@@ -1,3 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=IM+Fell+DW+Pica:ital@0;1&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  @apply quattrocento-sans-regular;
+
+  line-height: 1.5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  scrollbar-color: #000000 #f0f3f2;
+  scrollbar-width: thin;
+}
+
+.grandstander {
+  font-family: "Grandstander", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.im-fell-dw-pica-regular {
+  font-family: "IM Fell DW Pica", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.im-fell-dw-pica-regular-italic {
+  font-family: "IM Fell DW Pica", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.quattrocento-sans-regular {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.quattrocento-sans-bold {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.quattrocento-sans-regular-italic {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.quattrocento-sans-bold-italic {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+h1,
+h2 {
+  @apply grandstander;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  @apply im-fell-dw-pica-regular;
+}
