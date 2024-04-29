@@ -1,54 +1,65 @@
-# Astro Starter Kit: Basics
+# Note entretien
 
-```sh
-npm create astro@latest -- --template basics
-```
+## Questions techniques
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+- Le public cible comprend :
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+  - Des groupes de particuliers
+  - Des écoles et
+  - Des structures médico-sociales
+  - Des comités d'entreprise
+  - Les écoles, colonies de vacances, centre de loisir, collectifs publics
+  - Les personnes en situation de handicap moteur ou psychique
+  - Les personnes en situation d'exclusion sociale.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- Le secteur concerné est l'Occitanie en France, notamment dans les domaines de l'événementiel et des ateliers thérapeutiques.
 
-## 🚀 Project Structure
+- Les valeurs pronées sont le partage d'expériences, de connaissances et d'émotions, le respect de la vie (environnement et autrui) ainsi que la déconnexion du quotidien pour se reconnecter à l'essentiel.
 
-Inside of your Astro project, you'll see the following folders and files:
+- L'histoire à raconter concerne deux amis d'enfance avec des parcours atypiques
+  et des valeurs communes.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Ressources
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- [https://les-arborigenes.fr/](https://les-arborigenes.fr/)
+- [https://www.grimpeariege.com/](https://www.grimpeariege.com/)
+- [https://papaoursnature.fr/](https://papaoursnature.fr/)
+- [http://www.libertree.fr/sites.php](http://www.libertree.fr/sites.php)
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Notes structure site
 
-Any static assets, like images, can be placed in the `public/` directory.
+- Arborescence faible, maximum 5 pages, en poussant les informations en dernière
+  page (FAQ).
+- Inclure un logo à l'entrée suivi d'une navigation (fixed) et possiblement une
+  vidéo ou une image d'accueil.
+- L'ordre suggéré des sections comprend l'accueil, la présentation, une section images et des témoignages.
+- L'idée de placer des éléments en position fixe inclut le contact, une présentation de l'équipe et les tarifs.
+- Les onglets principaux ne doivent pas dépasser 5 et doivent couvrir des aspects tels que qui sont-ils, pour qui, comment (avec tarifs et activités), pourquoi et comment les contacter.
 
-## 🧞 Commands
+- Pages:
+  - 1 / Accueil
+  - 2 / Nos activités et tarifs
+  - 3 / Qui sommes-nous
+  - 4 / Contact
+  - 5 / FAQ.
 
-All commands are run from the root of the project, from a terminal:
+-add site map to counter balance the low number of pages and SEO
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Notes esthétiques
 
-## 👀 Want to learn more?
+- Couleurs vert, marron et orange recommandées, avec une cohérence esthétique.
+- Utilisation d'une police caligraphique, rappelant un style pirate mais facile à lire.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Ã€ venir
+
+- Envisager d'inclure une carte pour localiser les sites.
+
+## audit
+
+- strat inbout marketing (inbound marketing) : attirer les clients par page de blog, mots clée recherche, travail de contenu, payer par article. Partager sur réseau sociaux
+- google annonce : payer des mots clées, google te met en haut de page
+- campagne google ads, 500 euros,
+
+### ent
+
+- lyreco : fourniture de bureau
