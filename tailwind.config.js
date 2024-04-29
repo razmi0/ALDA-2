@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+//
+import twAnimate from "tailwindcss-animate";
+//
+//
+export default {
   darkMode: ["class"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   prefix: "",
@@ -12,6 +16,18 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        gr: {
+          400: "#a2c999",
+          500: "#397c5b",
+          600: "#1d3822",
+        },
+        pur: {
+          400: "#d5d4ea",
+          500: "#7b8ec3",
+          600: "#f3d2ff", //#ba9bc5
+        },
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -28,5 +44,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [twAnimate],
 };
