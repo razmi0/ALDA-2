@@ -50,6 +50,8 @@ const debug: DebugPanelProps = {
     },
   ],
 };
+
+export { debug };
 ```
 
 </ol>
