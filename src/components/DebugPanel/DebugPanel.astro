@@ -2,7 +2,11 @@
 import type { DebugPanelProps } from "@/types";
 import Panel from "./react/DebugPanel";
 
-interface Props extends DebugPanelProps {}
+interface Props {
+  range: {
+    range: DebugPanelProps["range"];
+  };
+}
 
 const { range } = Astro.props;
 const isDev = import.meta.env.DEV;
