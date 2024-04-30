@@ -57,28 +57,36 @@ const DebugPanel = (props: Props) => {
 
   return (
     <>
-      <aside className="fixed absolute-align w-fit h-fit mt-5 ml-5 bg-zinc-300/90 rounded-sm z-50">
-        <div className="w-full h-fit py-1 px-1 bg-zinc-50/90 flex items-center rounded-sm" tabIndex={-1}>
-          <button onClick={() => setOpen((p) => !p)} className="hover:ring-1 ring-zinc-300 cursor-pointer">
-            <PanelBottomClose className="text-zinc-500" />
+      <aside
+        className={`fixed absolute-align w-fit h-fit mt-5 ml-5 ${
+          open ? "bg-zinc-300/90" : "bg-transparent"
+        }  rounded-sm z-50`}
+      >
+        <div
+          className={`w-full h-fit py-1 px-1 ${open ? "bg-zinc-50/90" : "bg-transparent"} flex items-center rounded-sm`}
+          tabIndex={-1}
+        >
+          <button onClick={() => setOpen((p) => !p)} className={"hover:ring-1 ring-zinc-300 cursor-pointer"}>
+            <PanelBottomClose className="text-zinc-800" />
           </button>
         </div>
-        <div className={`${open ? "block" : "hidden"}`}>
+
+        <div className={`${open ? "inline-block" : "hidden"}`}>
           {range.map((item, index) => {
             const disabled = !targets[index] || errors[index] === "tag";
 
-            const buttonRingColor = targets[index]
-              ? "ring-green-400"
-              : errors[index] === "tag"
-              ? "ring-red-400"
-              : "ring-zinc-300";
+            const buttonRingColor = errors[index] === "tag" ? "ring-red-400" : "ring-zinc-300";
 
             return (
-              <>
-                <label className="px-2 font-bold" htmlFor={`range-${index}`}>
+              <div key={item.label}>
+                <label
+                  className="horizontal justify-between px-3 py-2 pt-3 text-zinc-500 text-sm"
+                  htmlFor={`range-${index}`}
+                >
                   {item.label}
+                  <span className="horizontal center w-[5ch] text-sm">{ranges[index]}</span>
                 </label>
-                <div className="horizontal center w-full h-fit p-3 gap-3" key={item.label}>
+                <div className="horizontal center w-full h-fit px-3 gap-3">
                   <div className="vertical gap-3">
                     <input
                       id={`range-${index}`}
@@ -89,17 +97,25 @@ const DebugPanel = (props: Props) => {
                       value={ranges[index]}
                       onChange={(e) => rangeOnChange(e, index, item.property)}
                       disabled={disabled}
+                      data-content={"0"}
                     />
                   </div>
                   <button
-                    className={`rounded-sm ring-2 bg-zinc-100 hover:bg-zinc-50 p-3 ${buttonRingColor} horizontal center`}
+                    className={`rounded-sm ring-2 bg-zinc-100 hover:bg-zinc-50 px-3 py-1 h-fit ${buttonRingColor} horizontal center gap-3`}
                     onClick={() => handleActivateElement(item.targetTag, index)}
                   >
                     Activate
-                    <small className="center tabular-nums w-[5ch]">{ranges[index]}</small>
+                    <svg
+                      viewBox="0 0 28 28"
+                      width={20}
+                      height={20}
+                      fill={disabled ? "red" : errors[index] === "tag" ? "orange" : "green"}
+                    >
+                      <circle cx="8" cy="14" r="8" />
+                    </svg>
                   </button>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
