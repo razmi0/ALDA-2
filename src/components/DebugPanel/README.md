@@ -1,14 +1,25 @@
 ![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
-# Debug Component
+# Debug CSS Astro Island
 
 Aim to tweak any style propertie of any DOM element.
 
 <ol>
+<li>Add the DebugPanel component to the App component
+
+</li>
 <li>Add <i>data-debug="name"</i> to an element in the DOM</li>
-<li>Declare in entry.ts the related debug object</li>
+<li>Declare in entry.ts the related debug object and export it</li>
 </ol>
+
+```tsx
+import { DebugPanel } from "./components/DebugPanel";
+...
+<DebugPanel />;
+<nav client::only="react" data-debug="navbar"></nav>
+...
+```
 
 ```typescript
 interface DebugPanelProps {
