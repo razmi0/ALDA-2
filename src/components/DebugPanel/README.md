@@ -35,6 +35,7 @@ type RangeProps = {
   unit?: "px" | "%" | "deg" | "em" | "rem";
   property: CSSProperty & string; // hyphenated css property to change (border-radius...)
 };
+
 /*
  *Example
  */
