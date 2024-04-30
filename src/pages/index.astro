@@ -1,14 +1,17 @@
 ---
 import Hero from "@/assets/hero/hero.png";
+import DebugPanel from "@/components/DebugPanel/DebugPanel.astro";
 import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import type { DebugPanelProps } from "@/types";
+
+const debugTags: DebugPanelProps = [];
 ---
 
-<script></script>
-
 <Layout title="Welcome to Astro.">
+  <DebugPanel />
   <section class="relative h-screen max-w-full w-full text-white">
     <Image src={Hero} class="absolute full max-w-screen object-cover -z-50 brightness-75 contrast-125" alt="hero" />
     <header class="absolute-align z-10 w-full px-52 py-2 h-1/4">

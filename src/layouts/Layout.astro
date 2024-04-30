@@ -1,5 +1,4 @@
 ---
-import DebugPanel from "@/components/DebugPanel/DebugPanel.astro";
 interface Props {
   title: string;
 }
@@ -18,7 +17,6 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <DebugPanel />
     <slot />
   </body>
 </html>

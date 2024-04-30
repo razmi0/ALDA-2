@@ -1,7 +1,11 @@
 ---
+import type { DebugPanelProps } from "@/types";
 import Panel from "./react/DebugPanel";
 
+interface Props extends DebugPanelProps {}
+
+const { range } = Astro.props;
 const isDev = import.meta.env.DEV;
 ---
 
-{isDev && <Panel client:load />}
+{isDev && <Panel client:only="react" range={range} />}
