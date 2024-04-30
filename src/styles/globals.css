@@ -93,4 +93,20 @@ h6 {
   .center {
     @apply justify-center items-center;
   }
+
+  .between {
+    @apply justify-between;
+  }
+
+  .full {
+    @apply w-full h-full;
+  }
+
+  .absolute-align {
+    @apply absolute inset-0;
+  }
+
+  .absolute-center {
+    @apply absolute inset-0 flex justify-center items-center;
+  }
 }
