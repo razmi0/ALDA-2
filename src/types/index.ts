@@ -1,5 +1,4 @@
-// Add your types here
-import type { CSSProperties } from "react";
+import type { CSSProperty } from "astro/types";
 
 export type Prettify<T> = {
   [K in keyof T]: T[K];
@@ -14,7 +13,7 @@ interface LocalDebugPanelProps {
     value: string;
     step: string;
     unit?: "px" | "%" | "deg" | "em" | "rem";
-    property: keyof CSSProperties;
+    property: CSSProperty;
   }[];
 }
 

@@ -1,6 +1,7 @@
 import { type DebugPanelProps } from "@/types";
+import type { CSSProperty } from "astro/types";
 import { PanelBottomClose } from "lucide-react";
-import type { CSSProperties, ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 
 type Props = {
@@ -40,7 +41,7 @@ const DebugPanel = (props: Props) => {
     setErrors(newErrors);
   };
 
-  const rangeOnChange = (e: ChangeEvent<HTMLInputElement>, index: number, property: keyof CSSProperties) => {
+  const rangeOnChange = (e: ChangeEvent<HTMLInputElement>, index: number, property: CSSProperty) => {
     const target = targets[index];
     const newValue = e.target.value;
     const newRanges = [...ranges];
@@ -49,10 +50,16 @@ const DebugPanel = (props: Props) => {
       console.error(`[ERROR] : Element not found index : ${index}`);
       return;
     }
+    /*
+     * store value
+     */
     newRanges[index] = newValue;
     setRanges(newRanges);
+    /*
+     * apply value
+     */
     const style = (target as HTMLElement).style;
-    style.setProperty(property, newValue.toString());
+    style.setProperty(property, newValue.toString() + (range[index]?.unit || ""));
   };
 
   return (
@@ -84,7 +91,9 @@ const DebugPanel = (props: Props) => {
                   htmlFor={`range-${index}`}
                 >
                   {item.label}
-                  <span className="horizontal center w-[5ch] text-sm">{ranges[index]}</span>
+                  <span className="horizontal center text-sm tabular-nums">
+                    {ranges[index]} {range[index]?.unit || ""}
+                  </span>
                 </label>
                 <div className="horizontal center w-full h-fit px-3 gap-3">
                   <div className="vertical gap-3">
