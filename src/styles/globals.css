@@ -72,3 +72,25 @@ h5,
 h6 {
   @apply im-fell-dw-pica-regular;
 }
+
+@layer base {
+  .vertical {
+    @apply flex flex-col;
+
+    &.reverse {
+      @apply flex-col-reverse;
+    }
+  }
+
+  .horizontal {
+    @apply flex;
+
+    &.reverse {
+      @apply flex-row-reverse;
+    }
+  }
+
+  .center {
+    @apply justify-center items-center;
+  }
+}
