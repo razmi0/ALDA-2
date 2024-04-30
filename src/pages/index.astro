@@ -1,9 +1,9 @@
 ---
 import Hero from "@/assets/hero/hero.png";
+import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import { generateLorem } from "@/lib/utils";
 ---
 
 <script></script>
@@ -40,9 +40,11 @@ import { generateLorem } from "@/lib/utils";
       class="absolute-align justify-end items-center vertical z-10 full max-h-[95%] gap-6 text-center pointer-events-none"
     >
       <p class="text-balance text-stone-300 line-clamp-3 max-w-[55ch] leading-4">{generateLorem(20)}</p>
-      <button class="h-16 w-36 rounded-full bg-gradient-to-r from-white to-pur-600 text-black font-bold"
-        >S'inscrire</button
-      >
+      <button class="card h-16 w-36 rounded-ful">
+        <span class="text-black z-50">S'inscrire</span>
+        <div data-style="dark-bg"></div>
+        <div data-style="light-border"></div>
+      </button>
     </div>
   </section>
 </Layout>
