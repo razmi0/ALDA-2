@@ -1,4 +1,5 @@
 import { type DebugPanelProps } from "@/types";
+import { PanelBottomClose } from "lucide-react";
 import type { CSSProperties, ChangeEvent } from "react";
 import { useState } from "react";
 
@@ -15,6 +16,7 @@ const DebugPanel = (props: Props) => {
   const [ranges, setRanges] = useState<string[]>(
     Array.from({ length: range.length }, (_, i) => range[i]?.value || "0")
   );
+  const [open, setOpen] = useState(false);
 
   const [errors, setErrors] = useState<(false | "tag")[]>([false]);
 
@@ -43,8 +45,6 @@ const DebugPanel = (props: Props) => {
     const newValue = e.target.value;
     const newRanges = [...ranges];
 
-    console.log(`[INFO] : ${property} : ${newValue}`);
-
     if (!target) {
       console.error(`[ERROR] : Element not found index : ${index}`);
       return;
@@ -56,44 +56,55 @@ const DebugPanel = (props: Props) => {
   };
 
   return (
-    <aside className="fixed absolute-align w-fit h-fit mt-5 ml-5 bg-zinc-300 rounded-sm z-50">
-      {range.map((item, index) => {
-        const disabled = !targets[index] || errors[index] === "tag";
+    <>
+      <aside className="fixed absolute-align w-fit h-fit mt-5 ml-5 bg-zinc-300/90 rounded-sm z-50">
+        <div className="w-full h-fit py-1 px-1 bg-zinc-50/90 flex items-center rounded-sm" tabIndex={-1}>
+          <button onClick={() => setOpen((p) => !p)} className="hover:ring-1 ring-zinc-300 cursor-pointer">
+            <PanelBottomClose className="text-zinc-500" />
+          </button>
+        </div>
+        <div className={`${open ? "block" : "hidden"}`}>
+          {range.map((item, index) => {
+            const disabled = !targets[index] || errors[index] === "tag";
 
-        const buttonRingColor = targets[index]
-          ? "ring-green-400"
-          : errors[index] === "tag"
-          ? "ring-red-400"
-          : "ring-zinc-300";
+            const buttonRingColor = targets[index]
+              ? "ring-green-400"
+              : errors[index] === "tag"
+              ? "ring-red-400"
+              : "ring-zinc-300";
 
-        return (
-          <div className="flex center w-full h-fit p-3 gap-3" key={item.label}>
-            <div className="vertical">
-              <label className="font-bold" htmlFor={`range-${index}`}>
-                {item.label}
-              </label>
-              <input
-                id={`range-${index}`}
-                type="range"
-                className="w-40 accent-current cursor-pointer"
-                min={item.min}
-                step={item.step}
-                max={item.max}
-                value={ranges[index]}
-                onChange={(e) => rangeOnChange(e, index, item.property)}
-                disabled={disabled}
-              />
-            </div>
-            <button
-              className={`rounded-sm ring-2 bg-zinc-100 hover:bg-zinc-50 p-3 ${buttonRingColor}`}
-              onClick={() => handleActivateElement(item.targetTag, index)}
-            >
-              Activate {ranges[index]}
-            </button>
-          </div>
-        );
-      })}
-    </aside>
+            return (
+              <>
+                <label className="px-2 font-bold" htmlFor={`range-${index}`}>
+                  {item.label}
+                </label>
+                <div className="horizontal center w-full h-fit p-3 gap-3" key={item.label}>
+                  <div className="vertical gap-3">
+                    <input
+                      id={`range-${index}`}
+                      type="range"
+                      min={item.min}
+                      step={item.step}
+                      max={item.max}
+                      value={ranges[index]}
+                      onChange={(e) => rangeOnChange(e, index, item.property)}
+                      disabled={disabled}
+                    />
+                  </div>
+                  <button
+                    className={`rounded-sm ring-2 bg-zinc-100 hover:bg-zinc-50 p-3 ${buttonRingColor} horizontal center`}
+                    onClick={() => handleActivateElement(item.targetTag, index)}
+                  >
+                    Activate
+                    <small className="center tabular-nums w-[5ch]">{ranges[index]}</small>
+                  </button>
+                </div>
+              </>
+            );
+          })}
+        </div>
+      </aside>
+    </>
   );
 };
 
