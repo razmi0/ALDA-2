@@ -13,7 +13,7 @@ interface LocalDebugPanelProps {
     value: string;
     step: string;
     unit?: "px" | "%" | "deg" | "em" | "rem";
-    property: CSSProperty;
+    property: CSSProperty & string;
   }[];
 }
 

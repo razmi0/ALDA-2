@@ -1,16 +1,8 @@
 ---
-import type { DebugPanelProps } from "@/types";
-import Panel from "./react/DebugPanel";
 import "@/components/DebugPanel/react/range.css";
+import Panel from "./react/DebugPanel";
 
-interface Props {
-  range: {
-    range: DebugPanelProps["range"];
-  };
-}
-
-const { range } = Astro.props;
 const isDev = import.meta.env.DEV;
 ---
 
-{isDev && <Panel client:only="react" range={range} />}
+{isDev && <Panel client:only="react" />}

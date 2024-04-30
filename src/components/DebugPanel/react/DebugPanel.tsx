@@ -1,18 +1,12 @@
-import { type DebugPanelProps } from "@/types";
 import type { CSSProperty } from "astro/types";
 import { PanelBottomClose } from "lucide-react";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
+import * as data from "../entry";
 
-type Props = {
-  range: {
-    range: DebugPanelProps["range"];
-  };
-};
-
-const DebugPanel = (props: Props) => {
-  if (!props.range.range || props.range.range.length === 0) return <></>;
-  const range = props.range.range;
+const DebugPanel = () => {
+  if (!data.range.range || data.range.range.length === 0) return <></>;
+  const range = data.range.range;
   const [targets, setTargets] = useState<(Element | null)[]>([null]);
   const [ranges, setRanges] = useState<string[]>(
     Array.from({ length: range.length }, (_, i) => range[i]?.value || "0")

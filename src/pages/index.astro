@@ -3,37 +3,12 @@ import Hero from "@/assets/hero/hero.png";
 import DebugPanel from "@/components/DebugPanel/DebugPanel.astro";
 import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
-import type { DebugPanelProps } from "@/types";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-
-const debugTags: DebugPanelProps = {
-  range: [
-    {
-      targetTag: "hero-image",
-      label: "image opacity",
-      min: "0",
-      max: "1",
-      value: "0.5",
-      property: "opacity",
-      step: "0.01",
-    },
-    {
-      targetTag: "hero-image",
-      label: "image radius",
-      min: "0",
-      max: "500",
-      value: "0",
-      property: "border-radius",
-      step: "1",
-      unit: "px",
-    },
-  ],
-};
 ---
 
 <Layout title="Welcome to Astro.">
-  <DebugPanel range={debugTags} />
+  <DebugPanel />
   <section class="relative h-screen max-w-full w-full text-white">
     <Image
       src={Hero}
