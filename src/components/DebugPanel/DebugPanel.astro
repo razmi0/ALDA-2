@@ -1,0 +1,7 @@
+---
+import Panel from "./react/DebugPanel";
+
+const isDev = import.meta.env.DEV;
+---
+
+{isDev && <Panel client:load />}
