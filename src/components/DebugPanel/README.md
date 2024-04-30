@@ -6,12 +6,8 @@
 Aim to tweak any style propertie of any DOM element.
 
 <ol>
-<li>Add the DebugPanel component to the App component
 
-</li>
-<li>Add <i>data-debug="name"</i> to an element in the DOM</li>
-<li>Declare in entry.ts the related debug object and export it</li>
-</ol>
+<li>Add the DebugPanel component to the App component and add <i>data-debug="name"</i> to an element in the DOM
 
 ```tsx
 import { DebugPanel } from "./components/DebugPanel";
@@ -20,6 +16,9 @@ import { DebugPanel } from "./components/DebugPanel";
 <nav client::only="react" data-debug="navbar"></nav>
 ...
 ```
+
+</li>
+<li>Declare in entry.ts the related debug object and export it</li>
 
 ```typescript
 interface DebugPanelProps {
@@ -36,7 +35,6 @@ type RangeProps = {
   unit?: "px" | "%" | "deg" | "em" | "rem";
   property: CSSProperty & string; // hyphenated css property to change (border-radius...)
 };
-
 /* Example */
 const debug: DebugPanelProps = {
   range: [
@@ -53,3 +51,5 @@ const debug: DebugPanelProps = {
   ],
 };
 ```
+
+</ol>
