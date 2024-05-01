@@ -1,6 +1,38 @@
-import type { DebugPanelProps } from "@/types";
+import type { CSSProperty } from "astro/types";
 
-export const range: DebugPanelProps = {
+type Unit = "px" | "%" | "deg" | "em" | "rem";
+
+export interface DebugPanelProps {
+  range?: {
+    targetTag: string;
+    label: string;
+    min: string;
+    max: string;
+    value: string;
+    step: string;
+    unit?: Unit;
+    property: CSSProperty & string;
+  }[];
+  checkbox?: {
+    targetTag: string;
+    label: string;
+    property: CSSProperty & string;
+    value: string;
+    isChecked: boolean;
+  }[];
+  radio?: {
+    targetTag: string;
+    label: string;
+    property: CSSProperty & string;
+    options: {
+      label: string;
+      value: string;
+    }[];
+    unit?: Unit;
+  }[];
+}
+
+export const data = {
   range: [
     {
       targetTag: "hero-image",
@@ -12,4 +44,24 @@ export const range: DebugPanelProps = {
       step: "0.01",
     },
   ],
-};
+  checkbox: [
+    {
+      targetTag: "header",
+      label: "image blur",
+      property: "filter",
+      value: "blur(5px)",
+    },
+  ],
+  radio: [
+    {
+      targetTag: "hero-image",
+      label: "image position",
+      property: "object-position",
+      options: [
+        { label: "top", value: "top" },
+        { label: "center", value: "center" },
+        { label: "bottom", value: "bottom" },
+      ],
+    },
+  ],
+} as DebugPanelProps;
