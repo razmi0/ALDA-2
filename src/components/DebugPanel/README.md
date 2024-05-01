@@ -64,7 +64,6 @@ type RadioProps = {
   options: {
     label: string;
     value: string;
-    checked?: boolean;
   }[];
   unit?: Unit;
 };
@@ -97,7 +96,6 @@ export const debug: DebugPanelProps = {
         {
           label: "Solid",
           value: "solid",
-          checked: true,
         },
         {
           label: "Dashed",

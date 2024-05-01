@@ -1,5 +1,5 @@
 import type { CSSProperty } from "astro/types";
-import { CircleAlert, CircleCheck, Info, PanelBottomClose } from "lucide-react";
+import { CircleAlert, CircleCheck, Info, PanelBottomClose, Power, RotateCcw } from "lucide-react";
 import type { ChangeEvent } from "react";
 import React, { useEffect, useState } from "react";
 import { data, type DebugPanelProps, type RadioOption } from "../entry";
@@ -15,6 +15,9 @@ const hasData = hasRanges || hasRadio || hasCheckboxes;
 const ranges = data.range as DebugPanelProps["range"];
 const checkboxes = data.checkbox as DebugPanelProps["checkbox"];
 const radios = data.radio as DebugPanelProps["radio"];
+
+let startingStyles: Record<string, CSSStyleDeclaration | null> = {};
+[...(ranges ?? []), ...(checkboxes ?? []), ...(radios ?? [])].map((item) => (startingStyles[item.targetTag] = null));
 
 let initRangesValues: string[], initCheckboxesValues: string[], initRadiosOptions: RadioOption[][];
 
@@ -47,8 +50,14 @@ const DebugPanel = () => {
   const togglePanel = () => setOpen(!open);
 
   const [errors, setErrors] = useState<{ tag: string; error: false | "tag" }[]>([]);
-  const [infos, setInfos] = useState<{ tag: string; info: false | "tag" }[]>([]);
-  const [success, setSuccess] = useState<{ tag: string; success: false | "tag" }[]>([]);
+  const [infos, setInfos] = useState<{ tag: string; info: false | "tag" | "reset" }[]>([]);
+  const [success, setSuccess] = useState<{ tag: string; success: false | "tag" | "reset" }[]>([]);
+
+  const reset = {
+    info: () => setInfos([]),
+    success: () => setSuccess([]),
+    error: () => setErrors([]),
+  };
 
   const [targets, setTargets] = useState<({ tag: string; element: Element } | null)[]>([null]);
 
@@ -67,17 +76,23 @@ const DebugPanel = () => {
         setErrors([...errors, { tag: targetTag, error: "tag" as const }]);
         return;
       }
+
       setTargets([...targets, { tag: targetTag, element }]);
       setSuccess([...success, { tag: targetTag, success: "tag" }]);
+
+      startingStyles[targetTag] = (element as HTMLElement).style;
     } else {
       console.log(`[INFO] : Element ${targetTag} already tagged and activated`);
       setInfos([...infos, { tag: targetTag, info: "tag" as const }]);
+
       const errorIdx = errors.findIndex((error) => error.tag === targetTag);
       const error = errors[errorIdx];
+
       if (error?.error === "tag") {
         const newError = [...errors];
         newError[errorIdx] = { tag: targetTag, error: false };
         setErrors(newError);
+
         console.log(`[INFO] : Error removed for ${targetTag}`);
         setInfos([...infos, { tag: targetTag, info: "tag" as const }]);
       } else if (!error) {
@@ -86,6 +101,29 @@ const DebugPanel = () => {
         setInfos([...infos, { tag: targetTag, info: "tag" as const }]);
       }
     }
+  };
+
+  const handleReset = (tag: string) => {
+    const target = targets.find((target) => target?.tag === tag);
+    if (!target) {
+      console.log(`[INFO] : Activating element ${tag} before reset`);
+      setInfos([...infos, { tag: tag, info: "reset" }]);
+      return;
+    }
+
+    const element = target.element as HTMLElement;
+
+    if (!startingStyles[tag]) {
+      console.log(`[INFO] : No starting styles found for ${tag}`);
+      setInfos([...infos, { tag: tag, info: "reset" }]);
+
+      return;
+    }
+
+    // @ts-ignore
+    element.style.cssText = startingStyles[tag] as string;
+
+    setSuccess([...success, { tag: tag, success: "reset" }]);
   };
 
   const rangeOnChange = (e: ChangeEvent<HTMLInputElement>, index: number, property: CSSProperty) => {
@@ -135,11 +173,7 @@ const DebugPanel = () => {
     }
   };
 
-  const radioOnChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    [fieldIndex, optionIndex]: [number, number],
-    property: CSSProperty
-  ) => {
+  const radioOnChange = (e: ChangeEvent<HTMLInputElement>, fieldIndex: number, property: CSSProperty) => {
     const target = targets.find((target) => target?.tag === radios?.[fieldIndex]?.targetTag);
 
     if (!target) {
@@ -149,7 +183,10 @@ const DebugPanel = () => {
     }
 
     const newRadiosOptions = [...radiosOptions];
-    ((newRadiosOptions[fieldIndex] as RadioOption[])[optionIndex] as RadioOption).checked = e.target.checked || false;
+
+    (newRadiosOptions[fieldIndex] as RadioOption[]).forEach((option) => {
+      option.label === e.target.id ? (option.checked = true) : (option.checked = false);
+    });
 
     setRadiosOptions(newRadiosOptions);
 
@@ -160,18 +197,18 @@ const DebugPanel = () => {
     style.setProperty(property, e.target.value);
   };
 
-  const containerColor = open ? "bg-zinc-300/90" : "bg-transparent";
-  const headerColor = open ? "bg-zinc-50/90" : "bg-transparent";
+  const containerColor = open ? "bg-zinc-100/90" : "bg-transparent";
+  const headerColor = open ? "bg-zinc-100/90" : "bg-transparent";
   const bodyDisplay = open ? "inline-block" : "hidden";
 
   return (
     <>
-      <Container className={containerColor}>
+      <Container className={"scale-95 " + containerColor}>
         <Header classNames={headerColor}>
           <Trigger setOpen={togglePanel}>
             <PanelBottomClose className="text-zinc-800" />
           </Trigger>
-          <LogEvent errors={errors} success={success} infos={infos} />
+          <LogEvent errors={errors} success={success} infos={infos} reset={reset} />
         </Header>
         <Body className={bodyDisplay}>
           {ranges &&
@@ -179,6 +216,8 @@ const DebugPanel = () => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
 
               const target = targets.find((target) => target?.tag === item.targetTag);
+
+              const resetStyles = () => handleReset(item.targetTag);
 
               const disabled = !target || error === "tag";
 
@@ -191,7 +230,7 @@ const DebugPanel = () => {
               const id = `range-${index}`;
 
               return (
-                <div key={item.label}>
+                <Item key={item.label}>
                   <Label id={id} value={labelValue}>
                     {item.label}
                   </Label>
@@ -205,14 +244,17 @@ const DebugPanel = () => {
                       onChange={(e) => rangeOnChange(e, index, item.property)}
                       disabled={disabled}
                     />
-                    <ActivateButton
-                      activate={activate}
-                      buttonColor={buttonRingColor}
-                      error={error}
-                      disabled={disabled}
-                    />
+                    <div>
+                      <ActivateButton
+                        activate={activate}
+                        buttonColor={buttonRingColor}
+                        error={error}
+                        disabled={disabled}
+                      />
+                      <ResetButton onClick={resetStyles} />
+                    </div>
                   </Field>
-                </div>
+                </Item>
               );
             })}
           {checkboxes &&
@@ -220,6 +262,8 @@ const DebugPanel = () => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
 
               const target = targets.find((target) => target?.tag === item.targetTag);
+
+              const resetStyles = () => handleReset(item.targetTag);
 
               const disabled = !target || error === "tag";
 
@@ -230,7 +274,7 @@ const DebugPanel = () => {
               const id = `range-${index}`;
 
               return (
-                <div key={item.label}>
+                <Item key={item.label}>
                   <Label id={id}>{item.label}</Label>
                   <Field>
                     <Checkbox
@@ -246,8 +290,9 @@ const DebugPanel = () => {
                       error={error}
                       disabled={disabled}
                     />
+                    <ResetButton onClick={resetStyles} />
                   </Field>
-                </div>
+                </Item>
               );
             })}
           {radios &&
@@ -255,6 +300,8 @@ const DebugPanel = () => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
 
               const target = targets.find((target) => target?.tag === item.targetTag);
+
+              const resetStyles = () => handleReset(item.targetTag);
 
               const disabled = !target || error === "tag";
 
@@ -265,18 +312,19 @@ const DebugPanel = () => {
               const id = `range-${index}`;
 
               return (
-                <div key={item.label} className="py-1">
+                <Item key={item.label} className="py-1">
                   <Label id={id}>{item.label}</Label>
                   <Field>
-                    {radiosOptions?.[index]?.map((option, optionIdx) => {
+                    {radiosOptions?.[index]?.map((option) => {
                       return (
                         <div key={option.label}>
                           <Radio
                             name={id}
                             id={option.label}
                             value={option.value}
-                            onChange={(e) => radioOnChange(e, [index, optionIdx], item.property)}
+                            onChange={(e) => radioOnChange(e, index, item.property)}
                             disabled={disabled}
+                            selected={option.checked}
                           />
                         </div>
                       );
@@ -288,13 +336,44 @@ const DebugPanel = () => {
                       error={error}
                       disabled={disabled}
                     />
+                    <ResetButton onClick={resetStyles} />
                   </Field>
-                </div>
+                </Item>
               );
             })}
         </Body>
       </Container>
     </>
+  );
+};
+
+const ResetButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="px-3 py-1 h-fit horizontal center gap-3 bg-zinc-100 hover:bg-zinc-50 rounded-sm ring-2 ring-zinc-300"
+    >
+      <RotateCcw className="h-5 w-5 text-zinc-500" />
+    </button>
+  );
+};
+
+const Item = ({
+  children,
+  className,
+  rest,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  rest?: React.HTMLProps<HTMLDivElement>;
+}) => {
+  return (
+    <div
+      className={`bg-zinc-200 m-2 mx-4 rounded-md ring-1 ring-stone-300 shadow-sm shadow-stone-500/90 ${className}`}
+      {...rest}
+    >
+      {children}
+    </div>
   );
 };
 
@@ -316,7 +395,7 @@ interface RangeProps extends React.HTMLProps<HTMLInputElement> {
 }
 
 const Range = ({ ...rest }: RangeProps) => {
-  return <input type="range" {...rest} />;
+  return <input type="range" {...rest} className="max-w-[65%]" />;
 };
 
 interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
@@ -337,26 +416,36 @@ const Checkbox = ({ ...rest }: CheckboxProps) => {
 
 interface RadioProps extends React.HTMLProps<HTMLInputElement> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  selected?: boolean | undefined;
 }
-const Radio = ({ ...rest }: RadioProps) => {
+
+const Radio = ({ selected, ...rest }: RadioProps) => {
   return (
     <div className="vertical center gap-3">
       <label className={`checkbox-label ${rest.disabled ? "cursor-not-allowed" : "cursor-pointer"} `}>
         <input {...rest} type="radio" />
         <div className="transition"></div>
       </label>
-      <LabelValue>{rest.value}</LabelValue>
+      <LabelValue selected={selected || false}>{rest.value}</LabelValue>
     </div>
   );
 };
 
-const LabelValue = ({ children }: { children: React.ReactNode }) => {
-  return <span className="horizontal center text-sm tabular-nums bg-zinc-200 py-1 px-2 rounded-md">{children}</span>;
+const LabelValue = ({ children, selected }: { children: React.ReactNode; selected?: boolean }) => {
+  const highlightColor = selected ? "ring-1 ring-stone-400" : "";
+  return (
+    <span className={`inline-block horizontal center text-xs tabular-nums py-1 px-2 rounded-md ${highlightColor}`}>
+      {children}
+    </span>
+  );
 };
 
 const Label = ({ children, id, value }: LabelProps) => {
   return (
-    <label className="horizontal justify-between px-3 py-2 pt-3 text-zinc-500 text-sm" htmlFor={id}>
+    <label
+      className="horizontal items-center justify-between px-3 py-2 pt-3 text-sm font-semibold text-stone-600"
+      htmlFor={id}
+    >
       {children}
       {value && <LabelValue>{value}</LabelValue>}
     </label>
@@ -364,19 +453,20 @@ const Label = ({ children, id, value }: LabelProps) => {
 };
 
 const Field = ({ children }: { children: React.ReactNode }) => {
-  return <div className="horizontal justify-between items-center w-full h-fit px-3 gap-3">{children}</div>;
+  return (
+    <div className="horizontal justify-between items-center w-full h-fit px-3 py-2 gap-3 flex-wrap">{children}</div>
+  );
 };
 
 const ActivateButton = ({ activate, buttonColor, error, disabled }: ActivateButtonProps) => {
+  const color = error === "tag" ? "red" : disabled ? "grey" : "green";
+
   return (
     <button
       className={`px-3 py-1 h-fit horizontal center gap-3 ${buttonColor} bg-zinc-100 hover:bg-zinc-50 rounded-sm ring-2`}
       onClick={activate}
     >
-      Activate
-      <svg viewBox="0 0 28 28" width={20} height={20} fill={error === "tag" ? "red" : disabled ? "grey" : "green"}>
-        <circle cx="15" cy="14" r="8" />
-      </svg>
+      <Power className={`h-5 w-5 text-${color}-600`} />
     </button>
   );
 };
@@ -387,6 +477,7 @@ const debugMsgs = {
     prefix: "[INFO]",
     type: {
       tag: (tag: string) => `already activated ${tag}`,
+      reset: (tag: string) => `${tag} not activated`,
     },
     icon: <Info className="h-4 w-4" />,
   },
@@ -395,6 +486,7 @@ const debugMsgs = {
     prefix: "[SUCCESS]",
     type: {
       tag: (tag: string) => `${tag} activated`,
+      reset: (tag: string) => `${tag} reset`,
     },
     icon: <CircleCheck className="h-4 w-4" />,
   },
@@ -415,11 +507,16 @@ const debugMsgs = {
 
 type LogInfoProps = {
   errors: { tag: string; error: false | "tag" }[];
-  success: { tag: string; success: false | "tag" }[];
-  infos: { tag: string; info: false | "tag" }[];
+  success: { tag: string; success: false | "tag" | "reset" }[];
+  infos: { tag: string; info: false | "tag" | "reset" }[];
+  reset: {
+    info: () => void;
+    success: () => void;
+    error: () => void;
+  };
 };
 
-const LogEvent = ({ errors, infos, success }: LogInfoProps) => {
+const LogEvent = ({ errors, infos, success, reset }: LogInfoProps) => {
   const [displayed, setDisplayed] = useState<string>("");
   const [type, setType] = useState<("info" | "success" | "warn" | "error") & keyof typeof debugMsgs>("info");
 
@@ -441,10 +538,12 @@ const LogEvent = ({ errors, infos, success }: LogInfoProps) => {
     const timeoutId = setTimeout(() => {
       setDisplayed("");
       clearTimeout(timeoutId);
+      reset.error();
     }, 5000);
 
     return () => {
       clearTimeout(timeoutId);
+      reset.error();
     };
   }, [errors]);
 
@@ -458,18 +557,21 @@ const LogEvent = ({ errors, infos, success }: LogInfoProps) => {
 
     setType("info");
     const info = infos[idxInfo];
-    if (info && info.info === "tag") {
-      const msg = `${debugMsgs.info.type.tag(info.tag)}`;
+
+    if (info && info.info) {
+      const msg = `${debugMsgs.info.type[info.info](info.tag)}`;
       setDisplayed(msg);
     }
 
     const timeoutId = setTimeout(() => {
       setDisplayed("");
       clearTimeout(timeoutId);
+      reset.info();
     }, 5000);
 
     return () => {
       clearTimeout(timeoutId);
+      reset.info();
     };
   }, [infos]);
 
@@ -483,22 +585,22 @@ const LogEvent = ({ errors, infos, success }: LogInfoProps) => {
 
     setType("success");
     const successMsg = success[idxSuccess];
-    if (successMsg && successMsg.success === "tag") {
-      const msg = `${debugMsgs.success.type.tag(successMsg.tag)}`;
+    if (successMsg && successMsg.success) {
+      const msg = `${debugMsgs.success.type[successMsg.success](successMsg.tag)}`;
       setDisplayed(msg);
     }
 
     const timeoutId = setTimeout(() => {
       setDisplayed("");
       clearTimeout(timeoutId);
+      reset.success();
     }, 5000);
 
     return () => {
       clearTimeout(timeoutId);
+      reset.success();
     };
   }, [success]);
-
-  console.log(`text-${debugMsgs[type].color}-600`);
 
   return (
     <div className="text-xs font-semibold ps-1">

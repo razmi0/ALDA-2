@@ -54,9 +54,39 @@ export const data = {
       label: "image blur",
       property: "filter",
       options: [
-        { label: "sm", value: "blur(5px)", checked: true },
-        { label: "lg", value: "blur(50px)", checked: false },
+        { label: "sm", value: "blur(5px)" },
+        { label: "lg", value: "blur(50px)" },
         { label: "xl", value: "blur(200px)" },
+      ],
+    },
+    {
+      targetTag: "hero-image",
+      label: "image contrast",
+      property: "filter",
+      options: [
+        { label: "low", value: "contrast(0.5)" },
+        { label: "normal", value: "contrast(1)" },
+        { label: "high", value: "contrast(2)" },
+      ],
+    },
+    {
+      targetTag: "hero-image",
+      label: "image brightness",
+      property: "filter",
+      options: [
+        { label: "low", value: "brightness(0.5)" },
+        { label: "normal", value: "brightness(1)" },
+        { label: "high", value: "brightness(2)" },
+      ],
+    },
+    {
+      targetTag: "hero-image",
+      label: "image grayscale",
+      property: "filter",
+      options: [
+        { label: "0%", value: "grayscale(0)" },
+        { label: "50%", value: "grayscale(0.5)" },
+        { label: "100%", value: "grayscale(1)" },
       ],
     },
   ],

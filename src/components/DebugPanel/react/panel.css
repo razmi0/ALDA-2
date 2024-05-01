@@ -85,10 +85,10 @@ input[type="range"] {
   display: none;
 }
 
-/* Checkbox */
-/* Checkbox */
-/* Checkbox */
-/* Checkbox */
+/* Checkbox & radio */
+/* Checkbox & radio */
+/* Checkbox & radio */
+/* Checkbox & radio */
 
 .checkbox-label {
   display: block;
@@ -105,7 +105,7 @@ input[type="range"] {
 .checkbox-label div {
   width: 60px;
   height: 60px;
-  background-color: #fff;
+  background-color: #999;
   top: -52px;
   left: -52px;
   position: absolute;
@@ -157,10 +157,10 @@ input[type="radio"] {
   0% {
     transform: translateY(-100%);
   }
-  3% {
+  2% {
     transform: translateY(0);
   }
-  97% {
+  98% {
     transform: translateY(0);
   }
   100% {
