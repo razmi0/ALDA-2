@@ -3,10 +3,19 @@ import typescriptParser from "@typescript-eslint/parser";
 import astroEslintParser from "astro-eslint-parser";
 import eslintPluginAstro from "eslint-plugin-astro";
 import a11y from "eslint-plugin-jsx-a11y";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
   ...eslintPluginAstro.configs["flat/recommended"],
+
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
 
   {
     files: ["**/*.{js,jsx,astro}"],
@@ -38,18 +47,7 @@ export default [
     languageOptions: {
       parser: typescriptParser,
     },
-    rules: {
-      // Note: you must disable the base rule as it can report incorrect errors
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          destructuredArrayIgnorePattern: "^_",
-        },
-      ],
-      "@typescript-eslint/no-non-null-assertion": "off",
-    },
+    rules: {},
   },
   {
     ignores: ["dist", "node_modules", ".github", "types.generated.d.ts"],

@@ -3,17 +3,28 @@
 
 # Debug CSS Astro Island
 
-Aim to tweak any style propertie of any DOM element.
+<p>Aim to tweak any style propertie of any DOM element.</p>
+<p>3 types of inputs available : </p>
+<ul>
+  <li>Range</li>
+  <li>Checkbox</li>
+  <li>Radio</li>
+</ul>
+
+## How to use
 
 <ol>
 
-<li>Add the DebugPanel component to the App component and add <i>data-debug="name"</i> to an element in the DOM
+<li>Add the AstroDebugPanel component your component tree and add <i>data-debug="name"</i> to an element in the DOM
 
 ```tsx
-import { DebugPanel } from "./components/DebugPanel";
+import { AstroDebugPanel } from "./components/DebugPanel";
 ...
-<DebugPanel />;
-<nav client::only="react" data-debug="navbar"></nav>
+<body>
+<AstroDebugPanel />;
+<nav data-debug="navbar">...</nav>
+<main>...</main>
+</body>
 ...
 ```
 
@@ -22,7 +33,9 @@ import { DebugPanel } from "./components/DebugPanel";
 
 ```typescript
 interface DebugPanelProps {
-  range: RangeProps[];
+  range?: RangeProps[];
+  checkbox?: CheckboxProps[];
+  radio?: RadioProps[];
 }
 
 type RangeProps = {
@@ -36,13 +49,33 @@ type RangeProps = {
   property: CSSProperty & string; // hyphenated css property to change (border-radius...)
 };
 
+type CheckboxProps = {
+  targetTag: string;
+  label: string;
+  property: CSSProperty & string;
+  value: string;
+  isChecked: boolean;
+};
+
+type RadioProps = {
+  targetTag: string;
+  label: string;
+  property: CSSProperty & string;
+  options: {
+    label: string;
+    value: string;
+    checked?: boolean;
+  }[];
+  unit?: Unit;
+};
+
 /*
  *Example
  */
-const debug: DebugPanelProps = {
+export const debug: DebugPanelProps = {
   range: [
     {
-      targetTag: "navbar", // Add data-debug="navbar" to the element
+      targetTag: "navbar", // Add data-debug="navbar" to the element targeted
       label: "Border Radius",
       min: "0",
       max: "100",
@@ -51,10 +84,49 @@ const debug: DebugPanelProps = {
       unit: "px",
       property: "border-radius",
     },
+    {
+      ...
+    }
+  ],
+  radio : [
+    {
+      targetTag: "navbar",
+      label: "Border Style",
+      property: "border-style",
+      options: [
+        {
+          label: "Solid",
+          value: "solid",
+          checked: true,
+        },
+        {
+          label: "Dashed",
+          value: "dashed",
+        },
+        {
+          label: "Dotted",
+          value: "dotted",
+        },
+      ],
+    },
+    {
+      ...
+    }
+  ],
+  checkbox: [
+    {
+      targetTag: "navbar",
+      label: "Border",
+      property: "border",
+      value: "1px solid black",
+      isChecked: true,
+    },
+    {
+      ...
+    }
   ],
 };
 
-export { debug };
 ```
 
 </ol>

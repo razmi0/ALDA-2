@@ -12,7 +12,7 @@ input[type="range"] {
   position: relative;
   overflow: hidden;
   height: 30px;
-  width: 200px;
+  width: 100%;
   cursor: pointer;
   border-radius: 0; /* iOS */
 
@@ -90,10 +90,6 @@ input[type="range"] {
 /* Checkbox */
 /* Checkbox */
 
-.clear {
-  clear: both;
-}
-
 .checkbox-label {
   display: block;
   cursor: pointer;
@@ -117,17 +113,57 @@ input[type="range"] {
   z-index: 100;
 }
 
-.checkbox-label input[type="checkbox"]:checked + div {
+.checkbox-label input:is([type="checkbox"]:checked, [type="radio"]:checked) + div {
   left: -10px;
   top: -10px;
 }
 
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input:is([type="checkbox"], [type="radio"]) {
   position: absolute;
   left: 50px;
   visibility: hidden;
 }
 
 .transition {
-  transition: 300ms ease;
+  transition: 200ms ease;
+}
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.text-blue-600 {
+  color: rgb(37 99 235);
+}
+
+.text-green-600 {
+  color: rgb(22 163 74);
+}
+
+.text-red-600 {
+  color: rgb(220 38 38);
+}
+
+*:has(> .log) {
+  overflow: hidden;
+}
+
+.log {
+  animation: slide-in-out 5s ease-out forwards;
+}
+
+@keyframes slide-in-out {
+  0% {
+    transform: translateY(-100%);
+  }
+  3% {
+    transform: translateY(0);
+  }
+  97% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
 }

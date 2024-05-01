@@ -1,6 +1,6 @@
 ---
 import Hero from "@/assets/hero/hero.png";
-import DebugPanel from "@/components/DebugPanel/DebugPanel.astro";
+import AstroDebugPanel from "@/components/DebugPanel/AstroDebugPanel.astro";
 import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Image } from "astro:assets";
@@ -8,7 +8,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Welcome to Astro.">
-  <DebugPanel />
+  <AstroDebugPanel />
   <section class="relative h-screen max-w-full w-full text-white">
     <Image
       src={Hero}

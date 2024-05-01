@@ -24,13 +24,16 @@ export interface DebugPanelProps {
     targetTag: string;
     label: string;
     property: CSSProperty & string;
-    options: {
-      label: string;
-      value: string;
-    }[];
+    options: RadioOption[];
     unit?: Unit;
   }[];
 }
+
+export type RadioOption = {
+  label: string;
+  value: string;
+  checked?: boolean;
+};
 
 export const data = {
   range: [
@@ -44,23 +47,16 @@ export const data = {
       step: "0.01",
     },
   ],
-  checkbox: [
-    {
-      targetTag: "header",
-      label: "image blur",
-      property: "filter",
-      value: "blur(5px)",
-    },
-  ],
+
   radio: [
     {
       targetTag: "hero-image",
-      label: "image position",
-      property: "object-position",
+      label: "image blur",
+      property: "filter",
       options: [
-        { label: "top", value: "top" },
-        { label: "center", value: "center" },
-        { label: "bottom", value: "bottom" },
+        { label: "sm", value: "blur(5px)", checked: true },
+        { label: "lg", value: "blur(50px)", checked: false },
+        { label: "xl", value: "blur(200px)" },
       ],
     },
   ],

@@ -1,8 +1,8 @@
 import type { CSSProperty } from "astro/types";
-import { PanelBottomClose } from "lucide-react";
+import { CircleAlert, CircleCheck, Info, PanelBottomClose } from "lucide-react";
 import type { ChangeEvent } from "react";
-import React, { useState } from "react";
-import { data, type DebugPanelProps } from "../entry";
+import React, { useEffect, useState } from "react";
+import { data, type DebugPanelProps, type RadioOption } from "../entry";
 
 /**
  *
@@ -16,7 +16,7 @@ const ranges = data.range as DebugPanelProps["range"];
 const checkboxes = data.checkbox as DebugPanelProps["checkbox"];
 const radios = data.radio as DebugPanelProps["radio"];
 
-let initRangesValues: string[], initCheckboxesValues: string[], initRadiosOptions: { label: string; value: string }[][];
+let initRangesValues: string[], initCheckboxesValues: string[], initRadiosOptions: RadioOption[][];
 
 if ("range" in data && (ranges?.length ?? 0) > 0) {
   initRangesValues = Array.from(
@@ -47,12 +47,14 @@ const DebugPanel = () => {
   const togglePanel = () => setOpen(!open);
 
   const [errors, setErrors] = useState<{ tag: string; error: false | "tag" }[]>([]);
+  const [infos, setInfos] = useState<{ tag: string; info: false | "tag" }[]>([]);
+  const [success, setSuccess] = useState<{ tag: string; success: false | "tag" }[]>([]);
 
   const [targets, setTargets] = useState<({ tag: string; element: Element } | null)[]>([null]);
 
   const [rangesValues, setRangesValues] = useState<string[]>(initRangesValues);
   const [checkboxesValues, _] = useState<string[]>(initCheckboxesValues);
-  const [radiosOptions, setRadiosOptions] = useState<{ label: string; value: string }[][]>(initRadiosOptions);
+  const [radiosOptions, setRadiosOptions] = useState<RadioOption[][]>(initRadiosOptions);
 
   const handleActivateElement = (targetTag: string) => {
     const isTagged = targets.find((target) => target?.tag === targetTag);
@@ -66,8 +68,10 @@ const DebugPanel = () => {
         return;
       }
       setTargets([...targets, { tag: targetTag, element }]);
+      setSuccess([...success, { tag: targetTag, success: "tag" }]);
     } else {
       console.log(`[INFO] : Element ${targetTag} already tagged and activated`);
+      setInfos([...infos, { tag: targetTag, info: "tag" as const }]);
       const errorIdx = errors.findIndex((error) => error.tag === targetTag);
       const error = errors[errorIdx];
       if (error?.error === "tag") {
@@ -75,9 +79,11 @@ const DebugPanel = () => {
         newError[errorIdx] = { tag: targetTag, error: false };
         setErrors(newError);
         console.log(`[INFO] : Error removed for ${targetTag}`);
+        setInfos([...infos, { tag: targetTag, info: "tag" as const }]);
       } else if (!error) {
         setErrors([...errors, { tag: targetTag, error: false }]);
         console.warn(`[WARN] : Error not found and was added for ${targetTag}`);
+        setInfos([...infos, { tag: targetTag, info: "tag" as const }]);
       }
     }
   };
@@ -89,6 +95,7 @@ const DebugPanel = () => {
 
     if (!target) {
       console.error(`[ERROR] : Element not found`);
+      setErrors([...errors, { tag: ranges?.[index]?.targetTag as string, error: "tag" }]);
       return;
     }
     /*
@@ -104,16 +111,12 @@ const DebugPanel = () => {
   };
 
   const checkboxOnChange = (e: ChangeEvent<HTMLInputElement>, index: number, property: CSSProperty) => {
-    console.log("checkboxOnChange");
-    console.log("check ", e.target.checked);
-    console.log("value", e.target.value);
-    console.log("property", property);
-
     const target = targets.find((target) => target?.tag === checkboxes?.[index]?.targetTag);
     const value = e.target.value;
 
     if (!target) {
       console.error(`[ERROR] : Element not found`);
+      setErrors([...errors, { tag: checkboxes?.[index]?.targetTag as string, error: "tag" }]);
       return;
     }
 
@@ -132,6 +135,31 @@ const DebugPanel = () => {
     }
   };
 
+  const radioOnChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    [fieldIndex, optionIndex]: [number, number],
+    property: CSSProperty
+  ) => {
+    const target = targets.find((target) => target?.tag === radios?.[fieldIndex]?.targetTag);
+
+    if (!target) {
+      console.error(`[ERROR] : Element not found`);
+      setErrors([...errors, { tag: radios?.[fieldIndex]?.targetTag as string, error: "tag" }]);
+      return;
+    }
+
+    const newRadiosOptions = [...radiosOptions];
+    ((newRadiosOptions[fieldIndex] as RadioOption[])[optionIndex] as RadioOption).checked = e.target.checked || false;
+
+    setRadiosOptions(newRadiosOptions);
+
+    const style = (target.element as HTMLElement).style;
+    /*
+     * apply value
+     */
+    style.setProperty(property, e.target.value);
+  };
+
   const containerColor = open ? "bg-zinc-300/90" : "bg-transparent";
   const headerColor = open ? "bg-zinc-50/90" : "bg-transparent";
   const bodyDisplay = open ? "inline-block" : "hidden";
@@ -143,6 +171,7 @@ const DebugPanel = () => {
           <Trigger setOpen={togglePanel}>
             <PanelBottomClose className="text-zinc-800" />
           </Trigger>
+          <LogEvent errors={errors} success={success} infos={infos} />
         </Header>
         <Body className={bodyDisplay}>
           {ranges &&
@@ -198,17 +227,11 @@ const DebugPanel = () => {
 
               const activate = () => handleActivateElement(item.targetTag);
 
-              const labelValue = `${checkboxesValues[index]}`;
-
               const id = `range-${index}`;
-
-              console.log();
 
               return (
                 <div key={item.label}>
-                  <Label id={id} value={labelValue}>
-                    {item.label}
-                  </Label>
+                  <Label id={id}>{item.label}</Label>
                   <Field>
                     <Checkbox
                       id={id}
@@ -217,6 +240,48 @@ const DebugPanel = () => {
                       onChange={(e) => checkboxOnChange(e, index, item.property)}
                       disabled={disabled}
                     />
+                    <ActivateButton
+                      activate={activate}
+                      buttonColor={buttonRingColor}
+                      error={error}
+                      disabled={disabled}
+                    />
+                  </Field>
+                </div>
+              );
+            })}
+          {radios &&
+            radios.map((item, index) => {
+              const error = errors.find((error) => error.tag === item.targetTag)?.error;
+
+              const target = targets.find((target) => target?.tag === item.targetTag);
+
+              const disabled = !target || error === "tag";
+
+              const buttonRingColor = error === "tag" ? "ring-red-400" : "ring-zinc-300";
+
+              const activate = () => handleActivateElement(item.targetTag);
+
+              const id = `range-${index}`;
+
+              return (
+                <div key={item.label} className="py-1">
+                  <Label id={id}>{item.label}</Label>
+                  <Field>
+                    {radiosOptions?.[index]?.map((option, optionIdx) => {
+                      return (
+                        <div key={option.label}>
+                          <Radio
+                            name={id}
+                            id={option.label}
+                            value={option.value}
+                            onChange={(e) => radioOnChange(e, [index, optionIdx], item.property)}
+                            disabled={disabled}
+                          />
+                        </div>
+                      );
+                    })}
+
                     <ActivateButton
                       activate={activate}
                       buttonColor={buttonRingColor}
@@ -243,7 +308,7 @@ type ActivateButtonProps = {
 type LabelProps = {
   children: React.ReactNode;
   id: string;
-  value: string;
+  value?: string;
 };
 
 interface RangeProps extends React.HTMLProps<HTMLInputElement> {
@@ -260,26 +325,46 @@ interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
 
 const Checkbox = ({ ...rest }: CheckboxProps) => {
   return (
-    <div>
-      <label className="checkbox-label">
-        <input {...rest} />
+    <div className="horizontal center gap-3">
+      <label className={`checkbox-label ${rest.disabled ? "cursor-not-allowed" : "cursor-pointer"} `}>
+        <input {...rest} type="checkbox" />
         <div className="transition"></div>
       </label>
+      <LabelValue>{rest.value}</LabelValue>
     </div>
   );
+};
+
+interface RadioProps extends React.HTMLProps<HTMLInputElement> {
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+const Radio = ({ ...rest }: RadioProps) => {
+  return (
+    <div className="vertical center gap-3">
+      <label className={`checkbox-label ${rest.disabled ? "cursor-not-allowed" : "cursor-pointer"} `}>
+        <input {...rest} type="radio" />
+        <div className="transition"></div>
+      </label>
+      <LabelValue>{rest.value}</LabelValue>
+    </div>
+  );
+};
+
+const LabelValue = ({ children }: { children: React.ReactNode }) => {
+  return <span className="horizontal center text-sm tabular-nums bg-zinc-200 py-1 px-2 rounded-md">{children}</span>;
 };
 
 const Label = ({ children, id, value }: LabelProps) => {
   return (
     <label className="horizontal justify-between px-3 py-2 pt-3 text-zinc-500 text-sm" htmlFor={id}>
       {children}
-      <span className="horizontal center text-sm tabular-nums">{value}</span>
+      {value && <LabelValue>{value}</LabelValue>}
     </label>
   );
 };
 
 const Field = ({ children }: { children: React.ReactNode }) => {
-  return <div className="horizontal center w-full h-fit px-3 gap-3">{children}</div>;
+  return <div className="horizontal justify-between items-center w-full h-fit px-3 gap-3">{children}</div>;
 };
 
 const ActivateButton = ({ activate, buttonColor, error, disabled }: ActivateButtonProps) => {
@@ -289,10 +374,141 @@ const ActivateButton = ({ activate, buttonColor, error, disabled }: ActivateButt
       onClick={activate}
     >
       Activate
-      <svg viewBox="0 0 28 28" width={20} height={20} fill={disabled ? "grey" : error === "tag" ? "red" : "green"}>
+      <svg viewBox="0 0 28 28" width={20} height={20} fill={error === "tag" ? "red" : disabled ? "grey" : "green"}>
         <circle cx="15" cy="14" r="8" />
       </svg>
     </button>
+  );
+};
+
+const debugMsgs = {
+  info: {
+    color: "blue",
+    prefix: "[INFO]",
+    type: {
+      tag: (tag: string) => `already activated ${tag}`,
+    },
+    icon: <Info className="h-4 w-4" />,
+  },
+  success: {
+    color: "green",
+    prefix: "[SUCCESS]",
+    type: {
+      tag: (tag: string) => `${tag} activated`,
+    },
+    icon: <CircleCheck className="h-4 w-4" />,
+  },
+  warn: {
+    color: "orange",
+    prefix: "[WARN]",
+    icon: <CircleAlert className="h-4 w-4" />,
+  },
+  error: {
+    color: "red",
+    prefix: "[ERROR]",
+    type: {
+      tag: (tag: string) => `${tag} not found`,
+    },
+    icon: <CircleAlert className="h-4 w-4" />,
+  },
+};
+
+type LogInfoProps = {
+  errors: { tag: string; error: false | "tag" }[];
+  success: { tag: string; success: false | "tag" }[];
+  infos: { tag: string; info: false | "tag" }[];
+};
+
+const LogEvent = ({ errors, infos, success }: LogInfoProps) => {
+  const [displayed, setDisplayed] = useState<string>("");
+  const [type, setType] = useState<("info" | "success" | "warn" | "error") & keyof typeof debugMsgs>("info");
+
+  // ERRORS
+  // --
+
+  useEffect(() => {
+    const idxErr = errors.findIndex((error) => error.error);
+
+    if (idxErr === -1) return;
+
+    setType("error");
+    const error = errors[idxErr];
+    if (error && error.error === "tag") {
+      const msg = `${debugMsgs.error.type.tag(error.tag)}`;
+      setDisplayed(msg);
+    }
+
+    const timeoutId = setTimeout(() => {
+      setDisplayed("");
+      clearTimeout(timeoutId);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [errors]);
+
+  // INFOS
+  // --
+
+  useEffect(() => {
+    const idxInfo = infos.findIndex((info) => info.info);
+
+    if (idxInfo === -1) return;
+
+    setType("info");
+    const info = infos[idxInfo];
+    if (info && info.info === "tag") {
+      const msg = `${debugMsgs.info.type.tag(info.tag)}`;
+      setDisplayed(msg);
+    }
+
+    const timeoutId = setTimeout(() => {
+      setDisplayed("");
+      clearTimeout(timeoutId);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [infos]);
+
+  // SUCCESS
+  // --
+
+  useEffect(() => {
+    const idxSuccess = success.findIndex((success) => success.success);
+
+    if (idxSuccess === -1) return;
+
+    setType("success");
+    const successMsg = success[idxSuccess];
+    if (successMsg && successMsg.success === "tag") {
+      const msg = `${debugMsgs.success.type.tag(successMsg.tag)}`;
+      setDisplayed(msg);
+    }
+
+    const timeoutId = setTimeout(() => {
+      setDisplayed("");
+      clearTimeout(timeoutId);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [success]);
+
+  console.log(`text-${debugMsgs[type].color}-600`);
+
+  return (
+    <div className="text-xs font-semibold ps-1">
+      {displayed && (
+        <div className={`horizontal center text-${debugMsgs[type].color}-600 gap-1 log`}>
+          {debugMsgs[type].icon}
+          <div className="translate-y-[2px]">{displayed}</div>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -303,9 +519,11 @@ type HeaderProps = {
 
 const Header = ({ children, classNames }: HeaderProps) => {
   return (
-    <div className={`w-full h-fit py-1 px-1 flex items-center rounded-sm ${classNames}`} tabIndex={-1}>
-      {children}
-    </div>
+    <>
+      <div className={`w-full h-fit py-1 px-1 horizontal items-center justify-between rounded-sm ${classNames}`}>
+        {children}
+      </div>
+    </>
   );
 };
 
@@ -334,7 +552,7 @@ const Container = ({ children, className }: ContainerProps) => {
 };
 
 const Body = ({ children, className }: { children: React.ReactNode; className: string }) => {
-  return <div className={className}>{children}</div>;
+  return <div className={`py-2 ${className}`}>{children}</div>;
 };
 
 export default DebugPanel;
