@@ -14,7 +14,7 @@
 
 <ol>
 
-<li>Add the AstroDebugPanel component your component tree and add <i>data-debug="name"</i> to an element in the DOM
+<li>Add the AstroDebugPanel component your astro component tree and add <i>data-debug="name"</i> to an element in the DOM
 
 ```tsx
 import { AstroDebugPanel } from "./components/DebugPanel";
