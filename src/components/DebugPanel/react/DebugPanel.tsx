@@ -175,7 +175,6 @@ const DebugPanel = () => {
         newChecked = !option.checked;
         return { ...option, checked: newChecked };
       }
-      1;
       return { ...option, checked: false };
     });
 
@@ -206,7 +205,9 @@ const DebugPanel = () => {
       <Container className={containerColor}>
         <Header classNames={headerColor}>
           <Trigger setOpen={togglePanel}>
-            <ChevronUp className={`text-zinc-500 h-5 w-5 ${open ? "rotate-180" : ""} transition-transform `} />
+            <ChevronUp
+              className={`h-5 w-5 ${open ? "rotate-180 text-zinc-500" : "text-white"} transition-transform `}
+            />
           </Trigger>
           <Log errors={errors} success={success} infos={infos} reset={reset} />
         </Header>
@@ -435,7 +436,7 @@ const Trigger = ({ setOpen, children }: TriggerProps) => {
       }
     >
       <div className="hidden center group-hover:horizontal absolute translate-x-[50%]" data-tooltip>
-        <small className="text-zinc-600 font-semibold">DebugPanel</small>
+        <small className="text-zinc-100 font-semibold">DebugPanel</small>
       </div>
       {children}
     </button>
