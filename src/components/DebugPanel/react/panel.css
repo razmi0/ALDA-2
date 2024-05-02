@@ -6,7 +6,7 @@
 /* Range */
 
 input[type="range"] {
-  margin: auto;
+  /* margin: auto; */
   appearance: none;
   -webkit-appearance: none;
   position: relative;

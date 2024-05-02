@@ -154,6 +154,8 @@ const DebugPanel = () => {
   const checkboxOnChange = (e: ChangeEvent<HTMLInputElement>, fieldIndex: number, property: CSSProperty) => {
     const target = targets.find((target) => target?.tag === checkboxes?.[fieldIndex]?.targetTag);
 
+    console.log("here");
+
     if (!target) {
       console.error(`[ERROR] : Element not found`);
       setErrors([...errors, { tag: checkboxes?.[fieldIndex]?.targetTag as string, error: "tag" }]);
@@ -230,8 +232,25 @@ const DebugPanel = () => {
 
               return (
                 <Item key={item.label}>
-                  <div className="horizontal justify-between ml-2">
-                    <Label id={id}>{item.label}</Label>
+                  <div className="horizontal gap-5 justify-between w-full">
+                    <div
+                      className="cursor-pointer horizontal items-center justify-between w-full"
+                      tabIndex={0}
+                      role="button"
+                      onClick={(_e) => {
+                        const currentTarget = _e.currentTarget;
+                        const target = currentTarget.parentNode?.nextSibling as HTMLElement;
+                        const chevron = currentTarget.querySelector("[data-is='label-icon']") as SVGElement;
+                        if (!target && !chevron) return;
+                        chevron.classList.toggle("rotate-90");
+                        target.classList.toggle("hidden");
+                      }}
+                    >
+                      <Label id={id}>
+                        <ChevronUp className={`rotate-90 h-4 w-4 transition-transform mr-1`} data-is="label-icon" />
+                        {item.label}
+                      </Label>
+                    </div>
                     <ButtonGroup
                       activate={activate}
                       error={error}
@@ -269,9 +288,26 @@ const DebugPanel = () => {
               const id = `range-${index}`;
 
               return (
-                <Item key={item.label} className="py-1">
-                  <div className="horizontal justify-between ml-2">
-                    <Label id={id}>{item.label}</Label>
+                <Item key={item.label}>
+                  <div className="horizontal gap-5 justify-between w-full">
+                    <div
+                      className="cursor-pointer horizontal items-center justify-between w-full"
+                      tabIndex={0}
+                      role="button"
+                      onClick={(_e) => {
+                        const currentTarget = _e.currentTarget;
+                        const target = currentTarget.parentNode?.nextSibling as HTMLElement;
+                        const chevron = currentTarget.querySelector("[data-is='label-icon']") as SVGElement;
+                        if (!target && !chevron) return;
+                        chevron.classList.toggle("rotate-90");
+                        target.classList.toggle("hidden");
+                      }}
+                    >
+                      <Label id={id}>
+                        <ChevronUp className={`rotate-90 h-4 w-4 transition-transform mr-1`} data-is="label-icon" />
+                        {item.label}
+                      </Label>
+                    </div>
                     <ButtonGroup
                       activate={activate}
                       error={error}
@@ -280,21 +316,23 @@ const DebugPanel = () => {
                       item={item}
                     />
                   </div>
+
                   <Field>
                     {checkboxesValues?.[index]?.map((option) => {
                       return (
-                        <div key={option.label}>
-                          <Checkbox
-                            name={id}
-                            id={option.label}
-                            value={option.value}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property)}
-                            targets={targets}
-                            selected={option.checked}
-                            errors={errors}
-                            item={item}
-                          />
-                        </div>
+                        // <div key={option.label}>
+                        <Checkbox
+                          key={option.label}
+                          name={id}
+                          id={option.label}
+                          value={option.value}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property)}
+                          targets={targets}
+                          selected={option.checked}
+                          errors={errors}
+                          item={item}
+                        />
+                        // </div>
                       );
                     })}
                   </Field>
@@ -318,7 +356,7 @@ const Item = ({
 }) => {
   return (
     <div
-      className={`bg-zinc-200 m-2 mx-4 p-1 rounded-md ring-1 ring-stone-300 shadow-sm shadow-stone-500/90 ${className}`}
+      className={`bg-zinc-200 m-2 mx-4 p-3 rounded-md ring-1 ring-stone-300 shadow-sm shadow-stone-500/90 h-fit w-56 ${className}`}
       {...rest}
     >
       {children}
@@ -337,7 +375,7 @@ interface RangeProps extends React.HTMLProps<HTMLInputElement> {
 }
 
 const Range = ({ ...rest }: RangeProps) => {
-  return <input type="range" className={`max-w-40 ${rest.className}`} {...rest} />;
+  return <input type="range" className={`w-full ${rest.className}`} {...rest} />;
 };
 
 type CheckboxProps = {
@@ -394,17 +432,17 @@ const LabelValue = ({
   );
 };
 
-const Label = ({ children, id, value }: LabelProps) => {
+const Label = ({ children, value }: LabelProps) => {
   return (
-    <label className="horizontal items-center justify-between text-sm font-semibold text-stone-600" htmlFor={id}>
+    <span className="horizontal items-center justify-between text-sm font-semibold text-stone-600">
       {children}
       {value && <LabelValue>{value}</LabelValue>}
-    </label>
+    </span>
   );
 };
 
 const Field = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={`relative vertical items-start full px-3 py-2 flex-wrap ${className}`}>{children}</div>;
+  return <div className={`relative vertical items-start gap-2 full pb-2 pt-4 flex-wrap ${className}`}>{children}</div>;
 };
 
 type HeaderProps = {
@@ -450,7 +488,11 @@ type ContainerProps = {
 
 const Container = ({ children, className }: ContainerProps) => {
   return (
-    <aside className={`fixed absolute-align w-fit h-fit mt-5 ml-5 rounded-lg z-50 ${className}`}>{children}</aside>
+    <aside
+      className={`fixed absolute-align w-fit h-fit mt-5 ml-5 rounded-lg z-50  max-h-[95%] overflow-y-auto ${className}`}
+    >
+      {children}
+    </aside>
   );
 };
 
