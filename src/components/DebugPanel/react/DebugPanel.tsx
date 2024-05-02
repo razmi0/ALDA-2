@@ -1,15 +1,15 @@
 import type { CSSProperty } from "astro/types";
 import { ChevronUp } from "lucide-react";
 import type { ChangeEvent } from "react";
-import React, { useState } from "react";
-import { data, type CheckboxOption, type DebugPanelProps } from "../entry";
+import { useState } from "react";
+import { data, type CheckboxOption, type DebugPanelProps, type Target } from "../entry";
 import { ButtonGroup } from "./Buttons";
-import Log from "./Log";
+import { Checkbox, Range } from "./Inputs";
+import { Item, ItemHeader } from "./Item";
+import { LabelValue } from "./Labels";
+import { Body, Container, Field, Header, Trigger } from "./Layout";
 
-type Target = {
-  tag: string;
-  element: Element;
-} | null;
+import Log from "./Log";
 
 /**
  *
@@ -192,7 +192,7 @@ const DebugPanel = () => {
     // style.setProperty(property, e.target.value);
   };
 
-  const containerColor = open ? "bg-zinc-100/90" : "bg-transparent";
+  const containerClass = open ? "bg-zinc-100/90 overflow-y-auto" : "bg-transparent overflow-y-visible";
   const headerColor = open ? "bg-zinc-100/90" : "bg-transparent";
   const bodyDisplay = open ? "inline-block" : "hidden";
 
@@ -204,7 +204,7 @@ const DebugPanel = () => {
 
   return (
     <>
-      <Container className={containerColor}>
+      <Container className={containerClass}>
         <Header classNames={headerColor}>
           <Trigger setOpen={togglePanel}>
             <ChevronUp
@@ -217,40 +217,18 @@ const DebugPanel = () => {
           {ranges &&
             ranges.map((item, index) => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
-
               const target = targets.find((target) => target?.tag === item.targetTag);
-
               const resetStyles = () => handleReset(item.targetTag);
-
               const disabled = !target || error === "tag";
-
               const activate = () => handleActivateElement(item.targetTag);
-
               const labelValue = `${rangesValues[index]} ${ranges[index]?.unit || ""}`;
-
               const id = `range-${index}`;
+              const handleRange = (e: ChangeEvent<HTMLInputElement>) => rangeOnChange(e, index, item.property);
+              const { min, max, step, label } = item;
 
               return (
-                <Item key={item.label}>
-                  <div className="horizontal gap-5 justify-between w-full">
-                    <div
-                      className="cursor-pointer horizontal items-center justify-between w-full"
-                      tabIndex={0}
-                      role="button"
-                      onClick={(_e) => {
-                        const currentTarget = _e.currentTarget;
-                        const target = currentTarget.parentNode?.nextSibling as HTMLElement;
-                        const chevron = currentTarget.querySelector("[data-is='label-icon']") as SVGElement;
-                        if (!target && !chevron) return;
-                        chevron.classList.toggle("rotate-90");
-                        target.classList.toggle("hidden");
-                      }}
-                    >
-                      <Label id={id}>
-                        <ChevronUp className={`rotate-90 h-4 w-4 transition-transform mr-1`} data-is="label-icon" />
-                        {item.label}
-                      </Label>
-                    </div>
+                <Item key={label}>
+                  <ItemHeader id={id} label={label}>
                     <ButtonGroup
                       activate={activate}
                       error={error}
@@ -258,15 +236,15 @@ const DebugPanel = () => {
                       targets={targets}
                       item={item}
                     />
-                  </div>
+                  </ItemHeader>
                   <Field className="flex-row">
                     <Range
                       id={id}
-                      min={item.min}
-                      step={item.step}
-                      max={item.max}
-                      value={rangesValues?.[index] || ""}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => rangeOnChange(e, index, item.property)}
+                      min={min}
+                      step={step}
+                      max={max}
+                      value={rangesValues[index]}
+                      onChange={handleRange}
                       disabled={disabled}
                     />
                     <LabelValue className="w-10 text-center" selected>
@@ -280,34 +258,14 @@ const DebugPanel = () => {
           {checkboxes &&
             checkboxes.map((item, index) => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
-
               const resetStyles = () => handleReset(item.targetTag);
-
               const activate = () => handleActivateElement(item.targetTag);
-
               const id = `range-${index}`;
-
+              const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property);
+              const { label } = item;
               return (
-                <Item key={item.label}>
-                  <div className="horizontal gap-5 justify-between w-full">
-                    <div
-                      className="cursor-pointer horizontal items-center justify-between w-full"
-                      tabIndex={0}
-                      role="button"
-                      onClick={(_e) => {
-                        const currentTarget = _e.currentTarget;
-                        const target = currentTarget.parentNode?.nextSibling as HTMLElement;
-                        const chevron = currentTarget.querySelector("[data-is='label-icon']") as SVGElement;
-                        if (!target && !chevron) return;
-                        chevron.classList.toggle("rotate-90");
-                        target.classList.toggle("hidden");
-                      }}
-                    >
-                      <Label id={id}>
-                        <ChevronUp className={`rotate-90 h-4 w-4 transition-transform mr-1`} data-is="label-icon" />
-                        {item.label}
-                      </Label>
-                    </div>
+                <Item key={label}>
+                  <ItemHeader id={id} label={label}>
                     <ButtonGroup
                       activate={activate}
                       error={error}
@@ -315,24 +273,22 @@ const DebugPanel = () => {
                       targets={targets}
                       item={item}
                     />
-                  </div>
-
+                  </ItemHeader>
                   <Field>
                     {checkboxesValues?.[index]?.map((option) => {
+                      const { label, value, checked } = option;
                       return (
-                        // <div key={option.label}>
                         <Checkbox
-                          key={option.label}
+                          key={label}
                           name={id}
-                          id={option.label}
-                          value={option.value}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property)}
+                          id={label}
+                          value={value}
+                          onChange={handleCheckbox}
                           targets={targets}
-                          selected={option.checked}
+                          selected={checked}
                           errors={errors}
                           item={item}
                         />
-                        // </div>
                       );
                     })}
                   </Field>
@@ -343,161 +299,6 @@ const DebugPanel = () => {
       </Container>
     </>
   );
-};
-
-const Item = ({
-  children,
-  className,
-  rest,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  rest?: React.HTMLProps<HTMLDivElement>;
-}) => {
-  return (
-    <div
-      className={`bg-zinc-200 m-2 mx-4 p-3 rounded-md ring-1 ring-stone-300 shadow-sm shadow-stone-500/90 h-fit w-56 ${className}`}
-      {...rest}
-    >
-      {children}
-    </div>
-  );
-};
-
-type LabelProps = {
-  children: React.ReactNode;
-  id: string;
-  value?: string;
-};
-
-interface RangeProps extends React.HTMLProps<HTMLInputElement> {
-  // onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
-
-const Range = ({ ...rest }: RangeProps) => {
-  return <input type="range" className={`w-full ${rest.className}`} {...rest} />;
-};
-
-type CheckboxProps = {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  selected?: boolean | undefined;
-  targets: Target[];
-  value: string;
-  errors: { tag: string; error: false | "tag" }[];
-  item: { targetTag: string };
-  name: string;
-  id: string;
-};
-
-const Checkbox = ({ onChange, selected, targets, value, errors, item, name, id }: CheckboxProps) => {
-  const target = targets.find((target) => target?.tag === item.targetTag);
-  const error = errors.find((error) => error.tag === item.targetTag)?.error;
-  const disabled = !target || error === "tag";
-
-  return (
-    <div className="horizontal justify-start items-center gap-3">
-      <label className={`checkbox-label ${disabled ? "cursor-not-allowed" : "cursor-pointer"} `}>
-        <input
-          onChange={onChange}
-          type="checkbox"
-          value={value}
-          name={name}
-          id={id}
-          disabled={disabled}
-          checked={selected || false}
-        />
-        <div className="transition"></div>
-      </label>
-      <LabelValue selected={selected || false}>{value}</LabelValue>
-    </div>
-  );
-};
-
-const LabelValue = ({
-  children,
-  selected,
-  className,
-}: {
-  children: React.ReactNode;
-  selected?: boolean;
-  className?: string;
-}) => {
-  const highlightColor = selected ? "bg-zinc-100 ring-1 ring-stone-300 shadow-sm shadow-stone-500/90" : "";
-  return (
-    <span
-      className={`inline-block horizontal center text-xs tabular-nums w-fit py-1 px-2 rounded-md transition-all ${className} ${highlightColor}`}
-    >
-      {children}
-    </span>
-  );
-};
-
-const Label = ({ children, value }: LabelProps) => {
-  return (
-    <span className="horizontal items-center justify-between text-sm font-semibold text-stone-600">
-      {children}
-      {value && <LabelValue>{value}</LabelValue>}
-    </span>
-  );
-};
-
-const Field = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={`relative vertical items-start gap-2 full pb-2 pt-4 flex-wrap ${className}`}>{children}</div>;
-};
-
-type HeaderProps = {
-  classNames?: string;
-  children: React.ReactNode;
-};
-
-const Header = ({ children, classNames }: HeaderProps) => {
-  return (
-    <>
-      <div className={`w-full h-fit py-1 px-1 horizontal items-center justify-between rounded-lg ${classNames}`}>
-        {children}
-      </div>
-    </>
-  );
-};
-
-type TriggerProps = {
-  setOpen: () => void;
-  children: React.ReactNode;
-};
-
-const Trigger = ({ setOpen, children }: TriggerProps) => {
-  return (
-    <button
-      onClick={setOpen}
-      className={
-        "relative hover:bg-slate-100/50 hover:ring-1 hover:ring-slate-100 cursor-pointer rounded-full p-1 group"
-      }
-    >
-      <div className="hidden center group-hover:horizontal absolute translate-x-[50%]" data-tooltip>
-        <small className="text-zinc-100 font-semibold">DebugPanel</small>
-      </div>
-      {children}
-    </button>
-  );
-};
-
-type ContainerProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-const Container = ({ children, className }: ContainerProps) => {
-  return (
-    <aside
-      className={`fixed absolute-align w-fit h-fit mt-5 ml-5 rounded-lg z-50  max-h-[95%] overflow-y-auto ${className}`}
-    >
-      {children}
-    </aside>
-  );
-};
-
-const Body = ({ children, className }: { children: React.ReactNode; className: string }) => {
-  return <div className={`py-2 grid grid-cols-2 ${className}`}>{children}</div>;
 };
 
 export default DebugPanel;
