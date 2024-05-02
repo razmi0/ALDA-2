@@ -3,13 +3,13 @@ import { ChevronUp } from "lucide-react";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { data, type CheckboxOption, type DebugPanelProps, type Target } from "../entry";
-import { ButtonGroup } from "./Buttons";
-import { Checkbox, Range } from "./Inputs";
-import { Item, ItemHeader } from "./Item";
-import { LabelValue } from "./Labels";
-import { Body, Container, Field, Header, Trigger } from "./Layout";
+import { ButtonGroup } from "./PanelButtons";
+import { Checkbox, Range } from "./PanelInputs";
+import { Item, ItemHeader } from "./PanelItem";
+import { LabelValue } from "./PanelLabels";
+import { Body, Container, Field, Header, Trigger } from "./PanelLayout";
 
-import Log from "./Log";
+import Log from "./PanelLog";
 
 /**
  *

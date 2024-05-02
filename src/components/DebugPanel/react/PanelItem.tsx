@@ -1,5 +1,5 @@
 import { ChevronUp } from "lucide-react";
-import { Label } from "./Labels";
+import { Label } from "./PanelLabels";
 import type { MouseEventHandler } from "react";
 
 const Item = ({

@@ -1,5 +1,5 @@
 import type { Target } from "../entry";
-import { LabelValue } from "./Labels";
+import { LabelValue } from "./PanelLabels";
 
 export type CheckboxProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
