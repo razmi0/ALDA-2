@@ -17,25 +17,18 @@ export interface DebugPanelProps {
     targetTag: string;
     label: string;
     property: CSSProperty & string;
-    value: string;
-    isChecked: boolean;
-  }[];
-  radio?: {
-    targetTag: string;
-    label: string;
-    property: CSSProperty & string;
-    options: RadioOption[];
+    options: CheckboxOption[];
     unit?: Unit;
   }[];
 }
 
-export type RadioOption = {
+export type CheckboxOption = {
   label: string;
   value: string;
   checked?: boolean;
 };
 
-export const data = {
+export const data: DebugPanelProps = {
   range: [
     {
       targetTag: "hero-image",
@@ -48,7 +41,7 @@ export const data = {
     },
   ],
 
-  radio: [
+  checkbox: [
     {
       targetTag: "hero-image",
       label: "image blur",
@@ -90,4 +83,4 @@ export const data = {
       ],
     },
   ],
-} as DebugPanelProps;
+};

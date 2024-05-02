@@ -4,11 +4,10 @@
 # Debug CSS Astro Island
 
 <p>Aim to tweak any style propertie of any DOM element.</p>
-<p>3 types of inputs available : </p>
+<p>2 types of inputs available : </p>
 <ul>
   <li>Range</li>
   <li>Checkbox</li>
-  <li>Radio</li>
 </ul>
 
 ## How to use
@@ -35,7 +34,6 @@ import { AstroDebugPanel } from "./components/DebugPanel";
 interface DebugPanelProps {
   range?: RangeProps[];
   checkbox?: CheckboxProps[];
-  radio?: RadioProps[];
 }
 
 type RangeProps = {
@@ -53,18 +51,7 @@ type CheckboxProps = {
   targetTag: string;
   label: string;
   property: CSSProperty & string;
-  value: string;
-  isChecked: boolean;
-};
-
-type RadioProps = {
-  targetTag: string;
-  label: string;
-  property: CSSProperty & string;
-  options: {
-    label: string;
-    value: string;
-  }[];
+  options: { label: string; value: string; }[];
   unit?: Unit;
 };
 
@@ -87,42 +74,21 @@ export const debug: DebugPanelProps = {
       ...
     }
   ],
-  radio : [
+  checkbox : [
     {
       targetTag: "navbar",
       label: "Border Style",
       property: "border-style",
       options: [
-        {
-          label: "Solid",
-          value: "solid",
-        },
-        {
-          label: "Dashed",
-          value: "dashed",
-        },
-        {
-          label: "Dotted",
-          value: "dotted",
-        },
+        { label: "Solid", value: "solid" },
+        { label: "Dashed", value: "dashed" },
+        { label: "Dotted", value: "dotted" },
       ],
     },
     {
       ...
     }
-  ],
-  checkbox: [
-    {
-      targetTag: "navbar",
-      label: "Border",
-      property: "border",
-      value: "1px solid black",
-      isChecked: true,
-    },
-    {
-      ...
-    }
-  ],
+  ]
 };
 
 ```

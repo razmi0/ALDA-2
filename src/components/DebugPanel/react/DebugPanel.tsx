@@ -2,7 +2,7 @@ import type { CSSProperty } from "astro/types";
 import { PanelBottomClose } from "lucide-react";
 import type { ChangeEvent } from "react";
 import React, { useState } from "react";
-import { data, type DebugPanelProps, type RadioOption } from "../entry";
+import { data, type CheckboxOption, type DebugPanelProps } from "../entry";
 import { ButtonGroup } from "./Buttons";
 import Log from "./Log";
 
@@ -16,17 +16,15 @@ type Target = {
  */
 const hasRanges = "range" in data && data.range.length > 0;
 const hasCheckboxes = "checkbox" in data && data.checkbox.length > 0;
-const hasRadio = "radio" in data && data.radio.length > 0;
-const hasData = hasRanges || hasRadio || hasCheckboxes;
+const hasData = hasRanges || hasCheckboxes;
 
 const ranges = data.range as DebugPanelProps["range"];
 const checkboxes = data.checkbox as DebugPanelProps["checkbox"];
-const radios = data.radio as DebugPanelProps["radio"];
 
 const startingStyles: Record<string, CSSStyleDeclaration | null> = {};
-[...(ranges ?? []), ...(checkboxes ?? []), ...(radios ?? [])].map((item) => (startingStyles[item.targetTag] = null));
+[...(ranges ?? []), ...(checkboxes ?? [])].map((item) => (startingStyles[item.targetTag] = null));
 
-let initRangesValues: string[], initCheckboxesValues: string[], initRadiosOptions: RadioOption[][];
+let initRangesValues: string[], initCheckboxesValues: CheckboxOption[][];
 
 if ("range" in data && (ranges?.length ?? 0) > 0) {
   initRangesValues = Array.from(
@@ -36,16 +34,9 @@ if ("range" in data && (ranges?.length ?? 0) > 0) {
 }
 
 if ("checkbox" in data && (checkboxes?.length ?? 0) > 0) {
-  initCheckboxesValues = Array.from(
-    { length: (checkboxes as DebugPanelProps["checkbox"])?.length ?? 0 },
-    (_, i) => checkboxes?.[i]?.value ?? "0"
-  );
-}
-
-if ("radio" in data && (radios?.length ?? 0) > 0) {
-  initRadiosOptions = Array.from({ length: (radios as DebugPanelProps["radio"])?.length ?? 0 }, (_, i) => {
-    const radio = radios?.[i];
-    return radio?.options ?? [];
+  initCheckboxesValues = Array.from({ length: (checkboxes as DebugPanelProps["checkbox"])?.length ?? 0 }, (_, i) => {
+    const checkbox = checkboxes?.[i];
+    return checkbox?.options ?? [];
   });
 }
 
@@ -60,6 +51,11 @@ const DebugPanel = () => {
   const [infos, setInfos] = useState<{ tag: string; info: false | "tag" | "reset" }[]>([]);
   const [success, setSuccess] = useState<{ tag: string; success: false | "tag" | "reset" }[]>([]);
 
+  const [targets, setTargets] = useState<Target[]>([null]);
+
+  const [rangesValues, setRangesValues] = useState<string[]>(initRangesValues);
+  const [checkboxesValues, setCheckboxesValues] = useState<CheckboxOption[][]>(initCheckboxesValues);
+
   const reset = {
     info: () => setInfos([]),
     success: () => setSuccess([]),
@@ -67,14 +63,7 @@ const DebugPanel = () => {
     targets: () => setTargets([null]),
     rangesValues: () => setRangesValues(initRangesValues),
     checkboxesValues: () => setCheckboxesValues(initCheckboxesValues),
-    radiosOptions: () => setRadiosOptions(initRadiosOptions),
   };
-
-  const [targets, setTargets] = useState<Target[]>([null]);
-
-  const [rangesValues, setRangesValues] = useState<string[]>(initRangesValues);
-  const [checkboxesValues, setCheckboxesValues] = useState<string[]>(initCheckboxesValues);
-  const [radiosOptions, setRadiosOptions] = useState<RadioOption[][]>(initRadiosOptions);
 
   const handleActivateElement = (targetTag: string) => {
     const isTagged = targets.find((target) => target?.tag === targetTag);
@@ -136,7 +125,6 @@ const DebugPanel = () => {
     reset.targets();
     reset.rangesValues();
     reset.checkboxesValues();
-    reset.radiosOptions();
 
     setSuccess([...success, { tag: tag, success: "reset" }]);
   };
@@ -163,52 +151,36 @@ const DebugPanel = () => {
     style.setProperty(property, newValue.toString() + (ranges?.[index]?.unit || ""));
   };
 
-  const checkboxOnChange = (e: ChangeEvent<HTMLInputElement>, index: number, property: CSSProperty) => {
-    const target = targets.find((target) => target?.tag === checkboxes?.[index]?.targetTag);
-    const value = e.target.value;
+  const checkboxOnChange = (e: ChangeEvent<HTMLInputElement>, fieldIndex: number, property: CSSProperty) => {
+    const target = targets.find((target) => target?.tag === checkboxes?.[fieldIndex]?.targetTag);
 
     if (!target) {
       console.error(`[ERROR] : Element not found`);
-      setErrors([...errors, { tag: checkboxes?.[index]?.targetTag as string, error: "tag" }]);
+      setErrors([...errors, { tag: checkboxes?.[fieldIndex]?.targetTag as string, error: "tag" }]);
       return;
     }
+    const newcheckboxesValues = [...checkboxesValues] as CheckboxOption[][];
 
-    const style = (target.element as HTMLElement).style;
-    if (e.target.checked) {
-      /*
-       * apply value
-       */
+    const option = (newcheckboxesValues[fieldIndex] as CheckboxOption[]).find((option) => option.label === e.target.id);
 
-      style.setProperty(property, value);
-    } else {
-      /*
-       * remove value
-       */
-      style.removeProperty(property);
-    }
-  };
-
-  const radioOnChange = (e: ChangeEvent<HTMLInputElement>, fieldIndex: number, property: CSSProperty) => {
-    const target = targets.find((target) => target?.tag === radios?.[fieldIndex]?.targetTag);
-
-    if (!target) {
-      console.error(`[ERROR] : Element not found`);
-      setErrors([...errors, { tag: radios?.[fieldIndex]?.targetTag as string, error: "tag" }]);
-      return;
-    }
-    const newRadiosOptions = [...radiosOptions];
-
-    (newRadiosOptions[fieldIndex] as RadioOption[]).forEach((option) => {
-      option.label === e.target.id ? (option.checked = true) : (option.checked = false);
+    let newCheckedState = option?.checked;
+    (newcheckboxesValues[fieldIndex] as CheckboxOption[]).forEach((option) => {
+      console.log(option.label === e.target.id, option.label, e.target.id);
+      if (option.label === e.target.id) {
+        newCheckedState = !option.checked;
+        option.checked = newCheckedState;
+        console.log(`[INFO] : ${option.label} checked state changed to ${newCheckedState}`);
+      }
     });
 
-    setRadiosOptions(newRadiosOptions);
+    setCheckboxesValues(newcheckboxesValues);
 
     const style = (target.element as HTMLElement).style;
     /*
      * apply value
      */
-    style.setProperty(property, e.target.value);
+    newCheckedState ? style.setProperty(property, e.target.value) : style.removeProperty(property);
+    // style.setProperty(property, e.target.value);
   };
 
   const containerColor = open ? "bg-zinc-100/90" : "bg-transparent";
@@ -274,45 +246,9 @@ const DebugPanel = () => {
                 </Item>
               );
             })}
+
           {checkboxes &&
             checkboxes.map((item, index) => {
-              const error = errors.find((error) => error.tag === item.targetTag)?.error; //error
-
-              const target = targets.find((target) => target?.tag === item.targetTag); //target
-
-              const resetStyles = () => handleReset(item.targetTag); // onClick tag
-
-              const disabled = !target || error === "tag"; // error
-
-              const activate = () => handleActivateElement(item.targetTag); // onclick tag
-
-              const id = `range-${index}`;
-
-              return (
-                <Item key={item.label}>
-                  <Label id={id}>{item.label}</Label>
-                  <Field>
-                    <Checkbox
-                      id={id}
-                      checked={item.isChecked}
-                      value={checkboxesValues?.[index] || ""}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property)}
-                      disabled={disabled}
-                    />
-
-                    <ButtonGroup
-                      activate={activate}
-                      error={error}
-                      resetStyles={resetStyles}
-                      targets={targets}
-                      item={item}
-                    />
-                  </Field>
-                </Item>
-              );
-            })}
-          {radios &&
-            radios.map((item, index) => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
 
               const resetStyles = () => handleReset(item.targetTag);
@@ -334,15 +270,14 @@ const DebugPanel = () => {
                     />
                   </div>
                   <Field>
-                    {radiosOptions?.[index]?.map((option) => {
-                      console.log(option);
+                    {checkboxesValues?.[index]?.map((option) => {
                       return (
                         <div key={option.label}>
-                          <Radio
+                          <Checkbox
                             name={id}
                             id={option.label}
                             value={option.value}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) => radioOnChange(e, index, item.property)}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property)}
                             targets={targets}
                             selected={option.checked}
                             errors={errors}
@@ -394,23 +329,7 @@ const Range = ({ ...rest }: RangeProps) => {
   return <input type="range" className={`max-w-40 ${rest.className}`} {...rest} />;
 };
 
-interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
-  // onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
-
-const Checkbox = ({ ...rest }: CheckboxProps) => {
-  return (
-    <div className="horizontal center gap-3">
-      <label className={`checkbox-label ${rest.disabled ? "cursor-not-allowed" : "cursor-pointer"} `}>
-        <input type="checkbox" {...rest} />
-        <div className="transition"></div>
-      </label>
-      <LabelValue>{rest.value}</LabelValue>
-    </div>
-  );
-};
-
-type RadioProps = {
+type CheckboxProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selected?: boolean | undefined;
   targets: Target[];
@@ -421,14 +340,23 @@ type RadioProps = {
   id: string;
 };
 
-const Radio = ({ onChange, selected, targets, value, errors, item, name, id }: RadioProps) => {
+const Checkbox = ({ onChange, selected, targets, value, errors, item, name, id }: CheckboxProps) => {
   const target = targets.find((target) => target?.tag === item.targetTag);
   const error = errors.find((error) => error.tag === item.targetTag)?.error;
   const disabled = !target || error === "tag";
+
   return (
     <div className="horizontal justify-start items-center gap-3">
       <label className={`checkbox-label ${disabled ? "cursor-not-allowed" : "cursor-pointer"} `}>
-        <input onChange={onChange} type="radio" value={value} name={name} id={id} disabled={disabled} />
+        <input
+          onChange={onChange}
+          type="checkbox"
+          value={value}
+          name={name}
+          id={id}
+          disabled={disabled}
+          checked={selected || false}
+        />
         <div className="transition"></div>
       </label>
       <LabelValue selected={selected || false}>{value}</LabelValue>
@@ -465,9 +393,7 @@ const Label = ({ children, id, value }: LabelProps) => {
 };
 
 const Field = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return (
-    <div className={`relative vertical items-start w-full h-fit px-3 py-2 flex-wrap ${className}`}>{children}</div>
-  );
+  return <div className={`relative vertical items-start full px-3 py-2 flex-wrap ${className}`}>{children}</div>;
 };
 
 type HeaderProps = {
@@ -510,7 +436,7 @@ const Container = ({ children, className }: ContainerProps) => {
 };
 
 const Body = ({ children, className }: { children: React.ReactNode; className: string }) => {
-  return <div className={`py-2 ${className}`}>{children}</div>;
+  return <div className={`py-2 grid grid-cols-2 ${className}`}>{children}</div>;
 };
 
 export default DebugPanel;
