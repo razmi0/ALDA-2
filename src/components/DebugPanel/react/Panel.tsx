@@ -189,18 +189,11 @@ const DebugPanel = () => {
      * apply value
      */
     newChecked ? style.setProperty(property, e.target.value) : style.removeProperty(property);
-    // style.setProperty(property, e.target.value);
   };
 
   const containerClass = open ? "bg-zinc-100/90 overflow-y-auto" : "bg-transparent overflow-y-visible";
   const headerColor = open ? "bg-zinc-100/90" : "bg-transparent";
   const bodyDisplay = open ? "inline-block" : "hidden";
-
-  // RENDER
-  // RENDER
-  // RENDER
-  // RENDER
-  // RENDER
 
   return (
     <>
@@ -260,7 +253,7 @@ const DebugPanel = () => {
               const error = errors.find((error) => error.tag === item.targetTag)?.error;
               const resetStyles = () => handleReset(item.targetTag);
               const activate = () => handleActivateElement(item.targetTag);
-              const id = `range-${index}`;
+              const id = `checkbox-${index}`;
               const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => checkboxOnChange(e, index, item.property);
               const { label } = item;
               return (
