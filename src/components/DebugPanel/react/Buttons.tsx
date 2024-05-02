@@ -15,7 +15,7 @@ type Target = {
 const ResetButton = ({ onClick, disabled }: { onClick: () => void; disabled: boolean }) => {
   return (
     <Button click={onClick} disabled={disabled}>
-      <RotateCcw className="h-5 w-5 text-zinc-500" />
+      <RotateCcw className={`h-4 w-4 text-zinc-600`} />
     </Button>
   );
 };
@@ -35,7 +35,7 @@ const Button = ({ click, children, disabled }: { click: () => void; children: Re
 const ActivateButton = ({ activate, color }: ActivateButtonProps) => {
   return (
     <Button click={activate}>
-      <Power className={`h-5 w-5 text-${color}-600 ${color}`} />
+      <Power className={`h-4 w-4 text-${color}-600 ${color} `} />
     </Button>
   );
 };
