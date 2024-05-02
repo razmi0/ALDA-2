@@ -1,16 +1,12 @@
 import { Power, RotateCcw } from "lucide-react";
 import { useEffect, useId, useState, type ReactNode } from "react";
+import type { Target } from "../entry";
 
 type ActivateButtonProps = {
   activate: () => void;
   color: string;
   disabled: boolean;
 };
-
-type Target = {
-  tag: string;
-  element: Element;
-} | null;
 
 const ResetButton = ({ onClick, disabled }: { onClick: () => void; disabled: boolean }) => {
   return (
