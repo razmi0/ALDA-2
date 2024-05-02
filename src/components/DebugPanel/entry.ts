@@ -82,5 +82,52 @@ export const data: DebugPanelProps = {
         { label: "100%", value: "grayscale(1)" },
       ],
     },
+    {
+      targetTag: "hero-image",
+      label: "image sepia",
+      property: "filter",
+      options: [
+        { label: "0%", value: "sepia(0)" },
+        { label: "50%", value: "sepia(0.5)" },
+        { label: "100%", value: "sepia(1)" },
+      ],
+    },
+    {
+      targetTag: "hero-image",
+      label: "image hue-rotate",
+      property: "filter",
+      options: [
+        { label: "0deg", value: "hue-rotate(0deg)" },
+        { label: "15deg", value: "hue-rotate(15deg)" },
+        { label: "30deg", value: "hue-rotate(30deg)" },
+        { label: "45deg", value: "hue-rotate(45deg)" },
+        { label: "60deg", value: "hue-rotate(60deg)" },
+        { label: "80deg", value: "hue-rotate(80deg)" },
+        { label: "90deg", value: "hue-rotate(90deg)" },
+        { label: "120deg", value: "hue-rotate(120deg)" },
+        { label: "150deg", value: "hue-rotate(150deg)" },
+        { label: "180deg", value: "hue-rotate(180deg)" },
+      ],
+    },
+    {
+      targetTag: "hero-image",
+      label: "image saturate",
+      property: "filter",
+      options: [
+        { label: "0%", value: "saturate(0)" },
+        { label: "50%", value: "saturate(0.5)" },
+        { label: "100%", value: "saturate(1)" },
+      ],
+    },
+    {
+      targetTag: "hero-image",
+      label: "image invert",
+      property: "filter",
+      options: [
+        { label: "0%", value: "invert(0)" },
+        { label: "50%", value: "invert(0.5)" },
+        { label: "100%", value: "invert(1)" },
+      ],
+    },
   ],
 };
