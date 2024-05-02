@@ -1,5 +1,5 @@
 import type { CSSProperty } from "astro/types";
-import { PanelBottomClose } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import type { ChangeEvent } from "react";
 import React, { useState } from "react";
 import { data, type CheckboxOption, type DebugPanelProps } from "../entry";
@@ -161,17 +161,25 @@ const DebugPanel = () => {
     }
     const newcheckboxesValues = [...checkboxesValues] as CheckboxOption[][];
 
-    const option = (newcheckboxesValues[fieldIndex] as CheckboxOption[]).find((option) => option.label === e.target.id);
+    const checkbox = newcheckboxesValues?.[fieldIndex] as CheckboxOption[];
 
-    let newCheckedState = option?.checked;
-    (newcheckboxesValues[fieldIndex] as CheckboxOption[]).forEach((option) => {
-      console.log(option.label === e.target.id, option.label, e.target.id);
+    if (!checkbox) {
+      console.error(`[ERROR] : Checkbox not found`);
+      return;
+    }
+
+    // const option = checkbox.find((option) => option.label === e.target.id);
+    let newChecked = false;
+    const options = checkbox.map((option: CheckboxOption) => {
       if (option.label === e.target.id) {
-        newCheckedState = !option.checked;
-        option.checked = newCheckedState;
-        console.log(`[INFO] : ${option.label} checked state changed to ${newCheckedState}`);
+        newChecked = !option.checked;
+        return { ...option, checked: newChecked };
       }
+      1;
+      return { ...option, checked: false };
     });
+
+    newcheckboxesValues[fieldIndex] = options;
 
     setCheckboxesValues(newcheckboxesValues);
 
@@ -179,7 +187,7 @@ const DebugPanel = () => {
     /*
      * apply value
      */
-    newCheckedState ? style.setProperty(property, e.target.value) : style.removeProperty(property);
+    newChecked ? style.setProperty(property, e.target.value) : style.removeProperty(property);
     // style.setProperty(property, e.target.value);
   };
 
@@ -198,7 +206,7 @@ const DebugPanel = () => {
       <Container className={containerColor}>
         <Header classNames={headerColor}>
           <Trigger setOpen={togglePanel}>
-            <PanelBottomClose className="text-zinc-800" />
+            <ChevronUp className={`text-zinc-500 h-5 w-5 ${open ? "rotate-180" : ""} transition-transform `} />
           </Trigger>
           <Log errors={errors} success={success} infos={infos} reset={reset} />
         </Header>
@@ -241,7 +249,9 @@ const DebugPanel = () => {
                       onChange={(e: ChangeEvent<HTMLInputElement>) => rangeOnChange(e, index, item.property)}
                       disabled={disabled}
                     />
-                    <LabelValue className="w-10">{labelValue}</LabelValue>
+                    <LabelValue className="w-10 text-center" selected>
+                      {labelValue}
+                    </LabelValue>
                   </Field>
                 </Item>
               );
@@ -373,10 +383,10 @@ const LabelValue = ({
   selected?: boolean;
   className?: string;
 }) => {
-  const highlightColor = selected ? "ring-1 ring-stone-400 shadow-inset shadow-stone-400 shadow-sm" : "";
+  const highlightColor = selected ? "bg-zinc-100 ring-1 ring-stone-300 shadow-sm shadow-stone-500/90" : "";
   return (
     <span
-      className={`inline-block horizontal center text-xs tabular-nums w-fit py-1 px-2 rounded-md ${className} ${highlightColor}`}
+      className={`inline-block horizontal center text-xs tabular-nums w-fit py-1 px-2 rounded-md transition-all ${className} ${highlightColor}`}
     >
       {children}
     </span>
@@ -418,7 +428,15 @@ type TriggerProps = {
 
 const Trigger = ({ setOpen, children }: TriggerProps) => {
   return (
-    <button onClick={setOpen} className={"hover:ring-1 ring-zinc-300 cursor-pointer"}>
+    <button
+      onClick={setOpen}
+      className={
+        "relative hover:bg-slate-100/50 hover:ring-1 hover:ring-slate-100 cursor-pointer rounded-full p-1 group"
+      }
+    >
+      <div className="hidden center group-hover:horizontal absolute translate-x-[50%]" data-tooltip>
+        <small className="text-zinc-600 font-semibold">DebugPanel</small>
+      </div>
       {children}
     </button>
   );
