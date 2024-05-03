@@ -7,3 +7,5 @@
 - [ ] implement way to get data(lat, long) => point rendered on map
 - [ ] implement related information (blog like)
 - [ ] implement next/prev button command to navigate through points
+
+focus event random page => pick up => get transform

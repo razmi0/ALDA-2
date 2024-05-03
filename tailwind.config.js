@@ -30,6 +30,10 @@ export default {
         def: {
           dark: "#0b0e16",
         },
+        earth: {
+          400: "#3d393d",
+          500: "#282528",
+        },
       },
       keyframes: {
         "accordion-down": {
