@@ -12,10 +12,9 @@ interface Props {
 }
 
 const { size = 20, radius = 10, selected = false, className, wrapperClassName, coordinates = [0, 0] } = Astro.props;
-console.log(coordinates);
 ---
 
-<div class={cn("horizontal center gap-2 text-slate-300 absolute", wrapperClassName)}>
+<div class={cn("horizontal center gap-2 text-white/80 absolute", wrapperClassName)}>
   <div class={cn(`p-2 rounded-full bg-blue-200/15`, selected ? "ring-1 ring-white/30 ring-inset" : "")}>
     <svg viewBox="0 0 28 28" width={size} height={size} fill={"currentColor"} class={cn("text-pur-500", className)}>
       <circle cx="14" cy="14" r={radius}></circle>
