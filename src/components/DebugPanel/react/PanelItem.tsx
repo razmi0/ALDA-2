@@ -28,9 +28,6 @@ type ItemHeaderProps = {
   label: string;
 };
 
-// let chevron: SVGElement | null = null;
-// let target: HTMLElement | null = null;
-
 const ItemHeader = ({ children, className, id, label }: ItemHeaderProps) => {
   const [expandElement, setExpandElement] = useState<[SVGElement, HTMLElement] | null>(null);
 
@@ -48,27 +45,6 @@ const ItemHeader = ({ children, className, id, label }: ItemHeaderProps) => {
       buttonLike?.parentNode?.nextSibling as HTMLElement,
     ]);
   }, []);
-
-  // useLayoutEffect(() => {
-  //   buttonLike = document.querySelector(`[data-is='button-expand-${id}']`) as HTMLElement;
-  //   if (!buttonLike) return;
-  //   target = buttonLike.parentNode?.nextSibling as HTMLElement;
-  //   chevron = buttonLike.querySelector(`[data-is='label-icon-${id}']`) as SVGElement;
-
-  //   const handlerToggleItem = () => {
-  //     console.log("target", target, "chevron", chevron, "buttonLike", buttonLike);
-  //     if (!target && !chevron) return;
-  //     (chevron as SVGElement).classList.toggle("rotate-90");
-  //     (target as HTMLElement).classList.toggle("hidden");
-  //   };
-
-  //   buttonLike.addEventListener("click", handlerToggleItem);
-
-  //   return () => {
-  //     if (!buttonLike) return;
-  //     buttonLike.removeEventListener("click", handlerToggleItem);
-  //   };
-  // }, []);
 
   return (
     <div className={`horizontal gap-5 justify-between w-full ${className} `}>
