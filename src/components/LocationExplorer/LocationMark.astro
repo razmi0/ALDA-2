@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { size = 20, radius = 10, selected = false, className, wrapperClassName, coordinates = [0, 0] } = Astro.props;
+console.log(coordinates);
 ---
 
 <div class={cn("horizontal center gap-2 text-white/80 absolute", wrapperClassName)}>

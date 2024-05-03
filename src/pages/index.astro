@@ -89,7 +89,7 @@ import Layout from "../layouts/Layout.astro";
       <div
         class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]"
       >
-        <p class="text-balance text-stone-300 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
+        <p class="text-balance text-white/80 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
           {generateLorem(30)}
         </p>
         <button
@@ -120,20 +120,20 @@ import Layout from "../layouts/Layout.astro";
           <p>{generateLorem(20)}</p>
           <p>{generateLorem(30)}</p>
         </div>
-        <figure class="horizontal gap-6">
+        <figure class="horizontal mt-1 gap-4">
           <Image
-            class={"aspect-square"}
-            src="https://picsum.photos/seed/picsum/200/300"
+            class={"aspect-square object-cover"}
+            src="https://picsum.photos/125"
             alt="lorem"
-            width={100}
-            height={100}
+            width={125}
+            height={125}
           />
           <Image
-            class={"aspect-square"}
-            src="https://picsum.photos/seed/picsum/200/300"
+            class={"aspect-square object-cover"}
+            src="https://picsum.photos/150"
             alt="lorem"
-            width={100}
-            height={100}
+            width={125}
+            height={125}
           />
         </figure>
       </article>
