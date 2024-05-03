@@ -16,9 +16,15 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
   });
 </script>
 
+<style>
+  button > * {
+    @apply h-5 w-5 opacity-90;
+  }
+</style>
+
 <button data-is="button-group">
-  <ArrowLeft className="h-5  w-5 opacity-90 " />
+  <ArrowLeft />
 </button>
 <button data-is="button-group">
-  <ArrowRight className="h-5 opacity-90 w-5  " />
+  <ArrowRight />
 </button>
