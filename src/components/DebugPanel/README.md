@@ -96,3 +96,9 @@ export const debug: DebugPanelProps = {
 <li>Activate the element and play with it</li>
 
 </ol>
+
+#### TODO
+
+- [ ] one tag => multiple elements
+- [ ] fix activate not working for > 1 element
+- [ ] UI entry.ts debug object

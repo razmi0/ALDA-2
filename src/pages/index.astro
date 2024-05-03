@@ -1,55 +1,164 @@
 ---
 import Hero from "@/assets/hero/hero.png";
+import Map from "@/assets/map-2.png";
 import AstroDebugPanel from "@/components/DebugPanel/AstroDebugPanel.astro";
 import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Image } from "astro:assets";
+import { Mountain } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+
+import ButtonGroup from "@/components/Buttons/ButtonGroup.astro";
+import CmdButton from "@/components/Buttons/CmdButton.astro";
+// import ForeBand from "@/components/ForeBand.astro";
+import Heading from "@/components/Heading.astro";
+import Output from "@/components/Output.astro";
 ---
+
+<script>
+  const heroButton = document.querySelector("[data-is='hero-button']");
+  if (!heroButton) throw new Error("hero button not found");
+
+  const handler = () => {
+    console.log("hero button clicked");
+  };
+
+  heroButton.addEventListener("click", handler);
+</script>
+
+<style>
+  main {
+    --primary: #0b0e16;
+    --color-start: rgba(11, 14, 22, 0);
+    --fade-to-b: linear-gradient(to bottom, rgba(11, 14, 22, 0) 0%, #0b0e16 100%);
+    --fade-to-t: linear-gradient(to top, rgba(11, 14, 22, 0) 0%, #0b0e16 100%);
+    --fade-to-l: linear-gradient(to left, rgba(11, 14, 22, 0) 0%, #0b0e16 100%);
+    --fade-to-r: linear-gradient(to right, rgba(11, 14, 22, 0) 0%, rgb(11, 14, 22) 100%);
+  }
+
+  .fade-out-top {
+    background: var(--fade-to-t);
+  }
+
+  .fade-out-bottom {
+    background: var(--fade-to-b);
+  }
+
+  .fade-out-right {
+    background: var(--fade-to-r);
+  }
+
+  .fade-out-left {
+    background: var(--fade-to-l);
+  }
+</style>
 
 <Layout title="Welcome to Astro.">
   <AstroDebugPanel />
-  <section class="relative h-screen max-w-full w-full text-white">
-    <Image
-      src={Hero}
-      class="absolute full max-w-screen object-cover -z-50 brightness-75 contrast-125"
-      alt="hero"
-      data-debug="hero-image"
-    />
-    <header class="absolute-align z-10 w-full px-52 py-2 h-1/4">
-      <nav class="full [&>ul]:full">
-        <ul class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
-          <li>
-            <a href="/">
-              <h1 class="text-2xl">A l'abordarbre</h1>
-            </a>
-          </li>
-          <div class="grow"></div>
-          <li>
-            <a href="/contact">Tarifs</a>
-          </li>
-          <li>
-            <a href="/nous">Nous</a>
-          </li>
-          <li class="text-pur-600">
-            <a href="/contact">Contact</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none">
-      <h2 class="text-3xl uppercase">l'aventure commence ici!</h2>
-      <h3 class="text-2xl">Découvrez la grimpe d'arbre</h3>
-    </div>
-    <div
-      class="absolute-align justify-end items-center vertical z-10 full max-h-[95%] gap-6 text-center pointer-events-none"
-    >
-      <p class="text-balance text-stone-300 line-clamp-3 max-w-[55ch] leading-4">{generateLorem(20)}</p>
-      <button class="card h-16 w-36 text-black">
-        <span class="relative z-50">S'inscrire</span>
-        <div data-style="dark-bg"></div>
-        <div data-style="light-border"></div>
-      </button>
-    </div>
-  </section>
+  <main>
+    <section class="relative h-screen max-w-full w-full text-white">
+      <Image src={Hero} class="absolute full max-w-screen object-cover -z-50 brightness-110 contrast-125" alt="hero" />
+      <!-- OVERLAY -->
+      <div
+        class="overlay h-full"
+        style={"border-image : fill 0 linear-gradient(to top, #0b0e16 0%, rgba(11, 14, 22, 0.2) 80%, rgba(11, 14, 22, 0) 100%);"}
+      >
+      </div>
+      <!-- OVERLAY -->
+      <!-- <div class="absolute full max-w-screen bottom-0 fade-out-bottom h-52" data-debug="fade-out-hero"></div> -->
+      <header class="absolute-align z-10 w-full px-52 py-2 h-1/4">
+        <nav class="full [&>ul]:full">
+          <ul class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
+            <li>
+              <a href="/">
+                <h1 class="text-2xl">A l'abordarbre</h1>
+              </a>
+            </li>
+            <div class="grow"></div>
+            <li>
+              <a href="/contact">Tarifs</a>
+            </li>
+            <li>
+              <a href="/nous">Nous</a>
+            </li>
+            <li>
+              <a href="/contact">
+                <button class="rounded-full ring-2 ring-white px-3 py-1 hover:bg-white/20">Contact </button>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none">
+        <h2 class="text-3xl uppercase">l'aventure commence ici!</h2>
+        <h3 class="text-2xl">Découvrez la grimpe d'arbre</h3>
+      </div>
+      <div
+        class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]"
+      >
+        <p class="text-balance text-stone-300 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
+          {generateLorem(30)}
+        </p>
+        <button
+          class="card h-10 w-44 text-black font-bold pointer-events-auto horizontal items-center justify-center px-4 gap-2"
+          data-is="hero-button"
+          style="z-index : inherit"
+        >
+          <Mountain className="h-[18px] w-[18px] -translate-y-[1px]" />
+          <span>S'inscrire</span>
+        </button>
+        <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / pipe</p>
+      </div>
+    </section>
+    <section class="relative h-screen max-w-full w-full bg-[#0b0e16] text-white" data-style="fade">
+      <div class="relative h-screen w-7/12 horizontal center">
+        <!-- FIGURE HERE
+          FIGURE HERE
+          FIGURE HERE
+          FIGURE HERE -->
+        <figure class="relative h-fit w-fit">
+          <!-- SECTION IMAGE -->
+
+          <div class="relative full">
+            <Image
+              src={Map}
+              class="full object-cover z-10 w-[800px] h-[600px] rounded-lg"
+              alt="hero"
+              data-debug="fade-out-map"
+            />
+            <div
+              class="absolute-aligh full"
+              style=" background : radial-gradient(circle, rgba(11, 14, 22, 0) 0%, rgba(0, 0, 0, 1) 80%)"
+            >
+            </div>
+          </div>
+          <!-- <ForeBand styles={styleVars} /> -->
+          <!-- background: radial-gradient(circle, rgba(11,14,22,0) 0%, rgba(0,0,0,1) 80%); -->
+
+          <!-- SECTION IMAGE -->
+
+          <div class="vertical gap-3 absolute top-0 w-fit h-fit">
+            <Output />
+            <Heading>
+              <span slot="title">Nom du lieu</span>
+              <span slot="subtitle">type de lieu</span>
+            </Heading>
+            <ButtonGroup className="gap-2 mt-2">
+              <CmdButton />
+            </ButtonGroup>
+          </div>
+        </figure>
+        <!-- FIGURE -->
+      </div>
+      <!-- | -->
+      <!-- | -->
+      <!-- NEXT ARTICLE -->
+      <!-- | -->
+      <div class="w-5/12 p-5">
+        <p>IMAGE</p>
+      </div>
+    </section>
+
+    <!-- // translate-y-10 -->
+  </main>
 </Layout>

@@ -1,0 +1,24 @@
+---
+import { ArrowLeft, ArrowRight } from "lucide-react";
+// import ButtonGroup from "./ButtonGroup.astro";
+---
+
+<script>
+  const buttons = document.querySelectorAll("[data-is='button-group']");
+  if (buttons.length === 0) {
+    console.log("No buttons found");
+  }
+
+  const handler = () => console.log("clicked");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", handler);
+  });
+</script>
+
+<button data-is="button-group">
+  <ArrowLeft className="h-5  w-5 opacity-90 " />
+</button>
+<button data-is="button-group">
+  <ArrowRight className="h-5 opacity-90 w-5  " />
+</button>

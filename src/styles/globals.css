@@ -112,10 +112,10 @@ h6 {
 }
 
 .card {
-  @apply relative drop-shadow-xl overflow-hidden rounded-full bg-gradient-to-br from-white/90 to-pur-500/90;
+  @apply relative drop-shadow-xl overflow-hidden rounded-full bg-gradient-to-br from-white to-pur-500 hover:brightness-110;
 
   & > [data-style="dark-bg"] {
-    @apply absolute opacity-90 z-[1] rounded-full inset-1 bg-gradient-to-br from-white/90 to-pur-500/90;
+    @apply absolute opacity-90 z-[1] rounded-full inset-1 bg-gradient-to-br from-white to-pur-500/90;
   }
 
   & > [data-style="light-border"] {
