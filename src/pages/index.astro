@@ -1,13 +1,15 @@
 ---
 import Hero from "@/assets/hero/hero.png";
-import Map from "@/assets/map-2.png";
+
 import AstroDebugPanel from "@/components/DebugPanel/AstroDebugPanel.astro";
-import SliderCommand from "@/components/SliderCommand.astro";
+import LocationExplorer from "@/components/LocationExplorer/LocationExplorer.astro";
 import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Image } from "astro:assets";
 import { Mountain } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+import LocationFigure from "@/components/LocationExplorer/LocationFigure.astro";
+import Section from "@/components/Section.astro";
 ---
 
 <script>
@@ -51,7 +53,7 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="Welcome to Astro.">
   <AstroDebugPanel />
   <main>
-    <section class="relative h-screen max-w-full w-full text-white">
+    <Section className="relative text-white">
       <Image src={Hero} class="absolute full max-w-screen object-cover -z-50 brightness-110 contrast-125" alt="hero" />
       <!-- OVERLAY -->
       <div class="h-full fade-out-bottom"></div>
@@ -100,16 +102,12 @@ import Layout from "../layouts/Layout.astro";
         </button>
         <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / pipe</p>
       </div>
-    </section>
-    <section class="relative h-screen max-w-full w-full bg-[#0b0e16] text-white" data-style="fade">
-      <div class="relative h-screen w-7/12 horizontal center">
-        <figure class="relative h-10/12 w-10/12">
-          <Image src={Map} class="full object-cover z-10 rounded-lg" alt="hero" data-debug="fade-out-map" />
-          <figcaption class="absolute bottom-1/4 right-10 text-slate-300">
-            <small>south of france</small>
-          </figcaption>
-          <SliderCommand title="Nom du lieu" subtitle="Type de lieu" />
-        </figure>
+    </Section>
+    <Section size="full" extension="sm" className="relative bg-def-dark text-white">
+      <div class="relative h-full w-7/12 horizontal center">
+        <LocationFigure>
+          <LocationExplorer />
+        </LocationFigure>
       </div>
       <!-- | -->
       <!-- | -->
@@ -118,8 +116,6 @@ import Layout from "../layouts/Layout.astro";
       <div class="w-5/12 p-5">
         <p>IMAGE</p>
       </div>
-    </section>
-
-    <!-- // translate-y-10 -->
+    </Section>
   </main>
 </Layout>
