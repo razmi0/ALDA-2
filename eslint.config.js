@@ -1,31 +1,31 @@
 import js from "@eslint/js";
 import typescriptParser from "@typescript-eslint/parser";
-import tseslint from "typescript-eslint";
 import astroEslintParser from "astro-eslint-parser";
 import eslintPluginAstro from "eslint-plugin-astro";
 import a11y from "eslint-plugin-jsx-a11y";
 import globals from "globals";
+import tseslint from "typescript-eslint";
 
 /**
  * Patching the globals object to replace the globals.browser.'AudioWorkletGlobalScope  ' key by a trimmed version
  * @see https://stackoverflow.com/questions/75524079/eslint-flat-config-eslint-config-js-throwing-parsing-error-the-keyword-imp
  */
-let patchedGlobals = {};
-let patchedBrowser = {};
-for (const key in globals) {
-  if (key === "browser") {
-    for (const browserKey in globals.browser) {
-      if (browserKey === "AudioWorkletGlobalScope ") {
-        patchedBrowser["AudioWorkletGlobalScope"] = false;
-        continue;
-      }
-      patchedBrowser[browserKey] = globals.browser[browserKey];
-    }
-    patchedGlobals[key] = patchedBrowser;
-    continue;
-  }
-  patchedGlobals[key] = globals[key];
-}
+// let patchedGlobals = {};
+// let patchedBrowser = {};
+// for (const key in globals) {
+//   if (key === "browser") {
+//     for (const browserKey in globals.browser) {
+//       if (browserKey === "AudioWorkletGlobalScope ") {
+//         patchedBrowser["AudioWorkletGlobalScope"] = false;
+//         continue;
+//       }
+//       patchedBrowser[browserKey] = globals.browser[browserKey];
+//     }
+//     patchedGlobals[key] = patchedBrowser;
+//     continue;
+//   }
+//   patchedGlobals[key] = globals[key];
+// }
 
 export default [
   js.configs.recommended,
@@ -35,7 +35,7 @@ export default [
   {
     languageOptions: {
       globals: {
-        ...patchedGlobals.browser,
+        ...globals.browser,
       },
     },
   },
