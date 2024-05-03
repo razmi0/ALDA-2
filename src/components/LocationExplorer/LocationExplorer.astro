@@ -27,35 +27,33 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
   }
 </style>
 
-<article>
-  <div class="vertical gap-3 absolute top-0 left-1/4">
-    <div class="horizontal items-center justify-start w-fit gap-1">
-      <output class="text-xl tabular-nums text-white font-semibold">{locations?.[0]?.page}</output>
-      <span class="translate-y-2 text-md text-slate-300">/ {totalPages}</span>
-    </div>
-    <header class="mt-2">
-      <h3 class="text-2xl font-medium leading-3">{locations?.[0]?.title}</h3>
-      <small class="text-sm text-slate-300">{locations?.[0]?.subtitle}</small>
-    </header>
-    <nav class="horizontal items-center justify-start gap-2 mt-2">
-      <button data-is="button-group" class="hover:[&>*]:text-white">
-        <ArrowLeft className="text-slate-300" />
-      </button>
-      <button data-is="button-group" class="hover:[&>*]:text-white">
-        <ArrowRight className="text-slate-300" />
-      </button>
-    </nav>
+<article class="vertical gap-3 absolute top-0 left-1/4">
+  <div class="horizontal items-center justify-start w-fit gap-1">
+    <output class="text-xl tabular-nums text-white font-semibold">{locations?.[0]?.page}</output>
+    <span class="translate-y-2 text-md text-slate-300">/ {totalPages}</span>
   </div>
-  <!--  -->
-  <!--  -->
-  <!--  -->
-  <div class="absolute-align full [&>div]:w-fit pointer-events-none">
-    <!-- SELECTED -->
-    <Mark wrapperClassName="top-24 right-24" coordinates={locations?.[0]?.coordinates} selected>
-      {locations?.[0]?.label || locations?.[0]?.title}
-    </Mark>
-    <Mark wrapperClassName="top-64 right-56" coordinates={locations?.[1]?.coordinates}>
-      {locations?.[1]?.label || locations?.[1]?.title}
-    </Mark>
-  </div>
+  <header class="mt-2">
+    <h3 class="text-2xl font-medium leading-3">{locations?.[0]?.title}</h3>
+    <small class="text-sm text-slate-300">{locations?.[0]?.subtitle}</small>
+  </header>
+  <nav class="horizontal items-center justify-start gap-2 mt-2">
+    <button data-is="button-group" class="hover:[&>*]:text-white">
+      <ArrowLeft className="text-slate-300" />
+    </button>
+    <button data-is="button-group" class="hover:[&>*]:text-white">
+      <ArrowRight className="text-slate-300" />
+    </button>
+  </nav>
 </article>
+<!--  -->
+<!--  -->
+<!--  -->
+<div class="absolute-align full [&>div]:w-fit pointer-events-none">
+  <!-- SELECTED -->
+  <Mark wrapperClassName="top-24 right-24" coordinates={locations?.[0]?.coordinates} selected>
+    {locations?.[0]?.label || locations?.[0]?.title}
+  </Mark>
+  <Mark wrapperClassName="top-64 right-56" coordinates={locations?.[1]?.coordinates}>
+    {locations?.[1]?.label || locations?.[1]?.title}
+  </Mark>
+</div>
