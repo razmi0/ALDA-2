@@ -1,0 +1,47 @@
+{
+  "locations": [
+    {
+      "title": "Rodez",
+      "subtitle": "Arbre centenaire",
+      "coordinates": [40.785091, -73.968285],
+      "page": 1,
+      "labelPage": "01",
+      "selected": false
+    },
+    {
+      "title": "Goyrans",
+      "subtitle": "Trampolin aérien",
+      "coordinates": [40.758, -73.9855],
+      "page": 2,
+      "labelPage": "02",
+      "selected": false
+    },
+    {
+      "title": "Empire State Building",
+      "subtitle": "Landmark",
+      "coordinates": [40.748817, -73.985428],
+      "page": 3,
+      "labelPage": "03",
+      "label": "ESB",
+      "selected": false
+    },
+    {
+      "title": "Brooklyn Bridge",
+      "subtitle": "Bridge",
+      "coordinates": [40.706086, -73.996864],
+      "page": 4,
+      "labelPage": "04",
+      "label": "BB",
+      "selected": false
+    },
+    {
+      "title": "Statue of Liberty",
+      "subtitle": "Monument",
+      "coordinates": [40.689247, -74.044502],
+      "page": 5,
+      "labelPage": "05",
+      "label": "SoL",
+      "selected": false
+    }
+  ]
+}
