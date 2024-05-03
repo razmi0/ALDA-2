@@ -1,0 +1,36 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+
+type Sizes = "full" | "half" | "third" | "quarter";
+type Extension = "sm" | "md" | "lg" | "xl" | "none";
+
+interface Props {
+  size?: Sizes;
+  extension?: Extension;
+  className?: HTMLAttributes<"section">["class"];
+}
+
+const { size = "full", extension = "none", className } = Astro.props;
+
+const extensions: Record<Extension, string> = {
+  none: "0px",
+  sm: "100px",
+  md: "200px",
+  lg: "300px",
+  xl: "400px",
+} as const;
+
+const sizes: Record<Sizes, string> = {
+  full: "100vh",
+  half: "50vh",
+  third: "33vh",
+  quarter: "25vh",
+} as const;
+
+const height = `calc(${sizes[size]} + ${extensions[extension]})`;
+---
+
+<section class={cn("min-w-full", className)} style={`height : ${height};`}>
+  <slot />
+</section>
