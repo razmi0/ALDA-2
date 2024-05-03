@@ -2,17 +2,12 @@
 import Hero from "@/assets/hero/hero.png";
 import Map from "@/assets/map-2.png";
 import AstroDebugPanel from "@/components/DebugPanel/AstroDebugPanel.astro";
+import SliderCommand from "@/components/SliderCommand.astro";
 import { generateLorem } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Image } from "astro:assets";
 import { Mountain } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-
-import ButtonGroup from "@/components/Buttons/ButtonGroup.astro";
-import CmdButton from "@/components/Buttons/CmdButton.astro";
-// import ForeBand from "@/components/ForeBand.astro";
-import Heading from "@/components/Heading.astro";
-import Output from "@/components/Output.astro";
 ---
 
 <script>
@@ -30,10 +25,10 @@ import Output from "@/components/Output.astro";
   main {
     --primary: #0b0e16;
     --color-start: rgba(11, 14, 22, 0);
-    --fade-to-b: linear-gradient(to bottom, rgba(11, 14, 22, 0) 0%, #0b0e16 100%);
-    --fade-to-t: linear-gradient(to top, rgba(11, 14, 22, 0) 0%, #0b0e16 100%);
-    --fade-to-l: linear-gradient(to left, rgba(11, 14, 22, 0) 0%, #0b0e16 100%);
-    --fade-to-r: linear-gradient(to right, rgba(11, 14, 22, 0) 0%, rgb(11, 14, 22) 100%);
+    --fade-to-b: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
+    --fade-to-t: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
+    --fade-to-l: linear-gradient(to left, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
+    --fade-to-r: linear-gradient(to right, var(--color-start) 0%, var(--color-start) 80%, rgb(11, 14, 22) 100%);
   }
 
   .fade-out-top {
@@ -59,11 +54,7 @@ import Output from "@/components/Output.astro";
     <section class="relative h-screen max-w-full w-full text-white">
       <Image src={Hero} class="absolute full max-w-screen object-cover -z-50 brightness-110 contrast-125" alt="hero" />
       <!-- OVERLAY -->
-      <div
-        class="overlay h-full"
-        style={"border-image : fill 0 linear-gradient(to top, #0b0e16 0%, rgba(11, 14, 22, 0.2) 80%, rgba(11, 14, 22, 0) 100%);"}
-      >
-      </div>
+      <div class="h-full fade-out-bottom"></div>
       <!-- OVERLAY -->
       <!-- <div class="absolute full max-w-screen bottom-0 fade-out-bottom h-52" data-debug="fade-out-hero"></div> -->
       <header class="absolute-align z-10 w-full px-52 py-2 h-1/4">
@@ -112,32 +103,13 @@ import Output from "@/components/Output.astro";
     </section>
     <section class="relative h-screen max-w-full w-full bg-[#0b0e16] text-white" data-style="fade">
       <div class="relative h-screen w-7/12 horizontal center">
-        <!-- FIGURE HERE
-          FIGURE HERE
-          FIGURE HERE
-          FIGURE HERE -->
-        <figure class="relative h-10/12 w-10/12 [&>div_*]:full">
-          <!-- ARTICLE -->
-          <!-- ARTICLE -->
-          <div class="relative">
-            <Image src={Map} class="object-cover z-10 rounded-lg" alt="hero" data-debug="fade-out-map" />
-          </div>
-          <!-- ARTICLE -->
-
-          <!-- SECTION IMAGE -->
-
-          <div class="vertical gap-3 absolute top-0 w-fit h-fit">
-            <Output />
-            <Heading>
-              <span slot="title">Nom du lieu</span>
-              <span slot="subtitle">type de lieu</span>
-            </Heading>
-            <ButtonGroup className="gap-2 mt-2">
-              <CmdButton />
-            </ButtonGroup>
-          </div>
+        <figure class="relative h-10/12 w-10/12">
+          <Image src={Map} class="full object-cover z-10 rounded-lg" alt="hero" data-debug="fade-out-map" />
+          <figcaption class="absolute bottom-1/4 right-10 text-slate-300">
+            <small>south of france</small>
+          </figcaption>
+          <SliderCommand title="Nom du lieu" subtitle="Type de lieu" />
         </figure>
-        <!-- FIGURE -->
       </div>
       <!-- | -->
       <!-- | -->
