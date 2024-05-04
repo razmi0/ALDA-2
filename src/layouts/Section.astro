@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 
 type Sizes = "full" | "half" | "third" | "quarter";
-type Extension = "sm" | "md" | "lg" | "xl" | "none";
+type Extension = "xs" | "sm" | "md" | "lg" | "xl" | "none";
 
 interface Props {
   size?: Sizes;
@@ -15,6 +15,7 @@ const { size = "full", extension = "none", className } = Astro.props;
 
 const extensions: Record<Extension, string> = {
   none: "0px",
+  xs: "50px",
   sm: "100px",
   md: "200px",
   lg: "300px",
