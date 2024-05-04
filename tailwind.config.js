@@ -58,10 +58,15 @@ export default {
         ".vertical": {
           "@apply flex flex-col": {},
         },
+        ".vertical-reverse": {
+          "@apply flex flex-col-reverse": {},
+        },
         ".horizontal": {
           "@apply flex": {},
         },
-
+        ".horizontal-reverse": {
+          "@apply  flex flex-row-reverse": {},
+        },
         ".center": {
           "@apply justify-center items-center": {},
         },
