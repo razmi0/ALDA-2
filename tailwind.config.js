@@ -33,6 +33,7 @@ export default {
         earth: {
           400: "#3d393d",
           500: "#282528",
+          600: "#252123",
         },
       },
       keyframes: {
