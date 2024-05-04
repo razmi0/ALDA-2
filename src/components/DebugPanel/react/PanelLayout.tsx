@@ -44,11 +44,7 @@ type ContainerProps = {
 };
 
 const Container = ({ children, className }: ContainerProps) => {
-  return (
-    <aside className={`fixed absolute-align w-fit h-fit mt-5 ml-5 rounded-lg z-50 max-h-[95%] ${className}`}>
-      {children}
-    </aside>
-  );
+  return <aside className={`fixed w-fit h-fit mt-5 ml-5 rounded-lg z-50 max-h-[95%] ${className}`}>{children}</aside>;
 };
 
 const Body = ({ children, className }: { children: React.ReactNode; className: string }) => {

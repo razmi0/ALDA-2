@@ -171,7 +171,7 @@ const charInText = textRing.length;
         class={"absolute bottom-0 object-cover min-w-[632px] w-full z-0"}
       />
     </Section>
-    <Section data-grid role="grid" className="relative center py-32 bg-earth-600" size="full">
+    <Section data-grid role="grid" className="relative center py-32 bg-earth-600 overflow-x-hidden" size="full">
       <style>
         [data-grid] {
           @apply grid grid-cols-[repeat(2,1fr)] grid-rows-[repeat(2,1fr)];
@@ -249,62 +249,68 @@ const charInText = textRing.length;
         </article>
       </div>
       <!-- top right -->
-      <div role="gridcell" class="font-bold text-xs text-white">
-        <figure class="relative w-fit h-fit">
-          <style define:vars={{ charInText }}>
+      <div role="gridcell" class="relative font-bold text-xs text-white/60">
+        <style define:vars={{ charInText }}>
+          .text-ring {
+            --character-width: 1;
+            --image-size: 120px;
+            --image-radius: calc(var(--image-size) / 2);
+          }
+          .text-ring [style*="--index"] {
+            --inner-angle: calc((360 / var(--charInText)) * 1deg);
+            --radius: calc(((var(--character-width, 1) / sin(var(--inner-angle))) * -1ch) - var(--image-radius));
+            text-transform: uppercase;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(calc(var(--inner-angle) * var(--index)))
+              translateY(var(--radius, -5ch));
+          }
+
+          @media (prefers-reduced-motion: no-preference) {
             .text-ring {
-              --character-width: 1;
-              --image-size: 50px;
-              --image-radius: calc(var(--image-size) / 2);
-            }
-            .text-ring [style*="--index"] {
-              --inner-angle: calc((360 / var(--charInText)) * 1deg);
-              --radius: calc(((var(--character-width, 1) / sin(var(--inner-angle))) * -1ch) - var(--image-radius));
-              text-transform: uppercase;
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              transform: translate(-50%, -50%) rotate(calc(var(--inner-angle) * var(--index)))
-                translateY(var(--radius, -5ch));
-            }
+              --duration: 180s;
+              animation: spin var(--duration) infinite linear;
 
-            @media (prefers-reduced-motion: no-preference) {
-              .text-ring {
-                --duration: 180s;
-                animation: spin var(--duration) infinite linear;
-
-                & > img {
-                  animation: counter-spin var(--duration) infinite linear;
-                }
-              }
-
-              @keyframes spin {
-                to {
-                  rotate: -360deg;
-                }
-              }
-
-              @keyframes counter-spin {
-                to {
-                  rotate: 360deg;
-                }
+              & > img {
+                animation: counter-spin var(--duration) infinite linear;
               }
             }
-          </style>
-          <div class="text-ring">
+
+            @keyframes spin {
+              to {
+                rotate: -360deg;
+              }
+            }
+
+            @keyframes counter-spin {
+              to {
+                rotate: 360deg;
+              }
+            }
+          }
+        </style>
+
+        <figure class="-translate-y-[20%]">
+          <div class="relative w-fit h-fit text-ring">
+            <Image
+              src={Bird}
+              alt="beautifull bird"
+              data-debug="bird"
+              class="rounded-full [box-shadow:_inset_0_0_0_28px_rgba(38,33,35,1)] opacity-70"
+            />
             <!-- IMAGE -->
-            <Image src={Bird} alt="beautifull bird" />
             <!-- IMAGE -->
-            <!-- TEXT RING -->
 
+            <!-- TEXT -->
             {
               textRingArray.map((char, index) => {
                 return <span style={`--index: ${index}`}>{char}</span>;
               })
             }
+            <span class="sr-only">{textRing}</span>
           </div>
-          <!-- TEXT RING -->
-          <span class="sr-only">{textRing}</span>
+          <!-- TEXT -->
         </figure>
       </div>
       <!-- bottom -->
