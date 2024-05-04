@@ -116,9 +116,9 @@ const charInText = textRing.length;
     <Section
       size="full"
       extension="sm"
-      className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-center"
+      className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-around"
     >
-      <div class="relative h-full w-full lg:w-7/12 horizontal center md:max-w-[700px] md:max-h-[700px]">
+      <div class="relative h-full w-full lg:w-7/12 horizontal center md:max-w-[900px] md:max-h-[700px]">
         <LocationFigure>
           <LocationExplorer />
         </LocationFigure>
@@ -127,13 +127,13 @@ const charInText = textRing.length;
       <!-- | -->
       <!-- NEXT ARTICLE -->
       <!-- | -->
-      <article class="md:w-fit flex flex-col px-12 items-start justify-center gap-6">
+      <article class="md:w-fit flex flex-col px-12 items-start justify-center gap-10">
         <!-- ARTICLE HEADER HERE -->
-        <header class="vertical gap-4 text-[0.95rem] text-white/60 md:max-w-[45ch] max-w-[75%] leading-5">
+        <header class="vertical gap-4 text-white/60 md:max-w-[60ch] max-w-[75%] leading-5">
           <TreeIcon />
-          <h2 class="text-white text-xl">{generateLorem(5)}</h2>
-          <p>{generateLorem(20)}</p>
+          <h2 class="text-white text-xl mt-6">{generateLorem(5)}</h2>
           <p>{generateLorem(30)}</p>
+          <p>{generateLorem(50)}</p>
         </header>
         <!-- ARTICLE HEADER HERE -->
         <figure class="h-full flex flex-row justify-end items-center mt-1 gap-4">
@@ -141,15 +141,15 @@ const charInText = textRing.length;
             class={"aspect-square object-cover"}
             src="https://picsum.photos/125"
             alt="lorem"
-            width={125}
-            height={125}
+            width={150}
+            height={150}
           />
           <Image
             class={"aspect-square object-cover"}
             src="https://picsum.photos/150"
             alt="lorem"
-            width={125}
-            height={125}
+            width={150}
+            height={150}
           />
         </figure>
       </article>
@@ -172,7 +172,13 @@ const charInText = textRing.length;
         class={"absolute bottom-0 object-cover min-w-[632px] w-full z-0"}
       />
     </Section>
-    <Section data-grid role="grid" className="relative center pt-32 bg-earth-600 overflow-hidden" size="full">
+    <Section
+      data-grid
+      role="grid"
+      extension="md"
+      className="relative center pt-32 bg-earth-600 overflow-hidden"
+      size="full"
+    >
       <style>
         [data-grid] {
           @apply grid grid-cols-[repeat(2,1fr)] grid-rows-[repeat(2,1fr)];
@@ -233,16 +239,16 @@ const charInText = textRing.length;
       </div>
       <!-- top left -->
       <div role="gridcell">
-        <article class="mx-auto md:w-fit flex flex-col px-12 gap-6 h-fit">
+        <article class="mx-auto md:w-fit flex flex-col px-12 gap-10 h-fit">
           <!-- ARTICLE HEADER HERE -->
           <div class="vertical items-start gap-6">
-            <header class="text-white/60 vertical gap-4 text-[0.95rem] md:max-w-[45ch] max-w-[75%] leading-5">
+            <header class="text-white/60 vertical gap-4 md:max-w-[60ch] max-w-[75%] leading-5">
               <BirdIcon />
-              <h2 class="text-white text-xl">{generateLorem(5)}</h2>
-              <p>{generateLorem(20)}</p>
+              <h2 class="text-white text-xl mt-6">{generateLorem(5)}</h2>
+              <p>{generateLorem(40)}</p>
               <p>{generateLorem(30)}</p>
             </header>
-            <button class="text-white rounded-full ring-2 ring-white px-9 py-2 hover:bg-white/20">
+            <button class="text-white/95 rounded-full ring-2 ring-white/95 px-9 py-2 hover:bg-white/20">
               <span>Découvrir</span>
             </button>
           </div>
@@ -312,7 +318,7 @@ const charInText = textRing.length;
       <!-- bottom -->
       <div role="gridcell" class="grid center">
         <figure
-          class="horizontal center drop-shadow-2xl -translate-y-[40%] [&>*]:h-[375px] [&>*]:w-[375px] text-white/50"
+          class="horizontal center drop-shadow-2xl -translate-y-[40%] [&>*]:h-[390px] [&>*]:w-[375px] text-white/50"
         >
           <Image
             src={"https://picsum.photos/200"}
@@ -322,7 +328,7 @@ const charInText = textRing.length;
             width="500"
           />
           <figcaption
-            class="vertical items-center justify-center w-5/12 h-inherit bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm"
+            class="vertical items-center justify-center w-5/12 h-inherit bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm text-lg"
           >
             <blockquote class="leading-6">
               <div class="w-full translate-y-6" aria-roledescription="open quote">
