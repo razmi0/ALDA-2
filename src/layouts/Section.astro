@@ -9,9 +9,11 @@ interface Props {
   size?: Sizes;
   extension?: Extension;
   className?: HTMLAttributes<"section">["class"];
+  style?: HTMLAttributes<"section">["style"];
+  [key: `data-${string}`]: boolean | number | string;
 }
 
-const { size = "full", extension = "none", className } = Astro.props;
+const { size = "full", extension = "none", className, style = "" } = Astro.props;
 
 const extensions: Record<Extension, string> = {
   none: "0px",
@@ -32,6 +34,6 @@ const sizes: Record<Sizes, string> = {
 const height = `calc(${sizes[size]} + ${extensions[extension]})`;
 ---
 
-<section class={cn("min-w-full", className)} style={`height : ${height};`}>
+<section {...Astro.props} class={cn("min-w-full", className)} style={`height : ${height}; ${style} `}>
   <slot />
 </section>
