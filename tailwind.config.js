@@ -51,5 +51,68 @@ export default {
       },
     },
   },
-  plugins: [twAnimate],
+  plugins: [
+    twAnimate,
+    ({ addUtilities }) => {
+      addUtilities({
+        ".vertical": {
+          "@apply flex flex-col": {},
+        },
+        ".horizontal": {
+          "@apply flex": {},
+        },
+
+        ".center": {
+          "@apply justify-center items-center": {},
+        },
+        ".full": {
+          "@apply w-full h-full": {},
+        },
+        ".absolute-align": {
+          "@apply absolute inset-0": {},
+        },
+        ".absolute-center": {
+          "@apply absolute inset-0 flex justify-center items-center": {},
+        },
+      });
+    },
+  ],
 };
+
+// @layer base {
+//   .vertical {
+//     @apply flex flex-col;
+
+//     &.reverse {
+//       @apply flex-col-reverse;
+//     }
+//   }
+
+//   .horizontal {
+//     @apply flex;
+
+//     &.reverse {
+//       @apply flex-row-reverse;
+//     }
+//   }
+
+//   .center {
+//     @apply justify-center items-center;
+//   }
+
+//   .between {
+//     @apply justify-between;
+//   }
+
+//   .full {
+//     @apply w-full h-full;
+//   }
+
+//   .absolute-align {
+//     @apply absolute inset-0;
+//   }
+
+//   .absolute-center {
+//     @apply absolute inset-0 flex justify-center items-center;
+//   }
+// }
