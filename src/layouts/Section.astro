@@ -5,7 +5,7 @@ import type { HTMLAttributes } from "astro/types";
 type Sizes = "full" | "half" | "third" | "quarter";
 type Extension = "xs" | "sm" | "md" | "lg" | "xl" | "none";
 
-interface Props {
+interface Props extends HTMLAttributes<"section"> {
   size?: Sizes;
   extension?: Extension;
   className?: HTMLAttributes<"section">["class"];
