@@ -51,7 +51,6 @@ export const data: DebugPanelProps = {
     //   targetTag: "bird",
     //   property: "display",
     //   label: "display",
-
     //   options: [
     //     {
     //       label: "hidden",
@@ -59,20 +58,19 @@ export const data: DebugPanelProps = {
     //     },
     //   ],
     // },
-    {
-      targetTag: "section-bird",
-      label: "layout",
-      property: "display",
-      options: [
-        { label: "flex", value: "flex" },
-        { label: "grid", value: "grid" },
-        { label: "block", value: "block" },
-        { label: "inline-block", value: "inline-block" },
-        { label: "inline", value: "inline" },
-        { label: "none", value: "none" },
-      ],
-    },
-
+    // {
+    //   targetTag: "section-bird",
+    //   label: "layout",
+    //   property: "display",
+    //   options: [
+    //     { label: "flex", value: "flex" },
+    //     { label: "grid", value: "grid" },
+    //     { label: "block", value: "block" },
+    //     { label: "inline-block", value: "inline-block" },
+    //     { label: "inline", value: "inline" },
+    //     { label: "none", value: "none" },
+    //   ],
+    // },
     // {
     //   targetTag: "bird",
     //   label: "blend-mode",
