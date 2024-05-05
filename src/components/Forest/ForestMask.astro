@@ -1,0 +1,27 @@
+---
+import BackgroundForest from "@/assets/forest/forest-bg.webp";
+import Forest from "@/assets/forest/forest.webp";
+import Section from "@/layouts/Section.astro";
+import { Image } from "astro:assets";
+
+---
+
+
+<Section
+      size="quarter"
+      extension="xs"
+      className="bg-map-dark relative overflow-x-hidden overflow-y-hidden z-10 flex justify-start items-start isolate"
+    >
+      <Image
+        src={Forest}
+        alt={"forest foreground"}
+        style={"transform: scale(-1, 1) translateY(125px);"}
+        class={"absolute bottom-0 object-cover min-w-[632px] w-full z-10"}
+      />
+      <Image
+        src={BackgroundForest}
+        alt={"forest background"}
+        style={"transform: translateY(-25px);"}
+        class={"absolute bottom-0 object-cover min-w-[632px] w-full z-0"}
+      />
+    </Section>

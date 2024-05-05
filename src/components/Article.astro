@@ -1,0 +1,22 @@
+---
+import { cn, generateLorem } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props {
+  nWord1?: number;
+  nWord2?: number;
+  className?: string;
+  pClass?: HTMLAttributes<"p">["class"];
+  dark?: boolean;
+}
+
+const { dark, nWord1, nWord2, className, pClass } = Astro.props;
+const theme = dark ? { title: "text-black", text: "text-black/60" } : { title: "text-white", text: "text-white/60" };
+---
+
+<div class={cn("vertical gap-4 max-w-[75%] leading-5", theme.text, className)}>
+  <slot />
+  <h2 class={cn("text-xl mt-6 ", theme.title)}>{generateLorem(5)}</h2>
+  {nWord1 && <p class={pClass || ""}>{generateLorem(nWord1)}</p>}
+  {nWord2 && <p class={pClass || ""}>{generateLorem(nWord2)}</p>}
+</div>

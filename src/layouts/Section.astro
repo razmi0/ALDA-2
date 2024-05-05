@@ -34,6 +34,6 @@ const sizes: Record<Sizes, string> = {
 const height = `calc(${sizes[size]} + ${extensions[extension]})`;
 ---
 
-<section {...Astro.props} class={cn("min-w-full", className)} style={`height : ${height}; ${style} `}>
+<section {...Astro.props} class={cn("min-w-full", className)} style={`min-height : ${height}; ${style} `}>
   <slot />
 </section>

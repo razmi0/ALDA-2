@@ -1,0 +1,33 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  variant?: "outline";
+  size?: "sm" | "md" | "lg";
+  className?: string;
+  dark?: boolean;
+}
+
+const { className, variant, dark, size } = Astro.props;
+
+const variants = {
+  outline: {
+    dark: "text-black rounded-full ring-2 ring-black hover:bg-slate-100",
+    light: "text-white/95 rounded-full ring-2 ring-white/95 hover:bg-white/20",
+  },
+  sizes: {
+    sm: "px-3 py-1",
+    md: "px-5 py-2",
+    lg: "px-9 py-2",
+    xl: "px-12 py-3",
+  },
+};
+
+// "text-white/95 rounded-full ring-2 ring-white/95 px-9 py-2 hover:bg-white/20"
+---
+
+<button
+  class={cn("", variants[variant || "outline"][dark ? "dark" : "light"], variants.sizes[size || "md"], className)}
+>
+  <slot />
+</button>

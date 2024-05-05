@@ -1,0 +1,17 @@
+---
+import Article from "../Article.astro";
+import Button from "../Button.astro";
+---
+
+<div class="vertical gap-16">
+  <Article nWord1={45} dark className="max-w-[50ch]" />
+  <footer class="horizontal items-center justify-start gap-6">
+    <Button size="lg" variant="outline" dark className="w-fit">S'inscrire</Button>
+    <div>
+      <span>Start at</span>
+      <small class="font-bold"> €</small>
+      <span class="font-bold text-lg">100</span>
+      <span> / night</span>
+    </div>
+  </footer>
+</div>

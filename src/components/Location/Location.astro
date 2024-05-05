@@ -1,0 +1,36 @@
+---
+import TreeIcon from "@/components/icons/Tree.astro";
+import Section from "@/layouts/Section.astro";
+import RandomImage from "../RandomImage.astro";
+import LocationExplorer from "./LocationExplorer/LocationExplorer.astro";
+import LocationFigure from "./LocationExplorer/LocationFigure.astro";
+import Article from "../Article.astro";
+---
+
+<Section
+  size="full"
+  extension="sm"
+  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-around"
+>
+  <div class="relative h-full w-full lg:w-7/12 horizontal center md:max-w-[900px] md:max-h-[700px]">
+    <LocationFigure>
+      <LocationExplorer />
+    </LocationFigure>
+  </div>
+  <!-- | -->
+  <!-- | -->
+  <!-- NEXT ARTICLE -->
+  <!-- | -->
+  <article class="md:w-fit flex flex-col px-12 items-start justify-center gap-10">
+    <!-- ARTICLE HEADER HERE -->
+    <Article nWord1={30} nWord2={40}>
+      <TreeIcon />
+    </Article>
+
+    <!-- ARTICLE HEADER HERE -->
+    <figure class="h-full flex flex-row justify-end items-center mt-1 gap-4">
+      <RandomImage seed={123} />
+      <RandomImage seed={456} />
+    </figure>
+  </article>
+</Section>
