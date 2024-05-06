@@ -1,6 +1,8 @@
 ---
 import Article from "../Article.astro";
 import Button from "../Button.astro";
+import StarEmpty from "../icons/StarEmpty.astro";
+import StarFilled from "../icons/StarFilled.astro";
 
 const pers = {
   values: ["night", "week", "person", "group"],
@@ -15,10 +17,18 @@ const prices = {
     return this.values[Math.floor(Math.random() * this.values.length)];
   },
 };
+
+const randomStars = new Array(Math.floor(Math.random() * 5) + 1);
+const emptyStars = new Array(5 - randomStars.length);
 ---
 
 <div class="vertical gap-16">
-  <Article nWord1={45} pClass={"text-black/90"} dark className="max-w-[50ch]" />
+  <Article nWord1={45} pClass={"text-black/90"} dark className="max-w-[50ch]">
+    <Fragment slot="stars">
+      {randomStars.map(() => <StarFilled />)}
+      {emptyStars.map(() => <StarEmpty />)}
+    </Fragment>
+  </Article>
   <footer class="horizontal items-center justify-start gap-6">
     <Button size="lg" variant="outline" dark className="w-fit">S'inscrire</Button>
     <p>
