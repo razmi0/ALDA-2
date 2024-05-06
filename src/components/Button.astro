@@ -4,23 +4,32 @@ import type { HTMLAttributes } from "astro/types";
 interface Props {
   variant?: "outline";
   size?: "sm" | "md" | "lg";
+  ring?: "sm" | "md" | "lg" | "xl";
   className?: string;
   dark?: boolean;
   rest?: Omit<HTMLAttributes<"button">, "class">;
 }
 
-const { className, variant, dark, size, ...rest } = Astro.props;
+const { className, variant, dark, size, ring, ...rest } = Astro.props;
 
 const variants = {
   outline: {
-    dark: "text-black rounded-full ring-2 ring-black hover:bg-slate-100",
-    light: "text-white/95 rounded-full ring-2 ring-white/95 hover:bg-white/20",
+    dark: "text-black  hover:bg-slate-100",
+    light: "text-white/95  hover:bg-white/20",
   },
   sizes: {
     sm: "px-3 py-1",
     md: "px-5 py-2",
     lg: "px-9 py-2",
     xl: "px-12 py-3",
+  },
+  rings: {
+    sm: "ring-1",
+    md: "ring-2",
+    lg: "ring-4",
+    xl: "ring-8",
+    dark: "rounded-full ring-black",
+    light: "rounded-full ring-white/95",
   },
 };
 ---
@@ -39,6 +48,8 @@ const variants = {
     "pointer-events-auto cursor-pointer",
     variants[variant || "outline"][dark ? "dark" : "light"],
     variants.sizes[size || "md"],
+    variants.rings[ring || "sm"],
+    variants.rings[dark ? "dark" : "light"],
     className
   )}
   data-action="button"

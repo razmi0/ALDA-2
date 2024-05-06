@@ -1,17 +1,31 @@
 ---
 import Article from "../Article.astro";
 import Button from "../Button.astro";
+
+const pers = {
+  values: ["night", "week", "person", "group"],
+  get: function () {
+    return this.values[Math.floor(Math.random() * this.values.length)];
+  },
+};
+
+const prices = {
+  values: [100, 200, 300, 400, 500],
+  get: function () {
+    return this.values[Math.floor(Math.random() * this.values.length)];
+  },
+};
 ---
 
 <div class="vertical gap-16">
   <Article nWord1={45} pClass={"text-black/90"} dark className="max-w-[50ch]" />
   <footer class="horizontal items-center justify-start gap-6">
     <Button size="lg" variant="outline" dark className="w-fit">S'inscrire</Button>
-    <div>
-      <span>Start at</span>
+    <p>
+      Start at
       <small class="font-bold"> €</small>
-      <span class="font-bold text-lg">100</span>
-      <span> / night</span>
-    </div>
+      <span class="font-bold text-lg">{prices.get()}</span>
+      / {pers.get()}
+    </p>
   </footer>
 </div>
