@@ -10,6 +10,7 @@ import Location from "@/components/Location/Location.astro";
 import Product from "@/components/Products/Product.astro";
 import RandomImage from "@/components/RandomImage.astro";
 import BirdIcon from "@/components/icons/Bird.astro";
+import ClimbIcon from "@/components/icons/Climb.astro";
 import OpenQuoteIcon from "@/components/icons/OpenQuote.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
@@ -174,7 +175,7 @@ const charInText = textRing.length;
         <span class="sr-only">{textRing}</span>
       </figure>
       <article class="horizontal center drop-shadow-2xl [&>*]:h-[390px] [&>*]:w-[375px] text-white/50">
-        <RandomImage size={500} seed={504} className=" rounded-tl-sm rounded-bl-sm" />
+        <RandomImage size={500} className=" rounded-tl-sm rounded-bl-sm" />
         <div class="vertical center w-5/12 bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm text-lg">
           <blockquote class="leading-6">
             <div class="w-full translate-y-6" aria-roledescription="open quote">
@@ -198,17 +199,18 @@ const charInText = textRing.length;
     >
       <article>
         <div>
+          <ClimbIcon />
           <h2 class="text-xl w-full text-left mb-8">Ce que l'on vous conseille</h2>
-          <RandomImage width={400} height={500} seed={501} />
+          <RandomImage width={400} height={500} />
         </div>
         <Product />
       </article>
       <article class="flex-row-reverse">
-        <RandomImage width={400} height={500} seed={502} />
+        <RandomImage width={400} height={500} />
         <Product />
       </article>
       <article>
-        <RandomImage width={400} height={500} seed={503} />
+        <RandomImage width={400} height={500} />
         <Product />
       </article>
     </Section>

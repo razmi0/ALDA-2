@@ -10,12 +10,12 @@ interface Props {
   height?: number;
 }
 
-const { size, className, seed, height, width } = Astro.props;
+const { size, className, seed = Math.floor(Math.random() * 100), height, width } = Astro.props;
 ---
 
 <Image
   class={cn("aspect-square object-cover ", className)}
-  src={`https://picsum.photos/${seed || size || 150}`}
+  src={`https://picsum.photos/${seed + (size || 150)}`}
   alt="lorem"
   width={width || size || 150}
   height={height || size || 150}
