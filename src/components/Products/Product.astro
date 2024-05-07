@@ -20,7 +20,7 @@ const stars = Array.from({ length: 5 }, (_, i) => {
 });
 ---
 
-<div class="vertical gap-6" data-id={id}>
+<div class="vertical gap-10" data-id={id}>
   <Article title={title} words1={description} pClass={"text-black/90"} dark className="max-w-[50ch]">
     <div slot="rating" class="horizontal items-center justify-start">
       {
@@ -30,7 +30,7 @@ const stars = Array.from({ length: 5 }, (_, i) => {
       }
     </div>
   </Article>
-  <footer class="horizontal items-center justify-start gap-6">
+  <footer class="horizontal items-center justify-start gap-10">
     <Button size="lg" variant="outline" dark className="w-fit font-bold">S'inscrire</Button>
     <p class="font-semibold">
       Start at

@@ -14,6 +14,7 @@ import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import FooterLandscape from "@/assets/footer-landscape.png";
 
 const textRing =
   "    oui bonjour    ⚪    c'est moi le texte    ⚪    qui tourne en rond    ⚪    vijay t'es    ⚪    trés jolie et    ⚪    magnifique ackchually    ⚪";
@@ -109,9 +110,28 @@ const charInText = textRing.length;
     </Section>
 
     <Section
-      class="vertical center py-52 px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
+      extension="md"
+      class="relative vertical center py-52 px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
     >
+      <style>
+        .before-footer-fade {
+          --color-start: #ffffff;
+          background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 85%, #94c2e7 100%);
+        }
+      </style>
+      <div class="absolute-align full before-footer-fade -z-10"></div>
+
       <Products />
+    </Section>
+    <Section className={"relative"}>
+      <style>
+        .footer-landscape-fade {
+          --color-start: transparent;
+          background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
+        }
+      </style>
+      <Image src={FooterLandscape} alt="earth" class="full absolute-align object-cover" />
+      <div class="absolute-align full footer-landscape-fade z-10"></div>
     </Section>
   </main>
 </Layout>

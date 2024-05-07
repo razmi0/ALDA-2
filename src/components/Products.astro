@@ -26,14 +26,16 @@ const imgSize = {
   products.map((product: ProductType, i: number) => {
     if (i === 0) {
       return (
-        <article class="horizontal" data-is={i}>
-          <div>
+        <>
+          <div class="w-full vertical">
             <ClimbIcon />
-            <h2 class="text-xl w-full text-left mb-8">Ce que l'on vous conseille</h2>
-            <RandomImage width={imgSize.width} height={imgSize.height} />
+            <h2 class="text-xl w-full text-left">Ce que l'on vous conseille</h2>
           </div>
-          <Product {...product} />
-        </article>
+          <article class="horizontal" data-is={i}>
+            <RandomImage width={imgSize.width} height={imgSize.height} />
+            <Product {...product} />
+          </article>
+        </>
       );
     }
     if (i % 2 !== 0) {

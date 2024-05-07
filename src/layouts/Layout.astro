@@ -1,9 +1,9 @@
 ---
 import Hero from "@/assets/hero/hero.png";
 import Button from "@/components/Button.astro";
+import "@/styles/globals.css";
 import { Image } from "astro:assets";
 import Section from "./Section.astro";
-import "@/styles/globals.css";
 
 interface Props {
   title: string;
@@ -28,25 +28,10 @@ const { title } = Astro.props;
         --primary: #0b0e16;
         --color-start: rgba(11, 14, 22, 0);
         --fade-to-b: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-        --fade-to-t: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-        --fade-to-l: linear-gradient(to left, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-        --fade-to-r: linear-gradient(to right, var(--color-start) 0%, var(--color-start) 80%, rgb(11, 14, 22) 100%);
-      }
-
-      .fade-out-top {
-        background: var(--fade-to-t);
       }
 
       .fade-out-bottom {
         background: var(--fade-to-b);
-      }
-
-      .fade-out-right {
-        background: var(--fade-to-r);
-      }
-
-      .fade-out-left {
-        background: var(--fade-to-l);
       }
     </style>
     <Section className="relative text-white" data-is="hero">
