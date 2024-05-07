@@ -64,7 +64,7 @@ export default {
           "@apply flex flex-col-reverse": {},
         },
         ".horizontal": {
-          "@apply flex": {},
+          "@apply flex flex-row": {},
         },
         ".horizontal-reverse": {
           "@apply  flex flex-row-reverse": {},
