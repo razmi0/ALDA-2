@@ -4,6 +4,7 @@ import Article from "@/components/Article.astro";
 import Button from "@/components/Button.astro";
 import Gradients from "@/components/Earth/Gradients.astro";
 import ForestMask from "@/components/Forest/ForestMask.astro";
+import Hero from "@/components/Hero.astro";
 import Location from "@/components/Location/Location.astro";
 import Product from "@/components/Products/Product.astro";
 import RandomImage from "@/components/RandomImage.astro";
@@ -13,7 +14,6 @@ import OpenQuoteIcon from "@/components/icons/OpenQuote.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { Image } from "astro:assets";
-import { Mountain } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const textRing =
@@ -51,29 +51,7 @@ const charInText = textRing.length;
 
 <Layout title="Accueil | ALAD">
   <main>
-    <div class="text-white" slot="hero">
-      <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none text-white">
-        <h2 class="text-3xl uppercase">l'aventure commence ici!</h2>
-        <h3 class="text-2xl">Découvrez la grimpe d'arbre</h3>
-      </div>
-      <div
-        class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]"
-      >
-        <p class="text-balance text-white/80 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
-          {generateLorem(30)}
-        </p>
-        <Button
-          className="pointer-events-auto horizontal gap-5 items-center w-48"
-          variant="outline"
-          size="lg"
-          data-is="hero-button"
-        >
-          <Mountain className="h-[18px] w-[18px] -translate-y-[1px]" />
-          <span>S'inscrire</span>
-        </Button>
-        <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
-      </div>
-    </div>
+    <Hero slot="hero" />
     <Location />
     <ForestMask />
     <Section
