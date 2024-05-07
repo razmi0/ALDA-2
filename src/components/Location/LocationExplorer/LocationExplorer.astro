@@ -15,8 +15,11 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
 ---
 
 <script>
-  const buttons = document.querySelectorAll("[data-is='button-group']");
-  const handler = () => console.log("clicked");
+  const buttons = Array.from(document.querySelectorAll("[data-is='button-group']"));
+  const handler = (e) => {
+    const action = e.currentTarget.dataset.action;
+    console.log(action);
+  };
 
   if (buttons) for (const btn of buttons) btn.addEventListener("click", handler);
 </script>
@@ -37,10 +40,10 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
     <small class="text-sm text-white/90">{locations?.[0]?.subtitle}</small>
   </header>
   <nav class="horizontal items-center justify-start gap-2 mt-1">
-    <button data-is="button-group" class="hover:[&>*]:text-white">
+    <button data-is="button-group" data-action="prevMark" class="hover:[&>*]:text-white">
       <ArrowLeft className="text-white/90" />
     </button>
-    <button data-is="button-group" class="hover:[&>*]:text-white">
+    <button data-is="button-group" data-action="nextMark" class="hover:[&>*]:text-white">
       <ArrowRight className="text-white/90" />
     </button>
   </nav>

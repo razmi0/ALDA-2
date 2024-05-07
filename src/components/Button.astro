@@ -34,18 +34,6 @@ const variants = {
 };
 ---
 
-<script>
-  const params = new URLSearchParams();
-  const buttons = Array.from(document.querySelectorAll("[data-action=button]"));
-  if (!buttons) throw new Error("Button not found");
-  const handleClick = () => {
-    console.log("Button clicked");
-    params.append("clicked", "true");
-    console.log(params.get("clicked"));
-  };
-  buttons.map((btn) => btn.addEventListener("click", handleClick));
-</script>
-
 <button
   class={cn(
     "pointer-events-auto cursor-pointer",
@@ -55,7 +43,6 @@ const variants = {
     variants.rings[dark ? "dark" : "light"],
     className
   )}
-  data-action="button"
   {...rest}
 >
   <slot />
