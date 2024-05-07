@@ -42,54 +42,53 @@ const charInText = textRing.length;
           <Button size="lg" variant="outline">Contact </Button>
         </div>
       </div>
-
-      <figure class="relative w-fit h-fit text-ring text-xs text-white/60" data-debug="section-bird">
-        <style define:vars={{ charInText }}>
-          .text-ring {
-            --character-width: 1;
-            --image-size: 120px;
-            --image-radius: calc(var(--image-size) / 2);
-          }
-          .text-ring [style*="--index"] {
-            --inner-angle: calc((360 / var(--charInText)) * 1deg);
-            --radius: calc(((var(--character-width, 1) / sin(var(--inner-angle))) * -1ch) - var(--image-radius));
-            text-transform: uppercase;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotate(calc(var(--inner-angle) * var(--index)))
-              translateY(var(--radius, -5ch));
-          }
-
-          @media (prefers-reduced-motion: no-preference) {
-            .text-ring {
-              --duration: 0;
-              animation: spin var(--duration) infinite linear;
-
-              & > img {
-                animation: counter-spin var(--duration) infinite linear;
-              }
-            }
-
-            @keyframes spin {
-              to {
-                rotate: -360deg;
-              }
-            }
-
-            @keyframes counter-spin {
-              to {
-                rotate: 360deg;
-              }
-            }
-          }
-        </style>
-        <Image src={Bird} alt="beautifull bird" class="rounded-full object-cover h-[500px] object-top" />
-        {
-          textRingArray.map((char, index) => {
-            return <span style={`--index: ${index}`}>{char}</span>;
-          })
+      <style define:vars={{ charInText }}>
+        .text-ring {
+          --character-width: 1;
+          --image-size: 120px;
+          --image-radius: calc(var(--image-size) / 2);
         }
+        .text-ring [style*="--index"] {
+          --inner-angle: calc((360 / var(--charInText)) * 1deg);
+          --radius: calc(((var(--character-width, 1) / sin(var(--inner-angle))) * -1ch) - var(--image-radius));
+          text-transform: uppercase;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%) rotate(calc(var(--inner-angle) * var(--index)))
+            translateY(var(--radius, -5ch));
+        }
+
+        .text-ring {
+          --duration: 180s;
+          animation: spin var(--duration) infinite linear;
+
+          & > img {
+            animation: counter-spin var(--duration) infinite linear;
+          }
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(-360deg);
+          }
+        }
+
+        @keyframes counter-spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
+      <figure class="relative w-fit h-fit text-ring text-xs text-white/60" data-debug="section-bird">
+        <Image src={Bird} alt="beautifull bird" class="rounded-full object-cover h-[500px] object-top" />
+        <div class="rotation">
+          {
+            textRingArray.map((char, index) => {
+              return <span style={`--index: ${index}`}>{char}</span>;
+            })
+          }
+        </div>
         <span class="sr-only">{textRing}</span>
       </figure>
 
