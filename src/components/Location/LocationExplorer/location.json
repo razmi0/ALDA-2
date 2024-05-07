@@ -3,44 +3,50 @@
     {
       "title": "Rodez",
       "subtitle": "Arbre centenaire",
-      "coordinates": [40.785091, -73.968285],
+      "coordinates": [18, 12],
       "page": 1,
       "labelPage": "01",
       "selected": false
     },
     {
+      "title": "Toulouse",
+      "subtitle": "Monument",
+      "coordinates": [16, 16],
+      "page": 5,
+      "labelPage": "05",
+      "selected": false
+    },
+    {
       "title": "Goyrans",
       "subtitle": "Trampolin aérien",
-      "coordinates": [40.758, -73.9855],
+      "coordinates": [17, 18],
       "page": 2,
       "labelPage": "02",
       "selected": false
     },
     {
-      "title": "Empire State Building",
+      "title": "Domazan",
       "subtitle": "Landmark",
-      "coordinates": [40.748817, -73.985428],
+      "coordinates": [15, 20],
       "page": 3,
       "labelPage": "03",
-      "label": "ESB",
       "selected": true
     },
     {
-      "title": "Brooklyn Bridge",
+      "title": "Auch",
       "subtitle": "Bridge",
-      "coordinates": [40.706086, -73.996864],
+      "coordinates": [11, 13],
       "page": 4,
       "labelPage": "04",
-      "label": "BB",
       "selected": false
     },
+
     {
-      "title": "Statue of Liberty",
-      "subtitle": "Monument",
-      "coordinates": [40.689247, -74.044502],
-      "page": 5,
-      "labelPage": "05",
-      "label": "SoL",
+      "title": "Biarritz",
+      "subtitle": "Grimpe ensemblée",
+      "coordinates": [6, 15],
+      "page": 6,
+      "labelPage": "06",
       "selected": false
     }
   ]

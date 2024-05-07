@@ -1,12 +1,14 @@
 ---
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Mark from "./LocationMark.astro";
+import LocationMark from "./LocationMark.astro";
 import data from "./location.json" assert { type: "json" };
 import type { Location } from "./types";
 
 const locations = data.locations as Location[];
 
 const defaultLocation = locations[0] || ({} as Location);
+
+console.log(locations);
 
 let page: string | number = defaultLocation.page || 1;
 let totalPages: string | number = locations.length;
@@ -19,38 +21,53 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
 
   const ctn = document.querySelector("#canvas-ctn") as HTMLElement;
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.querySelector("#locationCanvas") as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d")!;
-    const width = ctn.clientWidth;
-    const height = ctn.clientHeight;
-    canvas.width = width;
-    canvas.height = height;
+  const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLElement[];
 
-    const nRows = Math.floor(width / 50);
-    const nCols = Math.floor(height / 50);
+  const width = ctn.clientWidth;
+  const height = ctn.clientHeight;
+
+  const cellWidth = Math.floor(width / 30);
+  const cellHeight = Math.floor(height / 30);
+
+  const placeMarks = (mark: HTMLElement) => {
+    const [x, y] = (mark.dataset.coor as string).split(",").map((n) => parseInt(n)) as [number, number];
+    mark.style.top = `${y * cellHeight}px`;
+    mark.style.left = `${x * cellWidth}px`;
+  };
+
+  marks.map((mark) => placeMarks(mark));
+
+  /**
+   * DEBUG SHOW GRID
+   */
+
+  const canvas = document.querySelector("#locationCanvas") as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d")!;
+  const hideGrid = canvas.dataset.hidden;
+  canvas.width = width;
+  canvas.height = height;
+
+  const drawGrid = () => {
+    const nRows = Math.floor(width / cellWidth);
+    const nCols = Math.floor(height / cellHeight);
 
     // GRID DEEP LVL 1 INDEX IS ROW NUMBER
     // GRID DEEP LVL 2 INDEX IS COLUMN NUMBER
-    // const grid = new Array(nRows).fill(null).map(() => new Array(nCols).fill(null).map((_, j) => j));
-
-    const drawGrid = () => {
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      for (let i = 0; i < nRows; i++) {
-        ctx.moveTo(i * 50, 0);
-        ctx.lineTo(i * 50, height);
+    const grid = new Array(nRows).fill(null).map(() => new Array(nCols).map((_, j) => j));
+    // console.log(grid)
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let i = 0; i < grid.length; i++) {
+      const row = grid[i] as number[];
+      for (let j = 0; j < row.length; j++) {
+        ctx.rect(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+        ctx.strokeText(`${i},${j}`, j * cellWidth + 5, i * cellHeight + 15);
       }
-      for (let j = 0; j < nCols; j++) {
-        ctx.moveTo(0, j * 50);
-        ctx.lineTo(width, j * 50);
-      }
-      ctx.stroke();
-    };
-
-    drawGrid();
-  });
+    }
+    ctx.stroke();
+  };
+  if (!hideGrid) drawGrid();
 
   const buttons = Array.from(document.querySelectorAll("[data-is='button-group']"));
   const handler = (e: MouseEvent) => {
@@ -89,11 +106,15 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
 <!--  -->
 <!--  -->
 <div id="canvas-ctn" class="absolute-align full [&>div]:w-fit pointer-events-none">
-  <canvas id="locationCanvas"></canvas>
-  <Mark wrapperClassName="top-[25%] right-[25%]" coordinates={locations?.[0]?.coordinates} selected>
-    {locations?.[0]?.label || locations?.[0]?.title}
-  </Mark>
-  <Mark wrapperClassName="top-64 right-56" coordinates={locations?.[1]?.coordinates}>
-    {locations?.[1]?.label || locations?.[1]?.title}
-  </Mark>
+  <canvas id="locationCanvas" data-hidden></canvas>
+
+  {
+    locations.map((loc, i) => {
+      return (
+        <div class="horizontal center gap-2 absolute" data-coor={loc.coordinates} data-index={i}>
+          <LocationMark selected={loc.selected}>{loc.label || loc.title}</LocationMark>
+        </div>
+      );
+    })
+  }
 </div>
