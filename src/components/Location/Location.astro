@@ -1,33 +1,190 @@
 ---
 import TreeIcon from "@/components/icons/Tree.astro";
 import Section from "@/layouts/Section.astro";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Article from "../Article.astro";
 import RandomImage from "../RandomImage.astro";
-import LocationExplorer from "./LocationExplorer/LocationExplorer.astro";
 import LocationFigure from "./LocationExplorer/LocationFigure.astro";
+import LocationMark from "./LocationExplorer/LocationMark.astro";
+import data from "./LocationExplorer/location.json" assert { type: "json" };
+import type { Location } from "./LocationExplorer/types";
+
+const rawLocations = data.locations as Location[];
+
+const navArticleWidth = "130px";
+const visibleFrame = "120px";
+
+const totalPages = rawLocations.length;
+const locations = rawLocations.map((loc, i) => {
+  // page et labelpage at build time
+  const page = i + 1;
+  const labelPage = page < 10 ? `0${page}` : page;
+  return {
+    ...loc,
+    page: page,
+    labelPage: labelPage,
+    selected: i === 0,
+  };
+});
 ---
 
+<script>
+  /**
+   * MARKS PLACEMENT
+   * ctn is sliced in a grid of 30x30 cells
+   * location marks are placed in the grid according to their coordinates
+   */
+
+  const ctn = document.querySelector("#grid") as HTMLElement;
+  const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLElement[];
+
+  const cells = 30;
+  const dimensions = {
+    width: ctn.clientWidth,
+    height: ctn.clientHeight,
+    cellWidth: Math.floor(ctn.clientWidth / cells),
+    cellHeight: Math.floor(ctn.clientHeight / cells),
+    update: function () {
+      this.width = ctn.clientWidth;
+      this.height = ctn.clientHeight;
+      this.cellWidth = Math.floor(this.width / cells);
+      this.cellHeight = Math.floor(this.height / cells);
+    },
+  };
+
+  const placeMarks = (mark: HTMLElement) => {
+    const [x, y] = (mark.dataset.coor as string).split(",").map((n) => parseInt(n)) as [number, number];
+    mark.style.top = `${y * dimensions.cellHeight}px`;
+    mark.style.left = `${x * dimensions.cellWidth}px`;
+  };
+
+  marks.map((mark) => placeMarks(mark));
+
+  window.onresize = () => {
+    dimensions.update();
+    marks.map((mark) => placeMarks(mark));
+  };
+
+  /**
+   * Button script
+   */
+  const buttons = Array.from(document.querySelectorAll("[data-is='map-nav']"));
+  const frame = document.querySelector("[data-is='frame']") as HTMLElement;
+  const translation = parseInt(frame.dataset.translation as string, 10);
+
+  const handler = (e: MouseEvent) => {
+    const [action, currentTarget, totalPages] = (e.currentTarget as HTMLElement)?.dataset?.action
+      ?.split("#")
+      .map((x, i) => (i >= 1 ? parseInt(x) : x)) as [string, number, number];
+
+    const targetIndex = action === "next" ? currentTarget + 1 : currentTarget - 1;
+    const validTargetIndex = targetIndex > totalPages ? 1 : targetIndex < 1 ? totalPages : targetIndex;
+
+    frame.style.transform = `translateX(-${(validTargetIndex - 1) * translation}px)`;
+
+    marks.map((mark) => {
+      const firstChild = mark.firstElementChild as HTMLElement;
+      if (mark.dataset.index === validTargetIndex.toString()) {
+        firstChild.classList.add("selected");
+      } else {
+        firstChild.classList.remove("selected");
+      }
+    });
+  };
+
+  buttons &&
+    buttons.map((btn) => {
+      btn.addEventListener("click", handler as EventListener);
+    });
+</script>
+
+<style define:vars={{ totalPages, navArticleWidth }}>
+  button > * {
+    @apply h-5 w-5 opacity-90;
+  }
+
+  [data-is="frame"] {
+    min-width: calc(var(--navArticleWidth) * var(--totalPages));
+    transition: transform 0.3s;
+  }
+</style>
+
+<!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION -->
 <Section
   size="full"
   extension="sm"
   className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-around pt-36 lg:pt-0"
 >
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
+  <!-- LOCATION FIGURE -->
   <div class="relative h-full w-full horizontal center md:max-w-[900px] md:max-h-[700px]">
     <LocationFigure>
-      <LocationExplorer />
+      <div
+        class="absolute top-0 left-1/4 overflow-x-hidden"
+        style={`max-width: ${visibleFrame}; width: ${visibleFrame}; height: 100%;`}
+      >
+        <div class="horizontal" data-is="frame" data-translation={`${navArticleWidth}`}>
+          {
+            locations.map((loc) => {
+              return (
+                <article class={`vertical gap-3 justify-between`} style="min-width : var(--navArticleWidth);">
+                  <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]">
+                    <output class="tabular-nums text-white font-semibold">{loc.labelPage}</output>
+                    <span class="text-white/90">/ {totalPages}</span>
+                  </div>
+                  <header>
+                    <h3 class="text-2xl font-medium leading-3">{loc.title}</h3>
+                    <small class="text-sm text-white/90 whitespace-nowrap w-full">{loc.subtitle}</small>
+                  </header>
+                  <nav class="horizontal items-center justify-start gap-2 mt-1">
+                    <button
+                      data-is="map-nav"
+                      data-action={`prev#${loc.page}#${totalPages}`}
+                      class="hover:[&>*]:text-white"
+                    >
+                      <ArrowLeft className="text-white/90" />
+                    </button>
+                    <button
+                      data-is="map-nav"
+                      data-action={`next#${loc.page}#${totalPages}`}
+                      class="hover:[&>*]:text-white"
+                    >
+                      <ArrowRight className="text-white/90" />
+                    </button>
+                  </nav>
+                </article>
+              );
+            })
+          }
+        </div>
+      </div>
+      <div id="grid" class="absolute-align full [&>div]:w-fit pointer-events-none">
+        {
+          locations.map((loc, i) => {
+            return (
+              <div class="horizontal center gap-2 absolute" data-coor={loc.coordinates} data-index={i + 1}>
+                <LocationMark selected={loc.selected}>{loc.label || loc.title}</LocationMark>
+              </div>
+            );
+          })
+        }
+      </div>
     </LocationFigure>
   </div>
-  <!-- | -->
-  <!-- | -->
   <!-- NEXT ARTICLE -->
-  <!-- | -->
+  <!-- NEXT ARTICLE -->
+  <!-- NEXT ARTICLE -->
+  <!-- NEXT ARTICLE -->
   <article class="w-fit flex flex-col px-12 items-start justify-center gap-10">
-    <!-- ARTICLE HEADER HERE -->
-    <Article nWord1={30} nWord2={40} className="max-w-[50ch] ">
+    <Article nWord1={30} nWord2={40} className="max-w-[50ch]">
       <TreeIcon />
     </Article>
-
-    <!-- ARTICLE HEADER HERE -->
     <figure class="h-full flex flex-row justify-end items-center mt-1 gap-4">
       <RandomImage />
       <RandomImage />
