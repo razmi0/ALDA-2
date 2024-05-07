@@ -55,6 +55,11 @@ const locations = rawLocations.map((loc, i) => {
   //   ctx.stroke();
   // };
   // if (!hideGrid) drawGrid();
+  // <canvas id="locationCanvas" data-hidden></canvas>
+
+  /**
+   * MARKS PLACEMENT
+   */
 
   const ctn = document.querySelector("#canvas-ctn") as HTMLElement;
   const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLElement[];
@@ -162,7 +167,6 @@ const locations = rawLocations.map((loc, i) => {
   </div>
 </div>
 <div id="canvas-ctn" class="absolute-align full [&>div]:w-fit pointer-events-none">
-  <canvas id="locationCanvas" data-hidden></canvas>
   {
     locations.map((loc, i) => {
       return (
