@@ -1,9 +1,7 @@
 ---
 import Bird from "@/assets/bird-profile.webp";
-import Hero from "@/assets/hero/hero.png";
 import Article from "@/components/Article.astro";
 import Button from "@/components/Button.astro";
-// import AstroDebugPanel from "@/components/DebugPanel/AstroDebugPanel.astro";
 import Gradients from "@/components/Earth/Gradients.astro";
 import ForestMask from "@/components/Forest/ForestMask.astro";
 import Location from "@/components/Location/Location.astro";
@@ -14,7 +12,6 @@ import ClimbIcon from "@/components/icons/Climb.astro";
 import OpenQuoteIcon from "@/components/icons/OpenQuote.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
-import "@/styles/globals.css";
 import { Image } from "astro:assets";
 import { Mountain } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
@@ -52,39 +49,10 @@ const charInText = textRing.length;
   }
 </style>
 
-<Layout title="Welcome to Astro.">
-  <!-- <AstroDebugPanel /> -->
+<Layout title="Accueil | ALAD">
   <main>
-    <Section className="relative text-white">
-      <Image src={Hero} class="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125" alt="hero" />
-      <!-- OVERLAY -->
-      <div class="relative h-screen fade-out-bottom z-[1]"></div>
-      <!-- OVERLAY -->
-      <!-- <div class="absolute full max-w-screen bottom-0 fade-out-bottom h-52" data-debug="fade-out-hero"></div> -->
-      <header class="absolute-align z-10 w-full px-52 py-2 h-1/4">
-        <nav class="full [&>ul]:full">
-          <ul class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
-            <li>
-              <a href="/">
-                <h1 class="text-2xl">A l'abordarbre</h1>
-              </a>
-            </li>
-            <div class="grow"></div>
-            <li>
-              <a href="/contact">Tarifs</a>
-            </li>
-            <li>
-              <a href="/nous">Nous</a>
-            </li>
-            <li>
-              <a href="/contact">
-                <Button size="md" ring="md" variant="outline" data-is="hero-button">Contact</Button>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none">
+    <div class="text-white" slot="hero">
+      <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none text-white">
         <h2 class="text-3xl uppercase">l'aventure commence ici!</h2>
         <h3 class="text-2xl">Découvrez la grimpe d'arbre</h3>
       </div>
@@ -105,7 +73,7 @@ const charInText = textRing.length;
         </Button>
         <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
       </div>
-    </Section>
+    </div>
     <Location />
     <ForestMask />
     <Section
@@ -118,8 +86,8 @@ const charInText = textRing.length;
       <!-- top left -->
       <div class="w-fit h-fit vertical px-12 gap-10">
         <!-- ARTICLE HEADER HERE -->
-        <div class="vertical items-start gap-6">
-          <Article nWord1={40} nWord2={30} className="max-w-[50ch] z-10">
+        <div class="vertical items-start gap-6 z-10">
+          <Article nWord1={40} nWord2={30} className="max-w-[50ch]">
             <BirdIcon />
           </Article>
           <Button size="lg" variant="outline">Contact </Button>

@@ -1,4 +1,10 @@
 ---
+import Hero from "@/assets/hero/hero.png";
+import Button from "@/components/Button.astro";
+import { Image } from "astro:assets";
+import Section from "./Section.astro";
+import "@/styles/globals.css";
+
 interface Props {
   title: string;
 }
@@ -17,6 +23,37 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <Section className="relative text-white">
+      <Image src={Hero} class="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125" alt="hero" />
+      <!-- OVERLAY -->
+      <div class="relative h-screen fade-out-bottom z-[1]"></div>
+      <!-- OVERLAY -->
+      <!-- <div class="absolute full max-w-screen bottom-0 fade-out-bottom h-52" data-debug="fade-out-hero"></div> -->
+      <header class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
+        <nav class="full [&>ul]:full">
+          <ul class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
+            <li>
+              <a href="/">
+                <h1 class="text-2xl">A l'abordarbre</h1>
+              </a>
+            </li>
+            <div class="grow"></div>
+            <li>
+              <a href="/contact">Tarifs</a>
+            </li>
+            <li>
+              <a href="/nous">Nous</a>
+            </li>
+            <li>
+              <a href=`/contact`>
+                <Button size="md" ring="md" variant="outline" data-is="hero-button">Contact</Button>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <slot name="hero" />
+    </Section>
     <slot />
   </body>
 </html>
