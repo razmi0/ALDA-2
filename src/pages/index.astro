@@ -22,33 +22,6 @@ const textRingArray = textRing.split("");
 const charInText = textRing.length;
 ---
 
-<style>
-  main {
-    --primary: #0b0e16;
-    --color-start: rgba(11, 14, 22, 0);
-    --fade-to-b: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-    --fade-to-t: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-    --fade-to-l: linear-gradient(to left, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-    --fade-to-r: linear-gradient(to right, var(--color-start) 0%, var(--color-start) 80%, rgb(11, 14, 22) 100%);
-  }
-
-  .fade-out-top {
-    background: var(--fade-to-t);
-  }
-
-  .fade-out-bottom {
-    background: var(--fade-to-b);
-  }
-
-  .fade-out-right {
-    background: var(--fade-to-r);
-  }
-
-  .fade-out-left {
-    background: var(--fade-to-l);
-  }
-</style>
-
 <Layout title="Accueil | ALAD">
   <main>
     <Hero slot="hero" />

@@ -135,8 +135,7 @@ const locations = rawLocations.map((loc, i) => {
 <!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION -->
 <Section
   size="full"
-  extension="sm"
-  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-center pt-36 lg:pt-0"
+  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-center pt-36 lg:pt-0 gap-28"
 >
   <!-- LOCATION FIGURE -->
   <!-- LOCATION FIGURE -->
@@ -146,7 +145,7 @@ const locations = rawLocations.map((loc, i) => {
   <!-- LOCATION FIGURE -->
   <!-- LOCATION FIGURE -->
   <!-- LOCATION FIGURE -->
-  <div class="relative h-full w-full horizontal center md:max-w-[800px] md:max-h-[700px] select-none">
+  <div class="relative h-full w-full horizontal center md:max-w-[900px] md:max-h-[700px] select-none">
     <LocationFigure>
       <div
         class="absolute top-0 left-1/4 overflow-x-hidden"
@@ -200,12 +199,7 @@ const locations = rawLocations.map((loc, i) => {
       </div>
     </LocationFigure>
   </div>
-  <!-- NEXT ARTICLE -->
-  <!-- NEXT ARTICLE -->
-  <!-- NEXT ARTICLE -->
-  <!-- NEXT ARTICLE -->
 
-  <!-- VISIBLE FRAME -->
   <div class="overflow-x-hidden h-full" style={`max-width: ${articleContentWidth}; width: ${articleContentWidth}`}>
     <div
       class="horizontal"
@@ -216,7 +210,7 @@ const locations = rawLocations.map((loc, i) => {
       {
         locations.map((loc) => {
           return (
-            <article class="vertical items-start justify-center gap-10 " style={`min-width : ${articleContentWidth}`}>
+            <article class="vertical items-start justify-center gap-10" style={`min-width :var(--articleContentWidth)`}>
               <Article
                 title={loc.article.title}
                 words1={loc.article.paragraph1}
@@ -235,11 +229,4 @@ const locations = rawLocations.map((loc, i) => {
       }
     </div>
   </div>
-  <!-- <Article words1={30} words2={40} className="max-w-[50ch]">
-      <TreeIcon />
-    </Article>
-    <figure class="h-full flex flex-row justify-end items-center mt-1 gap-4">
-      <RandomImage />
-      <RandomImage />
-    </figure> -->
 </Section>
