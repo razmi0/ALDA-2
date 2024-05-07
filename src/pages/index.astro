@@ -1,5 +1,6 @@
 ---
 import Bird from "@/assets/bird-profile.webp";
+import FooterLandscape from "@/assets/footer-landscape.png";
 import Article from "@/components/Article.astro";
 import Button from "@/components/Button.astro";
 import Gradients from "@/components/Earth/Gradients.astro";
@@ -14,7 +15,6 @@ import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import FooterLandscape from "@/assets/footer-landscape.png";
 
 const textRing =
   "    oui bonjour    ⚪    c'est moi le texte    ⚪    qui tourne en rond    ⚪    vijay t'es    ⚪    trés jolie et    ⚪    magnifique ackchually    ⚪";
@@ -36,7 +36,7 @@ const charInText = textRing.length;
       <Gradients />
       <div class="w-fit h-fit vertical px-12 gap-10">
         <div class="vertical items-start gap-6 z-10">
-          <Article words1={40} words2={30} className="max-w-[50ch]">
+          <Article words1={40} words2={30} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/90"}>
             <BirdIcon />
           </Article>
           <Button size="lg" variant="outline">Contact </Button>
@@ -123,15 +123,32 @@ const charInText = textRing.length;
 
       <Products />
     </Section>
-    <Section className={"relative"}>
+    <Section className={"relative pt-32"}>
       <style>
         .footer-landscape-fade {
           --color-start: transparent;
           background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
         }
       </style>
-      <Image src={FooterLandscape} alt="earth" class="full absolute-align object-cover" />
-      <div class="absolute-align full footer-landscape-fade z-10"></div>
+      <Image src={FooterLandscape} alt="earth" class="full absolute-align object-cover -z-10" />
+      <div class="absolute-align full footer-landscape-fade"></div>
+      <article class="text-center z-10 vertical center text-black gap-7">
+        <h2 class="max-w-[50ch]">{generateLorem(5)}</h2>
+        <div class="font-bolder text-black/90">
+          <p class="max-w-[50ch]">{generateLorem(15)}</p>
+          <p class="max-w-[50ch]">{generateLorem(8)}</p>
+        </div>
+        <hr class="max-w-[30ch] w-full bg-slate-400" />
+        <div class="font-bold horizontal items-center justify-around w-full max-w-[50ch] text-black/90">
+          <p>05 62 58 95 78</p>
+          <p>laleche@estbonne.com</p>
+        </div>
+      </article>
     </Section>
+    <footer class="h-[50vh]">
+      <div></div>
+      <div></div>
+      <div></div>
+    </footer>
   </main>
 </Layout>
