@@ -4,78 +4,102 @@ import LocationMark from "./LocationMark.astro";
 import data from "./location.json" assert { type: "json" };
 import type { Location } from "./types";
 
-const locations = data.locations as Location[];
+const rawLocations = data.locations as Location[];
 
-const defaultLocation = locations[0] || ({} as Location);
-
-console.log(locations);
-
-let page: string | number = defaultLocation.page || 1;
-let totalPages: string | number = locations.length;
-if (page < 10) page = `0${page.toString()}`;
-if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
+const totalPages = rawLocations.length;
+const locations = rawLocations.map((loc, i) => {
+  // page et labelpage at build time
+  const page = i + 1;
+  const labelPage = page < 10 ? `0${page}` : page;
+  return {
+    ...loc,
+    page: page,
+    labelPage: labelPage,
+    selected: i === 0,
+  };
+});
 ---
 
 <script>
-  // TODO : RESIZE IMPLEMENTATION
+  /**
+   * DEBUG SHOW GRID ( uncomment to show grid)
+   */
+
+  // const canvas = document.querySelector("#locationCanvas") as HTMLCanvasElement;
+  // const ctx = canvas.getContext("2d")!;
+  // const hideGrid = canvas.dataset.hidden;
+  // canvas.width = width;
+  // canvas.height = height;
+
+  // const drawGrid = () => {
+  //   const nRows = Math.floor(width / cellWidth);
+  //   const nCols = Math.floor(height / cellHeight);
+
+  //   // GRID DEEP LVL 1 INDEX IS ROW NUMBER
+  //   // GRID DEEP LVL 2 INDEX IS COLUMN NUMBER
+  //   const grid = new Array(nRows).fill(null).map(() => new Array(nCols).map((_, j) => j));
+  //   // console.log(grid)
+  //   ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+  //   ctx.lineWidth = 1;
+  //   ctx.beginPath();
+  //   for (let i = 0; i < grid.length; i++) {
+  //     const row = grid[i] as number[];
+  //     for (let j = 0; j < row.length; j++) {
+  //       ctx.rect(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+  //       ctx.strokeText(`${i},${j}`, j * cellWidth + 5, i * cellHeight + 15);
+  //     }
+  //   }
+  //   ctx.stroke();
+  // };
+  // if (!hideGrid) drawGrid();
 
   const ctn = document.querySelector("#canvas-ctn") as HTMLElement;
-
   const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLElement[];
 
-  const width = ctn.clientWidth;
-  const height = ctn.clientHeight;
-
-  const cellWidth = Math.floor(width / 30);
-  const cellHeight = Math.floor(height / 30);
+  const cells = 30;
+  const dimensions = {
+    width: ctn.clientWidth,
+    height: ctn.clientHeight,
+    cellWidth: Math.floor(ctn.clientWidth / cells),
+    cellHeight: Math.floor(ctn.clientHeight / cells),
+    update: function () {
+      this.width = ctn.clientWidth;
+      this.height = ctn.clientHeight;
+      this.cellWidth = Math.floor(this.width / cells);
+      this.cellHeight = Math.floor(this.height / cells);
+    },
+  };
 
   const placeMarks = (mark: HTMLElement) => {
     const [x, y] = (mark.dataset.coor as string).split(",").map((n) => parseInt(n)) as [number, number];
-    mark.style.top = `${y * cellHeight}px`;
-    mark.style.left = `${x * cellWidth}px`;
+    mark.style.top = `${y * dimensions.cellHeight}px`;
+    mark.style.left = `${x * dimensions.cellWidth}px`;
   };
 
   marks.map((mark) => placeMarks(mark));
 
+  window.onresize = () => {
+    dimensions.update();
+    marks.map((mark) => placeMarks(mark));
+  };
+
   /**
-   * DEBUG SHOW GRID
+   * Button script
    */
-
-  const canvas = document.querySelector("#locationCanvas") as HTMLCanvasElement;
-  const ctx = canvas.getContext("2d")!;
-  const hideGrid = canvas.dataset.hidden;
-  canvas.width = width;
-  canvas.height = height;
-
-  const drawGrid = () => {
-    const nRows = Math.floor(width / cellWidth);
-    const nCols = Math.floor(height / cellHeight);
-
-    // GRID DEEP LVL 1 INDEX IS ROW NUMBER
-    // GRID DEEP LVL 2 INDEX IS COLUMN NUMBER
-    const grid = new Array(nRows).fill(null).map(() => new Array(nCols).map((_, j) => j));
-    // console.log(grid)
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    for (let i = 0; i < grid.length; i++) {
-      const row = grid[i] as number[];
-      for (let j = 0; j < row.length; j++) {
-        ctx.rect(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
-        ctx.strokeText(`${i},${j}`, j * cellWidth + 5, i * cellHeight + 15);
-      }
-    }
-    ctx.stroke();
-  };
-  if (!hideGrid) drawGrid();
-
   const buttons = Array.from(document.querySelectorAll("[data-is='button-group']"));
+  const pageOutput = document.querySelector("[data-is='page']") as HTMLOutputElement;
+  const totalPageOutput = document.querySelector("[data-is='totalPage']") as HTMLOutputElement;
+  const titleOutput = document.querySelector("[data-is='title']") as HTMLElement;
+  const subtitleOutput = document.querySelector("[data-is='subtitle']") as HTMLElement;
+
   const handler = (e: MouseEvent) => {
-    const action = (e.currentTarget as HTMLElement)?.dataset?.action;
-    console.log(action);
+    const pageTarget = (e.currentTarget as HTMLElement)?.dataset?.action;
   };
 
-  if (buttons) for (const btn of buttons) btn.addEventListener("click", handler as EventListener);
+  buttons &&
+    buttons.map((btn) => {
+      btn.addEventListener("click", handler as EventListener);
+    });
 </script>
 
 <style>
@@ -83,31 +107,45 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
     @apply h-5 w-5 opacity-90;
   }
 </style>
-
-<article class="vertical gap-3 absolute top-0 left-1/4">
-  <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]">
-    <output class="tabular-nums text-white font-semibold">{page}</output>
-    <span class="text-white/90">/ {totalPages}</span>
+<!-- overflow-x-hidden -->
+<div class="absolute top-0 left-1/4 w-[50vw]">
+  <div class="horizontal [&>article]:grow">
+    {
+      locations.map((loc) => {
+        return (
+          <article class="vertical gap-3 justify-between w-full">
+            <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]">
+              <output class="tabular-nums text-white font-semibold" data-is="page">
+                {loc.labelPage}
+              </output>
+              <span class="text-white/90" data-is="totalPage">
+                / {totalPages}
+              </span>
+            </div>
+            <header>
+              <h3 class="text-2xl font-medium leading-3" data-is="title">
+                {loc.title}
+              </h3>
+              <small class="text-sm text-white/90 whitespace-nowrap" data-is="subtitle">
+                {loc.subtitle}
+              </small>
+            </header>
+            <nav class="horizontal items-center justify-start gap-2 mt-1">
+              <button data-is="button-group" data-action={`next${loc.page}`} class="hover:[&>*]:text-white">
+                <ArrowLeft className="text-white/90" />
+              </button>
+              <button data-is="button-group" data-action={`prev${loc.page}`} class="hover:[&>*]:text-white">
+                <ArrowRight className="text-white/90" />
+              </button>
+            </nav>
+          </article>
+        );
+      })
+    }
   </div>
-  <header>
-    <h3 class="text-2xl font-medium leading-3">{defaultLocation.title}</h3>
-    <small class="text-sm text-white/90">{defaultLocation.subtitle}</small>
-  </header>
-  <nav class="horizontal items-center justify-start gap-2 mt-1">
-    <button data-is="button-group" data-action="prevMark" class="hover:[&>*]:text-white">
-      <ArrowLeft className="text-white/90" />
-    </button>
-    <button data-is="button-group" data-action="nextMark" class="hover:[&>*]:text-white">
-      <ArrowRight className="text-white/90" />
-    </button>
-  </nav>
-</article>
-<!--  -->
-<!--  -->
-<!--  -->
+</div>
 <div id="canvas-ctn" class="absolute-align full [&>div]:w-fit pointer-events-none">
   <canvas id="locationCanvas" data-hidden></canvas>
-
   {
     locations.map((loc, i) => {
       return (

@@ -4,24 +4,18 @@
       "title": "Rodez",
       "subtitle": "Arbre centenaire",
       "coordinates": [18, 12],
-      "page": 1,
-      "labelPage": "01",
       "selected": false
     },
     {
       "title": "Toulouse",
       "subtitle": "Monument",
       "coordinates": [16, 16],
-      "page": 5,
-      "labelPage": "05",
       "selected": false
     },
     {
       "title": "Goyrans",
       "subtitle": "Trampolin aérien",
       "coordinates": [17, 18],
-      "page": 2,
-      "labelPage": "02",
       "selected": false
     },
     {
@@ -36,8 +30,6 @@
       "title": "Auch",
       "subtitle": "Bridge",
       "coordinates": [11, 13],
-      "page": 4,
-      "labelPage": "04",
       "selected": false
     },
 
@@ -45,8 +37,6 @@
       "title": "Biarritz",
       "subtitle": "Grimpe ensemblée",
       "coordinates": [6, 15],
-      "page": 6,
-      "labelPage": "06",
       "selected": false
     }
   ]
