@@ -13,22 +13,21 @@ const { size = 20, radius = 10, selected = false, className } = Astro.props;
 ---
 
 <style>
-  div[data-selected="true"] {
+  div.selected {
     @apply ring-1 ring-white/30 ring-inset;
   }
-
-  span[data-selected="true"] {
+  div.selected ~ span {
     @apply text-white text-[1rem];
   }
 </style>
 
 <Fragment>
-  <div data-selected={selected.toString()} class={`p-2 rounded-full bg-blue-200/15`}>
+  <div class={`p-2 rounded-full bg-blue-200/15 ${selected ? "selected" : ""} `}>
     <svg viewBox="0 0 28 28" width={size} height={size} fill={"currentColor"} class={cn("text-pur-500", className)}>
       <circle cx="14" cy="14" r={radius}></circle>
     </svg>
   </div>
-  <span data-selected={selected.toString()} class={`font-semibold text-white/50 text-sm`}>
+  <span class={`font-semibold text-white/50 text-sm`}>
     <slot />
   </span>
 </Fragment>

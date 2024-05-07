@@ -102,6 +102,15 @@ const locations = rawLocations.map((loc, i) => {
     const validTargetIndex = targetIndex > totalPages ? 1 : targetIndex < 1 ? totalPages : targetIndex;
 
     frame.style.transform = `translateX(-${(validTargetIndex - 1) * translation}px)`;
+
+    marks.map((mark) => {
+      const firstChild = mark.firstElementChild as HTMLElement;
+      if (mark.dataset.index === validTargetIndex.toString()) {
+        firstChild.classList.add("selected");
+      } else {
+        firstChild.classList.remove("selected");
+      }
+    });
   };
 
   buttons &&
@@ -157,7 +166,7 @@ const locations = rawLocations.map((loc, i) => {
   {
     locations.map((loc, i) => {
       return (
-        <div class="horizontal center gap-2 absolute" data-coor={loc.coordinates} data-index={i}>
+        <div class="horizontal center gap-2 absolute" data-coor={loc.coordinates} data-index={i + 1}>
           <LocationMark selected={loc.selected}>{loc.label || loc.title}</LocationMark>
         </div>
       );
