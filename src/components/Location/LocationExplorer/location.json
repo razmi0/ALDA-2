@@ -4,7 +4,7 @@
       "title": "Rodez",
       "subtitle": "Arbre centenaire",
       "coordinates": [18, 12],
-      "selected": false
+      "selected": true
     },
     {
       "title": "Toulouse",
@@ -24,7 +24,7 @@
       "coordinates": [15, 20],
       "page": 3,
       "labelPage": "03",
-      "selected": true
+      "selected": false
     },
     {
       "title": "Auch",

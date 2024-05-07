@@ -6,6 +6,9 @@ import type { Location } from "./types";
 
 const rawLocations = data.locations as Location[];
 
+const navArticleWidth = "130px";
+const visibleFrame = "120px";
+
 const totalPages = rawLocations.length;
 const locations = rawLocations.map((loc, i) => {
   // page et labelpage at build time
@@ -86,14 +89,19 @@ const locations = rawLocations.map((loc, i) => {
   /**
    * Button script
    */
-  const buttons = Array.from(document.querySelectorAll("[data-is='button-group']"));
-  const pageOutput = document.querySelector("[data-is='page']") as HTMLOutputElement;
-  const totalPageOutput = document.querySelector("[data-is='totalPage']") as HTMLOutputElement;
-  const titleOutput = document.querySelector("[data-is='title']") as HTMLElement;
-  const subtitleOutput = document.querySelector("[data-is='subtitle']") as HTMLElement;
+  const buttons = Array.from(document.querySelectorAll("[data-is='map-nav']"));
+  const frame = document.querySelector("[data-is='frame']") as HTMLElement;
+  const translation = parseInt(frame.dataset.translation as string, 10);
 
   const handler = (e: MouseEvent) => {
-    const pageTarget = (e.currentTarget as HTMLElement)?.dataset?.action;
+    const [action, currentTarget, totalPages] = (e.currentTarget as HTMLElement)?.dataset?.action
+      ?.split("#")
+      .map((x, i) => (i >= 1 ? parseInt(x) : x)) as [string, number, number];
+
+    const targetIndex = action === "next" ? currentTarget + 1 : currentTarget - 1;
+    const validTargetIndex = targetIndex > totalPages ? 1 : targetIndex < 1 ? totalPages : targetIndex;
+
+    frame.style.transform = `translateX(-${(validTargetIndex - 1) * translation}px)`;
   };
 
   buttons &&
@@ -102,39 +110,39 @@ const locations = rawLocations.map((loc, i) => {
     });
 </script>
 
-<style>
+<style define:vars={{ totalPages, navArticleWidth }}>
   button > * {
     @apply h-5 w-5 opacity-90;
   }
+
+  [data-is="frame"] {
+    min-width: calc(var(--navArticleWidth) * var(--totalPages));
+    transition: transform 0.3s;
+  }
 </style>
-<!-- overflow-x-hidden -->
-<div class="absolute top-0 left-1/4 w-[50vw]">
-  <div class="horizontal [&>article]:grow">
+<!--   -->
+<div
+  class="absolute top-0 left-1/4 overflow-x-hidden"
+  style={`max-width: ${visibleFrame}; width: ${visibleFrame}; height: 100%;`}
+>
+  <div class="horizontal" data-is="frame" data-translation={`${navArticleWidth}`}>
     {
       locations.map((loc) => {
         return (
-          <article class="vertical gap-3 justify-between w-full">
+          <article class={`vertical gap-3 justify-between`} style="min-width : var(--navArticleWidth);">
             <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]">
-              <output class="tabular-nums text-white font-semibold" data-is="page">
-                {loc.labelPage}
-              </output>
-              <span class="text-white/90" data-is="totalPage">
-                / {totalPages}
-              </span>
+              <output class="tabular-nums text-white font-semibold">{loc.labelPage}</output>
+              <span class="text-white/90">/ {totalPages}</span>
             </div>
             <header>
-              <h3 class="text-2xl font-medium leading-3" data-is="title">
-                {loc.title}
-              </h3>
-              <small class="text-sm text-white/90 whitespace-nowrap" data-is="subtitle">
-                {loc.subtitle}
-              </small>
+              <h3 class="text-2xl font-medium leading-3">{loc.title}</h3>
+              <small class="text-sm text-white/90 whitespace-nowrap w-full">{loc.subtitle}</small>
             </header>
             <nav class="horizontal items-center justify-start gap-2 mt-1">
-              <button data-is="button-group" data-action={`next${loc.page}`} class="hover:[&>*]:text-white">
+              <button data-is="map-nav" data-action={`prev#${loc.page}#${totalPages}`} class="hover:[&>*]:text-white">
                 <ArrowLeft className="text-white/90" />
               </button>
-              <button data-is="button-group" data-action={`prev${loc.page}`} class="hover:[&>*]:text-white">
+              <button data-is="map-nav" data-action={`next#${loc.page}#${totalPages}`} class="hover:[&>*]:text-white">
                 <ArrowRight className="text-white/90" />
               </button>
             </nav>
