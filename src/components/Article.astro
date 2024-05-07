@@ -15,7 +15,7 @@ const { dark, words1, words2, className, pClass, title = generateLorem(5) } = As
 const theme = dark ? { title: "text-black", text: "text-black/60" } : { title: "text-white", text: "text-white/60" };
 ---
 
-<div class={cn("vertical gap-4 max-w-[75%] leading-5", theme.text, className)}>
+<div class={cn("vertical gap-4 leading-5", theme.text, className)}>
   <slot />
   <h2 class={cn("text-xl mt-6 ", theme.title)}>{title}</h2>
   <div slot="stars" class="horizontal items-center justify-start">

@@ -13,7 +13,15 @@ import type { Location } from "./LocationExplorer/types";
 const rawLocations = data.locations as Location[];
 
 const navArticleWidth = "130px";
-const visibleFrame = "120px";
+const navVisibleFrame = "120px";
+
+const articleContentWidth = "450px";
+const articleContentGap = "20px";
+const translationWidth = articleContentWidth
+  .concat(articleContentGap)
+  .split("px")
+  .filter((x) => x !== "")
+  .reduce((acc, cur) => acc + parseInt(cur, 10), 0);
 
 const totalPages = rawLocations.length;
 const locations = rawLocations.map((loc, i) => {
@@ -77,8 +85,8 @@ const locations = rawLocations.map((loc, i) => {
    * Button script
    */
   const buttons = Array.from(document.querySelectorAll("[data-is='map-nav']"));
-  const frame = document.querySelector("[data-is='frame']") as HTMLElement;
-  const translation = parseInt(frame.dataset.translation as string, 10);
+  const frames = Array.from(document.querySelectorAll("[data-is='frame']")) as HTMLElement[];
+  const translations = frames.map((frame) => parseInt(frame.dataset.translation as string, 10));
 
   const handler = (e: MouseEvent) => {
     const [action, currentTarget, totalPages] = (e.currentTarget as HTMLElement)?.dataset?.action
@@ -88,7 +96,9 @@ const locations = rawLocations.map((loc, i) => {
     const targetIndex = action === "next" ? currentTarget + 1 : currentTarget - 1;
     const validTargetIndex = targetIndex > totalPages ? 1 : targetIndex < 1 ? totalPages : targetIndex;
 
-    frame.style.transform = `translateX(-${(validTargetIndex - 1) * translation}px)`;
+    frames.map((frame, i) => {
+      frame.style.transform = `translateX(-${(validTargetIndex - 1) * (translations[i] as number)}px)`;
+    });
 
     marks.map((mark) => {
       const firstChild = mark.firstElementChild as HTMLElement;
@@ -106,7 +116,7 @@ const locations = rawLocations.map((loc, i) => {
     });
 </script>
 
-<style define:vars={{ totalPages, navArticleWidth }}>
+<style define:vars={{ totalPages, navArticleWidth, articleContentWidth }}>
   button > * {
     @apply h-5 w-5 opacity-90;
   }
@@ -115,13 +125,18 @@ const locations = rawLocations.map((loc, i) => {
     min-width: calc(var(--navArticleWidth) * var(--totalPages));
     transition: transform 0.3s;
   }
+
+  [data-is="article-frame"] {
+    min-width: calc(var(--articleContentWidth) * var(--totalPages));
+    transition: transform 0.3s;
+  }
 </style>
 
 <!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION -->
 <Section
   size="full"
   extension="sm"
-  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-around pt-36 lg:pt-0"
+  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-center pt-36 lg:pt-0"
 >
   <!-- LOCATION FIGURE -->
   <!-- LOCATION FIGURE -->
@@ -131,11 +146,11 @@ const locations = rawLocations.map((loc, i) => {
   <!-- LOCATION FIGURE -->
   <!-- LOCATION FIGURE -->
   <!-- LOCATION FIGURE -->
-  <div class="relative h-full w-full horizontal center md:max-w-[900px] md:max-h-[700px]">
+  <div class="relative h-full w-full horizontal center md:max-w-[800px] md:max-h-[700px] select-none">
     <LocationFigure>
       <div
         class="absolute top-0 left-1/4 overflow-x-hidden"
-        style={`max-width: ${visibleFrame}; width: ${visibleFrame}; height: 100%;`}
+        style={`max-width: ${navVisibleFrame}; width: ${navVisibleFrame}; height: 100%;`}
       >
         <div class="horizontal" data-is="frame" data-translation={`${navArticleWidth}`}>
           {
@@ -189,13 +204,42 @@ const locations = rawLocations.map((loc, i) => {
   <!-- NEXT ARTICLE -->
   <!-- NEXT ARTICLE -->
   <!-- NEXT ARTICLE -->
-  <article class="w-fit flex flex-col px-12 items-start justify-center gap-10">
-    <Article words1={30} words2={40} className="max-w-[50ch]">
+
+  <!-- VISIBLE FRAME -->
+  <div class="overflow-x-hidden h-full" style={`max-width: ${articleContentWidth}; width: ${articleContentWidth}`}>
+    <div
+      class="horizontal"
+      data-is="frame"
+      data-translation={`${translationWidth}`}
+      style={`gap: ${articleContentGap}`}
+    >
+      {
+        locations.map((loc) => {
+          return (
+            <article class="vertical items-start justify-center gap-10 " style={`min-width : ${articleContentWidth}`}>
+              <Article
+                title={loc.article.title}
+                words1={loc.article.paragraph1}
+                words2={loc.article.paragraph2}
+                pClass={"text-[#a4b1d6] opacity-90"}
+              >
+                <TreeIcon />
+              </Article>
+              <figure class="h-full horizontal justify-end items-center mt-1 gap-4">
+                <RandomImage />
+                <RandomImage />
+              </figure>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+  <!-- <Article words1={30} words2={40} className="max-w-[50ch]">
       <TreeIcon />
     </Article>
     <figure class="h-full flex flex-row justify-end items-center mt-1 gap-4">
       <RandomImage />
       <RandomImage />
-    </figure>
-  </article>
+    </figure> -->
 </Section>
