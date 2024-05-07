@@ -4,38 +4,39 @@ import Button from "../Button.astro";
 import StarEmpty from "../icons/StarEmpty.astro";
 import StarFilled from "../icons/StarFilled.astro";
 
-const pers = {
-  values: ["night", "week", "person", "group"],
-  get: function () {
-    return this.values[Math.floor(Math.random() * this.values.length)];
-  },
-};
+interface Props {
+  id: number;
+  price: string;
+  unit: string;
+  title: string;
+  rating: string;
+  description: string;
+}
 
-const prices = {
-  values: [100, 200, 300, 400, 500],
-  get: function () {
-    return this.values[Math.floor(Math.random() * this.values.length)];
-  },
-};
+const { price, unit, title, rating, description, id } = Astro.props;
 
-const randomStars = new Array(Math.floor(Math.random() * 5) + 1);
-const emptyStars = new Array(5 - randomStars.length);
+const stars = Array.from({ length: 5 }, (_, i) => {
+  return i < parseInt(rating) ? StarFilled : StarEmpty;
+});
 ---
 
-<div class="vertical gap-16">
-  <Article words1={45} pClass={"text-black/90"} dark className="max-w-[50ch]">
-    <Fragment slot="stars">
-      {randomStars.map(() => <StarFilled />)}
-      {emptyStars.map(() => <StarEmpty />)}
-    </Fragment>
+<div class="vertical gap-16" data-id={id}>
+  <Article title={title} words1={description} pClass={"text-black/90"} dark className="max-w-[50ch]">
+    <div slot="rating" class="horizontal items-center justify-start">
+      {
+        stars.map((Star) => {
+          return <Fragment>{<Star />}</Fragment>;
+        })
+      }
+    </div>
   </Article>
   <footer class="horizontal items-center justify-start gap-6">
     <Button size="lg" variant="outline" dark className="w-fit">S'inscrire</Button>
     <p>
       Start at
       <small class="font-bold"> €</small>
-      <span class="font-bold text-lg">{prices.get()}</span>
-      / {pers.get()}
+      <span class="font-bold text-lg">{price}</span>
+      / {unit}
     </p>
   </footer>
 </div>

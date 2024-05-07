@@ -18,9 +18,7 @@ const theme = dark ? { title: "text-black", text: "text-black/60" } : { title: "
 <div class={cn("vertical gap-4 leading-5", theme.text, className)}>
   <slot />
   <h2 class={cn("text-xl mt-6 ", theme.title)}>{title}</h2>
-  <div slot="stars" class="horizontal items-center justify-start">
-    <slot name="stars" />
-  </div>
-  {words1 && <p class={pClass || ""}>{typeof words1 === "number" ? generateLorem(words1) : words1}</p>}
-  {words2 && <p class={pClass || ""}>{typeof words2 === "number" ? generateLorem(words2) : words2}</p>}
+  <slot name="rating" />
 </div>
+{words1 && <p class={pClass || ""}>{typeof words1 === "number" ? generateLorem(words1) : words1}</p>}
+{words2 && <p class={pClass || ""}>{typeof words2 === "number" ? generateLorem(words2) : words2}</p>}

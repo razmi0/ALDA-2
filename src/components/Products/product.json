@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "price": "100",
+      "unit": "person",
+      "rating": "5"
+    },
+    {
+      "id": 2,
+      "price": "400",
+      "unit": "group",
+      "rating": "4"
+    },
+    {
+      "id": 3,
+      "price": "200",
+      "unit": "night",
+      "rating": "3"
+    }
+  ]
+}

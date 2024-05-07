@@ -1,0 +1,55 @@
+---
+import ClimbIcon from "@/components/icons/Climb.astro";
+import { generateLorem } from "@/lib/utils";
+import Product from "./Products/Product.astro";
+import data from "./Products/product.json" assert { type: "json" };
+import type { ProductType } from "./Products/types";
+import RandomImage from "./RandomImage.astro";
+
+const rawProducts = data.products;
+
+const products: ProductType[] = rawProducts.map((product) => {
+  return {
+    ...product,
+    title: generateLorem(5),
+    description: generateLorem(20),
+  };
+});
+
+const imgSize = {
+  width: 400,
+  height: 500,
+};
+---
+
+{
+  products.map((product: ProductType, i: number) => {
+    if (i === 0) {
+      return (
+        <article class="horizontal" data-is={i}>
+          <div>
+            <ClimbIcon />
+            <h2 class="text-xl w-full text-left mb-8">Ce que l'on vous conseille</h2>
+            <RandomImage width={imgSize.width} height={imgSize.height} />
+          </div>
+          <Product {...product} />
+        </article>
+      );
+    }
+    if (i % 2 !== 0) {
+      // even
+      return (
+        <article class="horizontal-reverse">
+          <RandomImage width={imgSize.width} height={imgSize.height} />
+          <Product {...product} />
+        </article>
+      );
+    }
+    return (
+      <article class="horizontal">
+        <RandomImage width={imgSize.width} height={imgSize.height} />
+        <Product {...product} />
+      </article>
+    );
+  })
+}
