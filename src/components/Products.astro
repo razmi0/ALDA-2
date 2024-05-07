@@ -12,7 +12,7 @@ const products: ProductType[] = rawProducts.map((product) => {
   return {
     ...product,
     title: generateLorem(5),
-    description: generateLorem(20),
+    description: generateLorem(40),
   };
 });
 
@@ -39,14 +39,14 @@ const imgSize = {
     if (i % 2 !== 0) {
       // even
       return (
-        <article class="horizontal-reverse">
+        <article class="horizontal-reverse" data-is={i}>
           <RandomImage width={imgSize.width} height={imgSize.height} />
           <Product {...product} />
         </article>
       );
     }
     return (
-      <article class="horizontal">
+      <article class="horizontal" data-is={i}>
         <RandomImage width={imgSize.width} height={imgSize.height} />
         <Product {...product} />
       </article>

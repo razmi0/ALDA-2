@@ -14,8 +14,8 @@ const { size, className, seed = Math.floor(Math.random() * 100), height, width }
 ---
 
 <Image
-  class={cn("aspect-square object-cover ", className)}
-  src={`https://picsum.photos/${seed + (size || 150)}`}
+  class={cn("aspect-square object-cover max-w-none", className)}
+  src={`https://picsum.photos/${seed + (size || width || 150)}`}
   alt="lorem"
   width={width || size || 150}
   height={height || size || 150}
