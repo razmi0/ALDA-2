@@ -6,22 +6,59 @@ import type { Location } from "./types";
 
 const locations = data.locations as Location[];
 
-// LOREM
-let page: string | number = locations?.[0]?.page || 1;
-let totalPages: string | number = locations?.length;
+const defaultLocation = locations[0] || ({} as Location);
+
+let page: string | number = defaultLocation.page || 1;
+let totalPages: string | number = locations.length;
 if (page < 10) page = `0${page.toString()}`;
 if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
-// LOREM
 ---
 
 <script>
+  // TODO : RESIZE IMPLEMENTATION
+
+  const ctn = document.querySelector("#canvas-ctn") as HTMLElement;
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.querySelector("#locationCanvas") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d")!;
+    const width = ctn.clientWidth;
+    const height = ctn.clientHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const nRows = Math.floor(width / 50);
+    const nCols = Math.floor(height / 50);
+
+    // GRID DEEP LVL 1 INDEX IS ROW NUMBER
+    // GRID DEEP LVL 2 INDEX IS COLUMN NUMBER
+    // const grid = new Array(nRows).fill(null).map(() => new Array(nCols).fill(null).map((_, j) => j));
+
+    const drawGrid = () => {
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let i = 0; i < nRows; i++) {
+        ctx.moveTo(i * 50, 0);
+        ctx.lineTo(i * 50, height);
+      }
+      for (let j = 0; j < nCols; j++) {
+        ctx.moveTo(0, j * 50);
+        ctx.lineTo(width, j * 50);
+      }
+      ctx.stroke();
+    };
+
+    drawGrid();
+  });
+
   const buttons = Array.from(document.querySelectorAll("[data-is='button-group']"));
-  const handler = (e) => {
-    const action = e.currentTarget.dataset.action;
+  const handler = (e: MouseEvent) => {
+    const action = (e.currentTarget as HTMLElement)?.dataset?.action;
     console.log(action);
   };
 
-  if (buttons) for (const btn of buttons) btn.addEventListener("click", handler);
+  if (buttons) for (const btn of buttons) btn.addEventListener("click", handler as EventListener);
 </script>
 
 <style>
@@ -36,8 +73,8 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
     <span class="text-white/90">/ {totalPages}</span>
   </div>
   <header>
-    <h3 class="text-2xl font-medium leading-3">{locations?.[0]?.title}</h3>
-    <small class="text-sm text-white/90">{locations?.[0]?.subtitle}</small>
+    <h3 class="text-2xl font-medium leading-3">{defaultLocation.title}</h3>
+    <small class="text-sm text-white/90">{defaultLocation.subtitle}</small>
   </header>
   <nav class="horizontal items-center justify-start gap-2 mt-1">
     <button data-is="button-group" data-action="prevMark" class="hover:[&>*]:text-white">
@@ -51,8 +88,9 @@ if (totalPages < 10) totalPages = `0${totalPages.toString()}`;
 <!--  -->
 <!--  -->
 <!--  -->
-<div class="absolute-align full [&>div]:w-fit pointer-events-none">
-  <Mark wrapperClassName="top-24 right-24" coordinates={locations?.[0]?.coordinates} selected>
+<div id="canvas-ctn" class="absolute-align full [&>div]:w-fit pointer-events-none">
+  <canvas id="locationCanvas"></canvas>
+  <Mark wrapperClassName="top-[25%] right-[25%]" coordinates={locations?.[0]?.coordinates} selected>
     {locations?.[0]?.label || locations?.[0]?.title}
   </Mark>
   <Mark wrapperClassName="top-64 right-56" coordinates={locations?.[1]?.coordinates}>
