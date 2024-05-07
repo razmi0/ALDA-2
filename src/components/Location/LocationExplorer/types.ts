@@ -6,7 +6,9 @@ export interface Location {
   labelPage?: `${this["page"]}` & string;
   label?: string | undefined; // location label on map
   selected?: boolean | undefined;
-  articleTitle: string;
-  articleParagraph1: string;
-  articleParagraph2: string;
+  article: {
+    title: string;
+    paragraph1: string;
+    paragraph2: string;
+  };
 }

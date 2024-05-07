@@ -23,7 +23,7 @@ const emptyStars = new Array(5 - randomStars.length);
 ---
 
 <div class="vertical gap-16">
-  <Article nWord1={45} pClass={"text-black/90"} dark className="max-w-[50ch]">
+  <Article words1={45} pClass={"text-black/90"} dark className="max-w-[50ch]">
     <Fragment slot="stars">
       {randomStars.map(() => <StarFilled />)}
       {emptyStars.map(() => <StarEmpty />)}

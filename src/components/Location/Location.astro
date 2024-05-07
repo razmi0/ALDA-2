@@ -1,6 +1,7 @@
 ---
 import TreeIcon from "@/components/icons/Tree.astro";
 import Section from "@/layouts/Section.astro";
+import { generateLorem } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Article from "../Article.astro";
 import RandomImage from "../RandomImage.astro";
@@ -19,11 +20,18 @@ const locations = rawLocations.map((loc, i) => {
   // page et labelpage at build time
   const page = i + 1;
   const labelPage = page < 10 ? `0${page}` : page;
+  // for now we generate lorem article content
+  const loremArticle = {
+    title: generateLorem(5),
+    paragraph1: generateLorem(30),
+    paragraph2: generateLorem(40),
+  };
   return {
     ...loc,
     page: page,
     labelPage: labelPage,
     selected: i === 0,
+    article: loremArticle,
   };
 });
 ---
@@ -182,7 +190,7 @@ const locations = rawLocations.map((loc, i) => {
   <!-- NEXT ARTICLE -->
   <!-- NEXT ARTICLE -->
   <article class="w-fit flex flex-col px-12 items-start justify-center gap-10">
-    <Article nWord1={30} nWord2={40} className="max-w-[50ch]">
+    <Article words1={30} words2={40} className="max-w-[50ch]">
       <TreeIcon />
     </Article>
     <figure class="h-full flex flex-row justify-end items-center mt-1 gap-4">

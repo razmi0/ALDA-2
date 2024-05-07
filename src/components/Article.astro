@@ -3,23 +3,24 @@ import { cn, generateLorem } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props {
-  nWord1?: number;
-  nWord2?: number;
+  title?: string;
+  words1?: number | string;
+  words2?: number | string;
   className?: string;
   pClass?: HTMLAttributes<"p">["class"];
   dark?: boolean;
 }
 
-const { dark, nWord1, nWord2, className, pClass } = Astro.props;
+const { dark, words1, words2, className, pClass, title = generateLorem(5) } = Astro.props;
 const theme = dark ? { title: "text-black", text: "text-black/60" } : { title: "text-white", text: "text-white/60" };
 ---
 
 <div class={cn("vertical gap-4 max-w-[75%] leading-5", theme.text, className)}>
   <slot />
-  <h2 class={cn("text-xl mt-6 ", theme.title)}>{generateLorem(5)}</h2>
+  <h2 class={cn("text-xl mt-6 ", theme.title)}>{title}</h2>
   <div slot="stars" class="horizontal items-center justify-start">
     <slot name="stars" />
   </div>
-  {nWord1 && <p class={pClass || ""}>{generateLorem(nWord1)}</p>}
-  {nWord2 && <p class={pClass || ""}>{generateLorem(nWord2)}</p>}
+  {words1 && <p class={pClass || ""}>{typeof words1 === "number" ? generateLorem(words1) : words1}</p>}
+  {words2 && <p class={pClass || ""}>{typeof words2 === "number" ? generateLorem(words2) : words2}</p>}
 </div>
