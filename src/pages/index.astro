@@ -56,14 +56,13 @@ const charInText = textRing.length;
     <ForestMask />
     <Section
       extension="none"
-      className="relative horizontal flex-wrap center pb-32 bg-earth-600 overflow-hidden"
+      className="relative vertical md:horizontal flex-wrap center pb-32 bg-earth-600 overflow-hidden"
       size="full"
       data-debug="section-bird"
     >
       <Gradients />
-      <!-- top left -->
+
       <div class="w-fit h-fit vertical px-12 gap-10">
-        <!-- ARTICLE HEADER HERE -->
         <div class="vertical items-start gap-6 z-10">
           <Article nWord1={40} nWord2={30} className="max-w-[50ch]">
             <BirdIcon />
@@ -71,6 +70,7 @@ const charInText = textRing.length;
           <Button size="lg" variant="outline">Contact </Button>
         </div>
       </div>
+
       <figure class="relative w-fit h-fit text-ring text-xs text-white/60" data-debug="section-bird">
         <style define:vars={{ charInText }}>
           .text-ring {
@@ -120,6 +120,7 @@ const charInText = textRing.length;
         }
         <span class="sr-only">{textRing}</span>
       </figure>
+
       <article class="horizontal center drop-shadow-2xl [&>*]:h-[390px] [&>*]:w-[375px] text-white/50">
         <RandomImage size={500} className=" rounded-tl-sm rounded-bl-sm" />
         <div class="vertical center w-5/12 bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm text-lg">
