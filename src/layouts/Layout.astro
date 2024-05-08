@@ -1,9 +1,11 @@
 ---
 import Button from "@/components/Button.astro";
-// import Hero from "@/components/ImageSwitch/screen/screen-img-1.png";
-import "@/styles/globals.css";
-// import { Image } from "astro:assets";
 import ImageSwitch from "@/components/ImageSwitch/ImageSwitch.astro";
+import Facebook from "@/components/icons/Facebook.astro";
+import Insta from "@/components/icons/Insta.astro";
+import Linkedin from "@/components/icons/Linkedin.astro";
+import Youtube from "@/components/icons/Youtube.astro";
+import "@/styles/globals.css";
 import Section from "./Section.astro";
 
 interface Props {
@@ -35,7 +37,7 @@ const { title } = Astro.props;
         background: var(--fade-to-b);
       }
     </style>
-    <Section className="relative text-white" data-is="hero">
+    <Section className="relative text-white" data-is="hero" as="header">
       <!-- <Image src={Hero} class="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125" alt="hero" /> -->
       <ImageSwitch
         uniqueKey="hero"
@@ -46,7 +48,7 @@ const { title } = Astro.props;
       <div class="relative h-screen fade-out-bottom z-[10]"></div>
       <!-- OVERLAY -->
       <!-- <div class="absolute full max-w-screen bottom-0 fade-out-bottom h-52" data-debug="fade-out-hero"></div> -->
-      <header class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
+      <section class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
         <nav class="full [&>ul]:full">
           <ul class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
             <li>
@@ -63,28 +65,37 @@ const { title } = Astro.props;
             </li>
             <li>
               <a href=`/contact`>
-                <Button size="md" ring="md" variant="outline" data-is="hero-button">Contact</Button>
+                <Button size="sm" ring="md" variant="outline" data-is="hero-button">Contact</Button>
               </a>
             </li>
           </ul>
         </nav>
-      </header>
+      </section>
       <slot name="hero" />
     </Section>
     <slot />
 
-    <footer class="h-[20vh]">
-      <div class="full horizontal items-center justify-around">
+    <Section as="footer" class="h-[20vh] vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10">
+      <section class="w-full horizontal items-center justify-between">
         <h1 class="text-2xl">A l'abordarbre</h1>
         <nav class="text-black/80 font-semibold">
-          <ul class="space-x-5 [&>a:hover]:underline">
+          <ul class="space-x-10">
             <a href="/contact">contact</a>
             <a href="/nous">nous</a>
             <a href="/tarifs">tarifs</a>
             <a href="/tarifs">activités</a>
           </ul>
         </nav>
-      </div>
-    </footer>
+        <article class="text-black/50 font-bold">
+          <ul class="horizontal gap-10">
+            <li><Youtube className={"w-6 h-6"} /></li>
+            <li><Linkedin className={"w-6 h-6"} /></li>
+            <li><Insta className={"w-6 h-6"} /></li>
+            <li><Facebook className={"w-6 h-6"} /></li>
+          </ul>
+        </article>
+      </section>
+      <a class="uppercase text-[0.8rem] mt-2 block text-right" href="https://github.com/razmi0">dev by razmio</a>
+    </Section>
   </body>
 </html>

@@ -1,6 +1,6 @@
 ---
 import { cn } from "@/lib/utils";
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes, HTMLTag } from "astro/types";
 
 type Sizes = "full" | "half" | "third" | "quarter";
 type Extension = "xs" | "sm" | "md" | "lg" | "xl" | "none";
@@ -11,9 +11,13 @@ interface Props extends HTMLAttributes<"section"> {
   className?: HTMLAttributes<"section">["class"];
   style?: HTMLAttributes<"section">["style"];
   [key: `data-${string}`]: boolean | number | string;
+  as?: HTMLTag;
 }
 
-const { size = "full", extension = "none", className, style = "" } = Astro.props;
+const { size = "full", extension = "none", className, style = "", as = "section" } = Astro.props;
+const filteredProps = ["size", "extension", "className", "style", "as"];
+
+const Tag = as as HTMLTag;
 
 const extensions: Record<Extension, string> = {
   none: "0px",
@@ -32,8 +36,10 @@ const sizes: Record<Sizes, string> = {
 } as const;
 
 const height = `calc(${sizes[size]} + ${extensions[extension]})`;
+
+const props = Object.fromEntries(Object.entries(Astro.props).filter(([key]) => !filteredProps.includes(key)));
 ---
 
-<section {...Astro.props} class={cn("min-w-full", className)} style={`min-height : ${height}; ${style} `}>
+<Tag {...props} class={cn("min-w-full", className)} style={`min-height : ${height}; ${style} `}>
   <slot />
-</section>
+</Tag>
