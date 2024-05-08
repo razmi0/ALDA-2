@@ -21,11 +21,11 @@ const stars = Array.from({ length: 5 }, (_, i) => {
 ---
 
 <div class="vertical gap-10" data-id={id}>
-  <Article title={title} words1={description} pClass={"text-black/90"} dark className="max-w-[50ch]">
+  <Article title={title} words1={description} pClass={"text-black/90 max-w-[50ch]"} dark>
     <div slot="rating" class="horizontal items-center justify-start">
       {
         stars.map((Star) => {
-          return <Fragment>{<Star />}</Fragment>;
+          return <Fragment>{<Star className={"h-4 w-4"} />}</Fragment>;
         })
       }
     </div>
