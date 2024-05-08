@@ -1,18 +1,23 @@
 ---
 import Section from "@/layouts/Section.astro";
+import VerticalText from "../VerticalText.astro";
 import EarthArticle from "./EarthArticle.astro";
-import Gradients from "./Gradients.astro";
 import EarthFigure from "./EarthFigure.astro";
 import EarthTestimony from "./EarthTestimony.astro";
+import Gradients from "./Gradients.astro";
 ---
 
 <Section
   extension="none"
-  className="relative vertical md:horizontal flex-wrap center pb-32 bg-earth-600 overflow-hidden"
+  className="relative vertical md:horizontal flex-wrap center pb-32 bg-earth-600 overflow-hidden gap-20"
   size="full"
 >
   <Gradients />
-  <EarthArticle />
-  <EarthFigure />
+  <VerticalText className="-left-28">Découvrez la grimpe d'arbre</VerticalText>
+
+  <div class="w-full horizontal center gap-48">
+    <EarthArticle />
+    <EarthFigure />
+  </div>
   <EarthTestimony />
 </Section>
