@@ -6,12 +6,12 @@ import RandomImage from "../RandomImage.astro";
 
 <article class="horizontal center shadow-2xl shadow-black z-10 [&>*]:h-[450px] [&>*]:w-[425px] text-white/50">
   <RandomImage size={500} className=" rounded-tl-sm rounded-bl-sm" />
-  <div class="vertical center w-5/12 bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm text-lg">
+  <div class="vertical center w-5/12 bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm">
     <blockquote class="leading-6">
       <div class="w-full translate-y-6" aria-roledescription="open quote">
         <OpenQuote />
       </div>
-      <p class="indent-10">{generateLorem(20)}</p>
+      <p class="text-lg indent-10">{generateLorem(20)}</p>
     </blockquote>
     <footer class="w-full mt-2">
       <address class="text-white/90 font-semibold">Vijay Leblanc</address>

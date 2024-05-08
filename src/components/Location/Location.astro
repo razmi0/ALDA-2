@@ -13,11 +13,13 @@ import type { Location } from "./LocationExplorer/types";
 
 const rawLocations = data.locations as Location[];
 
+// no gap
 const navArticleWidth = "130px";
 const navVisibleFrame = "120px";
-
+// --
 const articleContentWidth = "450px";
 const articleContentGap = "20px";
+// translation width article content =  width + gap
 const translationWidth = articleContentWidth
   .concat(articleContentGap)
   .split("px")
