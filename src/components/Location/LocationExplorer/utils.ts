@@ -46,10 +46,13 @@ export const updateFrames = (frames: HTMLElement[], targetIndex: number) => {
  *  @description Updates the [data-action] attribute of the buttons
  */
 export const updateButtons = (buttons: HTMLElement[], targetIndex: number, totalPages: number) => {
-  buttons.forEach((btn) => {
+  let i = 0;
+  while (i < buttons.length) {
+    const btn = buttons[i] as HTMLElement;
     const actiontype = btn.dataset.action?.split("#")[0] as string;
     btn.dataset.action = `${actiontype}#${targetIndex}#${totalPages}`;
-  });
+    i++;
+  }
 };
 
 /**
@@ -63,12 +66,15 @@ export const updateOutput = (output: HTMLElement, targetIndex: number) => {
  * @description Updates the marks with/without the selected class
  */
 export const updateMarks = (marks: HTMLElement[], targetIndex: number) => {
-  marks.forEach((mark) => {
+  let i = 0;
+  while (i < marks.length) {
+    const mark = marks[i] as HTMLElement;
+    i++;
     const firstChild = mark.firstElementChild as HTMLElement;
     if (mark.dataset.index === targetIndex.toString()) {
       firstChild.classList.add("selected");
-    } else {
-      firstChild.classList.remove("selected");
+      continue;
     }
-  });
+    firstChild.classList.remove("selected");
+  }
 };
