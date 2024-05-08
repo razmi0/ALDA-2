@@ -9,12 +9,14 @@ interface Props {
   selected?: boolean | undefined;
 }
 
-const { size = 20, radius = 10, selected = false, className } = Astro.props;
+const { size = 20, radius = "0.5rem", selected = false, className } = Astro.props;
 ---
 
 <style>
-  div.selected {
-    @apply ring-1 ring-white/30 ring-inset;
+  @media (min-width: 640px) {
+    div.selected {
+      @apply ring-1 ring-white/30 ring-inset;
+    }
   }
   div.selected ~ span {
     @apply text-white text-[1rem];
@@ -22,7 +24,7 @@ const { size = 20, radius = 10, selected = false, className } = Astro.props;
 </style>
 
 <Fragment>
-  <div class={`p-2 rounded-full bg-blue-200/15 ${selected ? "selected" : ""} `}>
+  <div class={`sm:p-2 sm:rounded-full sm:bg-blue-200/15 ${selected ? "selected" : ""} `}>
     <svg viewBox="0 0 28 28" width={size} height={size} fill={"currentColor"} class={cn("text-pur-500", className)}>
       <circle cx="14" cy="14" r={radius}></circle>
     </svg>

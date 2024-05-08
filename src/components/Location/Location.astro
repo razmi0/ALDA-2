@@ -80,6 +80,10 @@ const locations = rawLocations.map((loc, i) => {
   };
 
   const placeMarks = (mark: HTMLElement) => {
+    /**
+     * x => column
+     * y => row
+     */
     const [x, y] = (mark.dataset.coor as string).split(",").map((n) => parseInt(n)) as [number, number];
     mark.style.top = `${y * dimensions.cellHeight}px`;
     mark.style.left = `${x * dimensions.cellWidth}px`;
@@ -198,7 +202,7 @@ const locations = rawLocations.map((loc, i) => {
     </div>
   </LocationFigure>
 
-  <div class="overflow-x-hidden h-full" style={`max-width: ${articleContentWidth}; width: ${articleContentWidth}`}>
+  <div class="overflow-x-hidden h-full" style={`max-width: ${articleContentWidth}`}>
     <div
       class="horizontal"
       data-is="frame"
