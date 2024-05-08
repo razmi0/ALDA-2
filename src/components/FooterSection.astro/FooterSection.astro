@@ -1,0 +1,34 @@
+---
+import Section from "@/layouts/Section.astro";
+import ImageSwitch from "../ImageSwitch/ImageSwitch.astro";
+import { generateLorem } from "@/lib/utils";
+---
+
+<Section className={"relative"}>
+  <style>
+    .footer-landscape-fade {
+      --color-start: transparent;
+      background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
+    }
+  </style>
+  <ImageSwitch
+    uniqueKey="last-section"
+    alt="last section images"
+    className="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
+  />
+  <!-- OVERLAY -->
+  <!-- <div class="absolute-align full footer-landscape-fade z-50"></div> -->
+  <!-- OVERLAY -->
+  <article class="text-center z-10 vertical center text-black gap-7 pt-32">
+    <h2 class="max-w-[50ch]">{generateLorem(5)}</h2>
+    <div class="font-bolder text-black/90">
+      <p class="max-w-[50ch]">{generateLorem(15)}</p>
+      <p class="max-w-[50ch]">{generateLorem(8)}</p>
+    </div>
+    <hr class="max-w-[30ch] w-full bg-slate-400" />
+    <div class="font-semibold horizontal items-center justify-around w-full max-w-[50ch] text-black/90">
+      <p>(+33) 5 62 58 95 78</p>
+      <p>info@alabordarbre.com</p>
+    </div>
+  </article>
+</Section>

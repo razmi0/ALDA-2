@@ -1,154 +1,18 @@
 ---
-import Bird from "@/assets/bird-profile.webp";
-import Article from "@/components/Article.astro";
-import Button from "@/components/Button.astro";
-import Gradients from "@/components/Earth/Gradients.astro";
+import Earth from "@/components/Earth/Earth.astro";
+import FooterSection from "@/components/FooterSection.astro/FooterSection.astro";
 import ForestMask from "@/components/Forest/ForestMask.astro";
 import Hero from "@/components/Hero.astro";
-import ImageSwitch from "@/components/ImageSwitch/ImageSwitch.astro";
 import Location from "@/components/Location/Location.astro";
 import Products from "@/components/Products.astro";
-import RandomImage from "@/components/RandomImage.astro";
-import BirdIcon from "@/components/icons/Bird.astro";
-import OpenQuoteIcon from "@/components/icons/OpenQuote.astro";
-import Section from "@/layouts/Section.astro";
-import { generateLorem } from "@/lib/utils";
-import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-
-const textRing =
-  "    oui bonjour    ⚪    c'est moi le texte    ⚪    qui tourne en rond    ⚪    vijay t'es    ⚪    trés jolie et    ⚪    magnifique ackchually    ⚪";
-const textRingArray = textRing.split("");
-const charInText = textRing.length;
 ---
 
 <Layout title="Accueil | ALAD">
   <Hero slot="hero" />
   <Location />
   <ForestMask />
-  <Section
-    extension="none"
-    className="relative vertical md:horizontal flex-wrap center pb-32 bg-earth-600 overflow-hidden"
-    size="full"
-    data-debug="section-bird"
-  >
-    <Gradients />
-    <div class="w-fit h-fit vertical px-12 gap-10">
-      <div class="vertical items-start gap-6 z-10">
-        <Article words1={40} words2={30} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/90"}>
-          <BirdIcon />
-        </Article>
-        <Button size="lg" variant="outline">Contact </Button>
-      </div>
-    </div>
-    <style define:vars={{ charInText }}>
-      .text-ring {
-        --character-width: 1;
-        --image-size: 120px;
-        --image-radius: calc(var(--image-size) / 2);
-      }
-      .text-ring [style*="--index"] {
-        --inner-angle: calc((360 / var(--charInText)) * 1deg);
-        --radius: calc(((var(--character-width, 1) / sin(var(--inner-angle))) * -1ch) - var(--image-radius));
-        text-transform: uppercase;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) rotate(calc(var(--inner-angle) * var(--index))) translateY(var(--radius, -5ch));
-      }
-
-      .text-ring {
-        --duration: 180s;
-        animation: spin var(--duration) infinite linear;
-
-        & > img {
-          animation: counter-spin var(--duration) infinite linear;
-        }
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(-360deg);
-        }
-      }
-
-      @keyframes counter-spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-    <figure class="relative w-fit h-fit text-ring text-xs text-white/60" data-debug="section-bird">
-      <Image src={Bird} alt="beautifull bird" class="rounded-full object-cover h-[500px] object-top" />
-      <div class="rotation">
-        {
-          textRingArray.map((char, index) => {
-            return <span style={`--index: ${index}`}>{char}</span>;
-          })
-        }
-      </div>
-      <span class="sr-only">{textRing}</span>
-    </figure>
-
-    <article class="horizontal center drop-shadow-2xl [&>*]:h-[390px] [&>*]:w-[375px] text-white/50">
-      <RandomImage size={500} className=" rounded-tl-sm rounded-bl-sm" />
-      <div class="vertical center w-5/12 bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm text-lg">
-        <blockquote class="leading-6">
-          <div class="w-full translate-y-6" aria-roledescription="open quote">
-            <OpenQuoteIcon />
-          </div>
-          <p class="indent-10">{generateLorem(20)}</p>
-        </blockquote>
-        <footer class="w-full mt-2">
-          <address class="text-white/90 font-semibold">Vijay Leblanc</address>
-          <p class="text-pur-500 font-semibold">Fondateur</p>
-        </footer>
-      </div>
-    </article>
-  </Section>
-
-  <Section
-    extension="md"
-    className="relative vertical center py-52 px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
-  >
-    <style>
-      .before-footer-fade {
-        --color-start: #ffffff;
-        background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 85%, #94c2e7 100%);
-      }
-    </style>
-    <!-- OVERLAY -->
-    <!-- <div class="absolute-align full before-footer-fade -z-10"></div> -->
-    <!-- OVERLAY -->
-
-    <Products />
-  </Section>
-  <Section className={"relative"}>
-    <style>
-      .footer-landscape-fade {
-        --color-start: transparent;
-        background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
-      }
-    </style>
-    <ImageSwitch
-      uniqueKey="last-section"
-      alt="last section images"
-      className="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
-    />
-    <!-- OVERLAY -->
-    <!-- <div class="absolute-align full footer-landscape-fade z-50"></div> -->
-    <!-- OVERLAY -->
-    <article class="text-center z-10 vertical center text-black gap-7 pt-32">
-      <h2 class="max-w-[50ch]">{generateLorem(5)}</h2>
-      <div class="font-bolder text-black/90">
-        <p class="max-w-[50ch]">{generateLorem(15)}</p>
-        <p class="max-w-[50ch]">{generateLorem(8)}</p>
-      </div>
-      <hr class="max-w-[30ch] w-full bg-slate-400" />
-      <div class="font-semibold horizontal items-center justify-around w-full max-w-[50ch] text-black/90">
-        <p>(+33) 5 62 58 95 78</p>
-        <p>info@alabordarbre.com</p>
-      </div>
-    </article>
-  </Section>
+  <Earth />
+  <Products />
+  <FooterSection />
 </Layout>

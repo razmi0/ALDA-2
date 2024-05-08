@@ -1,0 +1,14 @@
+---
+import { BirdIcon } from "lucide-react";
+import Article from "../Article.astro";
+import Button from "../Button.astro";
+---
+
+<div class="w-fit h-fit vertical px-12 gap-10">
+  <div class="vertical items-start gap-6 z-10">
+    <Article words1={40} words2={30} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/90"}>
+      <BirdIcon />
+    </Article>
+    <Button size="lg" variant="outline">Contact </Button>
+  </div>
+</div>
