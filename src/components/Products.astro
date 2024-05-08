@@ -26,7 +26,7 @@ const imgSize = {
 
 <Section
   extension="md"
-  className="relative vertical center py-52 px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
+  className=" max-w-[100vw] relative vertical center md:py-52 md:px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
 >
   <VerticalText position="right" dark>Le meilleur de nos propositions</VerticalText>
   <style>
@@ -45,7 +45,10 @@ const imgSize = {
   {
     products.map((product: ProductType, i: number) => {
       return (
-        <article class={`${i % 2 !== 0 ? "horizontal-reverse" : "horizontal"}`} data-is={`product-${i}`}>
+        <article
+          class={`${i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal"}`}
+          data-is={`product-${i}`}
+        >
           <RandomImage width={imgSize.width} height={imgSize.height} />
           <Product {...product} />
         </article>
