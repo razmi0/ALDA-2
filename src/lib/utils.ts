@@ -8,7 +8,7 @@ const cn = (...inputs: ClassValue[]) => {
 /**
  * True if DEV env
  */
-const debug = import.meta.env.DEV && false;
+const isDev = import.meta.env.DEV;
 
 const generateLorem = (length: number): string => {
   let i = length;
@@ -26,4 +26,4 @@ const generateLorem = (length: number): string => {
   return generatedText.charAt(0).toUpperCase() + generatedText.slice(1).toLowerCase();
 };
 
-export { cn, debug, generateLorem };
+export { cn, generateLorem, isDev };
