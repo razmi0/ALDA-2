@@ -3,18 +3,40 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   className?: string;
+  position: "left" | "right";
+  dark?: boolean;
 }
 
-const { className } = Astro.props;
+const { className, position, dark = false } = Astro.props;
+
+const positions = {
+  left: "-left-32",
+  right: "-right-32",
+};
+
+const theme = dark ? "dark" : "light";
+
+const themed = {
+  light: {
+    text: "text-white",
+    separator: "bg-white",
+  },
+  dark: {
+    text: "text-black",
+    separator: "bg-black",
+  },
+};
 ---
 
 <div
   class={cn(
-    "horizontal center absolute left-0 bottom-96 z-10 text-white font-medium text-xs uppercase -rotate-90 h-fit w-fit gap-5",
+    "horizontal center absolute z-10 text-white font-medium text-xs uppercase -rotate-90 h-fit w-fit gap-5",
+    positions[position],
+    themed[theme].text,
     className
   )}
 >
-  <hr class="h-[1px] w-40" />
+  <hr class={cn("h-[1px] w-40", themed[theme].separator)} />
   <span class="whitespace-nowrap">
     <slot />
   </span>

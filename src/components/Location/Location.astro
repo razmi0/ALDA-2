@@ -5,6 +5,7 @@ import { generateLorem } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Article from "../Article.astro";
 import RandomImage from "../RandomImage.astro";
+import VerticalText from "../VerticalText.astro";
 import LocationFigure from "./LocationExplorer/LocationFigure.astro";
 import LocationMark from "./LocationExplorer/LocationMark.astro";
 import data from "./LocationExplorer/location.json" assert { type: "json" };
@@ -132,19 +133,11 @@ const locations = rawLocations.map((loc, i) => {
   }
 </style>
 
-<!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION --><!-- SECTION -->
 <Section
   size="full"
-  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-center pt-36 lg:pt-0 gap-28"
+  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-start pt-36 lg:pt-0 gap-32"
 >
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
-  <!-- LOCATION FIGURE -->
+  <VerticalText position="right" className="bottom-48">Découvrez des lieux uniques</VerticalText>
   <div class="relative h-full w-full horizontal center md:max-w-[900px] md:max-h-[700px] select-none">
     <LocationFigure>
       <div

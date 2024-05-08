@@ -6,6 +6,7 @@ import Product from "./Products/Product.astro";
 import data from "./Products/product.json" assert { type: "json" };
 import type { ProductType } from "./Products/types";
 import RandomImage from "./RandomImage.astro";
+import VerticalText from "./VerticalText.astro";
 
 const rawProducts = data.products;
 
@@ -27,6 +28,7 @@ const imgSize = {
   extension="md"
   className="relative vertical center py-52 px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
 >
+  <VerticalText position="right" dark>Le meilleur de nos propositions</VerticalText>
   <style>
     .before-footer-fade {
       --color-start: #ffffff;
