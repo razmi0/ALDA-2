@@ -1,11 +1,11 @@
 ---
-import ClimbIcon from "@/components/icons/Climb.astro";
+import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
+import { BirdIcon } from "lucide-react";
 import Product from "./Products/Product.astro";
 import data from "./Products/product.json" assert { type: "json" };
 import type { ProductType } from "./Products/types";
 import RandomImage from "./RandomImage.astro";
-import Section from "@/layouts/Section.astro";
 
 const rawProducts = data.products;
 
@@ -36,33 +36,14 @@ const imgSize = {
   <!-- OVERLAY -->
   <!-- <div class="absolute-align full before-footer-fade -z-10"></div> -->
   <!-- OVERLAY -->
+  <div class="vertical gap-10 w-full">
+    <BirdIcon className="h-10 w-10" />
+    <h2 class="text-xl text-left">Ce que l'on vous conseille</h2>
+  </div>
   {
     products.map((product: ProductType, i: number) => {
-      if (i === 0) {
-        return (
-          <>
-            <div class="w-full vertical">
-              <ClimbIcon />
-              <h2 class="text-xl w-full text-left">Ce que l'on vous conseille</h2>
-            </div>
-            <article class="horizontal" data-is={i}>
-              <RandomImage width={imgSize.width} height={imgSize.height} />
-              <Product {...product} />
-            </article>
-          </>
-        );
-      }
-      if (i % 2 !== 0) {
-        // even
-        return (
-          <article class="horizontal-reverse" data-is={i}>
-            <RandomImage width={imgSize.width} height={imgSize.height} />
-            <Product {...product} />
-          </article>
-        );
-      }
       return (
-        <article class="horizontal" data-is={i}>
+        <article class={`${i % 2 !== 0 ? "horizontal-reverse" : "horizontal"}`} data-is={`product-${i}`}>
           <RandomImage width={imgSize.width} height={imgSize.height} />
           <Product {...product} />
         </article>
