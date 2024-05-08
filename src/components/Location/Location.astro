@@ -26,7 +26,7 @@ const translationWidth = articleContentWidth
   .filter((x) => x !== "")
   .reduce((acc, cur) => acc + parseInt(cur, 10), 0);
 
-const totalPages = rawLocations.length;
+const totalPages = rawLocations.length < 10 ? `0${rawLocations.length}` : rawLocations.length.toString();
 const locations = rawLocations.map((loc, i) => {
   // page et labelpage at build time
   const page = i + 1;
@@ -48,6 +48,14 @@ const locations = rawLocations.map((loc, i) => {
 ---
 
 <script>
+  import {
+    extractDataAction,
+    updateFrames,
+    calculateIndex,
+    updateButtons,
+    updateMarks,
+    updateOutput,
+  } from "./LocationExplorer/utils";
   /**
    * MARKS PLACEMENT
    * ctn is sliced in a grid of 30x30 cells
@@ -55,7 +63,7 @@ const locations = rawLocations.map((loc, i) => {
    */
 
   const ctn = document.querySelector("#grid") as HTMLElement;
-  const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLElement[];
+  const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLButtonElement[];
 
   const cells = 30;
   const dimensions = {
@@ -87,35 +95,38 @@ const locations = rawLocations.map((loc, i) => {
   /**
    * Button script
    */
-  const buttons = Array.from(document.querySelectorAll("[data-is='map-nav']"));
+  const buttons = Array.from(document.querySelectorAll("[data-is='btn-nav']")) as HTMLElement[];
   const frames = Array.from(document.querySelectorAll("[data-is='frame']")) as HTMLElement[];
-  const translations = frames.map((frame) => parseInt(frame.dataset.translation as string, 10));
+  const output = document.querySelector("[data-page]")?.firstChild as HTMLElement;
+  const totalPages = parseInt(output.dataset.total as string, 10);
 
-  const handler = (e: MouseEvent) => {
-    const [action, currentTarget, totalPages] = (e.currentTarget as HTMLElement)?.dataset?.action
-      ?.split("#")
-      .map((x, i) => (i >= 1 ? parseInt(x) : x)) as [string, number, number];
+  const handleNavigation = (e: MouseEvent) => {
+    const [action, currentTarget] = extractDataAction(e);
+    const targetIndex = calculateIndex(action, currentTarget, totalPages);
+    updateDom(targetIndex);
+  };
 
-    const targetIndex = action === "next" ? currentTarget + 1 : currentTarget - 1;
-    const validTargetIndex = targetIndex > totalPages ? 1 : targetIndex < 1 ? totalPages : targetIndex;
+  const handleMarkClick = (e: MouseEvent) => {
+    const mark = e.currentTarget as HTMLElement;
+    const targetIndex = parseInt(mark.dataset.index as string, 10);
+    updateDom(targetIndex);
+  };
 
-    frames.map((frame, i) => {
-      frame.style.transform = `translateX(-${(validTargetIndex - 1) * (translations[i] as number)}px)`;
-    });
-
-    marks.map((mark) => {
-      const firstChild = mark.firstElementChild as HTMLElement;
-      if (mark.dataset.index === validTargetIndex.toString()) {
-        firstChild.classList.add("selected");
-      } else {
-        firstChild.classList.remove("selected");
-      }
-    });
+  const updateDom = (index: number) => {
+    updateFrames(frames, index);
+    updateButtons(buttons, index, totalPages);
+    updateOutput(output, index);
+    updateMarks(marks, index);
   };
 
   buttons &&
     buttons.map((btn) => {
-      btn.addEventListener("click", handler as EventListener);
+      btn.addEventListener("click", handleNavigation as EventListener);
+    });
+
+  marks &&
+    marks.map((mark) => {
+      mark.addEventListener("click", handleMarkClick as EventListener);
     });
 </script>
 
@@ -140,60 +151,52 @@ const locations = rawLocations.map((loc, i) => {
   className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-start pt-36 lg:pt-0 gap-32"
 >
   <VerticalText position="right" className="bottom-48">Découvrez des lieux uniques</VerticalText>
-  <div class="relative h-full w-full horizontal center md:max-w-[900px] md:max-h-[700px] select-none">
-    <LocationFigure>
-      <div
-        class="absolute top-0 left-1/4 overflow-x-hidden"
-        style={`max-width: ${navVisibleFrame}; width: ${navVisibleFrame}; height: 100%;`}
-      >
-        <div class="horizontal" data-is="frame" data-translation={`${navArticleWidth}`}>
-          {
-            locations.map((loc) => {
-              return (
-                <article class={`vertical gap-3 justify-between`} style="min-width : var(--navArticleWidth);">
-                  <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]">
-                    <output class="tabular-nums text-white font-semibold">{loc.labelPage}</output>
-                    <span class="text-white/90">/ {totalPages}</span>
-                  </div>
-                  <header>
-                    <h3 class="text-2xl font-medium leading-3">{loc.title}</h3>
-                    <small class="text-sm text-white/90 whitespace-nowrap w-full">{loc.subtitle}</small>
-                  </header>
-                  <nav class="horizontal items-center justify-start gap-2 mt-1">
-                    <button
-                      data-is="map-nav"
-                      data-action={`prev#${loc.page}#${totalPages}`}
-                      class="hover:[&>*]:text-white"
-                    >
-                      <ArrowLeft className="text-white/90" />
-                    </button>
-                    <button
-                      data-is="map-nav"
-                      data-action={`next#${loc.page}#${totalPages}`}
-                      class="hover:[&>*]:text-white"
-                    >
-                      <ArrowRight className="text-white/90" />
-                    </button>
-                  </nav>
-                </article>
-              );
-            })
-          }
-        </div>
+  <LocationFigure>
+    <div
+      class="absolute top-0 left-1/4 overflow-x-hidden"
+      style={`max-width: ${navVisibleFrame}; width: ${navVisibleFrame}; height: 100%;`}
+    >
+      <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]" data-page>
+        <output class="tabular-nums text-white font-semibold" data-total={totalPages}>01</output>
+        <span class="text-white/90">/ {totalPages}</span>
       </div>
-      <div id="grid" class="absolute-align full [&>div]:w-fit pointer-events-none">
+      <div class="horizontal" data-is="frame" data-translation={`${navArticleWidth}`}>
         {
-          locations.map((loc, i) => {
+          locations.map((loc) => {
             return (
-              <div class="horizontal center gap-2 absolute" data-coor={loc.coordinates} data-index={i + 1}>
-                <LocationMark selected={loc.selected}>{loc.label || loc.title}</LocationMark>
-              </div>
+              <article class="my-2" style="min-width : var(--navArticleWidth);">
+                <h3 class="text-2xl font-medium leading-3">{loc.title}</h3>
+                <small class="text-sm text-white/90 whitespace-nowrap w-full">{loc.subtitle}</small>
+              </article>
             );
           })
         }
       </div>
-    </LocationFigure>
-  </div>
+      <nav class="horizontal items-center justify-start gap-2">
+        <button data-action={`prev#1`} class="hover:[&>*]:text-white pointer-events-auto" data-is="btn-nav">
+          <ArrowLeft className="text-white/90" />
+        </button>
+        <button data-action={`next#1`} class="hover:[&>*]:text-white pointer-events-auto" data-is="btn-nav">
+          <ArrowRight className="text-white/90" />
+        </button>
+      </nav>
+    </div>
+    <div id="grid" class="absolute-align full [&>div]:w-fit pointer-events-none">
+      {
+        locations.map((loc, i) => {
+          return (
+            <button
+              class="horizontal center gap-2 absolute pointer-events-auto"
+              data-coor={loc.coordinates}
+              data-index={i + 1}
+            >
+              <LocationMark selected={loc.selected}>{loc.label || loc.title}</LocationMark>
+            </button>
+          );
+        })
+      }
+    </div>
+  </LocationFigure>
 
   <div class="overflow-x-hidden h-full" style={`max-width: ${articleContentWidth}; width: ${articleContentWidth}`}>
     <div

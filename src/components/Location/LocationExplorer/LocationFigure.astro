@@ -3,14 +3,16 @@ import { Image } from "astro:assets";
 import BlackMap from "../assets/map.png";
 ---
 
-<figure class="relative h-10/12 w-10/12">
-  <div
-    class="absolute-align full z-50 pointer-events-none [box-shadow:_inset_0px_-20px_25px_20px_rgba(11,14,22,_0.8);]"
-  >
+<figure class="relative h-full w-full horizontal center md:max-w-[900px] md:max-h-[700px] select-none">
+  <div class="relative h-10/12 w-10/12">
+    <div
+      class="absolute-align full z-50 pointer-events-none [box-shadow:_inset_0px_-20px_25px_20px_rgba(11,14,22,_0.8);]"
+    >
+    </div>
+    <Image src={BlackMap} class="full object-cover z-10" alt="hero" data-debug="fade-out-map" />
+    <figcaption class="absolute bottom-10 left-16 text-white/80">
+      <small>south of france</small>
+    </figcaption>
+    <slot />
   </div>
-  <Image src={BlackMap} class="full object-cover z-10" alt="hero" data-debug="fade-out-map" />
-  <figcaption class="absolute bottom-10 left-16 text-white/80">
-    <small>south of france</small>
-  </figcaption>
-  <slot />
 </figure>
