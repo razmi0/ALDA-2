@@ -16,6 +16,9 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
 ---
 
 <script>
+  /**
+   * Image switcher
+   */
   const btns = Array.from(
     document.querySelectorAll("button[data-key][data-image='screen-img']")!
   ) as HTMLButtonElement[];
@@ -39,6 +42,26 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
       }
     });
   });
+  /**
+   * Text shadow switcher
+   *
+   */
+  const textShadowBtns = Array.from(
+    document.querySelectorAll("button[data-action='text-shadow']")
+  ) as HTMLButtonElement[];
+  textShadowBtns.map((btn) => {
+    btn.addEventListener("click", () => {
+      const parentElement = btn.parentElement?.parentElement;
+      const textShadow =
+        "[text-shadow:0.05em_0_black,0_0.05em_black,-0.05em_0_black,0_-0.05em_black,-0.05em_-0.05em_black,-0.05em_0.05em_black,0.05em_-0.05em_black,0.05em_0.05em_black;]";
+      if (!parentElement) return;
+      if (parentElement.classList.contains(textShadow)) {
+        parentElement.classList.remove(textShadow);
+        return;
+      }
+      parentElement.classList.add(textShadow);
+    });
+  });
 </script>
 
 {
@@ -59,15 +82,27 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
 }
 {
   isDev && (
-    <button
-      data-key={uniqueKey}
-      data-image="screen-img"
-      class="z-50 relative pointer-events-auto ms-2 mt-2 border border-white px-1 hover:bg-white/60"
-    >
-      <small class="text-white font-bold [text-shadow:0.05em_0_black,0_0.05em_black,-0.05em_0_black,0_-0.05em_black,-0.05em_-0.05em_black,-0.05em_0.05em_black,0.05em_-0.05em_black,0.05em_0.05em_black;]">
-        Change img
-      </small>
-    </button>
+    <details class="ms-2 z-50 absolute">
+      <summary />
+      <button
+        data-key={uniqueKey}
+        data-image="screen-img"
+        class="z-50 relative pointer-events-auto  px-1 hover:bg-white/60 "
+      >
+        <small class=" text-white font-bold [text-shadow:0.05em_0_black,0_0.05em_black,-0.05em_0_black,0_-0.05em_black,-0.05em_-0.05em_black,-0.05em_0.05em_black,0.05em_-0.05em_black,0.05em_0.05em_black;]">
+          Change img
+        </small>
+      </button>
+      <button
+        data-key={uniqueKey}
+        data-action="text-shadow"
+        class=" z-50 relative pointer-events-auto  px-1 hover:bg-white/60 "
+      >
+        <small class="text-white font-bold [text-shadow:0.05em_0_black,0_0.05em_black,-0.05em_0_black,0_-0.05em_black,-0.05em_-0.05em_black,-0.05em_0.05em_black,0.05em_-0.05em_black,0.05em_0.05em_black;]">
+          text shadows
+        </small>
+      </button>
+    </details>
   )
 }
 {!isDev && <Image class={cn("pointer-events-none", className)} src={FallBack} alt={alt} />}

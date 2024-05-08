@@ -119,11 +119,13 @@ const charInText = textRing.length;
           background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 85%, #94c2e7 100%);
         }
       </style>
-      <div class="absolute-align full before-footer-fade -z-10"></div>
+      <!-- OVERLAY -->
+      <!-- <div class="absolute-align full before-footer-fade -z-10"></div> -->
+      <!-- OVERLAY -->
 
       <Products />
     </Section>
-    <Section className={"relative pt-32"}>
+    <Section className={"relative"}>
       <style>
         .footer-landscape-fade {
           --color-start: transparent;
@@ -135,18 +137,19 @@ const charInText = textRing.length;
         alt="last section images"
         className="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
       />
-      <!-- <Image src={FooterLandscape} alt="earth" class="full absolute-align object-cover -z-10" /> -->
-      <div class="absolute-align full footer-landscape-fade"></div>
-      <article class="text-center z-10 vertical center text-black gap-7">
+      <!-- OVERLAY -->
+      <!-- <div class="absolute-align full footer-landscape-fade z-50"></div> -->
+      <!-- OVERLAY -->
+      <article class="text-center z-10 vertical center text-black gap-7 pt-32">
         <h2 class="max-w-[50ch]">{generateLorem(5)}</h2>
         <div class="font-bolder text-black/90">
           <p class="max-w-[50ch]">{generateLorem(15)}</p>
           <p class="max-w-[50ch]">{generateLorem(8)}</p>
         </div>
         <hr class="max-w-[30ch] w-full bg-slate-400" />
-        <div class="font-bold horizontal items-center justify-around w-full max-w-[50ch] text-black/90">
-          <p>05 62 58 95 78</p>
-          <p>laleche@estbonne.com</p>
+        <div class="font-semibold horizontal items-center justify-around w-full max-w-[50ch] text-black/90">
+          <p>(+33) 5 62 58 95 78</p>
+          <p>info@alabordarbre.com</p>
         </div>
       </article>
     </Section>
