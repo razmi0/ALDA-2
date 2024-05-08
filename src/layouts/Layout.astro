@@ -3,8 +3,8 @@ import Button from "@/components/Button.astro";
 // import Hero from "@/components/ImageSwitch/screen/screen-img-1.png";
 import "@/styles/globals.css";
 // import { Image } from "astro:assets";
-import Section from "./Section.astro";
 import ImageSwitch from "@/components/ImageSwitch/ImageSwitch.astro";
+import Section from "./Section.astro";
 
 interface Props {
   title: string;
@@ -37,7 +37,11 @@ const { title } = Astro.props;
     </style>
     <Section className="relative text-white" data-is="hero">
       <!-- <Image src={Hero} class="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125" alt="hero" /> -->
-      <ImageSwitch alt="hero" className="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125" />
+      <ImageSwitch
+        uniqueKey="hero"
+        alt="hero"
+        className="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125"
+      />
       <!-- OVERLAY -->
       <div class="relative h-screen fade-out-bottom z-[10]"></div>
       <!-- OVERLAY -->
@@ -68,5 +72,7 @@ const { title } = Astro.props;
       <slot name="hero" />
     </Section>
     <slot />
+
+    <footer class="h-[50vh]"></footer>
   </body>
 </html>

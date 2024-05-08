@@ -5,7 +5,7 @@ import Button from "@/components/Button.astro";
 import Gradients from "@/components/Earth/Gradients.astro";
 import ForestMask from "@/components/Forest/ForestMask.astro";
 import Hero from "@/components/Hero.astro";
-import FooterLandscape from "@/components/ImageSwitch/screen/screen-img-8.png";
+import ImageSwitch from "@/components/ImageSwitch/ImageSwitch.astro";
 import Location from "@/components/Location/Location.astro";
 import Products from "@/components/Products.astro";
 import RandomImage from "@/components/RandomImage.astro";
@@ -130,7 +130,12 @@ const charInText = textRing.length;
           background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
         }
       </style>
-      <Image src={FooterLandscape} alt="earth" class="full absolute-align object-cover -z-10" />
+      <ImageSwitch
+        uniqueKey="last-section"
+        alt="last section images"
+        className="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
+      />
+      <!-- <Image src={FooterLandscape} alt="earth" class="full absolute-align object-cover -z-10" /> -->
       <div class="absolute-align full footer-landscape-fade"></div>
       <article class="text-center z-10 vertical center text-black gap-7">
         <h2 class="max-w-[50ch]">{generateLorem(5)}</h2>
@@ -145,10 +150,5 @@ const charInText = textRing.length;
         </div>
       </article>
     </Section>
-    <footer class="h-[50vh]">
-      <div></div>
-      <div></div>
-      <div></div>
-    </footer>
   </main>
 </Layout>
