@@ -5,6 +5,9 @@ const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
+/**
+ * True if DEV env
+ */
 const debug = import.meta.env.DEV && false;
 
 const generateLorem = (length: number): string => {
