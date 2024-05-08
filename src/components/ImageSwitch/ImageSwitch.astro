@@ -1,0 +1,50 @@
+---
+import { cn, debug } from "@/lib/utils";
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import FallBack from "./screen/screen-img-1.png";
+
+interface Props {
+  alt: string;
+  className?: string;
+}
+
+if (debug) return;
+
+const { alt, className } = Astro.props;
+
+let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/ImageSwitch/screen/*.png`);
+---
+
+<script>
+  const btn = document.querySelector("#img-switch")!;
+  const images = Array.from(document.querySelectorAll("[id*='screen-img']")) as HTMLImageElement[];
+  btn.addEventListener("click", () => {
+    const visibleImg = images.find((img) => !img.classList.contains("hidden")) ?? (images[0] as HTMLImageElement);
+    const visibleIdx = parseInt(visibleImg?.dataset.index ?? "0", 10);
+    const nextIndex = visibleIdx >= images.length - 1 ? 0 : visibleIdx + 1;
+    const nextImage = images[nextIndex];
+    visibleImg.classList.add("hidden");
+    if (nextImage) {
+      nextImage.classList.remove("hidden");
+    }
+  });
+</script>
+
+{
+  Object.keys(images).map((imgPath, i) => {
+    const img = images[imgPath]?.();
+    return (
+      <Image
+        class={cn("pointer-events-none", i === 0 ? "" : "hidden", className)}
+        id={`screen-img-${i}`}
+        data-index={i}
+        src={img || FallBack}
+        alt={alt}
+      />
+    );
+  })
+}
+<button id="img-switch" class="z-50 relative pointer-events-auto ms-2 mt-2 border border-white px-1 hover:bg-white/60">
+  <small class="font-bold">Change img</small>
+</button>
