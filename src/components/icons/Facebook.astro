@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import FBIcon from "./svg/fb.svg";
+
+interface Props {
+  className?: HTMLAttributes<"svg">["class"];
+}
+
+const { className } = Astro.props;
+---
+
+<Image src={FBIcon} alt="Tree" class={className} />

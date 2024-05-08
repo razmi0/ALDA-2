@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import InstaIcon from "./svg/insta.svg";
+
+interface Props {
+  className?: HTMLAttributes<"svg">["class"];
+}
+
+const { className } = Astro.props;
+---
+
+<Image src={InstaIcon} alt="Tree" class={className} />

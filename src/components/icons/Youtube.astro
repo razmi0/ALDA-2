@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import YTIcon from "./svg/youtube.svg";
+
+interface Props {
+  className?: HTMLAttributes<"svg">["class"];
+}
+
+const { className } = Astro.props;
+---
+
+<Image src={YTIcon} alt="Tree" class={className} />

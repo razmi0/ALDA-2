@@ -73,6 +73,18 @@ const { title } = Astro.props;
     </Section>
     <slot />
 
-    <footer class="h-[50vh]"></footer>
+    <footer class="h-[20vh]">
+      <div class="full horizontal items-center justify-around">
+        <h1 class="text-2xl">A l'abordarbre</h1>
+        <nav class="text-black/80 font-semibold">
+          <ul class="space-x-5 [&>a:hover]:underline">
+            <a href="/contact">contact</a>
+            <a href="/nous">nous</a>
+            <a href="/tarifs">tarifs</a>
+            <a href="/tarifs">activités</a>
+          </ul>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>
