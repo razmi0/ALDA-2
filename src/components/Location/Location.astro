@@ -95,10 +95,12 @@ const locations = rawLocations.map((loc, i) => {
   /**
    * Button script
    */
+  console.time("fetch location dom elements");
   const buttons = Array.from(document.querySelectorAll("[data-is='btn-nav']")) as HTMLElement[];
   const frames = Array.from(document.querySelectorAll("[data-is='frame']")) as HTMLElement[];
   const output = document.querySelector("[data-page]")?.firstChild as HTMLElement;
   const totalPages = parseInt(output.dataset.total as string, 10);
+  console.timeEnd("fetch location dom elements");
 
   const handleNavigation = (e: MouseEvent) => {
     const [action, currentTarget] = extractDataAction(e);
