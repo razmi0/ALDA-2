@@ -1,12 +1,10 @@
 ---
 import Button from "@/components/Button.astro";
 import ImageSwitch from "@/components/ImageSwitch/ImageSwitch.astro";
-import Facebook from "@/components/icons/Facebook.astro";
-import Insta from "@/components/icons/Insta.astro";
-import Linkedin from "@/components/icons/Linkedin.astro";
-import Youtube from "@/components/icons/Youtube.astro";
 import "@/styles/globals.css";
+import Nav from "./Nav.astro";
 import Section from "./Section.astro";
+import Socials from "./Socials.astro";
 
 interface Props {
   title: string;
@@ -27,7 +25,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <style>
-      [data-is="hero"] {
+      [data-is="global-header"] {
         --primary: #0b0e16;
         --color-start: rgba(11, 14, 22, 0);
         --fade-to-b: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
@@ -37,8 +35,7 @@ const { title } = Astro.props;
         background: var(--fade-to-b);
       }
     </style>
-    <Section className="relative text-white" data-is="hero" as="header">
-      <!-- <Image src={Hero} class="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125" alt="hero" /> -->
+    <Section className="relative text-white" data-is="global-header" as="header">
       <ImageSwitch
         uniqueKey="hero"
         alt="hero"
@@ -49,50 +46,38 @@ const { title } = Astro.props;
       <!-- OVERLAY -->
       <!-- <div class="absolute full max-w-screen bottom-0 fade-out-bottom h-52" data-debug="fade-out-hero"></div> -->
       <section class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
-        <nav class="full [&>ul]:full">
-          <ul class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
-            <li>
-              <a href="/">
-                <h1 class="text-2xl">A l'abordarbre</h1>
-              </a>
-            </li>
+        <nav class="full [&>div]:full">
+          <div class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
+            <a href="/">
+              <h1 class="text-2xl">A l'abordarbre</h1>
+            </a>
             <div class="grow"></div>
-            <li>
-              <a href="/contact">Tarifs</a>
-            </li>
-            <li>
-              <a href="/nous">Nous</a>
-            </li>
-            <li>
-              <a href=`/contact`>
-                <Button size="sm" ring="md" variant="outline" data-is="hero-button">Contact</Button>
-              </a>
-            </li>
-          </ul>
+            <a href="/contact">Tarifs</a>
+            <a href="/nous">Nous</a>
+            <a href=`/contact`>
+              <Button size="sm" ring="md" variant="outline" data-is="hero-button">Contact</Button>
+            </a>
+          </div>
         </nav>
       </section>
       <slot name="hero" />
     </Section>
-    <slot />
+    <main>
+      <slot />
+    </main>
 
-    <Section as="footer" class="h-[20vh] vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10">
-      <section class="w-full horizontal items-center justify-between">
+    <Section
+      as="footer"
+      size="quarter"
+      extension="none"
+      className="vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10"
+      data-is="global-footer"
+    >
+      <section class="full horizontal items-center justify-between">
         <h1 class="text-2xl">A l'abordarbre</h1>
-        <nav class="text-black/80 font-semibold">
-          <ul class="space-x-10">
-            <a href="/contact">contact</a>
-            <a href="/nous">nous</a>
-            <a href="/tarifs">tarifs</a>
-            <a href="/tarifs">activités</a>
-          </ul>
-        </nav>
+        <Nav className="text-black/80 font-semibold space-x-16" />
         <article class="text-black/50 font-bold">
-          <ul class="horizontal gap-10">
-            <li><Youtube className={"w-6 h-6"} /></li>
-            <li><Linkedin className={"w-6 h-6"} /></li>
-            <li><Insta className={"w-6 h-6"} /></li>
-            <li><Facebook className={"w-6 h-6"} /></li>
-          </ul>
+          <Socials />
         </article>
       </section>
       <a class="uppercase text-[0.8rem] mt-2 block text-right" href="https://github.com/razmi0">dev by razmio</a>
