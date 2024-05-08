@@ -1,0 +1,10 @@
+{
+  "icon": {
+    "scope": "",
+    "prefix": "astro",
+    "body": [
+      "---\r\nimport type { HTMLAttributes } from \"astro/types\";\r\nimport { Image } from \"astro:assets\";\r\nimport InstaIcon from \"./svg/insta.svg\";\r\n\r\ninterface Props {\r\n  className?: HTMLAttributes<\"svg\">[\"class\"];\r\n}\r\n\r\nconst { className } = Astro.props;\r\n---\r\n\r\n<Image src={InstaIcon} alt=\"Tree\" class={className} />"
+    ],
+    "description": ""
+  }
+}
