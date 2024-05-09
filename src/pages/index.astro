@@ -5,8 +5,10 @@ import ForestMask from "@/components/Forest/ForestMask.astro";
 import Hero from "@/components/Hero/Hero.astro";
 import Location from "@/components/Location/Location.astro";
 import Products from "@/components/Products/Products.astro";
+import HeaderFooter from "@/layouts/HeaderFooter.astro";
+import Section from "@/layouts/Section.astro";
+import { Wrench } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-import Footer from "@/layouts/Footer.astro";
 ---
 
 <Layout title="Accueil | ALAD">
@@ -14,7 +16,11 @@ import Footer from "@/layouts/Footer.astro";
   <Location />
   <ForestMask />
   <Earth />
+  <Section className={"horizontal center gap-8"}>
+    <Wrench size={32} />
+    <p class="font-bold text-2xl">Section en construction</p>
+  </Section>
   <Products />
   <FooterSection />
-  <Footer slot="footer" />
+  <HeaderFooter slot="footer" />
 </Layout>
