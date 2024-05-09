@@ -9,8 +9,9 @@ import StarEmpty from "@/components/icons/StarEmpty.astro";
 import StarFilled from "@/components/icons/StarFilled.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown, MinusSquareIcon, PlusSquareIcon } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+import Buttons from "@/components/Tarif/Buttons.astro";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -37,8 +38,9 @@ const products = rawProducts.products as ProductType[];
 </style>
 
 <script>
-  const navBtns = Array.from(document.querySelectorAll("button[data-id]")) as HTMLButtonElement[];
+  // const navBtns = Array.from(document.querySelectorAll("button[data-id]")) as HTMLButtonElement[];
   const productSections = Array.from(document.querySelectorAll("section[data-id]")) as HTMLElement[];
+  const outputEls = Array.from(document.querySelectorAll("output[data-action]")) as HTMLOutputElement[];
 
   const productButtons: Record<"add" | "remove", HTMLButtonElement[]> = {
     add: [],
@@ -46,26 +48,47 @@ const products = rawProducts.products as ProductType[];
   };
 
   productSections.map((section) => {
-    productButtons.add.push(section.children[0] as HTMLButtonElement);
-    productButtons.remove.push(section.children[2] as HTMLButtonElement);
+    productButtons.remove.push(section.firstChild as HTMLButtonElement);
+    productButtons.add.push(section.lastChild as HTMLButtonElement);
   });
 
-  const outputs = new Map();
+  type OutputMapValue = [HTMLOutputElement, string];
+  const outputs = new Map<string, OutputMapValue>();
+  outputEls.map((element) => {
+    const action = element.dataset.action;
+    if (!action) return;
+    const [id, price] = action.split("#") as [string, string];
+    outputs.set(id, [element, price]);
+  });
+
+  /**
+   * @description Map of product id and amount element display (span)
+   */
+  const amountEls = new Map<string, HTMLSpanElement>();
   productSections.map((section) => {
-    const productId = section.dataset.id;
-    const output = section.children[1] as HTMLSpanElement;
-    outputs.set(productId, output);
+    const productId = section.dataset.id as string;
+    const amountEl = section.children[1] as HTMLSpanElement;
+    amountEls.set(productId, amountEl);
   });
 
+  /**
+   * @description Handle the estimation of the product with the add and remove buttons
+   */
   const estimationHandler = (e: MouseEvent) => {
     const target = e.currentTarget as HTMLButtonElement;
     if (!target.dataset.action) return;
+
     const [actionType, id] = target.dataset.action.split("#") as [string, string];
-    const output = outputs.get(id);
-    const amount = parseInt(output.textContent) || 0;
-    actionType === "add"
-      ? (output.textContent = `${Math.max(amount + 1, 0)}`)
-      : (output.textContent = `${Math.max(amount - 1, 0)}`);
+    const amountEl = amountEls.get(id) as HTMLSpanElement;
+    const [outputEl, price] = outputs.get(id) as OutputMapValue;
+
+    if (!amountEl || !outputEl) return;
+
+    const currentAmount = parseInt(amountEl.textContent || "1") || 1;
+    const newAmount = actionType === "add" ? Math.max(currentAmount + 1, 1) : Math.max(currentAmount - 1, 1);
+    const newPrice = newAmount * parseInt(price);
+    amountEl.textContent = newAmount.toString();
+    outputEl.textContent = newPrice.toString();
   };
 
   [productButtons.add, productButtons.remove].map((typedBtns) => {
@@ -86,9 +109,7 @@ const products = rawProducts.products as ProductType[];
   </Section>
   <Section id={"1"} className={"horizontal center"} fixedHeight>
     <div class="m-10 w-full h-full horizontal">
-      <div
-        class="vertical border border-s-0 border-t-0 border-b-0 border-e-1 border-slate-400 rounded-tl-md rounded-bl-md w-4/12 h-5/6 gap-3 py-5"
-      >
+      <div class="vertical rounded-tl-md rounded-bl-md w-4/12 h-5/6 gap-3 py-5">
         {
           products.map((product) => {
             return (
@@ -116,7 +137,11 @@ const products = rawProducts.products as ProductType[];
           })
         }
       </div>
-      <div class="debug-2 w-9/12 h-5/6 overflow-hidden">
+      <!-- SECTION RIGHT -->
+      <!-- SECTION RIGHT -->
+      <!-- SECTION RIGHT -->
+      <!-- SECTION RIGHT -->
+      <div class="w-9/12 h-4/6 overflow-hidden">
         {
           products.map((product) => {
             const stars = Array.from({ length: 5 }, (_, i) => {
@@ -128,27 +153,48 @@ const products = rawProducts.products as ProductType[];
                 <article class="vertical h-5/6 w-full gap-5">
                   <div class="vertical gap-2">
                     <h2> {product.title} </h2>
+                    {/* TITRE */}
                     <div class="horizontal items-center justify-start">
                       {stars.map((Star) => {
                         return <Fragment>{<Star className={"h-4 w-4"} />}</Fragment>;
                       })}
                     </div>
+                    {/* TITRE */}
                   </div>
+                  {/* description */}
+                  {/* description */}
                   <p>{product.description.long}</p>
-                  <div class="w-full vertical center max-w-[75%]">
-                    {product.stats.map((stat) => {
-                      return <Bar label={stat.label} value={stat.value} />;
-                    })}
-                  </div>
-                  <section class="horizontal center" data-id={product.id}>
-                    <button data-action={`add#${product.id}`}>
-                      <PlusSquareIcon size="24" />
-                    </button>
-                    <span />
-                    <button data-action={`remove#${product.id}`}>
-                      <MinusSquareIcon size="24" />
-                    </button>
-                  </section>
+                  {/* description */}
+                  {/* STATS */}
+                  <div class="horizontal-reverse justify-between">
+                    <article class="w-full vertical max-w-[30%] py-4 px-6">
+                      {product.stats.map((stat) => (
+                        <Bar barSize={175} label={stat.label} value={stat.value} />
+                      ))}
+                    </article>
+                    {/* STATS */}
+                    {/* STATS */}
+                    {/* CALC */}
+                    {/* CALC */}
+                    {/* CALC */}
+                    <section class="vertical px-6 py-4 text-slate-700 w-fit">
+                      <div class="font-semibold text-sm mb-2">
+                        <span>Nombre de {product.unit} :</span>
+                      </div>
+                      <div class="horizontal center w-fit">
+                        <Buttons product={product} />
+                        <p class="font-medium ring-1 ring-slate-300 px-2">
+                          <small> €</small>
+                          <output class="font-bold text-lg" data-action={`${product.id}#${product.price}`}>
+                            {product.price}
+                          </output>
+                        </p>
+                      </div>
+                    </section>
+                  </div>{" "}
+                  {/* CALC */}
+                  {/* CALC */}
+                  {/* CALC */}
                 </article>
               </div>
             );

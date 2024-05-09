@@ -5,10 +5,8 @@ import Socials from "./Socials.astro";
 
 const currentPage = Astro.url.pathname;
 
-
 const as = currentPage === "/" ? "footer" : "header";
 const viewTransitionType = currentPage === "/" ? "slide" : "fade";
-
 ---
 
 <Section
@@ -31,14 +29,13 @@ const viewTransitionType = currentPage === "/" ? "slide" : "fade";
           <Socials />
         </article>
       ) : (
-        <span class="font-bold text-2xl" >LOGO</span>
+        <span class="font-bold text-2xl">LOGO</span>
       )
     }
   </section>
   {
-    as === "footer" ? (
-    <a class="uppercase text-[0.8rem] mt-2 block text-right" href="https://github.com/razmi0">dev by razmio</a>
-    ) : <></>
+    // as === "footer" ? (
+    // <a class="uppercase text-[0.8rem] mt-2 block text-right" href="https://github.com/razmi0">dev by razmio</a>
+    // ) : <></>
   }
-  
 </Section>
