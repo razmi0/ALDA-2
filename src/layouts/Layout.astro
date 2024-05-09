@@ -1,8 +1,7 @@
 ---
 import "@/styles/globals.css";
-import Nav from "./Nav.astro";
-import Section from "./Section.astro";
-import Socials from "./Socials.astro";
+import { ViewTransitions } from "astro:transitions";
+import Footer from "./Footer.astro";
 
 interface Props {
   title: string;
@@ -12,38 +11,21 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" transition:animate="fade">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <ViewTransitions />
     <title>{title}</title>
   </head>
   <body>
     <slot name="hero" />
+    <main>
+      <slot />
+    </main>
+    <Footer />
   </body>
-  <main>
-    <slot />
-  </main>
-
-  <Section
-    as="footer"
-    size="quarter"
-    extension="none"
-    className="vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10"
-    data-is="global-footer"
-  >
-    <section class="full horizontal items-center justify-between">
-      <h1 class="text-2xl">
-        <a href="/"> A l'abordarbre</a>
-      </h1>
-      <Nav className="text-black/80 font-semibold space-x-16" />
-      <article class="text-black/50 font-bold">
-        <Socials />
-      </article>
-    </section>
-    <a class="uppercase text-[0.8rem] mt-2 block text-right" href="https://github.com/razmi0">dev by razmio</a>
-  </Section>
 </html>

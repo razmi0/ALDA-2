@@ -57,81 +57,86 @@ const locations = rawLocations.map((loc, i) => {
     updateOutput,
   } from "./LocationExplorer/utils";
   /**
-   * MARKS PLACEMENT
-   * ctn is sliced in a grid of 30x30 cells
-   * location marks are placed in the grid according to their coordinates
+   * script view transition reexecuted at each page load
    */
-
-  const ctn = document.querySelector("#grid") as HTMLElement;
-  const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLButtonElement[];
-
-  const cells = 30;
-  const dimensions = {
-    width: ctn.clientWidth,
-    height: ctn.clientHeight,
-    cellWidth: Math.floor(ctn.clientWidth / cells),
-    cellHeight: Math.floor(ctn.clientHeight / cells),
-    update: function () {
-      this.width = ctn.clientWidth;
-      this.height = ctn.clientHeight;
-      this.cellWidth = Math.floor(this.width / cells);
-      this.cellHeight = Math.floor(this.height / cells);
-    },
-  };
-
-  const placeMarks = (mark: HTMLElement) => {
+  document.addEventListener("astro:page-load", () => {
     /**
-     * x => column
-     * y => row
+     * MARKS PLACEMENT
+     * ctn is sliced in a grid of 30x30 cells
+     * location marks are placed in the grid according to their coordinates
      */
-    const [x, y] = (mark.dataset.coor as string).split(",").map((n) => parseInt(n)) as [number, number];
-    mark.style.top = `${y * dimensions.cellHeight}px`;
-    mark.style.left = `${x * dimensions.cellWidth}px`;
-  };
+    const ctn = document.querySelector("#grid") as HTMLElement;
+    if (!ctn) return;
+    const marks = Array.from(document.querySelectorAll("[data-coor]")) as HTMLButtonElement[];
 
-  marks.map((mark) => placeMarks(mark));
+    const cells = 30;
+    const dimensions = {
+      width: ctn.clientWidth,
+      height: ctn.clientHeight,
+      cellWidth: Math.floor(ctn.clientWidth / cells),
+      cellHeight: Math.floor(ctn.clientHeight / cells),
+      update: function () {
+        this.width = ctn.clientWidth;
+        this.height = ctn.clientHeight;
+        this.cellWidth = Math.floor(this.width / cells);
+        this.cellHeight = Math.floor(this.height / cells);
+      },
+    };
 
-  window.onresize = () => {
-    dimensions.update();
+    const placeMarks = (mark: HTMLElement) => {
+      /**
+       * x => column
+       * y => row
+       */
+      const [x, y] = (mark.dataset.coor as string).split(",").map((n) => parseInt(n)) as [number, number];
+      mark.style.top = `${y * dimensions.cellHeight}px`;
+      mark.style.left = `${x * dimensions.cellWidth}px`;
+    };
+
     marks.map((mark) => placeMarks(mark));
-  };
 
-  /**
-   * Button script
-   */
-  const buttons = Array.from(document.querySelectorAll("[data-is='btn-nav']")) as HTMLElement[];
-  const frames = Array.from(document.querySelectorAll("[data-is='frame']")) as HTMLElement[];
-  const output = document.querySelector("[data-page]")?.firstChild as HTMLElement;
-  const totalPages = parseInt(output.dataset.total as string, 10);
+    window.onresize = () => {
+      dimensions.update();
+      marks.map((mark) => placeMarks(mark));
+    };
 
-  const handleNavigation = (e: MouseEvent) => {
-    const [action, currentTarget] = extractDataAction(e);
-    const targetIndex = calculateIndex(action, currentTarget, totalPages);
-    updateDom(targetIndex);
-  };
+    /**
+     * Button script
+     */
+    const buttons = Array.from(document.querySelectorAll("[data-is='btn-nav']")) as HTMLElement[];
+    const frames = Array.from(document.querySelectorAll("[data-is='frame']")) as HTMLElement[];
+    const output = document.querySelector("[data-page]")?.firstChild as HTMLElement;
+    const totalPages = parseInt(output.dataset.total as string, 10);
 
-  const handleMarkClick = (e: MouseEvent) => {
-    const mark = e.currentTarget as HTMLElement;
-    const targetIndex = parseInt(mark.dataset.index as string, 10);
-    updateDom(targetIndex);
-  };
+    const handleNavigation = (e: MouseEvent) => {
+      const [action, currentTarget] = extractDataAction(e);
+      const targetIndex = calculateIndex(action, currentTarget, totalPages);
+      updateDom(targetIndex);
+    };
 
-  const updateDom = (index: number) => {
-    updateFrames(frames, index);
-    updateButtons(buttons, index, totalPages);
-    updateOutput(output, index);
-    updateMarks(marks, index);
-  };
+    const handleMarkClick = (e: MouseEvent) => {
+      const mark = e.currentTarget as HTMLElement;
+      const targetIndex = parseInt(mark.dataset.index as string, 10);
+      updateDom(targetIndex);
+    };
 
-  buttons &&
-    buttons.map((btn) => {
-      btn.addEventListener("click", handleNavigation as EventListener);
-    });
+    const updateDom = (index: number) => {
+      updateFrames(frames, index);
+      updateButtons(buttons, index, totalPages);
+      updateOutput(output, index);
+      updateMarks(marks, index);
+    };
 
-  marks &&
-    marks.map((mark) => {
-      mark.addEventListener("click", handleMarkClick as EventListener);
-    });
+    buttons &&
+      buttons.map((btn) => {
+        btn.addEventListener("click", handleNavigation as EventListener);
+      });
+
+    marks &&
+      marks.map((mark) => {
+        mark.addEventListener("click", handleMarkClick as EventListener);
+      });
+  });
 </script>
 
 <style define:vars={{ totalPages, navArticleWidth, articleContentWidth }}>
