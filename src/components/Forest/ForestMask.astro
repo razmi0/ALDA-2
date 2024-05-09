@@ -8,18 +8,17 @@ import Forest from "./assets/forest.webp";
 <Section
   size="quarter"
   extension="sm"
-  className="bg-map-dark relative overflow-x-hidden overflow-y-hidden z-10 flex justify-start items-start isolate"
+  className="bg-map-dark relative overflow-x-hidden overflow-y-hidden z-10 flex justify-start items-start"
 >
   <Image
     src={Forest}
     alt={"forest foreground"}
-    style={"transform: scale(-1, 1) translateY(125px);"}
-    class={"absolute bottom-0 object-cover min-w-[632px] w-full z-[1]"}
+    class={"absolute bottom-0 object-cover min-w-[632px] w-full z-[1] [transform:_scale(-1,1)_translateY(75px)] xl:[transform:_scale(-1,1)_translateY(125px)]"}
   />
   <Image
     src={BackgroundForest}
     alt={"forest background"}
-    style={"transform: translateY(-25px);"}
+    style={"transform: translateY(-20px);"}
     class={"absolute bottom-0 object-cover min-w-[632px] w-full z-0"}
   />
 </Section>
