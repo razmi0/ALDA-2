@@ -24,4 +24,4 @@ type DescriptionType = {
   long: string;
 };
 
-type UnitType = "group" | "person" | "enfant" | "nuit" | "journée";
+export type UnitType = "group" | "person" | "enfant" | "nuit" | "journée";
