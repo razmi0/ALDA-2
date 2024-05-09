@@ -5,6 +5,7 @@ import { Mountain } from "lucide-react";
 import VerticalText from "../VerticalText.astro";
 import ImageSwitch from "../ImageSwitch/ImageSwitch.astro";
 import Section from "@/layouts/Section.astro";
+import Heading from "./Heading.astro";
 ---
 
 <style>
@@ -44,10 +45,7 @@ import Section from "@/layouts/Section.astro";
     </nav>
   </section>
   <div class="text-white">
-    <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none">
-      <h2 class="text-3xl uppercase">l'aventure commence ici!</h2>
-      <h3 class="text-2xl">Découvrez la grimpe d'arbre</h3>
-    </div>
+    <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
     <div
       class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]"
     >
