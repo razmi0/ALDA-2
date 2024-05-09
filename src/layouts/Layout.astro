@@ -4,13 +4,14 @@ import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
+  className?: string;
 }
 
-const { title } = Astro.props;
+const { title, className } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" transition:animate="fade">
+<html lang="en" transition:animate="fade" class={className}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
