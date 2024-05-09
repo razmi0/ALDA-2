@@ -1,14 +1,79 @@
 ---
 import Heading from "@/components/Hero/Heading.astro";
+import Badge from "@/components/Products/Badge.astro";
+import Bar from "@/components/Products/Bar.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
+import RandomImage from "@/components/RandomImage.astro";
+import StarEmpty from "@/components/icons/StarEmpty.astro";
+import StarFilled from "@/components/icons/StarFilled.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, MinusSquareIcon, PlusSquareIcon } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const products = rawProducts.products as ProductType[];
 ---
+
+<style>
+  .debug-1 {
+    @apply ring-1 ring-red-400;
+  }
+  .debug-2 {
+    @apply ring-1 ring-green-400;
+  }
+  .debug-3 {
+    @apply ring-1 ring-blue-400;
+  }
+  .debug-4 {
+    @apply ring-1 ring-yellow-400;
+  }
+  .debug-5 {
+    @apply ring-1 ring-purple-400;
+  }
+  .debug-6 {
+    @apply ring-1 ring-pink-400;
+  }
+</style>
+
+<script>
+  const navBtns = Array.from(document.querySelectorAll("button[data-id]")) as HTMLButtonElement[];
+  const productSections = Array.from(document.querySelectorAll("section[data-id]")) as HTMLElement[];
+
+  const productButtons: Record<"add" | "remove", HTMLButtonElement[]> = {
+    add: [],
+    remove: [],
+  };
+
+  productSections.map((section) => {
+    productButtons.add.push(section.children[0] as HTMLButtonElement);
+    productButtons.remove.push(section.children[2] as HTMLButtonElement);
+  });
+
+  const outputs = new Map();
+  productSections.map((section) => {
+    const productId = section.dataset.id;
+    const output = section.children[1] as HTMLSpanElement;
+    outputs.set(productId, output);
+  });
+
+  const estimationHandler = (e: MouseEvent) => {
+    const target = e.currentTarget as HTMLButtonElement;
+    if (!target.dataset.action) return;
+    const [actionType, id] = target.dataset.action.split("#") as [string, string];
+    const output = outputs.get(id);
+    const amount = parseInt(output.textContent) || 0;
+    actionType === "add"
+      ? (output.textContent = `${Math.max(amount + 1, 0)}`)
+      : (output.textContent = `${Math.max(amount - 1, 0)}`);
+  };
+
+  [productButtons.add, productButtons.remove].map((typedBtns) => {
+    typedBtns.map((btn) => {
+      btn.addEventListener("click", estimationHandler);
+    });
+  });
+</script>
 
 <Layout title="tarif">
   <HeaderFooter slot="header" />
@@ -20,22 +85,76 @@ const products = rawProducts.products as ProductType[];
     </Heading>
   </Section>
   <Section id={"1"} className={"horizontal center"} fixedHeight>
-    <div class="m-10 ring-1 ring-red-400 full">
-      {
-        products.map((product) => {
-          return (
-            <div class="m-10 ring-1 ring-red-400">
-              <h2>{product.name}</h2>
-              <p>{product.description.long}</p>
-              <p>{product.price}</p>
-            </div>
-          );
-        })
-      }
+    <div class="m-10 w-full h-full horizontal">
+      <div
+        class="vertical border border-s-0 border-t-0 border-b-0 border-e-1 border-slate-400 rounded-tl-md rounded-bl-md w-4/12 h-5/6 gap-3 py-5"
+      >
+        {
+          products.map((product) => {
+            return (
+              <button
+                class="vertical items-center justify-between mx-5 border rounded-md shadow-sm shadow-black/50 border-slate-600 hover:bg-slate-100 p-2 gap-3"
+                data-id={`${product.id}`}
+              >
+                <div class="w-full horizontal items-center justify-between">
+                  <h2>{product.name}</h2>
+                  <p class="font-medium">
+                    <span class="font-bold text-lg">
+                      <small> €</small>
+                      {product.price}
+                    </span>
+                    / {product.unit}
+                  </p>
+                </div>
+                <div class="w-full h-full space-x-4 text-left">
+                  {product.tags.map((tag) => {
+                    return <Badge tag={tag} />;
+                  })}
+                </div>
+              </button>
+            );
+          })
+        }
+      </div>
+      <div class="debug-2 w-9/12 h-5/6 overflow-hidden">
+        {
+          products.map((product) => {
+            const stars = Array.from({ length: 5 }, (_, i) => {
+              return i < parseInt(product.rating) ? StarFilled : StarEmpty;
+            });
+            return (
+              <div class="w-full h-5/6 rounded-tr-md rounded-br-md horizontal items-center justify-start px-5 gap-5">
+                <RandomImage seed={600} className="h-5/6 w-4/12" />
+                <article class="vertical h-5/6 w-full gap-5">
+                  <div class="vertical gap-2">
+                    <h2> {product.title} </h2>
+                    <div class="horizontal items-center justify-start">
+                      {stars.map((Star) => {
+                        return <Fragment>{<Star className={"h-4 w-4"} />}</Fragment>;
+                      })}
+                    </div>
+                  </div>
+                  <p>{product.description.long}</p>
+                  <div class="w-full vertical center max-w-[75%]">
+                    {product.stats.map((stat) => {
+                      return <Bar label={stat.label} value={stat.value} />;
+                    })}
+                  </div>
+                  <section class="horizontal center" data-id={product.id}>
+                    <button data-action={`add#${product.id}`}>
+                      <PlusSquareIcon size="24" />
+                    </button>
+                    <span />
+                    <button data-action={`remove#${product.id}`}>
+                      <MinusSquareIcon size="24" />
+                    </button>
+                  </section>
+                </article>
+              </div>
+            );
+          })
+        }
+      </div>
     </div>
-    <!-- CARDS -->
-    <!-- CARDS -->
-    <!-- CARDS -->
-    <!-- CARDS -->
   </Section>
 </Layout>
