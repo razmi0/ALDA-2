@@ -1,6 +1,5 @@
 ---
 import Section from "@/layouts/Section.astro";
-import { generateLorem } from "@/lib/utils";
 import { BirdIcon } from "lucide-react";
 import Product from "./Product.astro";
 import data from "./product.json" assert { type: "json" };
@@ -8,15 +7,9 @@ import type { ProductType } from "./types";
 import RandomImage from "../RandomImage.astro";
 import VerticalText from "../VerticalText.astro";
 
-const rawProducts = data.products;
+const rawProducts = data.products as ProductType[];
 
-const products: ProductType[] = rawProducts.map((product) => {
-  return {
-    ...product,
-    title: generateLorem(5),
-    description: generateLorem(40),
-  };
-});
+const topProducts = rawProducts.sort((a, b) => parseInt(b.rating, 10) - parseInt(a.rating, 10)).slice(0, 3);
 
 const imgSize = {
   width: 400,
@@ -43,7 +36,7 @@ const imgSize = {
     <h2 class="text-xl text-left">Ce que l'on vous conseille</h2>
   </div>
   {
-    products.map((product: ProductType, i: number) => {
+    topProducts.map((product: ProductType, i: number) => {
       return (
         <article
           class={`${i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal"}`}

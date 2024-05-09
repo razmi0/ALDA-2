@@ -2,21 +2,98 @@
   "products": [
     {
       "id": 1,
+      "name": "product1",
+      "title": "product1",
+      "description": {
+        "short": "short description",
+        "long": "long description"
+      },
       "price": "100",
       "unit": "person",
-      "rating": "5"
-    },
-    {
-      "id": 2,
-      "price": "400",
-      "unit": "group",
-      "rating": "4"
+      "rating": "3",
+      "stats": [
+        { "label": "courage", "value": "5" },
+        { "label": "agilite", "value": "4" },
+        { "label": "experience", "value": "3" }
+      ],
+      "tags": ["enfant", "facile", "adrenaline"],
+      "footerText": "footer text"
     },
     {
       "id": 3,
-      "price": "200",
-      "unit": "night",
-      "rating": "3"
+      "name": "product3",
+      "title": "product3",
+      "description": {
+        "short": "concise description",
+        "long": "elaborate description"
+      },
+      "price": "120",
+      "unit": "hour",
+      "rating": "5",
+      "stats": [
+        { "label": "courage", "value": "4" },
+        { "label": "agilite", "value": "3" },
+        { "label": "experience", "value": "5" }
+      ],
+      "tags": ["outdoor", "exciting", "team-building"],
+      "footerText": "footer info"
+    },
+    {
+      "id": 4,
+      "name": "product4",
+      "title": "product4",
+      "description": {
+        "short": "succinct description",
+        "long": "comprehensive description"
+      },
+      "price": "90",
+      "unit": "activity",
+      "rating": "4",
+      "stats": [
+        { "label": "courage", "value": "5" },
+        { "label": "agilite", "value": "4" },
+        { "label": "experience", "value": "3" }
+      ],
+      "tags": ["thrilling", "interactive", "memorable"],
+      "footerText": "footer details"
+    },
+    {
+      "id": 5,
+      "name": "product5",
+      "title": "product5",
+      "description": {
+        "short": "brief overview",
+        "long": "in-depth description"
+      },
+      "price": "150",
+      "unit": "session",
+      "rating": "4",
+      "stats": [
+        { "label": "courage", "value": "4" },
+        { "label": "agilite", "value": "5" },
+        { "label": "experience", "value": "5" }
+      ],
+      "tags": ["adventure", "challenge", "fun"],
+      "footerText": "footer information"
+    },
+    {
+      "id": 6,
+      "name": "product6",
+      "title": "product6",
+      "description": {
+        "short": "short summary",
+        "long": "detailed information"
+      },
+      "price": "80",
+      "unit": "participant",
+      "rating": "3",
+      "stats": [
+        { "label": "courage", "value": "3" },
+        { "label": "agilite", "value": "4" },
+        { "label": "experience", "value": "5" }
+      ],
+      "tags": ["family-friendly", "exciting", "educational"],
+      "footerText": "footer notes"
     }
   ]
 }

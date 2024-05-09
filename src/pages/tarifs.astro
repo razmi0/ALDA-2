@@ -1,20 +1,29 @@
 ---
 import Heading from "@/components/Hero/Heading.astro";
+import rawProducts from "@/components/Products/product.json" assert { type: "json" };
+import type { ProductType } from "@/components/Products/types";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { generateLorem } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+
+const products = rawProducts.products as ProductType[];
 ---
 
 <Layout title="tarif">
   <HeaderFooter slot="header" />
   <Section>
     <Heading h2="Nos tarifs" h3="Composable et personalisable" className="text-black">
-      <a href="#tarifs" class="pointer-events-auto">
+      <a href="#1" class="pointer-events-auto">
         <ArrowDown size="32" />
       </a>
     </Heading>
   </Section>
-  <Section id={"tarifs"}> <p>{generateLorem(20)}</p></Section>
+  <Section id={"1"} className={"horizontal center"}>
+    <div class="m-10 ring-1 ring-red-400 full"></div>
+    <!-- CARDS -->
+    <!-- CARDS -->
+    <!-- CARDS -->
+    <!-- CARDS -->
+  </Section>
 </Layout>

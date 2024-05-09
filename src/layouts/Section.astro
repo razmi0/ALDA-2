@@ -12,9 +12,10 @@ interface Props extends HTMLAttributes<"section"> {
   style?: HTMLAttributes<"section">["style"];
   [key: `data-${string}`]: boolean | number | string;
   as?: HTMLTag;
+  fixedHeight?: boolean;
 }
 
-const { size = "full", extension = "none", className, style = "", as = "section" } = Astro.props;
+const { size = "full", extension = "none", className, style = "", as = "section", fixedHeight = false } = Astro.props;
 const filteredProps = ["size", "extension", "className", "style", "as"];
 
 const Tag = as as HTMLTag;
@@ -40,6 +41,10 @@ const height = `calc(${sizes[size]} + ${extensions[extension]})`;
 const props = Object.fromEntries(Object.entries(Astro.props).filter(([key]) => !filteredProps.includes(key)));
 ---
 
-<Tag {...props} class={cn("min-w-full", className)} style={`min-height : ${height}; ${style} `}>
+<Tag
+  {...props}
+  class={cn("min-w-full", className)}
+  style={`min-height : ${height}; ${fixedHeight ? `height : ${height} ` : ""} ; ${style} `}
+>
   <slot />
 </Tag>
