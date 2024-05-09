@@ -6,13 +6,15 @@ import Hero from "@/components/Hero/Hero.astro";
 import Location from "@/components/Location/Location.astro";
 import Products from "@/components/Products/Products.astro";
 import Layout from "../layouts/Layout.astro";
+import Footer from "@/layouts/Footer.astro";
 ---
 
 <Layout title="Accueil | ALAD">
-  <Hero slot="hero" />
+  <Hero slot="header" />
   <Location />
   <ForestMask />
   <Earth />
   <Products />
   <FooterSection />
+  <Footer slot="footer" />
 </Layout>
