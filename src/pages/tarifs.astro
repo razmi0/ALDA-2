@@ -19,8 +19,20 @@ const products = rawProducts.products as ProductType[];
       </a>
     </Heading>
   </Section>
-  <Section id={"1"} className={"horizontal center"}>
-    <div class="m-10 ring-1 ring-red-400 full"></div>
+  <Section id={"1"} className={"horizontal center"} fixedHeight>
+    <div class="m-10 ring-1 ring-red-400 full">
+      {
+        products.map((product) => {
+          return (
+            <div class="m-10 ring-1 ring-red-400">
+              <h2>{product.name}</h2>
+              <p>{product.description.long}</p>
+              <p>{product.price}</p>
+            </div>
+          );
+        })
+      }
+    </div>
     <!-- CARDS -->
     <!-- CARDS -->
     <!-- CARDS -->

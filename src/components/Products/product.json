@@ -2,8 +2,8 @@
   "products": [
     {
       "id": 1,
-      "name": "product1",
-      "title": "product1",
+      "name": "name1",
+      "title": "title1",
       "description": {
         "short": "short description",
         "long": "long description"
@@ -21,8 +21,8 @@
     },
     {
       "id": 3,
-      "name": "product3",
-      "title": "product3",
+      "name": "name3",
+      "title": "title3",
       "description": {
         "short": "concise description",
         "long": "elaborate description"
@@ -40,8 +40,8 @@
     },
     {
       "id": 4,
-      "name": "product4",
-      "title": "product4",
+      "name": "name4",
+      "title": "title4",
       "description": {
         "short": "succinct description",
         "long": "comprehensive description"
@@ -59,8 +59,8 @@
     },
     {
       "id": 5,
-      "name": "product5",
-      "title": "product5",
+      "name": "name5",
+      "title": "title5",
       "description": {
         "short": "brief overview",
         "long": "in-depth description"
@@ -78,8 +78,8 @@
     },
     {
       "id": 6,
-      "name": "product6",
-      "title": "product6",
+      "name": "name6",
+      "title": "title6",
       "description": {
         "short": "short summary",
         "long": "detailed information"
