@@ -1,5 +1,6 @@
 ---
-import Footer from "@/layouts/Footer.astro";
+import Heading from "@/components/Hero/Heading.astro";
+import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
@@ -7,15 +8,13 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="tarif">
-  <Footer slot="header" />
+  <HeaderFooter slot="header" />
   <Section>
-    <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none text-black">
-      <h2 class="text-3xl uppercase">Nos tarifs</h2>
-      <h3 class="text-2xl">Composable et personalisable</h3>
+    <Heading h2="Nos tarifs" h3="Composable et personalisable" className="text-black">
       <a href="#tarifs" class="pointer-events-auto">
         <ArrowDown size="32" />
       </a>
-    </div>
+    </Heading>
   </Section>
   <Section id={"tarifs"}> <p>{generateLorem(20)}</p></Section>
 </Layout>
