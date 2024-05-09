@@ -1,0 +1,71 @@
+---
+import { generateLorem } from "@/lib/utils";
+import Button from "@/components/Button.astro";
+import { Mountain } from "lucide-react";
+import VerticalText from "../VerticalText.astro";
+import ImageSwitch from "../ImageSwitch/ImageSwitch.astro";
+import Section from "@/layouts/Section.astro";
+---
+
+<style>
+  [data-is="global-header"] {
+    --primary: #0b0e16;
+    --color-start: rgba(11, 14, 22, 0);
+    --fade-to-b: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
+  }
+
+  .fade-out-bottom {
+    background: var(--fade-to-b);
+  }
+</style>
+
+<Section className="relative text-white" data-is="global-header" as="header">
+  <ImageSwitch
+    uniqueKey="hero"
+    alt="hero"
+    className="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125"
+  />
+  <!-- OVERLAY -->
+  <div class="relative h-screen fade-out-bottom z-[10]"></div>
+  <!-- OVERLAY -->
+  <section class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
+    <nav class="full [&>div]:full">
+      <div class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
+        <a href="/">
+          <h1 class="text-2xl">A l'abordarbre</h1>
+        </a>
+        <div class="grow"></div>
+        <a href="/contact">Tarifs</a>
+        <a href="/nous">Nous</a>
+        <a href=`/contact`>
+          <Button size="sm" ring="md" variant="outline" data-is="hero-button">Contact</Button>
+        </a>
+      </div>
+    </nav>
+  </section>
+  <div class="text-white">
+    <div class="absolute-center vertical z-10 full gap-6 text-center pointer-events-none">
+      <h2 class="text-3xl uppercase">l'aventure commence ici!</h2>
+      <h3 class="text-2xl">Découvrez la grimpe d'arbre</h3>
+    </div>
+    <div
+      class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]"
+    >
+      <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
+
+      <p class="text-white/80 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
+        {generateLorem(30)}
+      </p>
+      <Button
+        className="pointer-events-auto horizontal gap-5 items-center w-48"
+        variant="outline"
+        size="lg"
+        data-is="hero-button"
+      >
+        <Mountain className="h-[18px] w-[18px] -translate-y-[1px]" />
+        <span>S'inscrire</span>
+      </Button>
+      <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
+    </div>
+  </div>
+</Section>

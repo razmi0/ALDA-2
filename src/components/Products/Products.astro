@@ -2,11 +2,11 @@
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { BirdIcon } from "lucide-react";
-import Product from "./Products/Product.astro";
-import data from "./Products/product.json" assert { type: "json" };
-import type { ProductType } from "./Products/types";
-import RandomImage from "./RandomImage.astro";
-import VerticalText from "./VerticalText.astro";
+import Product from "./Product.astro";
+import data from "./product.json" assert { type: "json" };
+import type { ProductType } from "./types";
+import RandomImage from "../RandomImage.astro";
+import VerticalText from "../VerticalText.astro";
 
 const rawProducts = data.products;
 
