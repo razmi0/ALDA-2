@@ -1,0 +1,10 @@
+{
+  "frontmatter": {
+    "scope": "",
+    "prefix": "astro",
+    "body": [
+      "---\r\n\r\ninterface Props {}\r\n\r\n\r\nconst {} = Astro.props\r\n---"
+    ],
+    "description": ""
+  }
+}
