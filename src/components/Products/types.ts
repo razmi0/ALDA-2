@@ -10,6 +10,7 @@ export interface ProductType {
 
   tags: string[];
   footerText: string;
+  locations: string[];
 }
 
 export type StatType = {

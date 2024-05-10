@@ -6,12 +6,10 @@ import rawProducts from "@/components/Products/product.json" assert { type: "jso
 import type { ProductType } from "@/components/Products/types";
 import RandomImage from "@/components/RandomImage.astro";
 import Inputs from "@/components/Tarif/Inputs.astro";
-import StarEmpty from "@/components/icons/StarEmpty.astro";
-import StarFilled from "@/components/icons/StarFilled.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Backpack, Gauge, MapPin } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const products = rawProducts.products as ProductType[];
@@ -83,9 +81,6 @@ const products = rawProducts.products as ProductType[];
       <div class="w-9/12 max-w-[75%] h-4/6 overflow-hidden">
         {
           products.map((product) => {
-            const stars = Array.from({ length: 5 }, (_, i) => {
-              return i < parseInt(product.rating) ? StarFilled : StarEmpty;
-            });
             return (
               <div class="w-full h-full rounded-tr-md rounded-br-md horizontal items-center justify-start px-5 gap-5 overflow-auto">
                 <RandomImage seed={600} className="h-5/6 w-4/12" />
@@ -93,11 +88,11 @@ const products = rawProducts.products as ProductType[];
                   <div class="vertical gap-2">
                     <h2> {product.title} </h2>
                     {/* TITRE */}
-                    <div class="horizontal items-center justify-start">
+                    {/* <div class="horizontal items-center justify-start">
                       {stars.map((Star) => {
                         return <Fragment>{<Star className={"h-4 w-4"} />}</Fragment>;
                       })}
-                    </div>
+                    </div> */}
                     {/* TITRE */}
                   </div>
                   <div class="overflow-auto leading-5">
@@ -108,25 +103,40 @@ const products = rawProducts.products as ProductType[];
                   </div>
                   {/* description */}
                   {/* LIST */}
-                  <section class="grid grid-cols-2 gap-10">
-                    <article class="w-full vertical justify-start">
-                      <h4>{generateLorem(1)} :</h4>
+                  <section class="vertical gap-3">
+                    <article class="horizontal items-center justify-start w-fit gap-5">
+                      <div class="horizontal center ">
+                        <Gauge className="h-5 -translate-y-[2px] stroke-1" />
+                        <p class="">difficulté</p>
+                      </div>
                       {product.stats.map((stat) => (
-                        <Bar barSize={175} label={stat.label} value={stat.value} />
+                        <Bar barSize={175} value={stat.value} />
                       ))}
                     </article>
-
-                    <div>
-                      <h4>{generateLorem(1)} :</h4>
-                      <ul class="font-normal text-sm">
+                    <article class="horizontal items-center justify-start w-fit gap-5">
+                      <div class="horizontal center ">
+                        <Backpack className="h-5 -translate-y-[2px] stroke-1" />
+                        <p>matériels</p>
+                      </div>
+                      <div class="space-x-5">
                         {[...Array(5)].map(() => (
-                          <li>{generateLorem(1)}</li>
+                          <Badge variant="outline" className="my-2" tag={generateLorem(1)} />
                         ))}
-                      </ul>
-                    </div>
+                      </div>
+                    </article>
+                    <article class="horizontal items-center justify-start w-fit gap-5">
+                      <div class="horizontal center ">
+                        <MapPin className="h-5  stroke-1" />
+                        <p>lieux</p>
+                      </div>
+                      <div class="space-x-5">
+                        {[...Array(5)].map(() => (
+                          <Badge variant="outline" className="my-2" tag={generateLorem(1)} />
+                        ))}
+                      </div>
+                    </article>
                   </section>
                   {/* LIST */}
-
                   <Inputs product={product} />
                 </article>
               </div>

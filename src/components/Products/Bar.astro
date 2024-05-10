@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import type { StatType } from "./types";
 
 interface Props {
-  label: StatType["label"];
+  label?: StatType["label"];
   value: StatType["value"];
   barSize: number;
   className?: string;
@@ -15,7 +15,8 @@ const width = parseInt(value) * 10;
 ---
 
 <div class={cn("horizontal center w-full gap-3 justify-between", className)}>
-  <span class="w-full text-black/80 text-sm text-left">{label}</span>
+  {label && <span class="w-full text-black/80 text-sm text-left">{label}</span>}
+
   <div class="h-1 rounded-sm bg-[#83838334]" style={`width: ${barSize}px`}>
     <div class="bg-[#131313] h-1 rounded-sm" style={`width : ${width}%`}></div>
   </div>
