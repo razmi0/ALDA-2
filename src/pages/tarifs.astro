@@ -1,17 +1,17 @@
 ---
 import Heading from "@/components/Hero/Heading.astro";
 import Badge from "@/components/Products/Badge.astro";
-import Bar from "@/components/Products/Bar.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
 import RandomImage from "@/components/RandomImage.astro";
+import Inputs from "@/components/Tarif/Inputs.astro";
 import StarEmpty from "@/components/icons/StarEmpty.astro";
 import StarFilled from "@/components/icons/StarFilled.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-import Buttons from "@/components/Tarif/Buttons.astro";
+import Bar from "@/components/Products/Bar.astro";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -108,13 +108,13 @@ const products = rawProducts.products as ProductType[];
     </Heading>
   </Section>
   <Section id={"1"} className={"horizontal center"} fixedHeight>
-    <div class="m-10 w-full h-full horizontal">
-      <div class="vertical rounded-tl-md rounded-bl-md w-4/12 h-5/6 gap-3 py-5">
+    <div class="w-full h-full horizontal center">
+      <div class="vertical w-4/12 h-5/6 gap-3 py-5 center">
         {
           products.map((product) => {
             return (
               <button
-                class="vertical items-center justify-between mx-5 border rounded-md shadow-sm shadow-black/50 border-slate-600 hover:bg-slate-100 p-2 gap-3"
+                class="w-full vertical items-center justify-between mx-5 border rounded-md shadow-sm shadow-black/50 border-slate-600 hover:bg-slate-100 p-2 gap-3"
                 data-id={`${product.id}`}
               >
                 <div class="w-full horizontal items-center justify-between">
@@ -141,16 +141,16 @@ const products = rawProducts.products as ProductType[];
       <!-- SECTION RIGHT -->
       <!-- SECTION RIGHT -->
       <!-- SECTION RIGHT -->
-      <div class="w-9/12 h-4/6 overflow-hidden">
+      <div class="w-9/12 max-w-[75%] h-4/6 overflow-hidden">
         {
           products.map((product) => {
             const stars = Array.from({ length: 5 }, (_, i) => {
               return i < parseInt(product.rating) ? StarFilled : StarEmpty;
             });
             return (
-              <div class="w-full h-5/6 rounded-tr-md rounded-br-md horizontal items-center justify-start px-5 gap-5">
+              <div class="w-full h-5/6 rounded-tr-md rounded-br-md horizontal items-center justify-start px-5 gap-5 overflow-auto">
                 <RandomImage seed={600} className="h-5/6 w-4/12" />
-                <article class="vertical h-5/6 w-full gap-5">
+                <article class="vertical h-5/6 max-w-fit gap-5">
                   <div class="vertical gap-2">
                     <h2> {product.title} </h2>
                     {/* TITRE */}
@@ -163,38 +163,17 @@ const products = rawProducts.products as ProductType[];
                   </div>
                   {/* description */}
                   {/* description */}
-                  <p>{product.description.long}</p>
-                  {/* description */}
-                  {/* STATS */}
-                  <div class="horizontal-reverse justify-between">
-                    <article class="w-full vertical max-w-[30%] py-4 px-6">
+                  <div class="overflow-auto leading-5">
+                    <article class="w-full vertical max-w-[30%] justify-start float-end rounded-full m-5">
                       {product.stats.map((stat) => (
                         <Bar barSize={175} label={stat.label} value={stat.value} />
                       ))}
                     </article>
-                    {/* STATS */}
-                    {/* STATS */}
-                    {/* CALC */}
-                    {/* CALC */}
-                    {/* CALC */}
-                    <section class="vertical px-6 py-4 text-slate-700 w-fit">
-                      <div class="font-semibold text-sm mb-2">
-                        <span>Nombre de {product.unit} :</span>
-                      </div>
-                      <div class="horizontal center w-fit">
-                        <Buttons product={product} />
-                        <p class="font-medium ring-1 ring-slate-300 px-2">
-                          <small> €</small>
-                          <output class="font-bold text-lg" data-action={`${product.id}#${product.price}`}>
-                            {product.price}
-                          </output>
-                        </p>
-                      </div>
-                    </section>
-                  </div>{" "}
-                  {/* CALC */}
-                  {/* CALC */}
-                  {/* CALC */}
+                    <p>{product.description.long}</p>
+                  </div>
+
+                  {/* description */}
+                  <Inputs product={product} />
                 </article>
               </div>
             );

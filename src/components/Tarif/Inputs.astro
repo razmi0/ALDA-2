@@ -1,0 +1,38 @@
+---
+import { DatePickerWithPresets } from "../DatePicker";
+import type { ProductType } from "../Products/types";
+import Buttons from "./Buttons.astro";
+
+interface Props {
+  product: ProductType;
+}
+
+const { product } = Astro.props;
+---
+
+<div class="horizontal justify-between items-center flex-wrap" style="min-width : min-content">
+  {/* STATS */}
+
+  {/* STATS */}
+  <DatePickerWithPresets client:visible />
+  {/* CALC */}
+
+  <!--  -->
+  <section class="vertical text-slate-700 w-fit">
+    <div class="font-normal text-sm mb-2">
+      <span>Nombre de {product.unit} :</span>
+    </div>
+    <div
+      class="inline-flex justify-between items-center whitespace-nowrap rounded-md text-sm ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 w-[240px] font-normal"
+    >
+      <Buttons product={product} />
+      <p class="px-2">
+        <small> €</small>
+        <output class="font-bold text-lg" data-action={`${product.id}#${product.price}`}>
+          {product.price}
+        </output>
+      </p>
+    </div>
+  </section>
+  {/* CALC */}
+</div>
