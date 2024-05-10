@@ -12,6 +12,7 @@ import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+import { generateLorem } from "@/lib/utils";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -170,8 +171,28 @@ const products = rawProducts.products as ProductType[];
                     </article>
                     <p>{product.description.long}</p>
                   </div>
-
                   {/* description */}
+
+                  <section class="grid grid-cols-2 ">
+                    <div>
+                      <h4>{generateLorem(1)} :</h4>
+                      <ul class="font-normal text-sm">
+                        {[...Array(5)].map(() => (
+                          <li>{generateLorem(1)}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4>{generateLorem(1)} :</h4>
+                      <ol class="font-normal text-sm list-decimal">
+                        {[...Array(5)].map(() => (
+                          <li>{generateLorem(1)}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  </section>
+
                   <Inputs product={product} />
                 </article>
               </div>
