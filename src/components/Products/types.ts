@@ -13,7 +13,7 @@ export interface ProductType {
 }
 
 export type StatType = {
-  label: "courage" | "agilite" | "experience";
+  label: "difficulté";
   value: string;
 };
 

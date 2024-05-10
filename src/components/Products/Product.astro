@@ -1,28 +1,17 @@
 ---
 import Article from "../Article.astro";
 import Button from "../Button.astro";
-import StarEmpty from "../icons/StarEmpty.astro";
-import StarFilled from "../icons/StarFilled.astro";
+import Rating from "./Rating.astro";
 import type { ProductType } from "./types";
 
 interface Props extends ProductType {}
 
 const { price, unit, title, rating, description, id } = Astro.props;
-
-const stars = Array.from({ length: 5 }, (_, i) => {
-  return i < parseInt(rating) ? StarFilled : StarEmpty;
-});
 ---
 
 <div class="vertical gap-10" data-id={id}>
   <Article title={title} words1={description.short} pClass={"text-black/90 max-w-[50ch]"} dark>
-    <div slot="rating" class="horizontal items-center justify-start">
-      {
-        stars.map((Star) => {
-          return <Fragment>{<Star className={"h-4 w-4"} />}</Fragment>;
-        })
-      }
-    </div>
+    <Rating rating={rating} slot="rating" />
   </Article>
   <footer class="horizontal items-center justify-start gap-10">
     <Button size="lg" variant="outline" dark className="w-fit font-bold">En savoir plus</Button>

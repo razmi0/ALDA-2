@@ -67,7 +67,7 @@ const ButtonGroup = ({
   const FieldState = ({ color }: { color: string }) => {
     return (
       <svg viewBox="0 0 28 28" width={20} height={20} fill={color}>
-        <circle cx="15" cy="14" r="8" />
+        <circle cx="15" cy="14" r="8"/>
       </svg>
     );
   };
