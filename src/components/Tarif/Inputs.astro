@@ -10,7 +10,7 @@ interface Props {
 const { product } = Astro.props;
 ---
 
-<div class="horizontal justify-between items-center flex-wrap" style="min-width : min-content">
+<div class="horizontal justify-between items-end flex-wrap" style="min-width : min-content">
   {/* STATS */}
 
   {/* STATS */}
@@ -23,7 +23,7 @@ const { product } = Astro.props;
       <span>Nombre de {product.unit} :</span>
     </div>
     <div
-      class="inline-flex justify-between items-center whitespace-nowrap rounded-md text-sm ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 w-[240px] font-normal">
+      class="inline-flex h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-zinc-100 hover:text-zinc-900 w-[240px] font-normal">
       <Buttons product={product} />
       <p class="px-2">
         <small> €</small>
