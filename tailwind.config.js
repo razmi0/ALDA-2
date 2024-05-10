@@ -81,6 +81,9 @@ export default {
         ".absolute-center": {
           "@apply absolute inset-0 flex justify-center items-center": {},
         },
+        ".shadcn-border": {
+          "@apply border rounded-md ring-offset-white border-zinc-200": {},
+        },
       });
     },
   ],
