@@ -1,6 +1,7 @@
 ---
 import Heading from "@/components/Hero/Heading.astro";
 import Badge from "@/components/Products/Badge.astro";
+import Bar from "@/components/Products/Bar.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
 import RandomImage from "@/components/RandomImage.astro";
@@ -11,7 +12,6 @@ import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-import Bar from "@/components/Products/Bar.astro";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -115,8 +115,7 @@ const products = rawProducts.products as ProductType[];
             return (
               <button
                 class="w-full vertical items-center justify-between mx-5 border rounded-md shadow-sm shadow-black/50 border-slate-600 hover:bg-slate-100 p-2 gap-3"
-                data-id={`${product.id}`}
-              >
+                data-id={`${product.id}`}>
                 <div class="w-full horizontal items-center justify-between">
                   <h2>{product.name}</h2>
                   <p class="font-medium">
@@ -161,10 +160,10 @@ const products = rawProducts.products as ProductType[];
                     </div>
                     {/* TITRE */}
                   </div>
-                  {/* description */}
-                  {/* description */}
                   <div class="overflow-auto leading-5">
-                    <article class="w-full vertical max-w-[30%] justify-start float-end rounded-full m-5">
+                    {/* description */}
+                    {/* description */}
+                    <article class="w-full vertical max-w-[30%] justify-start float-end rounded-full p-5">
                       {product.stats.map((stat) => (
                         <Bar barSize={175} label={stat.label} value={stat.value} />
                       ))}

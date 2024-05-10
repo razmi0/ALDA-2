@@ -9,12 +9,12 @@ interface Props {
 const { product } = Astro.props;
 ---
 
-<section class="horizontal center w-fit ring-1 ring-slate-300 h-7" data-id={product.id}>
+<section class="horizontal center w-fit ring-1 ring-slate-300 h-9" data-id={product.id}>
   <button class="w-full [&>*]:mx-auto" data-action={`remove#${product.id}`}>
-    <Minus size="20" />
+    <Minus size="18" />
   </button>
   <span class="tabular-nums w-16 text-center font-semibold">1</span>
   <button class="w-full [&>*]:mx-auto" data-action={`add#${product.id}`}>
-    <Plus size="20" />
+    <Plus size="18" />
   </button>
 </section>

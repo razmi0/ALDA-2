@@ -18,13 +18,12 @@ const { product } = Astro.props;
   {/* CALC */}
 
   <!--  -->
-  <section class="vertical text-slate-700 w-fit">
+  <section class="vertical text-black w-fit">
     <div class="font-normal text-sm mb-2">
       <span>Nombre de {product.unit} :</span>
     </div>
     <div
-      class="inline-flex justify-between items-center whitespace-nowrap rounded-md text-sm ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 w-[240px] font-normal"
-    >
+      class="inline-flex justify-between items-center whitespace-nowrap rounded-md text-sm ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 w-[240px] font-normal">
       <Buttons product={product} />
       <p class="px-2">
         <small> €</small>
