@@ -28,10 +28,10 @@ export function DatePickerWithPresets() {
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent position="popper">
-              <SelectItem value="0">Today</SelectItem>
-              <SelectItem value="1">Tomorrow</SelectItem>
-              <SelectItem value="3">In 3 days</SelectItem>
-              <SelectItem value="7">In a week</SelectItem>
+              <SelectItem value="0">Aujourd'hui</SelectItem>
+              <SelectItem value="1">Demain</SelectItem>
+              <SelectItem value="3">Dans trois jour</SelectItem>
+              <SelectItem value="7">Dans une semaine</SelectItem>
             </SelectContent>
           </Select>
           <div className="rounded-md border">
