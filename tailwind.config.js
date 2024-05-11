@@ -70,7 +70,7 @@ export default {
           "@apply  flex flex-row-reverse": {},
         },
         ".center": {
-          "@apply justify-center items-center": {},
+          "@apply justify-center justify-items-center items-center": {},
         },
         ".full": {
           "@apply w-full h-full": {},

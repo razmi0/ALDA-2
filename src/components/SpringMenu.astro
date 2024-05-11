@@ -1,0 +1,160 @@
+---
+import { cn } from "@/lib/utils";
+import { Bean, Bike, MoveUpRight, TentTree, Variable } from "lucide-react";
+
+interface Props {
+  startingWidth?: string;
+  startingSpringRight?: string;
+  startingSpringLeft?: string;
+  springRight?: string;
+  springLeft?: string;
+  growDuration?: string;
+  transitionDuration?: string;
+  ungrowDuration?: string;
+  className?: string | undefined;
+}
+
+const {
+  className,
+  startingWidth = "47px",
+  startingSpringLeft = "0px",
+  springLeft = "10px",
+  startingSpringRight = "10px",
+  springRight = "20px",
+  growDuration = "0.6s",
+  ungrowDuration = "0.3s",
+  transitionDuration = "0.1s",
+} = Astro.props;
+
+const icons = [
+  [Bike, "Bike"],
+  [Bean, "Bean"],
+  [TentTree, "TentTree"],
+  [Variable, "Variable"],
+] as const;
+---
+
+<style
+  define:vars={{
+    startingWidth,
+    startingSpringRight,
+    startingSpringLeft,
+    springLeft,
+    springRight,
+    growDuration,
+    transitionDuration,
+    ungrowDuration,
+  }}
+>
+  .div:hover {
+    animation: grow var(--growDuration) forwards;
+  }
+
+  .div:hover > .content {
+    animation: fadeIn var(--ungrowDuration) forwards;
+  }
+
+  .div {
+    @apply flex cursor-pointer ring-1 ring-offset-2 ring-white bg-white rounded-xl max-w-fit w-fit transition-all relative overflow-hidden leading-6;
+    padding: var(--startingSpringRight);
+    animation: ungrow var(--ungrowDuration) forwards;
+    transition: all var(--transitionDuration) var(--transitionDuration) ease-in-out;
+  }
+
+  .content {
+    @apply text-xl px-4 h-fit;
+    animation: fadeOut var(--growDuration) forwards;
+  }
+
+  .content:hover {
+    @apply underline;
+  }
+
+  .icon {
+    @apply w-7 h-7 min-w-7 min-h-7;
+  }
+
+  /* previous sibling */
+  div.div:has(~ div.div:hover),
+  div.div:hover ~ div.div {
+    @apply opacity-10 pointer-events-none text-black scale-90;
+  }
+
+  @keyframes grow {
+    0% {
+      width: var(--startingWidth);
+      padding-right: var(--startingSpringRight);
+      margin-left: var(--startingSpringLeft);
+    }
+    25% {
+      padding-right: var(--springRight);
+      margin-left: var(--springLeft);
+    }
+    100% {
+      width: 100%;
+      padding-right: var(--startingSpringRight);
+      margin-left: var(--startingSpringLeft);
+    }
+  }
+
+  @keyframes ungrow {
+    0% {
+      width: 100%;
+    }
+
+    100% {
+      width: var(--startingWidth);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      display: none;
+      transform: translate(100%, 0px, 0px);
+    }
+    1% {
+      display: inline-flex;
+    }
+    to {
+      display: inline-flex;
+      filter: blur(0);
+      transform: translate(0, 0px, 0px);
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      display: inline-flex;
+      transform: translate(0, 0px, 0px);
+    }
+
+    99% {
+      display: none;
+      filter: blur(10px);
+    }
+    to {
+      display: none;
+      transform: translate(100%, 0px, 0px);
+    }
+  }
+</style>
+
+<div class:list={cn("flex gap-3 center w-full ", className)}>
+  {
+    icons.map((duo, i) => {
+      const Icon = duo[0];
+      const name = duo[1];
+      return (
+        <div
+          data-index={i}
+          class="div animation-end-div active:bg-slate-400 focus:ring-offset-1 focus-visible:ring-offset-1 ring-offset-slate-200 select-none">
+          <Icon className="icon" />
+          <div class="content grandstander center flex">
+            <div>{name}</div>
+            <MoveUpRight className="inline h-7 w-7 ml-1" />
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
