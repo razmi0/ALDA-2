@@ -63,31 +63,32 @@ const products = rawProducts.products as ProductType[];
   <HeaderFooter slot="header" />
   <Section>
     <Heading h2="Nos tarifs" h3="Composable et personalisable" className="text-black">
-      <p class="max-w-[60ch]">{generateLorem(30)}</p>
+      <!-- <p class="max-w-[60ch]">{generateLorem(30)}</p> -->
       <a href="#1" class="pointer-events-auto">
         <ArrowDown size="32" />
       </a>
+      <div class="grow max-h-[10%]"></div>
+      <div class="horizontal center w-full text-lg text-center [&>article]:grow">
+        <article>
+          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">1</div>
+          <h2>Choisissez votre activité</h2>
+          <p>Sélectionnez une activité pour voir les détails</p>
+        </article>
+        <article>
+          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">2</div>
+          <h2>Choisissez quand et pour combien de personne</h2>
+          <p>Sélectionnez une activité pour voir les détails</p>
+        </article>
+        <article>
+          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">3</div>
+          <h2>Envoyer nous un message</h2>
+          <p>Sélectionnez une activité pour voir les détails</p>
+        </article>
+      </div>
     </Heading>
   </Section>
   <Section id={"1"} className={"horizontal items-start justify-center container"} fixedHeight>
     <div class="w-full h-full vertical items-center gap-10">
-      <div class="horizontal center w-full text-lg text-center [&>article]:grow">
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl">1</div>
-          <h2>Choisissez votre activité</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl">2</div>
-          <h2>Choisissez votre activité</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl">3</div>
-          <h2>Choisissez votre activité</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-      </div>
       <!-- SECTION card -->
       <!-- SECTION card -->
       <!-- SECTION card -->
@@ -97,7 +98,7 @@ const products = rawProducts.products as ProductType[];
           products.map((product) => {
             return (
               <button
-                class="w-full vertical items-center justify-between shadcn-border hover:bg-slate-100 py-2 px-4 gap-3"
+                class="w-full vertical items-center justify-between shadcn-border hover:bg-slate-100 py-2 px-4 gap-3 focus:ring-1 focus-visible:ring-1 ring-offset-2 ring-black "
                 data-action={`select#${product.id}`}>
                 <div class="w-full horizontal items-center justify-between">
                   <h2>{product.name}</h2>
@@ -130,7 +131,14 @@ const products = rawProducts.products as ProductType[];
               <div
                 class="w-full h-full horizontal px-5 gap-10 overflow-auto items-start justify-center"
                 data-action={`frame-element#${product.id}`}>
-                <RandomImage seed={600} className="h-5/6 w-4/12 aspect-auto" />
+                <section class="relative h-5/6 w-4/12">
+                  <RandomImage seed={600} className=" full aspect-auto" />
+                  <div class="absolute bottom-2 flex justify-evenly w-full">
+                    <RandomImage size={125} className="ring-1 ring-white" />
+                    <RandomImage size={125} className="ring-1 ring-white" />
+                    <RandomImage size={125} className="ring-1 ring-white" />
+                  </div>
+                </section>
                 <article class="vertical h-fit gap-5 items-start justify-center max-w-[70%] ">
                   <h2> {product.title}</h2>
                   <div class="overflow-auto leading-5">
