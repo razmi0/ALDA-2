@@ -13,19 +13,20 @@ export function DatePickerWithPresets() {
 
   return (
     <div className="vertical center">
+      <label className="mb-1 text-left text-sm w-full">Réservez une date :</label>
       <Button
         onClick={() => {
           if (dialogRef.current?.open) dialogRef.current?.close();
           dialogRef.current?.showModal();
         }}
         variant={"outline"}
-        className={cn("w-full justify-start text-left font-normal")}>
+        className={cn("w-full justify-start text-left font-normal max-w-72")}>
         <CalendarIcon className="mr-2 h-4 w-4" />
         {date ? format(date, "PPP") : <></>}
       </Button>
 
-      <div className="rounded-md border">
-        <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md" />
+      <div className="rounded-md border max-w-72">
+        <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md max-w-72" />
       </div>
     </div>
   );

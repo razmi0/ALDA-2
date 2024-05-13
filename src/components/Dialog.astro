@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 import Button from "./Button.astro";
 import type { ProductType } from "./Products/types";
 import Inputs from "./Tarif/Inputs.astro";
+import { X } from "lucide-react";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -14,7 +15,7 @@ const key = product.id;
 ---
 
 <script>
-  const dialogs = document.querySelectorAll("[data-action*='dialog']");
+  const dialogs = Array.from(document.querySelectorAll("[data-action*='dialog']")) as HTMLDialogElement[];
   const showButtons = Array.from(document.querySelectorAll("[data-action*='open']")) as HTMLButtonElement[];
   const closeButtons = Array.from(document.querySelectorAll("[data-action*='close']")) as HTMLButtonElement[];
   const outputs = Array.from(document.querySelectorAll("[data-action*='output']")) as HTMLParagraphElement[];
@@ -25,56 +26,80 @@ const key = product.id;
     );
   }
 
-  dialogs.forEach((dialog, i) => {
-    const showButton = showButtons[i];
-    const closeButton = closeButtons[i];
-    const output = outputs[i];
+  /**
+   * Map<string, [dialog, open, [close[]], output]>
+   */
+  const dialogMaps = new Map<
+    string,
+    [HTMLDialogElement, HTMLButtonElement, [HTMLButtonElement[]], HTMLParagraphElement]
+  >();
 
-    showButton.addEventListener("click", () => {
-      dialog.showModal();
-    });
+  dialogs.map((dialog, i) => {
+    const key = dialog.dataset.action.split("#")[1];
+    const open = document.querySelector(`dialog ~ [data-action='open#${key}']`) as HTMLButtonElement;
+    const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
+    const output = document.querySelector(`dialog + [data-action='output#${key}']`) as HTMLParagraphElement;
 
-    closeButton.addEventListener("click", () => {
-      dialog.close();
-      console.log(closeButton.value);
-    });
+    if (!open || !close || !output) {
+      throw new Error(`Missing open : ${open} or close : ${close} or output : ${output}`);
+    }
+
+    open.addEventListener("click", () => dialog.showModal());
+    close.map((btn) => btn.addEventListener("click", () => dialog.close()));
+    // output
+
+    dialogMaps.set(key, [dialog, open, close, output]);
   });
 </script>
 <style>
   dialog:modal {
-    @apply ring-1 ring-stone-300 ring-offset-1 vertical items-center justify-between px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10;
+    @apply ring-1 ring-stone-300 ring-offset-1 vertical items-center justify-between px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
   }
   dialog::backdrop {
     @apply bg-black/40 backdrop-blur-[1px];
   }
 </style>
 <dialog {...Astro.props} data-action={`dialog#${key}`}>
-  <div class="horizontal center w-full text-lg text-center [&>article]:grow gap-16">
-    <article>
-      <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">
-        <div class="translate-y-[3px]">1</div>
-      </div>
-      <h2>Choisissez quand et pour combien de personne</h2>
-      <p>Sélectionnez une activité pour voir les détails</p>
-    </article>
-    <article>
-      <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">
-        <div class="translate-y-[3px]">2</div>
-      </div>
-      <h2>Selectionnez vos options</h2>
-      <p>Sélectionnez une activité pour voir les détails</p>
-    </article>
-    <article>
-      <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">
-        <div class="translate-y-[3px]">3</div>
-      </div>
-      <h2>Envoyer nous un message</h2>
-      <p>Sélectionnez une activité pour voir les détails</p>
-    </article>
+  <button
+    data-action={`close#${key}`}
+    class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400"
+    ><X /></button
+  >
+
+  <div class="grid center grid-cols-3 gap-20 [&>section]:text-center [&_article]:mb-20 [&_article]:text-balance">
+    <!-- COL 1 -->
+    <section>
+      <article>
+        <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">1</div>
+        <h2>Choisissez quand et pour combien de personne</h2>
+        <p>Sélectionnez une activité pour voir les détails</p>
+      </article>
+      <Inputs product={product} />
+    </section>
+    <!-- COL 1 -->
+    <!-- COL 2 -->
+    <section>
+      <article>
+        <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">2</div>
+        <h2>Selectionnez vos options</h2>
+        <p>Sélectionnez une activité pour voir les détails</p>
+      </article>
+      <!-- OPTIONS -->
+    </section>
+    <!-- COL 2 -->
+    <!-- COL 3 -->
+    <section>
+      <article>
+        <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">3</div>
+        <h2>Envoyer nous un message</h2>
+        <p>Sélectionnez une activité pour voir les détails</p>
+      </article>
+      <!-- MESSAGE -->
+    </section>
+    <!-- COL 3 -->
   </div>
-  <Inputs product={product} client:visible />
   <Button data-action={`close#${key}`} dark size="lg" value={JSON.stringify("")} autofocus>Save</Button>
 </dialog>
 
 <p data-action=`output#${key}`>Cette boîte de dialogue modale a un arrière-plan festif !</p>
-<Button data-action={`open#${key}`} dark size="lg"> S'inscrire </Button>
+<Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>

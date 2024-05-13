@@ -95,17 +95,12 @@ const { product } = Astro.props;
   });
 </script>
 
-<div class="vertical justify-between items-start flex-wrap w-full gap-5 z-50" style="min-width : min-content">
-  {/* STATS */}
-
-  {/* STATS */}
-  <DatePickerWithPresets client:visible />
-  {/* CALC */}
-
-  <!--  -->
-  <section class="vertical text-black w-full">
-    <div class="font-normal text-sm mb-2">
-      <span>Nombre de {product.unit} :</span>
+<div
+  class="vertical justify-between items-start flex-wrap w-full [&>*]:w-full max-w-[270px] gap-10"
+  style="min-width : min-content">
+  <section class="vertical text-black select-none">
+    <div class="font-normal text-sm mb-1 text-left">
+      <label>Nombre de {product.unit} :</label>
     </div>
     <div
       class="w-full inline-flex h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-zinc-100 hover:text-zinc-900 font-normal">
@@ -118,5 +113,5 @@ const { product } = Astro.props;
       </p>
     </div>
   </section>
-  {/* CALC */}
+  <DatePickerWithPresets client:visible />
 </div>
