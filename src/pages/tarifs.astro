@@ -5,12 +5,12 @@ import Bar from "@/components/Products/Bar.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
 import RandomImage from "@/components/RandomImage.astro";
+import Dialog from "@/components/Tarif/Dialog.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { ArrowDown, Backpack, Gauge, MapPin } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-import Dialog from "@/components/Tarif/Dialog.astro";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -63,16 +63,13 @@ const products = rawProducts.products as ProductType[];
   <HeaderFooter slot="header" />
   <Section>
     <Heading h2="Nos tarifs" h3="Composable et personalisable" className="text-black">
-      <!-- <p class="max-w-[60ch]">{generateLorem(30)}</p> -->
-
       <div class="grow max-h-[10%]"></div>
-
       <a href="#1" class="pointer-events-auto">
         <ArrowDown size="32" />
       </a>
     </Heading>
   </Section>
-  <Section id={"1"} className={"horizontal items-start justify-center container"} fixedHeight>
+  <Section id={"1"} className={"horizontal items-center justify-center container"} fixedHeight>
     <!-- SECTION card -->
     <!-- SECTION card -->
     <!-- SECTION card -->
@@ -108,14 +105,14 @@ const products = rawProducts.products as ProductType[];
     <!-- SECTION content -->
     <!-- SECTION content -->
     <!-- SECTION content -->
-    <div class="overflow-hidden h-[500px] [&>[data-action*='frame-element']]:h-[500px]" data-is="frame">
+    <div class="overflow-hidden h-[600px] [&>[data-action*='frame-element']]:h-[600px]" data-is="frame">
       {
         products.map((product) => {
           return (
             <div
               class="w-full h-full horizontal px-5 gap-10 overflow-auto items-start justify-center"
               data-action={`frame-element#${product.id}`}>
-              <section class="relative h-[500px] w-4/12">
+              <section class="relative h-[575px] w-4/12">
                 <RandomImage seed={600} className=" full aspect-auto" />
                 <div class="absolute top-0 vertical justify-start gap-4 mt-4  left-4 h-full">
                   <RandomImage size={110} className="ring-1 ring-white" />
@@ -162,12 +159,7 @@ const products = rawProducts.products as ProductType[];
                     </div>
                   </article>
                 </section>
-                {/* LIST */}
-                {/* <Inputs product={product} /> */}
-
                 <Dialog product={product} />
-
-                {/* <Inputs product={product} /> */}
               </article>
             </div>
           );
