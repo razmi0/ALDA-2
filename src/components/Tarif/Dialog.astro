@@ -1,9 +1,10 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import Button from "./Button.astro";
-import type { ProductType } from "./Products/types";
-import Inputs from "./Tarif/Inputs.astro";
+import Button from "../Button.astro";
+import type { ProductType } from "../Products/types";
+import Inputs from "./Inputs.astro";
 import { X } from "lucide-react";
+import Options from "./Options.astro";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -66,7 +67,8 @@ const key = product.id;
     ><X /></button
   >
 
-  <div class="grid center grid-cols-3 gap-20 [&>section]:text-center [&_article]:mb-20 [&_article]:text-balance">
+  <div
+    class="grid center grid-cols-3 gap-20 [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full [&_article]:mb-20 [&_article]:text-balance">
     <!-- COL 1 -->
     <section>
       <article>
@@ -85,6 +87,7 @@ const key = product.id;
         <p>Sélectionnez une activité pour voir les détails</p>
       </article>
       <!-- OPTIONS -->
+      <Options />
     </section>
     <!-- COL 2 -->
     <!-- COL 3 -->

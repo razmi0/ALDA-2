@@ -1,0 +1,46 @@
+---
+import type { OptionType } from "./types";
+import Checkbox from "../ui/checkbox.astro";
+
+const options: OptionType[] = [
+  {
+    label: "Je peux amener mon matériel",
+    value: "hasMaterial",
+  },
+  {
+    label: "je suis un professionnel",
+    value: "isPro",
+  },
+  {
+    label: "je suis un particulier",
+    value: "isParticular",
+  },
+  {
+    label: "je suis une entreprise",
+    value: "isCompany",
+  },
+  {
+    label: "j'ai un handicap",
+    value: "hasDisability",
+    description: "Toutes nos activités sont accessibles aux personnes en situation de handicap",
+  },
+  {
+    label: "je suis une association",
+    value: "isAssociation",
+    description: "Les associations bénéficient d'un tarif réduit de 50%",
+  },
+  {
+    label: "je suis un accompagnant",
+    value: "isAccompanist",
+    description: "Les accompagnants ne payent pas",
+  },
+];
+---
+
+<section class={"h-full vertical justify-between select-none "}>
+  {
+    options.map((option) => {
+      return <Checkbox option={option} />;
+    })
+  }
+</section>
