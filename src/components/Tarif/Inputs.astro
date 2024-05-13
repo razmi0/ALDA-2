@@ -95,7 +95,7 @@ const { product } = Astro.props;
   });
 </script>
 
-<div class="vertical justify-between items-start flex-wrap w-full gap-5" style="min-width : min-content">
+<div class="vertical justify-between items-start flex-wrap w-full gap-5 z-50" style="min-width : min-content">
   {/* STATS */}
 
   {/* STATS */}
@@ -103,12 +103,12 @@ const { product } = Astro.props;
   {/* CALC */}
 
   <!--  -->
-  <section class="vertical text-black w-fit">
+  <section class="vertical text-black w-full">
     <div class="font-normal text-sm mb-2">
       <span>Nombre de {product.unit} :</span>
     </div>
     <div
-      class="inline-flex h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-zinc-100 hover:text-zinc-900 w-[240px] font-normal">
+      class="w-full inline-flex h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-zinc-100 hover:text-zinc-900 font-normal">
       <Buttons product={product} />
       <p class="px-2">
         <small> €</small>

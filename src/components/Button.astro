@@ -8,9 +8,11 @@ interface Props {
   className?: string;
   dark?: boolean;
   rest?: Omit<HTMLAttributes<"button">, "class">;
+  value?: string;
+  autofocus?: boolean;
 }
 
-const { className, variant, dark, size, ring, ...rest } = Astro.props;
+const { className, variant, dark, size, ring, value, autofocus, ...rest } = Astro.props;
 
 const variants = {
   outline: {
@@ -35,6 +37,8 @@ const variants = {
 ---
 
 <button
+  autofocus={autofocus}
+  value={value}
   class={cn(
     "pointer-events-auto cursor-pointer",
     variants[variant || "outline"][dark ? "dark" : "light"],
@@ -43,7 +47,6 @@ const variants = {
     variants.rings[dark ? "dark" : "light"],
     className
   )}
-  {...rest}
->
+  {...rest}>
   <slot />
 </button>

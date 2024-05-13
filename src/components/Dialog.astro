@@ -1,0 +1,80 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Button from "./Button.astro";
+import type { ProductType } from "./Products/types";
+import Inputs from "./Tarif/Inputs.astro";
+
+interface Props {
+  rest?: HTMLAttributes<"dialog">;
+  product: ProductType;
+}
+
+const { product } = Astro.props;
+const key = product.id;
+---
+
+<script>
+  const dialogs = document.querySelectorAll("[data-action*='dialog']");
+  const showButtons = Array.from(document.querySelectorAll("[data-action*='open']")) as HTMLButtonElement[];
+  const closeButtons = Array.from(document.querySelectorAll("[data-action*='close']")) as HTMLButtonElement[];
+  const outputs = Array.from(document.querySelectorAll("[data-action*='output']")) as HTMLParagraphElement[];
+
+  if (!dialogs || !showButtons || !closeButtons || !outputs) {
+    throw new Error(
+      `Missing dialog : ${dialog}, showButton : ${showButton} or closeButton :  ${closeButton} or output : ${output}`
+    );
+  }
+
+  dialogs.forEach((dialog, i) => {
+    const showButton = showButtons[i];
+    const closeButton = closeButtons[i];
+    const output = outputs[i];
+
+    showButton.addEventListener("click", () => {
+      dialog.showModal();
+    });
+
+    closeButton.addEventListener("click", () => {
+      dialog.close();
+      console.log(closeButton.value);
+    });
+  });
+</script>
+<style>
+  dialog:modal {
+    @apply ring-1 ring-stone-300 ring-offset-1 vertical items-center justify-between px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10;
+  }
+  dialog::backdrop {
+    @apply bg-black/40 backdrop-blur-[1px];
+  }
+</style>
+<dialog {...Astro.props} data-action={`dialog#${key}`}>
+  <div class="horizontal center w-full text-lg text-center [&>article]:grow gap-16">
+    <article>
+      <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">
+        <div class="translate-y-[3px]">1</div>
+      </div>
+      <h2>Choisissez quand et pour combien de personne</h2>
+      <p>Sélectionnez une activité pour voir les détails</p>
+    </article>
+    <article>
+      <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">
+        <div class="translate-y-[3px]">2</div>
+      </div>
+      <h2>Selectionnez vos options</h2>
+      <p>Sélectionnez une activité pour voir les détails</p>
+    </article>
+    <article>
+      <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">
+        <div class="translate-y-[3px]">3</div>
+      </div>
+      <h2>Envoyer nous un message</h2>
+      <p>Sélectionnez une activité pour voir les détails</p>
+    </article>
+  </div>
+  <Inputs product={product} client:visible />
+  <Button data-action={`close#${key}`} dark size="lg" value={JSON.stringify("")} autofocus>Save</Button>
+</dialog>
+
+<p data-action=`output#${key}`>Cette boîte de dialogue modale a un arrière-plan festif !</p>
+<Button data-action={`open#${key}`} dark size="lg"> S'inscrire </Button>

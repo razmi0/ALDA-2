@@ -5,12 +5,12 @@ import Bar from "@/components/Products/Bar.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
 import RandomImage from "@/components/RandomImage.astro";
-import Inputs from "@/components/Tarif/Inputs.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { ArrowDown, Backpack, Gauge, MapPin } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+import Dialog from "@/components/Dialog.astro";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -64,128 +64,115 @@ const products = rawProducts.products as ProductType[];
   <Section>
     <Heading h2="Nos tarifs" h3="Composable et personalisable" className="text-black">
       <!-- <p class="max-w-[60ch]">{generateLorem(30)}</p> -->
+
+      <div class="grow max-h-[10%]"></div>
+
       <a href="#1" class="pointer-events-auto">
         <ArrowDown size="32" />
       </a>
-      <div class="grow max-h-[10%]"></div>
-      <div class="horizontal center w-full text-lg text-center [&>article]:grow">
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">1</div>
-          <h2>Choisissez votre activité</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">2</div>
-          <h2>Choisissez quand et pour combien de personne</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-14 w-14 -translate-y-1 text-3xl mx-auto mb-2">3</div>
-          <h2>Envoyer nous un message</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-      </div>
     </Heading>
   </Section>
   <Section id={"1"} className={"horizontal items-start justify-center container"} fixedHeight>
-    <div class="w-full h-full vertical items-center gap-10">
-      <!-- SECTION card -->
-      <!-- SECTION card -->
-      <!-- SECTION card -->
-      <!-- SECTION card -->
-      <div class="flex w-full h-fit gap-6 py-5 center">
-        {
-          products.map((product) => {
-            return (
-              <button
-                class="w-full vertical items-center justify-between shadcn-border hover:bg-slate-100 py-2 px-4 gap-3 focus:ring-1 focus-visible:ring-1 ring-offset-2 ring-black "
-                data-action={`select#${product.id}`}>
-                <div class="w-full horizontal items-center justify-between">
-                  <h2>{product.name}</h2>
-                  <p class="font-medium">
-                    <span class="font-bold text-lg">
-                      <small> €</small>
-                      {product.price}
-                    </span>
-                    / {product.unit}
-                  </p>
-                </div>
-                <div class="w-full h-full space-x-4 text-left">
-                  {product.tags.map((tag) => {
-                    return <Badge tag={tag} className="my-2" />;
-                  })}
-                </div>
-              </button>
-            );
-          })
-        }
-      </div>
-      <!-- SECTION content -->
-      <!-- SECTION content -->
-      <!-- SECTION content -->
-      <!-- SECTION content -->
-      <div class="overflow-hidden" data-is="frame">
-        {
-          products.map((product) => {
-            return (
-              <div
-                class="w-full h-full horizontal px-5 gap-10 overflow-auto items-start justify-center"
-                data-action={`frame-element#${product.id}`}>
-                <section class="relative h-5/6 w-4/12">
-                  <RandomImage seed={600} className=" full aspect-auto" />
-                  <div class="absolute bottom-2 flex justify-evenly w-full">
-                    <RandomImage size={125} className="ring-1 ring-white" />
-                    <RandomImage size={125} className="ring-1 ring-white" />
-                    <RandomImage size={125} className="ring-1 ring-white" />
-                  </div>
-                </section>
-                <article class="vertical h-fit gap-5 items-start justify-center max-w-[70%] ">
-                  <h2> {product.title}</h2>
-                  <div class="overflow-auto leading-5">
-                    <p class="max-w-[60ch]">{product.description.long}</p>
-                  </div>
-                  {/* LIST */}
-                  <section class="vertical gap-3">
-                    <article class="horizontal items-center justify-start w-fit gap-5">
-                      <div class="horizontal center gap-1">
-                        <Gauge className="h-5 -translate-y-[2px] stroke-2" />
-                        <p class="font-semibold">difficulté</p>
-                      </div>
-                      {product.stats.map((stat) => (
-                        <Bar barSize={175} value={stat.value} />
-                      ))}
-                    </article>
-                    <article class="horizontal items-center justify-start w-fit gap-5">
-                      <div class="horizontal center gap-1">
-                        <Backpack className="h-5 -translate-y-[2px] stroke-2" />
-                        <p class="font-semibold">matériels</p>
-                      </div>
-                      <div class="space-x-5">
-                        {[...Array(5)].map(() => (
-                          <Badge variant="outline" className="my-2 font-medium" tag={generateLorem(1)} />
-                        ))}
-                      </div>
-                    </article>
-                    <article class="horizontal items-center justify-start w-fit gap-5">
-                      <div class="horizontal center gap-1">
-                        <MapPin className="h-5 stroke-2" />
-                        <p class="font-semibold">lieux</p>
-                      </div>
-                      <div class="space-x-5">
-                        {[...Array(5)].map(() => (
-                          <Badge variant="outline" className="my-2 font-medium" tag={generateLorem(1)} />
-                        ))}
-                      </div>
-                    </article>
-                  </section>
-                  {/* LIST */}
-                  <Inputs product={product} />
-                </article>
+    <!-- SECTION card -->
+    <!-- SECTION card -->
+    <!-- SECTION card -->
+    <!-- SECTION card -->
+    <div class="vertical w-fit h-fit gap-6 py-5 center">
+      {
+        products.map((product) => {
+          return (
+            <button
+              class="w-full vertical items-center justify-between shadcn-border hover:bg-slate-100 py-2 px-4 gap-3 focus:ring-1 focus-visible:ring-1 ring-offset-2 ring-black "
+              data-action={`select#${product.id}`}>
+              <div class="w-full horizontal items-center justify-between">
+                <h2>{product.name}</h2>
+                <p class="font-medium">
+                  <span class="font-bold text-lg">
+                    <small> €</small>
+                    {product.price}
+                  </span>
+                  / {product.unit}
+                </p>
               </div>
-            );
-          })
-        }
-      </div>
+              <div class="w-full h-full space-x-4 text-left">
+                {product.tags.map((tag) => {
+                  return <Badge tag={tag} className="my-2" />;
+                })}
+              </div>
+            </button>
+          );
+        })
+      }
+    </div>
+    <!-- SECTION content -->
+    <!-- SECTION content -->
+    <!-- SECTION content -->
+    <!-- SECTION content -->
+    <div class="overflow-hidden h-[500px] [&>[data-action*='frame-element']]:h-[500px]" data-is="frame">
+      {
+        products.map((product) => {
+          return (
+            <div
+              class="w-full h-full horizontal px-5 gap-10 overflow-auto items-start justify-center"
+              data-action={`frame-element#${product.id}`}>
+              <section class="relative h-[500px] w-4/12">
+                <RandomImage seed={600} className=" full aspect-auto" />
+                <div class="absolute top-0 vertical justify-start gap-4 mt-4  left-4 h-full">
+                  <RandomImage size={110} className="ring-1 ring-white" />
+                  <RandomImage size={110} className="ring-1 ring-white" />
+                  <RandomImage size={110} className="ring-1 ring-white" />
+                </div>
+              </section>
+              <article class="vertical h-fit gap-5 items-start justify-center max-w-[70%] ">
+                <h2> {product.title}</h2>
+                <div class="overflow-auto leading-5">
+                  <p class="max-w-[60ch]">{product.description.long}</p>
+                </div>
+                {/* LIST */}
+                <section class="vertical gap-3">
+                  <article class="horizontal items-center justify-start w-fit gap-5">
+                    <div class="horizontal center gap-1">
+                      <Gauge className="h-5 -translate-y-[2px] stroke-2" />
+                      <p class="font-semibold">difficulté</p>
+                    </div>
+                    {product.stats.map((stat) => (
+                      <Bar barSize={175} value={stat.value} />
+                    ))}
+                  </article>
+                  <article class="horizontal items-center justify-start w-fit gap-5">
+                    <div class="horizontal center gap-1">
+                      <Backpack className="h-5 -translate-y-[2px] stroke-2" />
+                      <p class="font-semibold">matériels</p>
+                    </div>
+                    <div class="space-x-5">
+                      {[...Array(5)].map(() => (
+                        <Badge variant="outline" className="my-2 font-medium" tag={generateLorem(1)} />
+                      ))}
+                    </div>
+                  </article>
+                  <article class="horizontal items-center justify-start w-fit gap-5">
+                    <div class="horizontal center gap-1">
+                      <MapPin className="h-5 stroke-2" />
+                      <p class="font-semibold">lieux</p>
+                    </div>
+                    <div class="space-x-5">
+                      {[...Array(5)].map(() => (
+                        <Badge variant="outline" className="my-2 font-medium" tag={generateLorem(1)} />
+                      ))}
+                    </div>
+                  </article>
+                </section>
+                {/* LIST */}
+                {/* <Inputs product={product} /> */}
+
+                <Dialog product={product} />
+
+                {/* <Inputs product={product} /> */}
+              </article>
+            </div>
+          );
+        })
+      }
     </div>
   </Section>
 </Layout>
