@@ -1,9 +1,10 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import { X } from "lucide-react";
 import Button from "../Button.astro";
 import type { ProductType } from "../Products/types";
 import Inputs from "./Inputs.astro";
-import { X } from "lucide-react";
+import Message from "./Message.astro";
 import Options from "./Options.astro";
 
 interface Props {
@@ -32,7 +33,7 @@ const key = product.id;
    */
   const dialogMaps = new Map<
     string,
-    [HTMLDialogElement, HTMLButtonElement, [HTMLButtonElement[]], HTMLParagraphElement]
+    [HTMLDialogElement, HTMLButtonElement, [HTMLButtonElement[]], HTMLParagraphElement, HTMLFormElement]
   >();
 
   dialogs.map((dialog, i) => {
@@ -40,16 +41,28 @@ const key = product.id;
     const open = document.querySelector(`dialog ~ [data-action='open#${key}']`) as HTMLButtonElement;
     const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
     const output = document.querySelector(`dialog + [data-action='output#${key}']`) as HTMLParagraphElement;
+    const form = document.querySelector(`dialog [data-form='form#${key}']`) as HTMLFormElement;
 
     if (!open || !close || !output) {
-      throw new Error(`Missing open : ${open} or close : ${close} or output : ${output}`);
+      throw new Error(`Missing open : ${open} or close : ${close} or output : ${output} or form : ${form}`);
     }
 
     open.addEventListener("click", () => dialog.showModal());
     close.map((btn) => btn.addEventListener("click", () => dialog.close()));
     // output
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      console.log(data);
+      if (data.hp) {
+        window.location = "/honey";
+      }
+      // output.textContent = JSON.stringify(data);
+      // dialog.close();
+    });
 
-    dialogMaps.set(key, [dialog, open, close, output]);
+    dialogMaps.set(key, [dialog, open, close, output, form]);
   });
 </script>
 <style>
@@ -59,50 +72,61 @@ const key = product.id;
   dialog::backdrop {
     @apply bg-black/40 backdrop-blur-[1px];
   }
+
+  .hp {
+    @apply hidden;
+  }
 </style>
 <dialog {...Astro.props} data-action={`dialog#${key}`}>
   <button
+    type="button"
     data-action={`close#${key}`}
     class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400"
     ><X /></button
   >
-
-  <div
-    class="grid center grid-cols-3 gap-20 [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full [&_article]:mb-20 [&_article]:text-balance">
-    <!-- COL 1 -->
-    <section>
-      <article>
-        <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">1</div>
-        <h2>Choisissez quand et pour combien de personne</h2>
-        <p>Sélectionnez une activité pour voir les détails</p>
-      </article>
-      <Inputs product={product} />
-    </section>
-    <!-- COL 1 -->
-    <!-- COL 2 -->
-    <section>
-      <article>
-        <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">2</div>
-        <h2>Selectionnez vos options</h2>
-        <p>Sélectionnez une activité pour voir les détails</p>
-      </article>
-      <!-- OPTIONS -->
-      <Options />
-    </section>
-    <!-- COL 2 -->
-    <!-- COL 3 -->
-    <section>
-      <article>
-        <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">3</div>
-        <h2>Envoyer nous un message</h2>
-        <p>Sélectionnez une activité pour voir les détails</p>
-      </article>
-      <!-- MESSAGE -->
-    </section>
-    <!-- COL 3 -->
-  </div>
-  <Button data-action={`close#${key}`} dark size="lg" value={JSON.stringify("")} autofocus>Save</Button>
+  <form data-form={`form#${key}`}>
+    <input type="hidden" name="product_id" value={product.id} />
+    <label class="hp" for="hp"
+      >Hi honey !
+      <input type="text" id="hp" name="hp" />
+    </label>
+    <div
+      class="grid center grid-cols-3 gap-20 [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full [&_article]:mb-20 [&_article]:text-balance">
+      <!-- COL 1 -->
+      <section>
+        <article>
+          <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">1</div>
+          <h2>Choisissez quand et pour combien de personne</h2>
+          <p>Sélectionnez une activité pour voir les détails</p>
+        </article>
+        <Inputs product={product} />
+      </section>
+      <!-- COL 1 -->
+      <!-- COL 2 -->
+      <section>
+        <article>
+          <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">2</div>
+          <h2>Selectionnez vos options</h2>
+          <p>Sélectionnez une activité pour voir les détails</p>
+        </article>
+        <Options />
+      </section>
+      <!-- COL 2 -->
+      <!-- COL 3 -->
+      <section>
+        <article>
+          <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">3</div>
+          <h2>Envoyer nous un message</h2>
+          <p>Sélectionnez une activité pour voir les détails</p>
+        </article>
+        <!-- MESSAGE -->
+        <Message key={product.id} />
+      </section>
+      <!-- COL 3 -->
+    </div>
+    <Button type="submit" data-action={`close#${key}`} dark size="lg" value={JSON.stringify("")} autofocus>Save</Button>
+  </form>
 </dialog>
 
-<p data-action=`output#${key}`>Cette boîte de dialogue modale a un arrière-plan festif !</p>
+<p data-action=`output#${key}`>output</p>
 <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>

@@ -7,12 +7,13 @@ interface Props {
   ring?: "sm" | "md" | "lg" | "xl";
   className?: string;
   dark?: boolean;
-  rest?: Omit<HTMLAttributes<"button">, "class">;
   value?: string;
   autofocus?: boolean;
+  rest?: Omit<HTMLAttributes<"button">, "class">;
+  type?: HTMLAttributes<"button">["type"];
 }
 
-const { className, variant, dark, size, ring, value, autofocus, ...rest } = Astro.props;
+const { className, variant, dark, size, ring, value, autofocus, type = "button", ...rest } = Astro.props;
 
 const variants = {
   outline: {
@@ -39,6 +40,7 @@ const variants = {
 <button
   autofocus={autofocus}
   value={value}
+  type={type}
   class={cn(
     "pointer-events-auto cursor-pointer",
     variants[variant || "outline"][dark ? "dark" : "light"],

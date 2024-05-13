@@ -1,0 +1,90 @@
+---
+import Checkbox from "../ui/checkbox.astro";
+import Info from "./Info.astro";
+import type { OptionType } from "./types";
+
+interface Props {
+  key: string | number;
+}
+
+const option: OptionType = {
+  label: "je souhaite etre recontacté",
+  value: "recontact",
+};
+
+const { key } = Astro.props;
+---
+
+<style>
+  label {
+    @apply text-sm;
+  }
+  input {
+    @apply w-full ps-3 py-2 rounded-md;
+  }
+</style>
+
+<script>
+  const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
+
+  const messageMap = new Map<string, [HTMLElement, HTMLInputElement, HTMLInputElement, HTMLTextAreaElement]>();
+
+  sections.map((section) => {
+    const action = section.dataset.action;
+    if (!action) throw new Error("No action found on section");
+    const key = action.split("#")[1] as string;
+    const email = section.querySelector(`input[type="email"]`) as HTMLInputElement;
+    const tel = section.querySelector(`input[type="tel"]`) as HTMLInputElement;
+    const textarea = section.querySelector(`textarea`) as HTMLTextAreaElement;
+
+    messageMap.set(key, [section, email, tel, textarea]);
+
+    tel.addEventListener("input", () => {
+      const value = tel.value.replace(/\./g, "");
+      const mod = value.length % 2;
+      if (mod === 0 && value.length > 0) {
+        tel.value += ".";
+      }
+    });
+
+    tel.addEventListener("keydown", (e) => {
+      const key = e.key;
+      const isNotAllowed = key.match(/[a-zA-Z]/);
+      if (isNotAllowed) e.preventDefault();
+      switch (key) {
+        case "Backspace":
+          tel.value = tel.value.slice(0, -1);
+          break;
+      }
+    });
+
+    textarea.addEventListener("input", () => {
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    });
+  });
+</script>
+
+<section
+  class={"h-full vertical justify-between [&>label]:vertical [&>label]:items-start [&>label]:justify-center"}
+  data-action={`section-message#${key}`}>
+  <label for={`email-${key}`}>
+    <span>Votre email :</span>
+    <input id={`email-${key}`} type="email" name={`email`} placeholder="monemail@email.com" />
+    <Info text="Votre email nous permettra de nous mettre en contact" />
+  </label>
+  <label for={`tel-${key}`}>
+    <span>Votre téléphone :</span>
+    <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." />
+    <Info text="Votre téléphone nous permettra de nous mettre en contact" />
+  </label>
+  <label for={`textarea-${key}`}>
+    <span>Votre message :</span>
+    <textarea
+      id={`textarea-${key}`}
+      name={`textarea`}
+      class="w-full min-h-40 px-2 py-1 h-auto rounded-md"
+      placeholder="Message..."></textarea>
+    <Info text="Votre message nous permettra de mieux comprendre votre demande" />
+  </label>
+  <Checkbox option={option} />
+</section>
