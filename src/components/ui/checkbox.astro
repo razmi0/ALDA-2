@@ -1,24 +1,35 @@
 ---
+import { Info } from "lucide-react";
 import type { OptionType } from "../Tarif/types";
 interface Props {
   option: OptionType;
 }
 
 const inpCl =
-  "w-full inline-flex bg-white h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-100 hover:text-zinc-900 font-normal";
+  "w-full inline-flex h-10 justify-between items-center whitespace-nowrap text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-normal";
 
 const { option } = Astro.props;
 ---
 
-<div class={`py-2 px-4 ${inpCl}`}>
-  <label for={option.value} class="horizontal items-center justify-between text-sm cursor-pointer w-full">
-    <span class="first-letter:uppercase translate-y-[1px]">{option.label}</span>
-    <input
-      type="checkbox"
-      value={option.value}
-      id={option.value}
-      name={option.value}
-      class="accent-current h-5 w-5 rounded-md"
-    />
-  </label>
+<div class="px-4 py-2 bg-white shadcn-border">
+  <div class={`${inpCl} pt-2 px-4 has-[:checked]:bg-zinc-100 has-[:checked]:text-zinc-900`}>
+    <label for={option.value} class="horizontal items-center gap-3 text-sm cursor-pointer w-full">
+      <input
+        type="checkbox"
+        value={option.value}
+        id={option.value}
+        name={option.value}
+        class="accent-current h-5 w-5"
+      />
+      <span class="first-letter:uppercase translate-y-[1px]">{option.label}</span>
+    </label>
+  </div>
+  {
+    option.description && (
+      <div class="horizontal center ps-4 text-black/80">
+        <Info className="inline-block w-5 h-5 mr-1.5  stroke-1 " />
+        <small class="block w-full text-left leading-4 translate-y-[1px]">{option.description}</small>
+      </div>
+    )
+  }
 </div>

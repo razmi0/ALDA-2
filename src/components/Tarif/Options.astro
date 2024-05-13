@@ -22,7 +22,7 @@ const options: OptionType[] = [
   {
     label: "j'ai un handicap",
     value: "hasDisability",
-    description: "Toutes nos activités sont accessibles aux personnes en situation de handicap",
+    description: "Nous nous adaptons à votre handicap",
   },
   {
     label: "je suis une association",
@@ -37,7 +37,7 @@ const options: OptionType[] = [
 ];
 ---
 
-<section class={"h-full vertical justify-between select-none "}>
+<section class={"h-full vertical justify-between select-none"}>
   {
     options.map((option) => {
       return <Checkbox option={option} />;
