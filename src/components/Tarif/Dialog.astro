@@ -6,6 +6,7 @@ import type { ProductType } from "../Products/types";
 import Inputs from "./Inputs.astro";
 import Message from "./Message.astro";
 import Options from "./Options.astro";
+import MultiHeader from "../Dialog/MultiHeader.astro";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -40,6 +41,8 @@ const key = product.id;
     close.map((btn) => btn.addEventListener("click", () => dialog.close()));
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+      const formId = form.dataset.form.split("#")[1] as string;
+      if (formId !== key) window.location = "/honey";
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
       console.log(data);
@@ -51,6 +54,7 @@ const key = product.id;
     dialogMaps.set(key, [dialog, open, close, form]);
   });
 </script>
+
 <style>
   dialog:modal {
     @apply ring-1 ring-stone-300 ring-offset-1 vertical items-center justify-between px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
@@ -63,6 +67,7 @@ const key = product.id;
     @apply hidden;
   }
 </style>
+
 <dialog {...Astro.props} data-action={`dialog#${key}`}>
   <button
     type="button"
@@ -70,44 +75,53 @@ const key = product.id;
     class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400"
     ><X /></button
   >
+  <MultiHeader />
   <form data-form={`form#${key}`}>
     <input type="hidden" name="product_id" value={product.id} />
-    <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /> </label>
-    <div
-      class="grid center grid-cols-3 gap-20 [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full [&_article]:mb-20 [&_article]:text-balance">
+    <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
+    <!-- MULTISTEP -->
+    <!-- MULTISTEP -->
+    <style>
+      [data-is="multistep"] {
+        @apply grid center [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full gap-32;
+        grid-template-columns: repeat(3, 800px);
+      }
+    </style>
+    <div data-is="multistep">
       <!-- COL 1 -->
-      <section>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">1</div>
-          <h2>Choisissez quand et pour combien de personne</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
+      {
+        [Inputs, Options, Message].map((Component) => {
+          return (
+            <section>
+              <Component product={product} />
+              <div class="horizontal w-full justify-end items-center gap-5">
+                <Button data-action={`prev#1`} size="lg" className="w-fit" dark>
+                  Précédent
+                </Button>
+                <Button data-action={`next#1`} size="lg" className="w-fit" dark>
+                  Suivant
+                </Button>
+              </div>
+            </section>
+          );
+        })
+      }
+      <!-- <section>
         <Inputs product={product} />
+        <Button data-action={`prev#1`} size="lg" dark>Précédent</Button>
+        <Button data-action={`next#1`} size="lg" dark>Suivant</Button>
       </section>
-      <!-- COL 1 -->
-      <!-- COL 2 -->
       <section>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">2</div>
-          <h2>Selectionnez vos options</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
         <Options />
+        <Button data-action={`prev#2`} size="lg" dark>Précédent</Button>
+        <Button data-action={`next#2`} size="lg" dark>Suivant</Button>
       </section>
-      <!-- COL 2 -->
-      <!-- COL 3 -->
       <section>
-        <article>
-          <div class="rounded-full p-2 ring-1 ring-black h-12 w-12 text-3xl mx-auto mb-2 text-center">3</div>
-          <h2>Envoyer nous un message</h2>
-          <p>Sélectionnez une activité pour voir les détails</p>
-        </article>
-        <!-- MESSAGE -->
         <Message key={product.id} />
-      </section>
-      <!-- COL 3 -->
+        <Button data-action={`prev#3`} size="lg" dark>Précédent</Button>
+        <Button type="submit" data-action={`close#${key}`} dark size="lg" autofocus>Envoyer</Button>
+      </section> -->
     </div>
-    <Button type="submit" data-action={`close#${key}`} dark size="lg" value={JSON.stringify("")} autofocus>Save</Button>
   </form>
 </dialog>
 <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>

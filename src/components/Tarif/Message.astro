@@ -1,10 +1,11 @@
 ---
+import type { ProductType } from "../Products/types";
 import Checkbox from "../ui/checkbox.astro";
 import Info from "./Info.astro";
 import type { OptionType } from "./types";
 
 interface Props {
-  key: string | number;
+  product: ProductType;
 }
 
 const option: OptionType = {
@@ -12,7 +13,8 @@ const option: OptionType = {
   value: "recontact",
 };
 
-const { key } = Astro.props;
+const { product } = Astro.props;
+const key = product.id;
 ---
 
 <style>

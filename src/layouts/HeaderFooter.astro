@@ -1,11 +1,16 @@
 ---
+import type { HTMLTag } from "astro/types";
 import Nav from "./Nav.astro";
 import Section from "./Section.astro";
 import Socials from "./Socials.astro";
 
-const currentPage = Astro.url.pathname;
+interface Props {
+  as: HTMLTag;
+}
 
-const as = currentPage === "/" ? "footer" : "header";
+const currentPage = Astro.url.pathname;
+const { as = currentPage === "/" ? "footer" : "header" } = Astro.props;
+
 const viewTransitionType = currentPage === "/" ? "slide" : "fade";
 ---
 
@@ -15,8 +20,7 @@ const viewTransitionType = currentPage === "/" ? "slide" : "fade";
   extension="none"
   className="vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10"
   data-is={`global-${as}`}
-  transition:animate={viewTransitionType}
->
+  transition:animate={viewTransitionType}>
   <section class="full horizontal items-center justify-between">
     <h1 class="text-2xl">
       <a href="/"> A l'abordarbre</a>
