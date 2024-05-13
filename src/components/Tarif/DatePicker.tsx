@@ -21,7 +21,6 @@ export function DatePickerWithPresets() {
 
       <div className="rounded-md border max-w-72">
         <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md max-w-72" />
-        in
       </div>
     </div>
   );

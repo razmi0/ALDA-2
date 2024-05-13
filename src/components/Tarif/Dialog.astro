@@ -18,38 +18,26 @@ const key = product.id;
 
 <script>
   const dialogs = Array.from(document.querySelectorAll("[data-action*='dialog']")) as HTMLDialogElement[];
-  const showButtons = Array.from(document.querySelectorAll("[data-action*='open']")) as HTMLButtonElement[];
-  const closeButtons = Array.from(document.querySelectorAll("[data-action*='close']")) as HTMLButtonElement[];
-  const outputs = Array.from(document.querySelectorAll("[data-action*='output']")) as HTMLParagraphElement[];
 
-  if (!dialogs || !showButtons || !closeButtons || !outputs) {
-    throw new Error(
-      `Missing dialog : ${dialog}, showButton : ${showButton} or closeButton :  ${closeButton} or output : ${output}`
-    );
-  }
+  if (!dialogs) throw new Error(`Missing dialog : ${dialog}`);
 
   /**
-   * Map<string, [dialog, open, [close[]], output]>
+   * Map<string, [dialog, open, [close[]], form]>
    */
-  const dialogMaps = new Map<
-    string,
-    [HTMLDialogElement, HTMLButtonElement, [HTMLButtonElement[]], HTMLParagraphElement, HTMLFormElement]
-  >();
+  const dialogMaps = new Map<string, [HTMLDialogElement, HTMLButtonElement, [HTMLButtonElement[]], HTMLFormElement]>();
 
-  dialogs.map((dialog, i) => {
+  dialogs.map((dialog) => {
     const key = dialog.dataset.action.split("#")[1];
     const open = document.querySelector(`dialog ~ [data-action='open#${key}']`) as HTMLButtonElement;
     const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
-    const output = document.querySelector(`dialog + [data-action='output#${key}']`) as HTMLParagraphElement;
     const form = document.querySelector(`dialog [data-form='form#${key}']`) as HTMLFormElement;
 
-    if (!open || !close || !output) {
-      throw new Error(`Missing open : ${open} or close : ${close} or output : ${output} or form : ${form}`);
+    if (!open || !close) {
+      throw new Error(`Missing open : ${open} or close : ${close} or form : ${form}`);
     }
 
     open.addEventListener("click", () => dialog.showModal());
     close.map((btn) => btn.addEventListener("click", () => dialog.close()));
-    // output
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const formData = new FormData(form);
@@ -58,11 +46,9 @@ const key = product.id;
       if (data.hp) {
         window.location = "/honey";
       }
-      // output.textContent = JSON.stringify(data);
-      // dialog.close();
     });
 
-    dialogMaps.set(key, [dialog, open, close, output, form]);
+    dialogMaps.set(key, [dialog, open, close, form]);
   });
 </script>
 <style>
@@ -86,10 +72,7 @@ const key = product.id;
   >
   <form data-form={`form#${key}`}>
     <input type="hidden" name="product_id" value={product.id} />
-    <label class="hp" for="hp"
-      >Hi honey !
-      <input type="text" id="hp" name="hp" />
-    </label>
+    <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /> </label>
     <div
       class="grid center grid-cols-3 gap-20 [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full [&_article]:mb-20 [&_article]:text-balance">
       <!-- COL 1 -->
@@ -127,6 +110,4 @@ const key = product.id;
     <Button type="submit" data-action={`close#${key}`} dark size="lg" value={JSON.stringify("")} autofocus>Save</Button>
   </form>
 </dialog>
-
-<p data-action=`output#${key}`>output</p>
 <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
