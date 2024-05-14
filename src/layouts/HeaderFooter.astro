@@ -1,12 +1,7 @@
 ---
-import type { HTMLTag } from "astro/types";
 import Nav from "./Nav.astro";
 import Section from "./Section.astro";
 import Socials from "./Socials.astro";
-
-interface Props {
-  as: HTMLTag;
-}
 
 const currentPage = Astro.url.pathname;
 const { as = currentPage === "/" ? "footer" : "header" } = Astro.props;
