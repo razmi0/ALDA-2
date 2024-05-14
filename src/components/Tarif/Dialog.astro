@@ -2,11 +2,11 @@
 import type { HTMLAttributes } from "astro/types";
 import { X } from "lucide-react";
 import Button from "../Button.astro";
+import MultiHeader from "../Dialog/MultiHeader.astro";
 import type { ProductType } from "../Products/types";
 import Inputs from "./Inputs.astro";
 import Message from "./Message.astro";
 import Options from "./Options.astro";
-import MultiHeader from "../Dialog/MultiHeader.astro";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -15,6 +15,7 @@ interface Props {
 
 const { product } = Astro.props;
 const key = product.id;
+const components = [Inputs, Options, Message];
 ---
 
 <script>
@@ -33,6 +34,45 @@ const key = product.id;
     const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
     const form = document.querySelector(`dialog [data-form='form#${key}']`) as HTMLFormElement;
 
+    const navBtns = {
+      next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
+      prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
+    };
+
+    for (const key in navBtns) {
+      navBtns[key].map((btn: HTMLButtonElement) => {
+        const action = btn.dataset.action as string;
+        if (!action) throw new Error(`Missing action`);
+        const [actiontype, id, _] = action.split("#") as ["prev" | "next", string, string];
+
+        switch (actiontype) {
+          case "prev":
+            btn.addEventListener("click", () => {
+              const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
+              const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
+              frames.map((frame) => {
+                const nextMove = currentTranlation + 800;
+                frame.dataset.translation = `${nextMove}`;
+                frame.style.transform = `translateX(${nextMove}px)`;
+              });
+            });
+            break;
+
+          case "next":
+            btn.addEventListener("click", () => {
+              const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
+              const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
+              frames.map((frame) => {
+                const nextMove = currentTranlation - 800;
+                frame.dataset.translation = `${nextMove}`;
+                frame.style.transform = `translateX(${nextMove}px)`;
+              });
+            });
+            break;
+        }
+      });
+    }
+
     if (!open || !close) {
       throw new Error(`Missing open : ${open} or close : ${close} or form : ${form}`);
     }
@@ -41,8 +81,6 @@ const key = product.id;
     close.map((btn) => btn.addEventListener("click", () => dialog.close()));
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const formId = form.dataset.form.split("#")[1] as string;
-      if (formId !== key) window.location = "/honey";
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
       console.log(data);
@@ -56,8 +94,12 @@ const key = product.id;
 </script>
 
 <style>
+  [data-is="multistep"] {
+    @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden;
+    grid-template-columns: repeat(3, 800px);
+  }
   dialog:modal {
-    @apply ring-1 ring-stone-300 ring-offset-1 vertical items-center justify-between px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
+    @apply ring-1 ring-stone-300 ring-offset-1 vertical  px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
   }
   dialog::backdrop {
     @apply bg-black/40 backdrop-blur-[1px];
@@ -68,59 +110,46 @@ const key = product.id;
   }
 </style>
 
-<dialog {...Astro.props} data-action={`dialog#${key}`}>
+<dialog {...Astro.props} data-action={`dialog#${key}`} class="max-w-[900px] overflow-hidden">
   <button
     type="button"
     data-action={`close#${key}`}
-    class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400"
-    ><X /></button
-  >
+    class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400">
+    <X />
+  </button>
   <MultiHeader />
   <form data-form={`form#${key}`}>
     <input type="hidden" name="product_id" value={product.id} />
     <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
-    <!-- MULTISTEP -->
-    <!-- MULTISTEP -->
-    <style>
-      [data-is="multistep"] {
-        @apply grid center [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full gap-32;
-        grid-template-columns: repeat(3, 800px);
-      }
-    </style>
     <div data-is="multistep">
       <!-- COL 1 -->
       {
-        [Inputs, Options, Message].map((Component) => {
+        components.map((Component, i) => {
+          const isFirstIndex = i === 0;
+          const isLastIndex = i === components.length - 1;
           return (
-            <section>
+            <section class="p-5" data-frame={`frame#${key}`} data-translation="0">
               <Component product={product} />
               <div class="horizontal w-full justify-end items-center gap-5">
-                <Button data-action={`prev#1`} size="lg" className="w-fit" dark>
-                  Précédent
-                </Button>
-                <Button data-action={`next#1`} size="lg" className="w-fit" dark>
-                  Suivant
-                </Button>
+                {!isFirstIndex && (
+                  <Button data-action={`prev#${key}`} size="lg" className="w-fit" dark>
+                    Précédent
+                  </Button>
+                )}
+                {isLastIndex ? (
+                  <Button type="submit" size="lg" className="w-fit" dark>
+                    Valider
+                  </Button>
+                ) : (
+                  <Button data-action={`next#${key}`} size="lg" className="w-fit" dark>
+                    Suivant
+                  </Button>
+                )}
               </div>
             </section>
           );
         })
       }
-      <!-- <section>
-        <Inputs product={product} />
-        <Button data-action={`prev#1`} size="lg" dark>Précédent</Button>
-        <Button data-action={`next#1`} size="lg" dark>Suivant</Button>
-      </section>
-      <section>
-        <Options />
-        <Button data-action={`prev#2`} size="lg" dark>Précédent</Button>
-        <Button data-action={`next#2`} size="lg" dark>Suivant</Button>
-      </section>
-      <section>
-        <Message key={product.id} />
-        <Button data-action={`prev#3`} size="lg" dark>Précédent</Button>
-        <Button type="submit" data-action={`close#${key}`} dark size="lg" autofocus>Envoyer</Button>
-      </section> -->
     </div>
   </form>
 </dialog>
