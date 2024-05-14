@@ -36,8 +36,6 @@ const products = rawProducts.products as ProductType[];
   }
 </style>
 
-
-
 <Layout title="tarif">
   <HeaderFooter slot="header" />
   <Section>
@@ -102,13 +100,13 @@ const products = rawProducts.products as ProductType[];
                   </div>
                 </article>
               </section>
-              <Dialog product={product} />
+              <Dialog product={product} dialogSize={1000} />
             </article>
           </div>
         );
       })
     }
   </Section>
-  
+
   <HeaderFooter slot="footer" as="footer" />
 </Layout>

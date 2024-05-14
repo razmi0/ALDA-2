@@ -1,9 +1,10 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { X } from "lucide-react";
 import Button from "../Button.astro";
 import MultiHeader from "../Dialog/MultiHeader.astro";
 import type { ProductType } from "../Products/types";
+import CloseButton from "./CloseButton.astro";
+import Form from "./Form.astro";
 import Inputs from "./Inputs.astro";
 import Message from "./Message.astro";
 import Options from "./Options.astro";
@@ -11,29 +12,32 @@ import Options from "./Options.astro";
 interface Props {
   rest?: HTMLAttributes<"dialog">;
   product: ProductType;
+  dialogSize?: number;
+  gap?: number;
+  frameSize?: number;
 }
 
-const { product } = Astro.props;
+const { product, dialogSize = 800, frameSize = dialogSize - 100, gap = 50 } = Astro.props;
 const key = product.id;
 const components = [Inputs, Options, Message];
+const sizes = {
+  dialog: `${dialogSize}px`,
+  gap: `${gap}px`,
+  frameSize: `${frameSize}px`,
+  translation: frameSize + gap,
+};
 ---
 
 <script>
   const dialogs = Array.from(document.querySelectorAll("[data-action*='dialog']")) as HTMLDialogElement[];
-
   if (!dialogs) throw new Error(`Missing dialog : ${dialog}`);
-
-  /**
-   * Map<string, [dialog, open, [close[]], form]>
-   */
-  const dialogMaps = new Map<string, [HTMLDialogElement, HTMLButtonElement, [HTMLButtonElement[]], HTMLFormElement]>();
-
   dialogs.map((dialog) => {
     const key = dialog.dataset.action.split("#")[1];
-    const open = document.querySelector(`dialog ~ [data-action='open#${key}']`) as HTMLButtonElement;
+    const open = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
     const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
-    const form = document.querySelector(`dialog [data-form='form#${key}']`) as HTMLFormElement;
-
+    const form = document.querySelector(`[data-form='form#${key}']`) as HTMLFormElement;
+    const multistep = dialog.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
+    const translationSize = parseInt(multistep.dataset.framesize) || 0;
     const navBtns = {
       next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
       prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
@@ -43,7 +47,7 @@ const components = [Inputs, Options, Message];
       navBtns[key].map((btn: HTMLButtonElement) => {
         const action = btn.dataset.action as string;
         if (!action) throw new Error(`Missing action`);
-        const [actiontype, id, _] = action.split("#") as ["prev" | "next", string, string];
+        const [actiontype, id] = action.split("#") as ["prev" | "next", string, string];
 
         switch (actiontype) {
           case "prev":
@@ -51,7 +55,7 @@ const components = [Inputs, Options, Message];
               const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
               const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
               frames.map((frame) => {
-                const nextMove = currentTranlation + 800;
+                const nextMove = currentTranlation + translationSize;
                 frame.dataset.translation = `${nextMove}`;
                 frame.style.transform = `translateX(${nextMove}px)`;
               });
@@ -63,7 +67,7 @@ const components = [Inputs, Options, Message];
               const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
               const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
               frames.map((frame) => {
-                const nextMove = currentTranlation - 800;
+                const nextMove = currentTranlation - translationSize;
                 frame.dataset.translation = `${nextMove}`;
                 frame.style.transform = `translateX(${nextMove}px)`;
               });
@@ -88,40 +92,29 @@ const components = [Inputs, Options, Message];
         window.location = "/honey";
       }
     });
-
-    dialogMaps.set(key, [dialog, open, close, form]);
   });
 </script>
 
-<style>
-  [data-is="multistep"] {
+<style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, gap: sizes.gap }}>
+  [data-is^="multistep"] {
     @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden;
-    grid-template-columns: repeat(3, 800px);
+    grid-template-columns: repeat(3, var(--frameSize));
+    gap: var(--gap);
   }
   dialog:modal {
-    @apply ring-1 ring-stone-300 ring-offset-1 vertical  px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
+    @apply ring-1 ring-stone-300 ring-offset-1 vertical px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
+    max-width: var(--dialogMaxSize);
   }
   dialog::backdrop {
     @apply bg-black/40 backdrop-blur-[1px];
   }
-
-  .hp {
-    @apply hidden;
-  }
 </style>
 
-<dialog {...Astro.props} data-action={`dialog#${key}`} class="max-w-[900px] overflow-hidden">
-  <button
-    type="button"
-    data-action={`close#${key}`}
-    class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400">
-    <X />
-  </button>
+<dialog {...Astro.props} data-action={`dialog#${key}`} class="overflow-hidden">
+  <CloseButton key={key} />
   <MultiHeader />
-  <form data-form={`form#${key}`}>
-    <input type="hidden" name="product_id" value={product.id} />
-    <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
-    <div data-is="multistep">
+  <Form key={key} id={product.id}>
+    <div data-is={`multistep#${key}`} data-frameSize={sizes.translation}>
       <!-- COL 1 -->
       {
         components.map((Component, i) => {
@@ -130,7 +123,7 @@ const components = [Inputs, Options, Message];
           return (
             <section class="p-5" data-frame={`frame#${key}`} data-translation="0">
               <Component product={product} />
-              <div class="horizontal w-full justify-end items-center gap-5">
+              <div class="horizontal w-full justify-end items-center gap-5 mt-5">
                 {!isFirstIndex && (
                   <Button data-action={`prev#${key}`} size="lg" className="w-fit" dark>
                     Précédent
@@ -151,6 +144,6 @@ const components = [Inputs, Options, Message];
         })
       }
     </div>
-  </form>
+  </Form>
 </dialog>
 <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
