@@ -121,7 +121,7 @@ const sizes = {
           const isFirstIndex = i === 0;
           const isLastIndex = i === components.length - 1;
           return (
-            <section class="p-5" data-frame={`frame#${key}`} data-translation="0">
+            <section class="p-5 transition-transform" data-frame={`frame#${key}`} data-translation="0">
               <Component product={product} />
               <div class="horizontal w-full justify-end items-center gap-5 mt-5">
                 {!isFirstIndex && (

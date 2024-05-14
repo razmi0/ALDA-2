@@ -11,7 +11,7 @@ const inpCl =
 const { option } = Astro.props;
 ---
 
-<div class="px-2 py-1">
+<div class="py-1">
   <div
     class={`${inpCl} ${option.description ? "pt-1" : "py-1"} px-2 has-[:checked]:bg-zinc-100 has-[:checked]:text-zinc-900 bg-white shadcn-border`}>
     <label for={option.value} class="horizontal items-center gap-3 text-sm cursor-pointer w-full">
