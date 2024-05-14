@@ -2,8 +2,9 @@
 import Heading from "@/components/Hero/Heading.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
-import RandomImage from "@/components/RandomImage.astro";
 import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
+import Orientation from "@/components/Tarif/Orientation.astro";
+import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
@@ -48,21 +49,15 @@ const products = rawProducts.products as ProductType[];
   <Section id={"1"} className={"vertical center container gap-32"}>
     {
       products.map((product, i) => {
-        const isEven = i % 2 === 0;
+        const orientation = i % 2 === 0 ? "ltr" : "rtl";
         return (
-          <div class={`full ${isEven ? "horizontal" : "horizontal-reverse"} px-5 gap-10 center`}>
+          <Orientation orientation={orientation}>
             <section class="relative vertical w-fit h-full">
-              <RandomImage seed={600} className="h-[400px] w-full aspect-square" />
-              <div
-                class={`absolute bottom-5 ${isEven ? "left-5" : "right-5"} horizontal w-full ${isEven ? "justify-start" : "justify-end"} gap-5 items-center`}>
-                <RandomImage size={110} className="ring-1 ring-white" />
-                <RandomImage size={110} className="ring-1 ring-white" />
-                <RandomImage size={110} className="ring-1 ring-white" />
-              </div>
+              <Pictures size={400} orientation={orientation} />
             </section>
-            <article class="vertical w-fit h-full gap-5 items-start justify-evenly">
+            <section class="vertical w-fit h-full gap-5 items-start justify-evenly">
               <TarifText title={product.title} description={product.description.long} />
-              <section class="vertical gap-3">
+              <article class="vertical gap-3">
                 <Stats label="dificulty" type="bar" stats={product.stats}>
                   <Gauge slot="icon" />
                 </Stats>
@@ -72,10 +67,10 @@ const products = rawProducts.products as ProductType[];
                 <Stats label="lieux" type="badge" stats={product.locations}>
                   <MapPin slot="icon" />
                 </Stats>
-              </section>
+              </article>
               <Dialog product={product} dialogSize={1200} />
-            </article>
-          </div>
+            </section>
+          </Orientation>
         );
       })
     }

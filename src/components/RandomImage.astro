@@ -8,9 +8,10 @@ interface Props {
   seed?: number;
   width?: number;
   height?: number;
+  style?: string;
 }
 
-const { size, className, seed = Math.floor(Math.random() * 100), height, width } = Astro.props;
+const { size, className, seed = Math.floor(Math.random() * 100), height, width, style } = Astro.props;
 ---
 
 <Image
@@ -19,4 +20,5 @@ const { size, className, seed = Math.floor(Math.random() * 100), height, width }
   alt="lorem"
   width={width || size || 150}
   height={height || size || 150}
+  style={style}
 />

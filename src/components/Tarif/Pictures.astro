@@ -1,0 +1,27 @@
+---
+import { cn } from "@/lib/utils";
+import RandomImage from "../RandomImage.astro";
+
+interface Props {
+  size: number;
+  orientation: "ltr" | "rtl";
+}
+
+const orientationClasses = {
+  ltr: "left-5 justify-start",
+  rtl: "right-5 justify-end",
+};
+
+const { size = 400, orientation } = Astro.props;
+---
+
+<RandomImage seed={size} className="w-full aspect-square" style={`height : ${size}px`} />
+<div
+  class={cn(
+    `absolute bottom-5 horizontal w-full gap-5 items-center [&>*]:ring-1 [&>*]:ring-white [&>*]:aspect-square`,
+    orientationClasses[orientation]
+  )}>
+  <RandomImage size={110} />
+  <RandomImage size={110} />
+  <RandomImage size={110} />
+</div>

@@ -29,68 +29,70 @@ const sizes = {
 ---
 
 <script>
-  const dialogs = Array.from(document.querySelectorAll("[data-action*='dialog']")) as HTMLDialogElement[];
-  if (!dialogs) throw new Error(`Missing dialog : ${dialog}`);
-  dialogs.map((dialog) => {
-    const key = dialog.dataset.action.split("#")[1];
-    const open = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
-    const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
-    const form = document.querySelector(`[data-form='form#${key}']`) as HTMLFormElement;
-    const multistep = dialog.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
-    const translationSize = parseInt(multistep.dataset.framesize) || 0;
-    const navBtns = {
-      next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
-      prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
-    };
+  document.addEventListener("astro:page-load", () => {
+    const dialogs = Array.from(document.querySelectorAll("[data-action*='dialog']")) as HTMLDialogElement[];
+    if (!dialogs) throw new Error(`Missing dialog : ${dialog}`);
+    dialogs.map((dialog) => {
+      const key = dialog.dataset.action.split("#")[1];
+      const open = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
+      const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
+      const form = document.querySelector(`[data-form='form#${key}']`) as HTMLFormElement;
+      const multistep = dialog.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
+      const translationSize = parseInt(multistep.dataset.framesize) || 0;
+      const navBtns = {
+        next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
+        prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
+      };
 
-    for (const key in navBtns) {
-      navBtns[key].map((btn: HTMLButtonElement) => {
-        const action = btn.dataset.action as string;
-        if (!action) throw new Error(`Missing action`);
-        const [actiontype, id] = action.split("#") as ["prev" | "next", string, string];
+      for (const key in navBtns) {
+        navBtns[key].map((btn: HTMLButtonElement) => {
+          const action = btn.dataset.action as string;
+          if (!action) throw new Error(`Missing action`);
+          const [actiontype, id] = action.split("#") as ["prev" | "next", string, string];
 
-        switch (actiontype) {
-          case "prev":
-            btn.addEventListener("click", () => {
-              const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
-              const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
-              frames.map((frame) => {
-                const nextMove = currentTranlation + translationSize;
-                frame.dataset.translation = `${nextMove}`;
-                frame.style.transform = `translateX(${nextMove}px)`;
+          switch (actiontype) {
+            case "prev":
+              btn.addEventListener("click", () => {
+                const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
+                const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
+                frames.map((frame) => {
+                  const nextMove = currentTranlation + translationSize;
+                  frame.dataset.translation = `${nextMove}`;
+                  frame.style.transform = `translateX(${nextMove}px)`;
+                });
               });
-            });
-            break;
+              break;
 
-          case "next":
-            btn.addEventListener("click", () => {
-              const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
-              const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
-              frames.map((frame) => {
-                const nextMove = currentTranlation - translationSize;
-                frame.dataset.translation = `${nextMove}`;
-                frame.style.transform = `translateX(${nextMove}px)`;
+            case "next":
+              btn.addEventListener("click", () => {
+                const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
+                const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
+                frames.map((frame) => {
+                  const nextMove = currentTranlation - translationSize;
+                  frame.dataset.translation = `${nextMove}`;
+                  frame.style.transform = `translateX(${nextMove}px)`;
+                });
               });
-            });
-            break;
+              break;
+          }
+        });
+      }
+
+      if (!open || !close) {
+        throw new Error(`Missing open : ${open} or close : ${close} or form : ${form}`);
+      }
+
+      open.addEventListener("click", () => dialog.showModal());
+      close.map((btn) => btn.addEventListener("click", () => dialog.close()));
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        console.log(data);
+        if (data.hp) {
+          window.location = "/honey";
         }
       });
-    }
-
-    if (!open || !close) {
-      throw new Error(`Missing open : ${open} or close : ${close} or form : ${form}`);
-    }
-
-    open.addEventListener("click", () => dialog.showModal());
-    close.map((btn) => btn.addEventListener("click", () => dialog.close()));
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      console.log(data);
-      if (data.hp) {
-        window.location = "/honey";
-      }
     });
   });
 </script>
