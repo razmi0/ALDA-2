@@ -11,6 +11,7 @@ export interface ProductType {
   tags: string[];
   footerText: string;
   locations: string[];
+  matériels: string[];
 }
 
 export type StatType = {
