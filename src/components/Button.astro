@@ -42,7 +42,7 @@ const variants = {
   value={value}
   type={type}
   class={cn(
-    "pointer-events-auto cursor-pointer",
+    "pointer-events-auto cursor-pointer select-none",
     variants[variant || "outline"][dark ? "dark" : "light"],
     variants.sizes[size || "md"],
     variants.rings[ring || "sm"],
