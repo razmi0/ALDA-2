@@ -1,0 +1,16 @@
+---
+import { X } from "lucide-react";
+
+interface Props {
+  key: string | number;
+}
+
+const { key } = Astro.props;
+---
+
+<button
+  type="button"
+  data-action={`close#${key}`}
+  class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400">
+  <X />
+</button>
