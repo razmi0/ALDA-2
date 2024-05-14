@@ -1,0 +1,43 @@
+---
+const steps = [
+  {
+    title: "Etape 1",
+    description: "Choisissez quand et pour combien de personne",
+  },
+  {
+    title: "Etape 2",
+    description: "Selectionnez vos options",
+  },
+  {
+    title: "Etape 3",
+    description: "Contactez-nous",
+  },
+];
+---
+
+<style>
+  .step {
+    @apply rounded-full p-2 ring-2 ring-white min-h-12 h-12 min-w-12 w-12 text-3xl text-center;
+  }
+  article {
+    @apply grow gap-4 horizontal items-center justify-start w-full;
+
+    p {
+      @apply text-sm text-balance text-slate-200/90;
+    }
+  }
+</style>
+
+<div class="vertical items-center w-fit text-left text-white gap-5">
+  {
+    steps.map(({ title, description }, i) => (
+      <article>
+        <div class="step">{i + 1}</div>
+        <div class="vertical justify-center items-start leading-4">
+          <h2>{title}</h2>
+          <p>{description}</p>
+        </div>
+      </article>
+    ))
+  }
+</div>

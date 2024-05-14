@@ -1,12 +1,12 @@
 ---
-import type { HTMLAttributes } from "astro/types";
 import Button from "@/components/Button.astro";
 import type { ProductType } from "@/components/Products/types";
+import type { HTMLAttributes } from "astro/types";
 import CloseButton from "./CloseButton.astro";
+import ContactDetail from "./ContactDetail.astro";
 import Form from "./Form.astro";
 import Inputs from "./Inputs.astro";
 import Message from "./Message.astro";
-import MultiHeader from "./MultiHeader.astro";
 import Options from "./Options.astro";
 
 interface Props {
@@ -15,9 +15,16 @@ interface Props {
   dialogSize?: number;
   gap?: number;
   frameSize?: number;
+  detailsSize?: number;
 }
 
-const { product, dialogSize = 800, frameSize = dialogSize - 100, gap = 50 } = Astro.props;
+const {
+  product,
+  dialogSize = 800,
+  frameSize = dialogSize * 0.7,
+  detailsSize = dialogSize * 0.3,
+  gap = 50,
+} = Astro.props;
 const key = product.id;
 const components = [Inputs, Options, Message];
 const sizes = {
@@ -99,12 +106,13 @@ const sizes = {
 
 <style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, gap: sizes.gap }}>
   [data-is^="multistep"] {
-    @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden;
+    @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden h-full;
     grid-template-columns: repeat(3, var(--frameSize));
     gap: var(--gap);
   }
   dialog:modal {
-    @apply ring-1 ring-stone-300 ring-offset-1 vertical px-10 py-10 bg-zinc-200 text-black shadow-md shadow-black/20 gap-10 rounded-md;
+    /* px-5 py-5 */
+    @apply ring-1 ring-stone-300 ring-offset-1 horizontal bg-zinc-200 text-black shadow-md shadow-black/20 rounded-md;
     max-width: var(--dialogMaxSize);
   }
   dialog::backdrop {
@@ -113,8 +121,7 @@ const sizes = {
 </style>
 
 <dialog {...Astro.props} data-action={`dialog#${key}`} class="overflow-hidden">
-  <CloseButton key={key} />
-  <MultiHeader />
+  <ContactDetail product={product} size={detailsSize} />
   <Form key={key} id={product.id}>
     <div data-is={`multistep#${key}`} data-frameSize={sizes.translation}>
       <!-- COL 1 -->
@@ -123,20 +130,23 @@ const sizes = {
           const isFirstIndex = i === 0;
           const isLastIndex = i === components.length - 1;
           return (
-            <section class="p-5 transition-transform" data-frame={`frame#${key}`} data-translation="0">
+            <section
+              class="transition-transform grid place-items-center p-10"
+              data-frame={`frame#${key}`}
+              data-translation="0">
               <Component product={product} />
-              <div class="horizontal w-full justify-end items-center gap-5 mt-5">
+              <div class="horizontal w-full justify-end items-center gap-5">
                 {!isFirstIndex && (
-                  <Button data-action={`prev#${key}`} size="lg" className="w-fit" dark>
+                  <Button data-action={`prev#${key}`} size="md" className="" variant="filled" ring="sm">
                     Précédent
                   </Button>
                 )}
                 {isLastIndex ? (
-                  <Button type="submit" size="lg" className="w-fit" dark>
+                  <Button type="submit" size="md" className="w-fit rounded-md" variant="filled" ring="sm">
                     Valider
                   </Button>
                 ) : (
-                  <Button data-action={`next#${key}`} size="lg" className="w-fit" dark>
+                  <Button data-action={`next#${key}`} size="md" className="w-fit rounded-md" variant="filled" ring="sm">
                     Suivant
                   </Button>
                 )}
@@ -147,5 +157,7 @@ const sizes = {
       }
     </div>
   </Form>
+  <CloseButton key={key} />
 </dialog>
+
 <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>

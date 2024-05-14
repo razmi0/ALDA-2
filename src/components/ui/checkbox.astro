@@ -11,16 +11,16 @@ const inpCl =
 const { option } = Astro.props;
 ---
 
-<div class="py-1">
+<div class="py-1 ps-3">
   <div
-    class={`${inpCl} ${option.description ? "pt-1" : "py-1"} px-2 has-[:checked]:bg-zinc-100 has-[:checked]:text-zinc-900 bg-white shadcn-border`}>
+    class={`${inpCl} ${option.description ? "pt-1" : "py-1"} ps-2 has-[:checked]:bg-zinc-100 has-[:checked]:text-zinc-900`}>
     <label for={option.value} class="horizontal items-center gap-3 text-sm cursor-pointer w-full">
       <input
         type="checkbox"
         value={option.value}
         id={option.value}
         name={option.value}
-        class="accent-current h-5 w-5"
+        class="accent-slate-700 h-5 w-5"
       />
       <span class="first-letter:uppercase translate-y-[1px]">{option.label}</span>
     </label>

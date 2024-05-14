@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 interface Props {
-  variant?: "outline";
+  variant?: "outline" | "filled";
   size?: "sm" | "md" | "lg";
   ring?: "sm" | "md" | "lg" | "xl";
   className?: string;
@@ -17,8 +17,12 @@ const { className, variant, dark, size, ring, value, autofocus, type = "button",
 
 const variants = {
   outline: {
-    dark: "text-black  hover:bg-slate-100",
-    light: "text-white/95  hover:bg-white/20",
+    dark: "text-black hover:bg-slate-100",
+    light: "text-white/95 hover:bg-white/80",
+  },
+  filled: {
+    dark: "text-white/95 bg-black hover:bg-black/90",
+    light: "text-black bg-white hover:bg-white/80",
   },
   sizes: {
     sm: "px-3 py-1",
@@ -31,8 +35,8 @@ const variants = {
     md: "ring-2",
     lg: "ring-4",
     xl: "ring-8",
-    dark: "rounded-full ring-black",
-    light: "rounded-full ring-white/95",
+    dark: "ring-black",
+    light: "ring-white/95",
   },
 };
 ---
@@ -42,7 +46,7 @@ const variants = {
   value={value}
   type={type}
   class={cn(
-    "pointer-events-auto cursor-pointer select-none",
+    "pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold",
     variants[variant || "outline"][dark ? "dark" : "light"],
     variants.sizes[size || "md"],
     variants.rings[ring || "sm"],

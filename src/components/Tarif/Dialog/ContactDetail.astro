@@ -1,3 +1,41 @@
 ---
+import type { ProductType } from "@/components/Products/types";
+import Steps from "./Steps.astro";
 
+interface Props {
+  product: ProductType;
+  size: number;
+}
+
+const { product, size } = Astro.props;
 ---
+
+<style>
+  p {
+    @apply text-left text-sm leading-4 text-slate-200/90;
+  }
+</style>
+
+<section
+  class="vertical justify-between items-center rounded-tl-lg rounded-bl-lg py-8 px-2 bg-slate-700 text-white ps-4 gap-14"
+  style={`min-width : ${size}px`}>
+  <Steps />
+  <article class="space-y-5">
+    <div>
+      <h2 class="text-lg font-bold text-left mb-1">Contact</h2>
+      <p class="text-balance">Nous sommes toujours heureux de prendre contact avec vous et répondre à vos questions</p>
+    </div>
+    <div>
+      <h4 class="grandstander">Email</h4>
+      <p>contact@${product.name}.com</p>
+    </div>
+    <div>
+      <h4 class="grandstander">Téléphone</h4>
+      <p>01 23 45 67 89</p>
+    </div>
+    <div>
+      <h4 class="grandstander">Lieu</h4>
+      <p>4 rue Jean Jaurès 31000 Toulouse</p>
+    </div>
+  </article>
+</section>

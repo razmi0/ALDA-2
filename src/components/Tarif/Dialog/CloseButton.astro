@@ -8,9 +8,11 @@ interface Props {
 const { key } = Astro.props;
 ---
 
-<button
-  type="button"
-  data-action={`close#${key}`}
-  class="absolute right-0 top-0 mt-2 mr-2 text-zinc-600 hover:text-zinc-400 focus:text-zinc-400 focus-visible:text-zinc-400">
-  <X />
-</button>
+<div class="absolute-center full pointer-events-none">
+  <button
+    type="button"
+    data-action={`close#${key}`}
+    class="pointer-events-auto absolute right-0 top-0 text-slate-700 hover:text-slate-500 focus:text-slate-500 focus-visible:text-slate-500">
+    <X />
+  </button>
+</div>
