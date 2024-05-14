@@ -11,9 +11,29 @@ interface Props {
   autofocus?: boolean;
   rest?: Omit<HTMLAttributes<"button">, "class">;
   type?: HTMLAttributes<"button">["type"];
+  leftIcon?: boolean;
+  rightIcon?: boolean;
 }
 
-const { className, variant, dark, size, ring, value, autofocus, type = "button", ...rest } = Astro.props;
+const {
+  className,
+  variant,
+  dark,
+  size,
+  ring,
+  value,
+  autofocus,
+  type = "button",
+  rightIcon,
+  leftIcon,
+  ...rest
+} = Astro.props;
+
+let iconClass;
+const hasIcon = Astro.slots.has("icon");
+if (hasIcon) {
+  iconClass = rightIcon ? "horizontal-reverse justify-between" : leftIcon ? "horizontal justify-between" : "";
+}
 
 const variants = {
   outline: {
@@ -44,15 +64,36 @@ const variants = {
 <button
   autofocus={autofocus}
   value={value}
+  data-is="button"
   type={type}
   class={cn(
-    "pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold",
+    "pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold group",
     variants[variant || "outline"][dark ? "dark" : "light"],
     variants.sizes[size || "md"],
     variants.rings[ring || "sm"],
     variants.rings[dark ? "dark" : "light"],
+    iconClass,
     className
   )}
   {...rest}>
-  <slot />
+  <div
+    class={cn(
+      hasIcon &&
+        "group-focus:opacity-100 group-hover:opacity-100 opacity-0 transition-all group-focus:translate-x-0 group-hover:translate-x-0",
+      rightIcon ? "-translate-x-5" : leftIcon ? "translate-x-5" : ""
+    )}>
+    <slot name="icon" />
+  </div>
+  <div
+    class={cn(
+      "translate-y-[1px]",
+      hasIcon && "transition-all",
+      rightIcon
+        ? "group-focus:-translate-x-1 group-hover:-translate-x-1 translate-x-3"
+        : leftIcon
+          ? "group-focus:translate-x-1 group-hover:translate-x-1 -translate-x-3"
+          : ""
+    )}>
+    <slot />
+  </div>
 </button>

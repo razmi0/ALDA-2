@@ -3,6 +3,14 @@ import type { OptionType } from "@/components/Tarif/types";
 import Checkbox from "@/components/ui/checkbox.astro";
 import rawOptions from "@/components/Tarif/Dialog/option.json" assert { type: "json" };
 import { generateLorem } from "@/lib/utils";
+import type { ProductType } from "@/components/Products/types";
+
+interface Props {
+  product: ProductType;
+}
+
+const { product } = Astro.props;
+const key = product.id;
 
 const options: OptionType[] = rawOptions.options;
 ---
@@ -14,7 +22,7 @@ const options: OptionType[] = rawOptions.options;
 <section class={"h-fit grid grid-cols-2 gap-2 select-none"}>
   {
     options.map((option) => {
-      return <Checkbox option={option} />;
+      return <Checkbox option={option} key={key} />;
     })
   }
 </section>

@@ -8,6 +8,7 @@ import Form from "./Form.astro";
 import Inputs from "./Inputs.astro";
 import Message from "./Message.astro";
 import Options from "./Options.astro";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -137,17 +138,19 @@ const sizes = {
               <Component product={product} />
               <div class="horizontal w-full justify-end items-center gap-5">
                 {!isFirstIndex && (
-                  <Button data-action={`prev#${key}`} size="md" className="" variant="filled" ring="sm">
+                  <Button data-action={`prev#${key}`} size="md" variant="filled" leftIcon ring="sm">
+                    <ArrowBigLeft className="stroke-1" slot="icon" />
                     Précédent
                   </Button>
                 )}
                 {isLastIndex ? (
-                  <Button type="submit" size="md" className="w-fit rounded-md" variant="filled" ring="sm">
+                  <Button type="submit" size="md" className="horizontal justify-between" variant="filled" ring="sm">
                     Valider
                   </Button>
                 ) : (
-                  <Button data-action={`next#${key}`} size="md" className="w-fit rounded-md" variant="filled" ring="sm">
+                  <Button data-action={`next#${key}`} size="md" variant="filled" rightIcon ring="sm">
                     Suivant
+                    <ArrowBigRight className="stroke-1" slot="icon" />
                   </Button>
                 )}
               </div>

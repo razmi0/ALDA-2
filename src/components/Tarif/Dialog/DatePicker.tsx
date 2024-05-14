@@ -1,26 +1,33 @@
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import * as React from "react";
 
-import { format } from "date-fns";
-
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-// import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar as CalendarIcon } from "lucide-react";
-export function DatePickerWithPresets() {
+export function DatePickerWithPresets({ id }: { id: string | number }) {
   const [date, setDate] = React.useState<Date>();
 
   return (
     <div className="vertical center">
       <label className="mb-1 text-left text-sm w-full">Réservez une date :</label>
-      <Button type="button" variant={"outline"} className={cn("w-full justify-start text-left font-normal max-w-72")}>
-        <CalendarIcon className="mr-2 h-4 w-4" />
-        {date ? format(date, "PPP") : <></>}
-      </Button>
-      <input type="hidden" name="date" value={date?.toDateString()} />
-
-      <div className="rounded-md border max-w-72">
-        <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md max-w-72" />
+      <div className="w-full inline-flex items-center justify-start px-5 h-10 text-left font-normal transition-colors whitespace-nowrap bg-white rounded-tr-md rounded-tl-md">
+        <CalendarIcon className="mr-2 h-5 w-5 stroke-[1.5]" />
+        <span data-dateoutput={id}>{date ? format(date, "PPP") : <></>}</span>
+      </div>
+      <input
+        id={id.toString()}
+        data-dateinput={id}
+        type="hidden"
+        name="date"
+        value={date ? format(date, "PPP") : "Pick a date"}
+        className="text-left font-normal"
+      />
+      <div className="rounded-br-md rounded-bl-md max-w-72">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          className="bg-white max-w-72 rounded-br-md rounded-bl-md"
+        />
       </div>
     </div>
   );

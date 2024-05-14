@@ -26,4 +26,26 @@ const generateLorem = (length: number): string => {
   return generatedText.charAt(0).toUpperCase() + generatedText.slice(1).toLowerCase();
 };
 
-export { cn, generateLorem, isDev };
+const needDOM = <T>(selector: string, multiple: { multiple: boolean } = { multiple: false }) => {
+  const elements = multiple
+    ? (Array.from(document.querySelectorAll(selector)) as T[])
+    : (document.querySelector(selector) as T);
+  if (!elements) throw new Error(`Element not found: ${selector}`);
+  return elements as typeof multiple extends { multiple: true } ? T[] : T;
+};
+
+const getFromLS = (key: string) => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  return localStorage.getItem(key);
+};
+
+const setToLS = (key: string, value: string): null | void => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  localStorage.setItem(key, value);
+};
+
+export { cn, generateLorem, getFromLS, isDev, needDOM, setToLS };

@@ -11,57 +11,56 @@ const { product } = Astro.props;
 ---
 
 <script>
-  const productSections = Array.from(document.querySelectorAll("section[data-id]")) as HTMLElement[];
-  const outputEls = Array.from(document.querySelectorAll("output[data-action]")) as HTMLOutputElement[];
-  const inputEls = Array.from(document.querySelectorAll("input[type=number]")) as HTMLInputElement[];
+  import { needDOM } from "@/lib/utils";
+
+  const selectors = [
+    "section[data-id]", // [0] : productSections HTMLElement[]
+    "output[data-action]", // [1] : outputEls HTMLOutputElement[]
+    "input[type=number]", // [2] : inputEls HTMLInputElement[]
+  ];
+  const elements = selectors.map((selector) => needDOM<HTMLElement[]>(selector, { multiple: true })) as HTMLElement[][];
 
   const inputMap = new Map<string, HTMLInputElement>();
-  inputEls.map((input) => {
+  (elements[2] as HTMLInputElement[]).map((input) => {
     const id = input.id.split("#")[0];
     if (!id) throw new Error("No id found on the input element");
     inputMap.set(id, input);
   });
 
-  if (productSections.length === 0 || outputEls.length === 0)
-    throw new Error("No product sections or output elements found");
-
-  const productButtons: Record<"add" | "remove", HTMLButtonElement[]> = {
-    add: [],
-    remove: [],
+  const productButtons = {
+    add: [] as HTMLButtonElement[],
+    remove: [] as HTMLButtonElement[],
+    build: function (elements: HTMLElement[]) {
+      for (const child of elements) {
+        if (child.nodeName === "BUTTON") {
+          const action = child.dataset.action as (`add#${number}` | `remove#${number}`) & string;
+          action.startsWith("add")
+            ? this.add.push(child as HTMLButtonElement)
+            : this.remove.push(child as HTMLButtonElement);
+        }
+      }
+    },
   };
 
-  type ButtonAction = (`add#${number}` | `remove#${number}`) & string;
-  productSections.map((section) => {
-    const childrens = Array.from(section.children) as HTMLElement[];
-    for (const child of childrens) {
-      if (child.nodeName === "BUTTON") {
-        const action = child.dataset.action as ButtonAction;
-        action.startsWith("add")
-          ? productButtons.add.push(child as HTMLButtonElement)
-          : productButtons.remove.push(child as HTMLButtonElement);
-      }
-    }
-  });
+  elements[0]!.map((section) => productButtons.build(Array.from(section.children) as HTMLElement[]));
 
   if (productButtons.add.length === 0 || productButtons.remove.length === 0)
     throw new Error("No add or remove buttons found");
 
   type OutputMapValue = [HTMLOutputElement, string];
   const outputs = new Map<string, OutputMapValue>();
-  outputEls.map((element) => {
+  (elements[1] as HTMLOutputElement[]).map((element) => {
     const action = element.dataset.action;
     if (!action) return;
     const [id, price] = action.split("#") as [string, string];
     outputs.set(id, [element, price]);
   });
 
-  if (outputs.size === 0) throw new Error("No output elements found");
-
   /**
    * @description Map of product id and amount element display (span)
    */
   const amountEls = new Map<string, HTMLSpanElement>();
-  productSections.map((section) => {
+  elements[0]!.map((section) => {
     const productId = section.dataset.id as string;
     const amountEl = section.children[1] as HTMLSpanElement;
     amountEls.set(productId, amountEl);
@@ -105,9 +104,7 @@ const { product } = Astro.props;
   });
 </script>
 
-<div
-  class="vertical justify-between items-start flex-wrap w-full [&>*]:w-full max-w-[270px] gap-10"
-  style="min-width : min-content">
+<div class="grid grid-cols-2 gap-3" style="min-width : min-content">
   <section class="vertical text-black select-none">
     <div class="font-normal text-sm mb-1 text-left">
       <label>Nombre de {product.unit} :</label>
@@ -120,9 +117,11 @@ const { product } = Astro.props;
         <output class="font-bold text-lg" data-action={`${product.id}#${product.price}`}>
           {product.price}
         </output>
-        <input type="number" name="quantity_person" class="hidden" id={`${product.id}#input`} />
+        <input value="1" min="1" type="number" name="quantity_person" class="hidden" id={`${product.id}#input`} />
       </p>
     </div>
   </section>
-  <DatePickerWithPresets client:visible />
+  <section class="vertical center">
+    <DatePickerWithPresets client:visible id={product.id} />
+  </section>
 </div>
