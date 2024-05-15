@@ -26,8 +26,11 @@ const {
   detailsSize = dialogSize * 0.3,
   gap = 50,
 } = Astro.props;
-const key = product.id;
+// --
 const components = [Inputs, Options, Message];
+// --
+const key = product.id;
+// --
 const sizes = {
   dialog: `${dialogSize}px`,
   gap: `${gap}px`,
@@ -120,11 +123,10 @@ const sizes = {
   }
 </style>
 
-<dialog {...Astro.props} data-action={`dialog#${key}`} class="overflow-hidden">
+<dialog {...Astro.props.rest} data-action={`dialog#${key}`} class="overflow-hidden">
   <ContactDetail product={product} size={detailsSize} />
   <Form key={key} id={product.id}>
     <div data-is={`multistep#${key}`} data-frameSize={sizes.translation}>
-      <!-- COL 1 -->
       {
         components.map((Component, i) => (
           <section
