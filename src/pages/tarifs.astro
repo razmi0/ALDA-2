@@ -41,12 +41,10 @@ const products = rawProducts.products as ProductType[];
   <Section>
     <Heading h2="Nos tarifs" h3="Composable et personalisable" className="text-black">
       <div class="grow max-h-[10%]"></div>
-      <a href="#1" class="pointer-events-auto">
-        <ArrowDown size="32" />
-      </a>
+      <ArrowDown size="32" />
     </Heading>
   </Section>
-  <Section id={"1"} className={"vertical center container gap-32"}>
+  <Section className={"vertical center container gap-32"}>
     {
       products.map((product, i) => {
         const orientation = i % 2 === 0 ? "ltr" : "rtl";
