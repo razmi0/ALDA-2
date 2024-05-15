@@ -2,6 +2,7 @@
 import BirdIcon from "@/components/icons/Bird.astro";
 import Article from "../Article.astro";
 import Button from "../Button.astro";
+import CTA from "../CTA.astro";
 ---
 
 <div class="w-fit h-fit vertical px-12 gap-10">
@@ -9,6 +10,6 @@ import Button from "../Button.astro";
     <Article words1={35} words2={30} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/60"}>
       <BirdIcon />
     </Article>
-    <Button size="lg" variant="outline">Contact </Button>
+    <CTA href="/contact"><Button size="lg" variant="outline" className="hover:bg-white/20">Contact </Button></CTA>
   </div>
 </div>
