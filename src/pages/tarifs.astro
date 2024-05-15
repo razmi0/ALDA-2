@@ -44,12 +44,12 @@ const products = rawProducts.products as ProductType[];
       <ArrowDown size="32" />
     </Heading>
   </Section>
-  <Section className={"vertical center container gap-32"}>
+  <Section className={"vertical center container gap-72"}>
     {
       products.map((product, i) => {
         const orientation = i % 2 === 0 ? "ltr" : "rtl";
         return (
-          <Orientation orientation={orientation} id={`${product.id}`}>
+          <Orientation orientation={orientation} anchorId={`${product.id}`}>
             <section class="relative vertical w-fit h-full">
               <Pictures size={400} orientation={orientation} />
             </section>

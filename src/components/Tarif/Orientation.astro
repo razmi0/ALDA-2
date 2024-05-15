@@ -1,12 +1,12 @@
 ---
 import { cn } from "@/lib/utils";
-import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"div"> {
+interface Props {
   orientation: "ltr" | "rtl";
+  anchorId?: string | number;
 }
 
-const { orientation } = Astro.props;
+const { orientation, anchorId } = Astro.props;
 
 const orientationClasses = {
   ltr: "horizontal",
@@ -14,6 +14,9 @@ const orientationClasses = {
 };
 ---
 
-<div {...Astro.props} class={cn(`full px-5 gap-10 items-center justify-evenly`, orientationClasses[orientation])}>
+<div
+  {...Astro.props}
+  class={cn(`relative full px-5 gap-10 items-center justify-evenly`, orientationClasses[orientation])}>
+  <div id={`${anchorId}`} aria-hidden="true" class="absolute -top-[50%]"></div>
   <slot />
 </div>
