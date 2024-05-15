@@ -7,15 +7,23 @@ interface Props {
 
 const { className } = Astro.props;
 
+const isActivePath = (path: string) => Astro.url.pathname === path;
+
 const websiteLinks = [
-  { name: "accueil", href: "/" },
-  { name: "contact", href: "/contact" },
-  { name: "nous", href: "/nous" },
-  { name: "tarifs", href: "/tarifs" },
-  { name: "FAQs", href: "/FAQ" },
+  { name: "accueil", href: "/", isActive: isActivePath("/") },
+  { name: "contact", href: "/contact", isActive: isActivePath("/contact") },
+  { name: "nous", href: "/nous", isActive: isActivePath("/nous") },
+  { name: "tarifs", href: "/tarifs", isActive: isActivePath("/tarifs") },
+  { name: "FAQs", href: "/FAQ", isActive: isActivePath("/FAQ") },
 ];
 ---
 
 <nav class={cn("", className)}>
-  {websiteLinks.map(({ name, href }) => <a href={href}>{name}</a>)}
+  {
+    websiteLinks.map(({ name, href, isActive }) => (
+      <a href={href} class={cn(isActive ? "text-pur-500" : "")}>
+        {name}
+      </a>
+    ))
+  }
 </nav>

@@ -12,8 +12,6 @@ interface Props {
 
 const currentPage = Astro.url.pathname;
 const { as = currentPage === "/" ? "footer" : "header", className } = Astro.props as Props;
-
-const viewTransitionType = currentPage === "/" ? "slide" : "fade";
 ---
 
 <Section
@@ -21,8 +19,7 @@ const viewTransitionType = currentPage === "/" ? "slide" : "fade";
   size="quarter"
   extension="none"
   className={cn("vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10", className)}
-  data-is={`global-${as}`}
-  transition:animate={viewTransitionType}>
+  data-is={`global-${as}`}>
   <section class="full horizontal items-center justify-between">
     <h1 class="text-2xl">
       <a href="/"> A l'abordarbre</a>

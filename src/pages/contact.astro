@@ -1,8 +1,10 @@
 ---
+import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/layouts/Section.astro";
 ---
 
-<Section>
-  <Layout title="contact" />
-</Section>
+<Layout title="contact">
+  <HeaderFooter slot="header" />
+  <Section />
+</Layout>
