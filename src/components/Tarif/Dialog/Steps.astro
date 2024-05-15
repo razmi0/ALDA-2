@@ -20,7 +20,7 @@ const steps = [
     @apply rounded-full p-2 ring-2 ring-white bg-slate-700 min-h-12 h-12 min-w-12 w-12 text-3xl text-center;
   }
   article {
-    @apply relative grow gap-4 horizontal items-center justify-start w-full;
+    @apply relative grow w-full horizontal items-center justify-between gap-4;
 
     p {
       @apply text-sm text-balance text-slate-200/90;
@@ -32,11 +32,14 @@ const steps = [
   {
     steps.map(({ title, description }, i) => (
       <article>
-        <div class="step">{i + 1}</div>
-        <div class="vertical justify-center items-start leading-4">
-          <h2>{title}</h2>
-          <p>{description}</p>
+        <div class="horizontal items-center justify-start gap-4">
+          <div class="step">{i + 1}</div>
+          <div class="vertical justify-center items-start leading-4">
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
         </div>
+        <slot />
       </article>
     ))
   }

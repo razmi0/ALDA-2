@@ -1,0 +1,35 @@
+---
+import Button from "@/components/Button.astro";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+
+interface Props {
+  key: string | number;
+  isLastIndex: boolean;
+  isFirstIndex: boolean;
+}
+
+const { key, isLastIndex, isFirstIndex } = Astro.props;
+---
+
+<div class="horizontal w-full justify-end items-center gap-5">
+  {
+    !isFirstIndex && (
+      <Button data-action={`prev#${key}`} size="md" variant="filled" leftIcon ring="sm">
+        <ArrowBigLeft className="stroke-1" slot="icon" />
+        Précédent
+      </Button>
+    )
+  }
+  {
+    isLastIndex ? (
+      <Button type="submit" size="md" className="horizontal justify-between" variant="filled" ring="sm">
+        Valider
+      </Button>
+    ) : (
+      <Button data-action={`next#${key}`} size="md" variant="filled" rightIcon ring="sm">
+        Suivant
+        <ArrowBigRight className="stroke-1" slot="icon" />
+      </Button>
+    )
+  }
+</div>

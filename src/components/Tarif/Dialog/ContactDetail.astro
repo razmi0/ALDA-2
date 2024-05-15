@@ -1,6 +1,7 @@
 ---
 import type { ProductType } from "@/components/Products/types";
 import Steps from "./Steps.astro";
+import StarFilled from "@/components/icons/StarFilled.astro";
 
 interface Props {
   product: ProductType;
@@ -19,17 +20,10 @@ const { product, size } = Astro.props;
 <section
   class="vertical justify-between items-center rounded-tl-lg rounded-bl-lg py-8 px-2 bg-slate-700 text-white ps-4 gap-14"
   style={`min-width : ${size}px`}>
-  <div class="relative">
-    <Steps />
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="absolute-align z-0 w-[50px] h-[250px]">
-      <line x1="47" y1="200" x2="47" y2="-100" stroke="red" stroke-width="30"></line>
-    </svg>
-  </div>
+  <Steps>
+    <StarFilled className={"text-pur-500"} />
+  </Steps>
   <article class="space-y-5 w-full">
-    <!-- <div>
-      <h2 class="text-lg font-bold text-left mb-1">Contact</h2>
-      <p class="text-balance">Nous sommes toujours heureux de prendre contact avec vous et répondre à vos questions</p>
-    </div> -->
     <div>
       <h4 class="grandstander">Email</h4>
       <p>contact@${product.name}.com</p>
