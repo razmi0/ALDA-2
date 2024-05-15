@@ -1,7 +1,6 @@
 ---
 import type { ProductType } from "@/components/Products/types";
 import Steps from "./Steps.astro";
-import StarFilled from "@/components/icons/StarFilled.astro";
 
 interface Props {
   product: ProductType;
@@ -20,9 +19,7 @@ const { product, size } = Astro.props;
 <section
   class="vertical justify-between items-center rounded-tl-lg rounded-bl-lg py-8 px-2 bg-slate-700 text-white ps-4 gap-14"
   style={`min-width : ${size}px`}>
-  <Steps>
-    <StarFilled className={"text-pur-500"} />
-  </Steps>
+  <Steps key={product.id} />
   <article class="space-y-5 w-full">
     <div>
       <h4 class="grandstander">Email</h4>

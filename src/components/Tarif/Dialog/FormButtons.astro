@@ -1,20 +1,21 @@
 ---
 import Button from "@/components/Button.astro";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, Send } from "lucide-react";
 
 interface Props {
   key: string | number;
   isLastIndex: boolean;
   isFirstIndex: boolean;
+  step: number;
 }
 
-const { key, isLastIndex, isFirstIndex } = Astro.props;
+const { key, isLastIndex, isFirstIndex, step } = Astro.props;
 ---
 
 <div class="horizontal w-full justify-end items-center gap-5">
   {
     !isFirstIndex && (
-      <Button data-action={`prev#${key}`} size="md" variant="filled" leftIcon ring="sm">
+      <Button data-action={`prev#${key}`} size="md" variant="filled" leftIcon ring="sm" data-step={step - 1}>
         <ArrowBigLeft className="stroke-1" slot="icon" />
         Précédent
       </Button>
@@ -22,11 +23,12 @@ const { key, isLastIndex, isFirstIndex } = Astro.props;
   }
   {
     isLastIndex ? (
-      <Button type="submit" size="md" className="horizontal justify-between" variant="filled" ring="sm">
+      <Button type="submit" size="md" variant="filled" rightIcon ring="sm">
         Valider
+        <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
       </Button>
     ) : (
-      <Button data-action={`next#${key}`} size="md" variant="filled" rightIcon ring="sm">
+      <Button data-action={`next#${key}`} size="md" variant="filled" rightIcon ring="sm" data-step={step + 1}>
         Suivant
         <ArrowBigRight className="stroke-1" slot="icon" />
       </Button>

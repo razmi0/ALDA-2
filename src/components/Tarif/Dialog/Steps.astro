@@ -1,4 +1,12 @@
 ---
+import StarFilled from "@/components/icons/StarFilled.astro";
+
+interface Props {
+  key: string | number;
+}
+
+const { key } = Astro.props;
+
 const steps = [
   {
     title: "Etape 1",
@@ -28,19 +36,40 @@ const steps = [
   }
 </style>
 
-<div class="vertical items-center w-fit text-left text-white gap-10 z-10 relative">
-  {
-    steps.map(({ title, description }, i) => (
-      <article>
-        <div class="horizontal items-center justify-start gap-4">
-          <div class="step">{i + 1}</div>
-          <div class="vertical justify-center items-start leading-4">
-            <h2>{title}</h2>
-            <p>{description}</p>
+<!-- <script>
+  const translation = {
+    gap: 40,
+    step: 56,
+  };
+
+  const currentStep = 1;
+
+  //40px + 56px
+</script> -->
+
+<section class="horizontal w-full">
+  <div class="vertical items-center w-fit text-left text-white gap-10 relative">
+    {
+      steps.map(({ title, description }, i) => (
+        <article>
+          <div class="horizontal items-center justify-start gap-4 h-14">
+            <div class="step">{i + 1}</div>
+            <div class="vertical justify-center items-start leading-4">
+              <h2>{title}</h2>
+              <p>{description}</p>
+            </div>
           </div>
-        </div>
-        <slot />
-      </article>
-    ))
-  }
-</div>
+        </article>
+      ))
+    }
+  </div>
+  <div class="w-14 h-full [&>*]:w-full [&>*]:grid [&>*]:place-items-center">
+    <picture
+      data-picture={key}
+      data-step="1"
+      class="h-14 transition-transform"
+      style="--translation : 96px ; --step : 0 ; transform : translateY(calc(var(--translation) * var(--step)))">
+      <StarFilled className={"text-pur-500"} />
+    </picture>
+  </div>
+</section>
