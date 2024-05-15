@@ -53,69 +53,53 @@ const sizes = {
         [`[data-action^='prev#${key}']`, { multiple: true }], // [5] HTMLButtonElement multiple
       ];
 
-      const [arr_open, arr_form, arr_multistep, close, next, prev] = selectors.map((selector) =>
+      const [openBtn, form, multistep, closeBtns, nextBtns, prevBtns] = selectors.map((selector) =>
         needDOM<HTMLElement[]>(...selector)
       );
-      const open = (arr_open as [HTMLButtonElement])[0];
-      const form = (arr_form as [HTMLFormElement])[0];
-      const multistep = (arr_multistep as [HTMLElement])[0];
-      const navBtns = {
-        next: next as HTMLButtonElement[],
-        prev: prev as HTMLButtonElement[],
-      };
 
-      const frameSize = multistep.dataset.framesize as string;
+      if (!openBtn || !form || !multistep || !closeBtns || !nextBtns || !prevBtns)
+        throw new Error(`Missing DOM elements`);
+
+      const frameSize = multistep?.[0]?.dataset.framesize as string;
       const translationSize = parseInt(frameSize) || 0;
 
-      for (const key in navBtns) {
-        navBtns[key as "next" | "prev"].forEach((btn: HTMLButtonElement) => {
-          const action = btn.dataset.action as string;
-          if (!action) throw new Error(`Missing action`);
-          const [actiontype, id] = action.split("#") as ["prev" | "next", string, string];
+      const handleNavigation = (direction: "prev" | "next") => {
+        const frames = needDOM<HTMLElement[]>(`[data-frame^='frame#${key}']`, { multiple: true });
+        const firstFrame = frames[0] as HTMLElement;
+        const translationData = firstFrame.dataset.translation as string;
+        const currentTranslation = parseInt(translationData) || 0;
 
-          switch (actiontype) {
-            case "prev":
-              btn.addEventListener("click", () => {
-                const frames = needDOM<HTMLElement[]>(`[data-frame^='frame#${id}']`, { multiple: true });
-                const firstIndex = frames[0] as HTMLElement;
-                const translationData = firstIndex.dataset.translation as string;
-                const currentTranlation = parseInt(translationData) || 0;
-                frames.forEach((frame) => {
-                  const nextMove = currentTranlation + translationSize;
-                  frame.dataset.translation = `${nextMove}`;
-                  frame.style.transform = `translateX(${nextMove}px)`;
-                });
-              });
-              break;
-
-            case "next":
-              btn.addEventListener("click", () => {
-                const frames = needDOM<HTMLElement[]>(`[data-frame^='frame#${id}']`, { multiple: true });
-                const firstIndex = frames[0] as HTMLElement;
-                const translationData = firstIndex.dataset.translation as string;
-                const currentTranlation = parseInt(translationData) || 0;
-                frames.forEach((frame) => {
-                  const nextMove = currentTranlation - translationSize;
-                  frame.dataset.translation = `${nextMove}`;
-                  frame.style.transform = `translateX(${nextMove}px)`;
-                });
-              });
-              break;
-          }
+        frames.forEach((frame) => {
+          const nextMove =
+            direction === "prev" ? currentTranslation + translationSize : currentTranslation - translationSize;
+          frame.dataset.translation = `${nextMove}`;
+          frame.style.transform = `translateX(${nextMove}px)`;
         });
-      }
+      };
 
-      open.addEventListener("click", () => dialog.showModal());
-      (close as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
-      form.addEventListener("submit", (e) => {
+      (nextBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
+        btn.addEventListener("click", () => handleNavigation("next"))
+      );
+
+      (prevBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
+        btn.addEventListener("click", () => handleNavigation("prev"))
+      );
+
+      const handleSubmit = (e: SubmitEvent) => {
         e.preventDefault();
-        const formData = new FormData(form);
+        const formData = new FormData(form[0] as HTMLFormElement);
         const data = Object.fromEntries(formData.entries());
         console.log(data);
         if (data.hp) {
           window.location.assign("/honey");
         }
-      });
+      };
+
+      const open = openBtn[0] as HTMLButtonElement;
+      const formEl = form[0] as HTMLFormElement;
+      open.addEventListener("click", () => dialog.showModal());
+      (closeBtns as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
+      formEl.addEventListener("submit", (e: SubmitEvent) => handleSubmit(e));
     });
   });
 </script>
