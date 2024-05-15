@@ -6,6 +6,7 @@ import VerticalText from "../VerticalText.astro";
 import ImageSwitch from "../ImageSwitch/ImageSwitch.astro";
 import Section from "@/layouts/Section.astro";
 import Heading from "./Heading.astro";
+import CTA from "../CTA.astro";
 ---
 
 <style>
@@ -31,13 +32,14 @@ import Heading from "./Heading.astro";
   <!-- OVERLAY -->
   <section class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
     <nav class="full [&>div]:full">
-      <div class="horizontal center gap-12 font-bold [&>li>a:hover]:underline text-lg">
+      <div class="horizontal center gap-12 font-bold [&_a:hover]:underline text-lg">
         <a href="/">
           <h1 class="text-2xl">A l'abordarbre</h1>
         </a>
         <div class="grow"></div>
         <a href="/contact">contact</a>
         <a href="/nous">nous</a>
+        <a href="/FAQ">FAQs</a>
         <a href=`/tarifs`>
           <Button className="hover:bg-white/20 pb-1" size="sm" ring="md" variant="outline" data-is="hero-button"
             >activités et tarifs</Button
@@ -63,7 +65,7 @@ import Heading from "./Heading.astro";
         textClass="-translate-x-2"
         leftIcon>
         <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
-        <span>S'inscrire</span>
+        <CTA href="/tarifs"><span>S'inscrire</span></CTA>
       </Button>
       <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
     </div>
