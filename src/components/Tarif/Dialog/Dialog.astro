@@ -40,7 +40,7 @@ const sizes = {
   import { needDOM } from "@/lib/utils";
   document.addEventListener("astro:page-load", () => {
     const dialogs = needDOM<HTMLDialogElement[]>("dialog", { multiple: true });
-    dialogs.map((dialog) => {
+    dialogs.forEach((dialog) => {
       const action = dialog.dataset.action as string;
       const key = action.split("#")[1];
 
@@ -68,7 +68,7 @@ const sizes = {
       const translationSize = parseInt(frameSize) || 0;
 
       for (const key in navBtns) {
-        navBtns[key as "next" | "prev"].map((btn: HTMLButtonElement) => {
+        navBtns[key as "next" | "prev"].forEach((btn: HTMLButtonElement) => {
           const action = btn.dataset.action as string;
           if (!action) throw new Error(`Missing action`);
           const [actiontype, id] = action.split("#") as ["prev" | "next", string, string];
@@ -80,7 +80,7 @@ const sizes = {
                 const firstIndex = frames[0] as HTMLElement;
                 const translationData = firstIndex.dataset.translation as string;
                 const currentTranlation = parseInt(translationData) || 0;
-                frames.map((frame) => {
+                frames.forEach((frame) => {
                   const nextMove = currentTranlation + translationSize;
                   frame.dataset.translation = `${nextMove}`;
                   frame.style.transform = `translateX(${nextMove}px)`;
@@ -94,7 +94,7 @@ const sizes = {
                 const firstIndex = frames[0] as HTMLElement;
                 const translationData = firstIndex.dataset.translation as string;
                 const currentTranlation = parseInt(translationData) || 0;
-                frames.map((frame) => {
+                frames.forEach((frame) => {
                   const nextMove = currentTranlation - translationSize;
                   frame.dataset.translation = `${nextMove}`;
                   frame.style.transform = `translateX(${nextMove}px)`;
@@ -105,12 +105,8 @@ const sizes = {
         });
       }
 
-      if (!open || !close) {
-        throw new Error(`Missing open : ${open} or close : ${close} or form : ${form}`);
-      }
-
       open.addEventListener("click", () => dialog.showModal());
-      close.map((btn) => btn.addEventListener("click", () => dialog.close()));
+      (close as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const formData = new FormData(form);

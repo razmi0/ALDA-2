@@ -93,11 +93,11 @@ const locations = rawLocations.map((loc, i) => {
       mark.style.left = `${x * dimensions.cellWidth}px`;
     };
 
-    marks.map((mark) => placeMarks(mark));
+    marks.forEach((mark) => placeMarks(mark));
 
     window.onresize = () => {
       dimensions.update();
-      marks.map((mark) => placeMarks(mark));
+      marks.forEach((mark) => placeMarks(mark));
     };
 
     /**
@@ -128,12 +128,12 @@ const locations = rawLocations.map((loc, i) => {
     };
 
     buttons &&
-      buttons.map((btn) => {
+      buttons.forEach((btn) => {
         btn.addEventListener("click", handleNavigation as EventListener);
       });
 
     marks &&
-      marks.map((mark) => {
+      marks.forEach((mark) => {
         mark.addEventListener("click", handleMarkClick as EventListener);
       });
   });
@@ -157,14 +157,12 @@ const locations = rawLocations.map((loc, i) => {
 
 <Section
   size="full"
-  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-start pt-36 lg:pt-0 gap-32"
->
+  className="relative bg-map-dark text-white flex flex-col lg:flex-row items-center justify-start pt-36 lg:pt-0 gap-32">
   <VerticalText position="right" className="bottom-0">Découvrez des lieux uniques</VerticalText>
   <LocationFigure>
     <div
       class="absolute top-0 left-1/4 overflow-x-hidden"
-      style={`max-width: ${navVisibleFrame}; width: ${navVisibleFrame}; height: 100%;`}
-    >
+      style={`max-width: ${navVisibleFrame}; width: ${navVisibleFrame}; height: 100%;`}>
       <div class="horizontal items-center justify-start w-fit gap-1 text-[0.95rem]" data-page>
         <output class="tabular-nums text-white font-semibold" data-total={totalPages}>01</output>
         <span class="text-white/90">/ {totalPages}</span>
@@ -197,8 +195,7 @@ const locations = rawLocations.map((loc, i) => {
             <button
               class="horizontal center gap-2 absolute pointer-events-auto"
               data-coor={loc.coordinates}
-              data-index={i + 1}
-            >
+              data-index={i + 1}>
               <LocationMark selected={loc.selected}>{loc.label || loc.title}</LocationMark>
             </button>
           );
@@ -212,8 +209,7 @@ const locations = rawLocations.map((loc, i) => {
       class="horizontal"
       data-is="frame"
       data-translation={`${translationWidth}`}
-      style={`gap: ${articleContentGap}`}
-    >
+      style={`gap: ${articleContentGap}`}>
       {
         locations.map((loc) => {
           return (
@@ -222,8 +218,7 @@ const locations = rawLocations.map((loc, i) => {
                 title={loc.article.title}
                 words1={loc.article.paragraph1}
                 words2={loc.article.paragraph2}
-                pClass={"text-[#a4b1d6] opacity-90"}
-              >
+                pClass={"text-[#a4b1d6] opacity-90"}>
                 <TreeIcon />
               </Article>
               <figure class="h-full horizontal justify-end items-center mt-1 gap-4">

@@ -23,7 +23,7 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
     document.querySelectorAll("button[data-key][data-image='screen-img']")!
   ) as HTMLButtonElement[];
   const images = Array.from(document.querySelectorAll(`[data-image='screen-img']`)) as HTMLImageElement[];
-  btns.map((btn) => {
+  btns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const target = e.currentTarget as HTMLButtonElement;
       const targetKey = target.dataset.key;
@@ -49,7 +49,7 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
   const textShadowBtns = Array.from(
     document.querySelectorAll("button[data-action='text-shadow']")
   ) as HTMLButtonElement[];
-  textShadowBtns.map((btn) => {
+  textShadowBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       const parentElement = btn.parentElement?.parentElement;
       const textShadow =
@@ -87,8 +87,7 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
       <button
         data-key={uniqueKey}
         data-image="screen-img"
-        class="z-50 relative pointer-events-auto  px-1 hover:bg-white/60 "
-      >
+        class="z-50 relative pointer-events-auto  px-1 hover:bg-white/60 ">
         <small class=" text-white font-bold [text-shadow:0.05em_0_black,0_0.05em_black,-0.05em_0_black,0_-0.05em_black,-0.05em_-0.05em_black,-0.05em_0.05em_black,0.05em_-0.05em_black,0.05em_0.05em_black;]">
           Change img
         </small>
@@ -96,8 +95,7 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Image
       <button
         data-key={uniqueKey}
         data-action="text-shadow"
-        class=" z-50 relative pointer-events-auto  px-1 hover:bg-white/60 "
-      >
+        class=" z-50 relative pointer-events-auto  px-1 hover:bg-white/60 ">
         <small class="text-white font-bold [text-shadow:0.05em_0_black,0_0.05em_black,-0.05em_0_black,0_-0.05em_black,-0.05em_-0.05em_black,-0.05em_0.05em_black,0.05em_-0.05em_black,0.05em_0.05em_black;]">
           text shadows
         </small>
