@@ -49,7 +49,7 @@ const products = rawProducts.products as ProductType[];
       products.map((product, i) => {
         const orientation = i % 2 === 0 ? "ltr" : "rtl";
         return (
-          <Orientation orientation={orientation}>
+          <Orientation orientation={orientation} id={`${product.id}`}>
             <section class="relative vertical w-fit h-full">
               <Pictures size={400} orientation={orientation} />
             </section>
