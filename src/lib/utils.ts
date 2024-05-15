@@ -26,7 +26,7 @@ const generateLorem = (length: number): string => {
   return generatedText.charAt(0).toUpperCase() + generatedText.slice(1).toLowerCase();
 };
 
-const needDOM = <T>(selector: string, multiple: { multiple: boolean } = { multiple: false }) => {
+const needDOM = <T>(selector: string, multiple: { multiple?: boolean | undefined } = { multiple: false }) => {
   const elements = multiple
     ? (Array.from(document.querySelectorAll(selector)) as T[])
     : (document.querySelector(selector) as T);

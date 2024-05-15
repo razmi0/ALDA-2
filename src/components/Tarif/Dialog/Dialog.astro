@@ -37,23 +37,48 @@ const sizes = {
 ---
 
 <script>
+  import { needDOM } from "@/lib/utils";
   document.addEventListener("astro:page-load", () => {
-    const dialogs = Array.from(document.querySelectorAll("[data-action*='dialog']")) as HTMLDialogElement[];
-    if (!dialogs) throw new Error(`Missing dialog : ${dialog}`);
+    const dialogs = needDOM<HTMLDialogElement[]>("dialog", { multiple: true });
     dialogs.map((dialog) => {
-      const key = dialog.dataset.action.split("#")[1];
-      const open = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
-      const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
-      const form = document.querySelector(`[data-form='form#${key}']`) as HTMLFormElement;
-      const multistep = dialog.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
-      const translationSize = parseInt(multistep.dataset.framesize) || 0;
+      const action = dialog.dataset.action as string;
+      const key = action.split("#")[1];
+
+      const selectors: [string, { multiple?: boolean } | undefined][] = [
+        [`[data-action='open#${key}']`, { multiple: false }], // [0] HTMLButtonElement single
+        [`[data-form='form#${key}']`, { multiple: false }], // [1] HTMLFormElement single
+        [`[data-is='multistep#${key}']`, { multiple: false }], // [2] HTMLElement single
+        [`[data-action='close#${key}']`, { multiple: true }], // [3] HTMLButtonElement multiple
+        [`[data-action^='next#${key}']`, { multiple: true }], // [4] HTMLButtonElement multiple
+        [`[data-action^='prev#${key}']`, { multiple: true }], // [5] HTMLButtonElement multiple
+      ];
+
+      const [arr_open, arr_form, arr_multistep, close, next, prev] = selectors.map((selector) =>
+        needDOM<HTMLElement[]>(...selector)
+      );
+      const open = (arr_open as [HTMLButtonElement])[0];
+      const form = (arr_form as [HTMLFormElement])[0];
+      const multistep = (arr_multistep as [HTMLElement])[0];
       const navBtns = {
-        next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
-        prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
+        next: next as HTMLButtonElement[],
+        prev: prev as HTMLButtonElement[],
       };
 
+      // const open = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
+      // const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
+      // const form = document.querySelector(`[data-form='form#${key}']`) as HTMLFormElement;
+      // const multistep = dialog.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
+
+      // const navBtns = {
+      //   next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
+      //   prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
+      // };
+
+      const frameSize = multistep.dataset.framesize as string;
+      const translationSize = parseInt(frameSize) || 0;
+
       for (const key in navBtns) {
-        navBtns[key].map((btn: HTMLButtonElement) => {
+        navBtns[key as "next" | "prev"].map((btn: HTMLButtonElement) => {
           const action = btn.dataset.action as string;
           if (!action) throw new Error(`Missing action`);
           const [actiontype, id] = action.split("#") as ["prev" | "next", string, string];
@@ -61,8 +86,10 @@ const sizes = {
           switch (actiontype) {
             case "prev":
               btn.addEventListener("click", () => {
-                const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
-                const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
+                const frames = needDOM<HTMLElement[]>(`[data-frame^='frame#${id}']`, { multiple: true });
+                const firstIndex = frames[0] as HTMLElement;
+                const translationData = firstIndex.dataset.translation as string;
+                const currentTranlation = parseInt(translationData) || 0;
                 frames.map((frame) => {
                   const nextMove = currentTranlation + translationSize;
                   frame.dataset.translation = `${nextMove}`;
@@ -73,8 +100,10 @@ const sizes = {
 
             case "next":
               btn.addEventListener("click", () => {
-                const frames = Array.from(dialog.querySelectorAll(`[data-frame^='frame#${id}']`));
-                const currentTranlation = parseInt(frames[0].dataset.translation) || 0;
+                const frames = needDOM<HTMLElement[]>(`[data-frame^='frame#${id}']`, { multiple: true });
+                const firstIndex = frames[0] as HTMLElement;
+                const translationData = firstIndex.dataset.translation as string;
+                const currentTranlation = parseInt(translationData) || 0;
                 frames.map((frame) => {
                   const nextMove = currentTranlation - translationSize;
                   frame.dataset.translation = `${nextMove}`;
@@ -98,7 +127,7 @@ const sizes = {
         const data = Object.fromEntries(formData.entries());
         console.log(data);
         if (data.hp) {
-          window.location = "/honey";
+          window.location.assign("/honey");
         }
       });
     });
