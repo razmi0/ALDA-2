@@ -13,6 +13,7 @@ interface Props {
   type?: HTMLAttributes<"button">["type"];
   leftIcon?: boolean;
   rightIcon?: boolean;
+  textClass?: string;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   type = "button",
   rightIcon,
   leftIcon,
+  textClass,
   ...rest
 } = Astro.props;
 
@@ -92,7 +94,8 @@ const variants = {
         ? "group-focus:-translate-x-1 group-hover:-translate-x-1 translate-x-3"
         : leftIcon
           ? "group-focus:translate-x-1 group-hover:translate-x-1 -translate-x-3"
-          : ""
+          : "",
+      textClass
     )}>
     <slot />
   </div>

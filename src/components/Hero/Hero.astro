@@ -36,10 +36,12 @@ import Heading from "./Heading.astro";
           <h1 class="text-2xl">A l'abordarbre</h1>
         </a>
         <div class="grow"></div>
-        <a href="/tarifs">Tarifs</a>
-        <a href="/nous">Nous</a>
-        <a href=`/contact`>
-          <Button className="pt-2 pb-1" size="sm" ring="md" variant="outline" data-is="hero-button">Contact</Button>
+        <a href="/contact">contact</a>
+        <a href="/nous">nous</a>
+        <a href=`/tarifs`>
+          <Button className="hover:bg-white/20 pb-1" size="sm" ring="md" variant="outline" data-is="hero-button"
+            >activités et tarifs</Button
+          >
         </a>
       </div>
     </nav>
@@ -47,20 +49,20 @@ import Heading from "./Heading.astro";
   <div class="text-white">
     <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
     <div
-      class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]"
-    >
+      class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]">
       <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
 
       <p class="text-white/80 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
         {generateLorem(30)}
       </p>
       <Button
-        className="pointer-events-auto horizontal gap-5 items-center w-48"
+        className="pointer-events-auto hover:bg-white/20"
         variant="outline"
         size="lg"
         data-is="hero-button"
-      >
-        <Mountain className="h-[18px] w-[18px] -translate-y-[1px]" />
+        textClass="-translate-x-2"
+        leftIcon>
+        <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
         <span>S'inscrire</span>
       </Button>
       <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
