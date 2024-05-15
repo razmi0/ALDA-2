@@ -64,16 +64,6 @@ const sizes = {
         prev: prev as HTMLButtonElement[],
       };
 
-      // const open = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
-      // const close = Array.from(dialog.querySelectorAll(`[data-action='close#${key}']`) as HTMLButtonElement[]);
-      // const form = document.querySelector(`[data-form='form#${key}']`) as HTMLFormElement;
-      // const multistep = dialog.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
-
-      // const navBtns = {
-      //   next: Array.from(dialog.querySelectorAll(`[data-action^='next#${key}']`) as HTMLButtonElement[]),
-      //   prev: Array.from(dialog.querySelectorAll(`[data-action^='prev#${key}']`) as HTMLButtonElement[]),
-      // };
-
       const frameSize = multistep.dataset.framesize as string;
       const translationSize = parseInt(frameSize) || 0;
 
