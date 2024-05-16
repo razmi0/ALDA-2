@@ -1,0 +1,18 @@
+---
+
+interface Props {
+  price : string;
+  unit : string;
+}
+
+const { price, unit } = Astro.props;
+---
+
+<p class="font-semibold whitespace-nowrap">
+  Start at
+  <span class="font-bold text-lg">
+    <small> €</small>
+    {price}
+  </span>
+  / {unit}
+</p>

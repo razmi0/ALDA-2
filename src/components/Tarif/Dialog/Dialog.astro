@@ -1,14 +1,15 @@
 ---
 import Button from "@/components/Button.astro";
+import MinimalPrice from "@/components/Products/MinimalPrice.astro";
 import type { ProductType } from "@/components/Products/types";
 import type { HTMLAttributes } from "astro/types";
-import CloseButton from "./CloseButton.astro";
-import ContactDetail from "./ContactDetail.astro";
 import Form from "../Form/Form.astro";
 import FormButtons from "../Form/FormButtons.astro";
 import Inputs from "../Form/Inputs.astro";
 import Message from "../Form/Message.astro";
 import Options from "../Form/Options.astro";
+import CloseButton from "./CloseButton.astro";
+import ContactDetail from "./ContactDetail.astro";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -141,12 +142,5 @@ const sizes = {
 </dialog>
 <div class="horizontal center gap-5">
   <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
-  <p class="font-semibold whitespace-nowrap">
-    Start at
-    <span class="font-bold text-lg">
-      <small> €</small>
-      {product.price}
-    </span>
-    / {product.unit}
-  </p>
+  <MinimalPrice price={product.price} unit={product.unit}/>
 </div>

@@ -3,6 +3,7 @@ import Article from "../Article.astro";
 import Button from "../Button.astro";
 import CTA from "../CTA.astro";
 import Badge from "./Badge.astro";
+import MinimalPrice from "./MinimalPrice.astro";
 import type { ProductType } from "./types";
 
 interface Props extends ProductType {}
@@ -24,13 +25,6 @@ const { price, unit, title, description, id, tags } = Astro.props;
     <CTA href={`/tarifs#${id}`}>
       <Button size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">En savoir plus</Button>
     </CTA>
-    <p class="font-semibold whitespace-nowrap">
-      Start at
-      <span class="font-bold text-lg">
-        <small> €</small>
-        {price}
-      </span>
-      / {unit}
-    </p>
+    <MinimalPrice price={price} unit={unit} />
   </footer>
 </div>
