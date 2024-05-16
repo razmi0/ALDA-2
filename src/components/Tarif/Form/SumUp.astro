@@ -1,1 +1,14 @@
-hi
+---
+import type { ProductType } from "@/components/Products/types";
+
+interface Props {
+  product: ProductType;
+}
+
+const { product } = Astro.props;
+---
+
+<section class="bg-white text-black">
+  <h5>Récapitulatif</h5>
+  <div data-root={`root#${product.id}`}></div>
+</section>
