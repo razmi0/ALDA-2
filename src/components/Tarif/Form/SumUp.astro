@@ -8,7 +8,20 @@ interface Props {
 const { product } = Astro.props;
 ---
 
-<section class="bg-white text-black">
-  <h5>Récapitulatif</h5>
-  <div data-root={`root#${product.id}`}></div>
+<style>
+  div {
+    ul {
+      @apply space-y-2 mb-2 w-full;
+
+      li {
+        @apply horizontal items-center justify-between;
+      }
+    }
+  }
+</style>
+
+<h5 class="w-full text-lg text-left">Récapitulatif</h5>
+<section class="w-full bg-white text-black text-left">
+  <div class="vertical center w-full p-5 text-sm" data-recap={`recap#${product.id}`}></div>
 </section>
+<section data-is="recap-message" class="p-5 w-full bg-white text-black text-left mb-3"></section>

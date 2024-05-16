@@ -80,3 +80,11 @@ p,
 li {
   font-size: 0.98rem;
 }
+
+span.label {
+  @apply font-semibold;
+}
+
+p.value {
+  @apply font-normal;
+}

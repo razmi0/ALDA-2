@@ -45,7 +45,8 @@ const isLastIndex = step === formSize - 1;
         variant="filled"
         rightIcon
         ring="sm"
-        data-step={step + 1}>
+        data-step={step + 1}
+        type={step === 2 ? "submit" : "button"}>
         Suivant
         <ArrowBigRight className="stroke-1" slot="icon" />
       </Button>
