@@ -71,12 +71,12 @@ const key = product.id;
   data-action={`section-message#${key}`}>
   <label for={`email-${key}`}>
     <span>Votre email :</span>
-    <input id={`email-${key}`} type="email" name={`email`} placeholder="monemail@email.com" />
+    <input id={`email-${key}`} type="email" name={`email`} placeholder="monemail@email.com" class="mb-1" />
     <Info text="Votre email nous permettra de nous mettre en contact" data-type="email" key={`${key}`} />
   </label>
   <label for={`tel-${key}`}>
     <span>Votre téléphone :</span>
-    <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." />
+    <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." class="mb-1" />
     <Info text="Votre téléphone nous permettra de nous mettre en contact" data-type="tel" key={`${key}`} />
   </label>
   <label for={`textarea-${key}`}>
@@ -84,7 +84,7 @@ const key = product.id;
     <textarea
       id={`textarea-${key}`}
       name={`textarea`}
-      class="w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52"
+      class="w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52 mb-1"
       placeholder="Message..."></textarea>
     <Info text="Votre message nous permettra de mieux comprendre votre demande" />
   </label>
