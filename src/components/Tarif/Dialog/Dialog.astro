@@ -139,5 +139,14 @@ const sizes = {
   </Form>
   <CloseButton key={key} />
 </dialog>
-
-<Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
+<div class="horizontal center gap-5">
+  <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
+  <p class="font-semibold whitespace-nowrap">
+    Start at
+    <span class="font-bold text-lg">
+      <small> €</small>
+      {product.price}
+    </span>
+    / {product.unit}
+  </p>
+</div>

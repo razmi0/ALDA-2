@@ -9,7 +9,7 @@ import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown, Backpack, Gauge, MapPin } from "lucide-react";
+import { ArrowDown, Backpack, CircleChevronRight, Gauge, Hourglass, MapPin } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const products = rawProducts.products as ProductType[];
@@ -51,21 +51,40 @@ const products = rawProducts.products as ProductType[];
         return (
           <Orientation orientation={orientation} anchorId={`${product.id}`}>
             <section class="relative vertical w-fit h-full">
-              <Pictures size={400} orientation={orientation} />
+              <Pictures size={500} orientation={orientation} />
             </section>
-            <section class="vertical w-fit h-full gap-5 items-start justify-evenly">
+            <section class="vertical w-fit h-full gap-7 items-start justify-evenly max-w-[50%]">
               <TarifText title={product.title} description={product.description.long} />
-              <article class="vertical gap-3">
-                <Stats label="dificulty" type="bar" stats={product.stats}>
-                  <Gauge slot="icon" />
-                </Stats>
-                <Stats label="matériels" type="badge" stats={product.materials}>
-                  <Backpack slot="icon" />
-                </Stats>
-                <Stats label="lieux" type="badge" stats={product.locations}>
-                  <MapPin slot="icon" />
-                </Stats>
-              </article>
+              <div class="grid grid-cols-2">
+                <div class="vertical gap-1">
+                  <Stats label="duration" type="none" stats={product.duration}>
+                    <Hourglass slot="icon" />
+                  </Stats>
+                  <Stats label="dificulty" type="bar" stats={product.stats}>
+                    <Gauge slot="icon" />
+                  </Stats>
+                  <Stats label="matériels" type="badge" stats={product.materials}>
+                    <Backpack slot="icon" />
+                  </Stats>
+                  <Stats label="lieux" type="badge" stats={product.locations}>
+                    <MapPin slot="icon" />
+                  </Stats>
+                  <Stats label="public" type="none" stats={product.public}>
+                    <MapPin slot="icon" />
+                  </Stats>
+                </div>
+                <div class="grid items-start justify-end">
+                  <ul class="w-full">
+                    <p class="font-semibold mb-2">Programme :</p>
+                    {product.tasks.map((task) => (
+                      <li class="w-full horizontal items-center gap-3 mb-1">
+                        <CircleChevronRight className="stroke-1 h-4 w-4" />
+                        <p class="full">{task}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
               <Dialog product={product} dialogSize={1000} />
             </section>
           </Orientation>

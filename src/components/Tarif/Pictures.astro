@@ -15,7 +15,11 @@ const orientationClasses = {
 const { size = 400, orientation } = Astro.props;
 ---
 
-<RandomImage seed={size} className="w-full aspect-square" style={`height : ${size}px`} />
+<RandomImage
+  seed={size}
+  className="w-full aspect-square ring-offset-2 ring-1 ring-stone-200"
+  style={`height : ${size}px`}
+/>
 <div
   class={cn(
     `absolute bottom-5 horizontal w-full gap-5 items-center [&>*]:ring-1 [&>*]:ring-white [&>*]:aspect-square`,
