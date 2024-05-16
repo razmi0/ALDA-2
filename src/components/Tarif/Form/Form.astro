@@ -79,7 +79,7 @@ const { id, key } = Astro.props;
 
         const sectionMessage = form.querySelector("section[data-is='recap-message']") as HTMLElement;
         if (sectionMessage) {
-          sectionMessage.textContent = ""; // Clear previous content
+          sectionMessage.textContent = "";
 
           const spanLabel = document.createElement("span");
           spanLabel.className = "label";
@@ -93,7 +93,6 @@ const { id, key } = Astro.props;
           sectionMessage.appendChild(pValue);
         }
 
-        // Clear previous content
         rootRecap.textContent = "";
 
         const ul = document.createElement("ul");
