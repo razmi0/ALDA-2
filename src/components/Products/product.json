@@ -8,11 +8,7 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
-      "tasks": [
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-      ],
+      "tasks": ["Lorem Ipsum is simply dummy", "Lorem Ipsum is simply dummy", "Lorem Ipsum is simply dummy"],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["tente", "sac de couchage", "matelas"],
       "price": "100",
@@ -32,11 +28,7 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
-      "tasks": [
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-      ],
+      "tasks": ["Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy "],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["corde", "gants", "casque"],
       "price": "120",
@@ -55,11 +47,7 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
-      "tasks": [
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-      ],
+      "tasks": ["Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy "],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["casque", "gants", "bottes"],
       "price": "90",
@@ -79,11 +67,7 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "in-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
-      "tasks": [
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-      ],
+      "tasks": ["Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy "],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["boîte à outils", "perceuse", "scie circulaire"],
       "price": "150",
@@ -103,11 +87,7 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
-      "tasks": [
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-      ],
+      "tasks": ["Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy ", "Lorem Ipsum is simply dummy "],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["canne à pêche", "appâts", "hameçons"],
       "price": "80",
