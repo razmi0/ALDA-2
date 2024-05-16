@@ -46,10 +46,6 @@ const { text, key } = Astro.props;
 <style>
   div:has(> [data-variant="error"]) {
     @apply text-red-500 ring-1 ring-red-500;
-
-    & > svg {
-      @apply animate-pulse;
-    }
   }
 </style>
 
