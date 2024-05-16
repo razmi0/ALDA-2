@@ -18,7 +18,7 @@ const { text, key } = Astro.props;
 
   outputs.forEach((output) => {
     const key = output.dataset.info?.split("#")[1] as string;
-    initial.set(key, { element: output, baseText: output.textContent });
+    initial.set(key, { element: output, baseText: output.textContent as string });
   });
 
   const config = { attributes: true, childList: false, subtree: false };
@@ -31,7 +31,10 @@ const { text, key } = Astro.props;
         setTimeout(() => {
           console.log("resetting");
           output.dataset.variant = "info" as "info" | "error";
-          output.textContent = initial.get(key).baseText as string;
+          if (initial.has(key)) {
+            const initialData = initial.get(key);
+            if (initialData) output.textContent = initialData.baseText;
+          }
         }, resetDelay);
       }
     }

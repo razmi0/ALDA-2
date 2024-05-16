@@ -8,14 +8,21 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
+      "tasks": [
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      ],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["tente", "sac de couchage", "matelas"],
       "price": "100",
       "unit": "personne",
+      "duration": "1 night",
       "rating": "3",
       "stats": [{ "label": "difficulté", "value": "8" }],
       "tags": ["enfant", "facile", "adrenaline"],
-      "footerText": "footer text"
+      "footerText": "footer text",
+      "public": "adult"
     },
     {
       "id": 3,
@@ -25,6 +32,11 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
+      "tasks": [
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      ],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["corde", "gants", "casque"],
       "price": "120",
@@ -32,7 +44,8 @@
       "rating": "5",
       "stats": [{ "label": "difficulté", "value": "5" }],
       "tags": ["outdoor", "exciting", "team-building"],
-      "footerText": "footer info"
+      "footerText": "footer info",
+      "public": "everyone"
     },
     {
       "id": 4,
@@ -42,14 +55,21 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
+      "tasks": [
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      ],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["casque", "gants", "bottes"],
       "price": "90",
       "unit": "personne",
+      "duration": "2 hours",
       "rating": "4",
       "stats": [{ "label": "difficulté", "value": "6" }],
       "tags": ["thrilling", "interactive", "memorable"],
-      "footerText": "footer details"
+      "footerText": "footer details",
+      "public": "from 12 years old"
     },
     {
       "id": 5,
@@ -59,14 +79,21 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "in-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
+      "tasks": [
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      ],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["boîte à outils", "perceuse", "scie circulaire"],
       "price": "150",
       "unit": "session",
+      "duration": "3 hours",
       "rating": "4",
       "stats": [{ "label": "difficulté", "value": "7" }],
       "tags": ["adventure", "challenge", "fun"],
-      "footerText": "footer information"
+      "footerText": "footer information",
+      "public": "child"
     },
     {
       "id": 6,
@@ -76,14 +103,21 @@
         "short": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
         "long": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       },
+      "tasks": [
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      ],
       "locations": ["Paris", "Lyon", "Marseille"],
       "materials": ["canne à pêche", "appâts", "hameçons"],
       "price": "80",
       "unit": "participant",
+      "duration": "2 hours",
       "rating": "3",
       "stats": [{ "label": "difficulté", "value": "9" }],
       "tags": ["family-friendly", "exciting", "educational"],
-      "footerText": "footer notes"
+      "footerText": "footer notes",
+      "public": "everyone"
     }
   ]
 }

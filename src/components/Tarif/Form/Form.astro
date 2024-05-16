@@ -1,0 +1,101 @@
+---
+interface Props {
+  key: string | number;
+  id: string | number;
+}
+
+const { id, key } = Astro.props;
+---
+
+<script>
+  import { credibilyScore } from "@/lib/utils";
+
+  type FormDataTarif = {
+    date: string;
+    email: string;
+    hp: string;
+    product_id: string;
+    quantity_person: string;
+    tel: string;
+    textarea: string;
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    const forms = Array.from(document.querySelectorAll("form[data-form]")) as HTMLFormElement[];
+    const infos = Array.from(document.querySelectorAll("[data-info][data-variant][data-type]")) as HTMLElement[];
+
+    const infoMap = new Map<string, HTMLElement[]>();
+    for (const info of infos) {
+      const key = info.dataset.info?.split("#")[1] as string;
+      if (infoMap.has(key)) {
+        const currentElement = infoMap.get(key) as HTMLElement[];
+        infoMap.set(key, [...currentElement, info]);
+        continue;
+      }
+      infoMap.set(key, [info]);
+    }
+
+    const findType = (type: string, elements: HTMLElement[]) => {
+      return elements.find((info) => info.dataset.type === type);
+    };
+
+    const noContactGivenError = (infosElements: HTMLElement[]) => {
+      const errorText = "Nous avons besoin d'au moins un moyen de vous contacter";
+
+      const emailInfo = findType("email", infosElements);
+      const telInfo = findType("tel", infosElements);
+
+      if (!emailInfo || !telInfo) {
+        console.error("Missing info element");
+        return;
+      }
+
+      emailInfo.textContent = errorText;
+      telInfo.textContent = errorText;
+      emailInfo.dataset.variant = "error";
+      telInfo.dataset.variant = "error";
+    };
+
+    const handleSubmit = (e: SubmitEvent) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries()) as FormDataTarif;
+      if (data.hp) {
+        window.location.assign("/honey");
+        return;
+      }
+
+      const { email, product_id, tel } = data;
+
+      if (!email && !tel) {
+        const infosElements = infoMap.get(product_id);
+        if (!infosElements) {
+          console.error(`Missing info element with ${product_id} key`);
+          return;
+        }
+        noContactGivenError(infosElements);
+        return;
+      }
+
+      //-- Add score to data
+      const treatedData = { ...data, score: credibilyScore(data) } as FormDataTarif & { score: string };
+      console.log(treatedData);
+    };
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", handleSubmit);
+    });
+  });
+</script>
+
+<style>
+  .hp {
+    @apply hidden;
+  }
+</style>
+<form data-form={`form#${key}`}>
+  <input type="hidden" name="product_id" value={id} />
+  <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
+  <slot />
+</form>
