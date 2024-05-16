@@ -79,21 +79,41 @@ const { id, key } = Astro.props;
 
         const sectionMessage = form.querySelector("section[data-is='recap-message']") as HTMLElement;
         if (sectionMessage) {
-          sectionMessage.innerHTML = `
-          <span class="label">${labels["textarea"]?.label ?? key}:</span> <p class="value">${data.textarea}</p>
-          `;
+          sectionMessage.textContent = ""; // Clear previous content
+
+          const spanLabel = document.createElement("span");
+          spanLabel.className = "label";
+          spanLabel.textContent = labels["textarea"]?.label ?? key;
+
+          const pValue = document.createElement("p");
+          pValue.className = "value";
+          pValue.textContent = data.textarea;
+
+          sectionMessage.appendChild(spanLabel);
+          sectionMessage.appendChild(pValue);
         }
-        // --
-        rootRecap.innerHTML = `
-          <ul>
-            ${entries
-              .map(([key, value]) => {
-                const displayedValue = labels[key]?.value === "inherit" ? value : labels[key]?.value;
-                return `<li><span class="label">${labels[key]?.label ?? key}</span> <p class="value">${displayedValue}</p></li>`;
-              })
-              .join("")}
-          </ul>
-        `;
+
+        // Clear previous content
+        rootRecap.textContent = "";
+
+        const ul = document.createElement("ul");
+        entries.forEach(([key, value]) => {
+          const li = document.createElement("li");
+
+          const spanLabel = document.createElement("span");
+          spanLabel.className = "label";
+          spanLabel.textContent = labels[key]?.label ?? key;
+
+          const pValue = document.createElement("p");
+          pValue.className = "value";
+          pValue.textContent = labels[key]?.value === "inherit" ? value : labels[key]?.value ?? value;
+
+          li.appendChild(spanLabel);
+          li.appendChild(pValue);
+          ul.appendChild(li);
+        });
+
+        rootRecap.appendChild(ul);
       }
 
       //-- Add score to data
