@@ -12,6 +12,9 @@ export interface ProductType {
   footerText: string;
   locations: string[];
   materials: string[];
+  public: string;
+  tasks: string[];
+  duration: "string";
 }
 
 export type StatType = {
