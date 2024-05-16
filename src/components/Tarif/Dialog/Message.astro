@@ -72,19 +72,19 @@ const key = product.id;
   <label for={`email-${key}`}>
     <span>Votre email :</span>
     <input id={`email-${key}`} type="email" name={`email`} placeholder="monemail@email.com" />
-    <Info text="Votre email nous permettra de nous mettre en contact" />
+    <Info text="Votre email nous permettra de nous mettre en contact" data-type="email" key={`${key}`} />
   </label>
   <label for={`tel-${key}`}>
     <span>Votre téléphone :</span>
     <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." />
-    <Info text="Votre téléphone nous permettra de nous mettre en contact" />
+    <Info text="Votre téléphone nous permettra de nous mettre en contact" data-type="tel" key={`${key}`} />
   </label>
   <label for={`textarea-${key}`}>
     <span>Votre message :</span>
     <textarea
       id={`textarea-${key}`}
       name={`textarea`}
-      class="w-full min-h-40 px-2 py-1 h-auto rounded-md"
+      class="w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52"
       placeholder="Message..."></textarea>
     <Info text="Votre message nous permettra de mieux comprendre votre demande" />
   </label>

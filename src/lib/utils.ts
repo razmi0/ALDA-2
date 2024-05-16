@@ -48,4 +48,11 @@ const setToLS = (key: string, value: string): null | void => {
   localStorage.setItem(key, value);
 };
 
-export { cn, generateLorem, getFromLS, isDev, needDOM, setToLS };
+const credibilyScore = (data: { [key: string]: unknown }) => {
+  const arr = Object.values(data);
+  const rawScore: number = arr.reduce((acc: number, curr: unknown) => (!curr ? acc : acc + 1), 0);
+  const percentage = (rawScore * 100) / arr.length;
+  return percentage.toFixed(2);
+};
+
+export { cn, credibilyScore, generateLorem, getFromLS, isDev, needDOM, setToLS };

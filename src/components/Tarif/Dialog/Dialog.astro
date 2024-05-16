@@ -49,22 +49,18 @@ const sizes = {
 
       const selectors: [string, { multiple?: boolean } | undefined][] = [
         [`[data-action='open#${key}']`, { multiple: false }], // [0] HTMLButtonElement single
-        [`[data-form='form#${key}']`, { multiple: false }], // [1] HTMLFormElement single
-        [`[data-is='multistep#${key}']`, { multiple: false }], // [2] HTMLElement single
-        [`[data-action='close#${key}']`, { multiple: true }], // [3] HTMLButtonElement multiple
-        [`[data-action^='next#${key}']`, { multiple: true }], // [4] HTMLButtonElement multiple
-        [`[data-action^='prev#${key}']`, { multiple: true }], // [5] HTMLButtonElement multiple
-        [`[data-picture='${key}']`, { multiple: false }], // [6] HTMLPictureElement single
+        [`[data-is='multistep#${key}']`, { multiple: false }], // [1] HTMLElement single
+        [`[data-action='close#${key}']`, { multiple: true }], // [2] HTMLButtonElement multiple
+        [`[data-action^='next#${key}']`, { multiple: true }], // [3] HTMLButtonElement multiple
+        [`[data-action^='prev#${key}']`, { multiple: true }], // [4] HTMLButtonElement multiple
+        [`[data-picture='${key}']`, { multiple: false }], // [5] HTMLPictureElement single
       ];
 
-      const [openBtn, form, multistep, closeBtns, nextBtns, prevBtns, stepIndicator] = selectors.map((selector) =>
+      const [openBtn, multistep, closeBtns, nextBtns, prevBtns, stepIndicator] = selectors.map((selector) =>
         needDOM<HTMLElement[]>(...selector)
       );
 
-      console.log(stepIndicator);
-
-      if (!openBtn || !form || !multistep || !closeBtns || !nextBtns || !prevBtns)
-        throw new Error(`Missing DOM elements`);
+      if (!openBtn || !multistep || !closeBtns || !nextBtns || !prevBtns) throw new Error(`Missing DOM elements`);
 
       const frameSize = multistep?.[0]?.dataset.framesize as string;
       const translationSize = parseInt(frameSize) || 0;
@@ -98,21 +94,9 @@ const sizes = {
         btn.addEventListener("click", (e) => handleNavigation("prev", e))
       );
 
-      const handleSubmit = (e: SubmitEvent) => {
-        e.preventDefault();
-        const formData = new FormData(form[0] as HTMLFormElement);
-        const data = Object.fromEntries(formData.entries());
-        console.log(data);
-        if (data.hp) {
-          window.location.assign("/honey");
-        }
-      };
-
       const open = openBtn[0] as HTMLButtonElement;
-      const formEl = form[0] as HTMLFormElement;
       open.addEventListener("click", () => dialog.showModal());
       (closeBtns as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
-      formEl.addEventListener("submit", (e: SubmitEvent) => handleSubmit(e));
     });
   });
 </script>
