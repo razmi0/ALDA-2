@@ -3,28 +3,38 @@ import StarFilled from "@/components/icons/StarFilled.astro";
 
 interface Props {
   key: string | number;
+  steps: { title: string; description: string }[];
 }
 
-const { key } = Astro.props;
+const { key, steps } = Astro.props;
 
-const steps = [
-  {
-    title: "Etape 1",
-    description: "Choisissez quand et pour combien de personne",
+const sizes = {
+  gap: 18,
+  height: 56,
+  translation: function () {
+    return this.height + this.gap;
   },
-  {
-    title: "Etape 2",
-    description: "Selectionnez vos options",
-  },
-  {
-    title: "Etape 3",
-    description: "Contactez-nous",
-  },
-];
+};
 ---
 
-<style>
+<style define:vars={{ gap: sizes.gap + "px", stepHeight: sizes.height + "px", translation: sizes.translation() + "px" }}
+>
+  .steps-ctn {
+    @apply vertical items-center w-fit text-left text-white relative;
+    gap: var(--gap);
+  }
   .step {
+    @apply horizontal items-center justify-start gap-4;
+    height: var(--stepHeight);
+  }
+
+  picture[data-picture][data-step] {
+    --step: 0;
+    @apply transition-transform;
+    transform: translateY(calc(var(--translation) * var(--step)));
+    height: var(--stepHeight);
+  }
+  .step-number {
     @apply rounded-full p-2 ring-2 ring-white bg-slate-700 min-h-12 h-12 min-w-12 w-12 text-3xl text-center;
   }
   article {
@@ -37,12 +47,14 @@ const steps = [
 </style>
 
 <section class="horizontal w-full">
-  <div class="vertical items-center w-fit text-left text-white gap-10 relative">
+  <!-- 40px -->
+  <div class="steps-ctn">
     {
       steps.map(({ title, description }, i) => (
         <article>
-          <div class="horizontal items-center justify-start gap-4 h-14">
-            <div class="step">{i + 1}</div>
+          {/* 56px */}
+          <div class=" step">
+            <div class="step-number">{i + 1}</div>
             <div class="vertical justify-center items-start leading-4">
               <h2>{title}</h2>
               <p>{description}</p>
@@ -53,11 +65,7 @@ const steps = [
     }
   </div>
   <div class="w-14 h-full [&>*]:w-full [&>*]:grid [&>*]:place-items-center">
-    <picture
-      data-picture={key}
-      data-step="1"
-      class="h-14 transition-transform"
-      style="--translation : 96px ; --step : 0 ; transform : translateY(calc(var(--translation) * var(--step)))">
+    <picture data-picture={key} data-step="1">
       <StarFilled className={"text-pur-500"} />
     </picture>
   </div>

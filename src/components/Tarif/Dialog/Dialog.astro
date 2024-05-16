@@ -8,6 +8,7 @@ import FormButtons from "../Form/FormButtons.astro";
 import Inputs from "../Form/Inputs.astro";
 import Message from "../Form/Message.astro";
 import Options from "../Form/Options.astro";
+import SumUp from "../Form/SumUp.astro";
 import CloseButton from "./CloseButton.astro";
 import ContactDetail from "./ContactDetail.astro";
 
@@ -28,7 +29,8 @@ const {
   gap = 50,
 } = Astro.props;
 // --
-const components = [Inputs, Options, Message];
+const components = [Inputs, Options, Message, SumUp];
+const Nsections = components.length;
 // --
 const key = product.id;
 // --
@@ -38,6 +40,25 @@ const sizes = {
   frameSize: `${frameSize}px`,
   translation: frameSize + gap,
 };
+
+const steps = [
+  {
+    title: "Etape 1",
+    description: "Choisissez quand et pour combien de personne",
+  },
+  {
+    title: "Etape 2",
+    description: "Selectionnez vos options",
+  },
+  {
+    title: "Etape 3",
+    description: "Contactez-nous",
+  },
+  {
+    title: "Etape 4",
+    description: "Récapitulatif",
+  },
+];
 ---
 
 <script>
@@ -102,10 +123,10 @@ const sizes = {
   });
 </script>
 
-<style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, gap: sizes.gap }}>
+<style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, gap: sizes.gap, Nsections }}>
   [data-is^="multistep"] {
     @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden h-full;
-    grid-template-columns: repeat(3, var(--frameSize));
+    grid-template-columns: repeat(var(--Nsections), var(--frameSize));
     gap: var(--gap);
   }
   dialog:modal {
@@ -119,7 +140,7 @@ const sizes = {
 </style>
 
 <dialog {...Astro.props.rest} data-action={`dialog#${key}`} class="overflow-hidden">
-  <ContactDetail product={product} size={detailsSize} />
+  <ContactDetail product={product} size={detailsSize} steps={steps} />
   <Form key={key} id={product.id}>
     <div class="absolute top-0 w-full pointer-events-none -z-10">
       <h2 class="w-full text-left pl-5 py-2 bg-transparent text-lg text-slate-700">{product.name}</h2>
@@ -142,5 +163,5 @@ const sizes = {
 </dialog>
 <div class="horizontal center gap-5">
   <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
-  <MinimalPrice price={product.price} unit={product.unit}/>
+  <MinimalPrice price={product.price} unit={product.unit} />
 </div>

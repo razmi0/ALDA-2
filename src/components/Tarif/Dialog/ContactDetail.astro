@@ -1,13 +1,15 @@
 ---
 import type { ProductType } from "@/components/Products/types";
 import Steps from "../Form/Steps.astro";
+import type { StepType } from "../types";
 
 interface Props {
   product: ProductType;
   size: number;
+  steps: StepType[];
 }
 
-const { product, size } = Astro.props;
+const { product, size, steps } = Astro.props;
 ---
 
 <style>
@@ -19,11 +21,11 @@ const { product, size } = Astro.props;
 <section
   class="vertical justify-between items-center rounded-tl-lg rounded-bl-lg py-8 px-2 bg-slate-700 text-white ps-4 gap-14"
   style={`min-width : ${size}px`}>
-  <Steps key={product.id} />
+  <Steps key={product.id} steps={steps} />
   <article class="space-y-5 w-full">
     <div>
       <h4 class="grandstander">Email</h4>
-      <p>contact@${product.name}.com</p>
+      <p>contact@{product.name}.com</p>
     </div>
     <div>
       <h4 class="grandstander">Téléphone</h4>

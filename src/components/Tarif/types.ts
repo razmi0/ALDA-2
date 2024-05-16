@@ -3,3 +3,5 @@ export type OptionType = {
   value: string;
   description?: string;
 };
+
+export type StepType = { title: string; description: string };
