@@ -29,8 +29,13 @@ const {
   gap = 50,
 } = Astro.props;
 // --
-const components = [Inputs, Options, Message, SumUp];
-const Nsections = components.length;
+const form = {
+  components: [Inputs, Options, Message, SumUp],
+
+  size: function () {
+    return this.components.length;
+  },
+};
 // --
 const key = product.id;
 // --
@@ -123,7 +128,8 @@ const steps = [
   });
 </script>
 
-<style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, gap: sizes.gap, Nsections }}>
+<style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, gap: sizes.gap, Nsections: form.size() }}
+>
   [data-is^="multistep"] {
     @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden h-full;
     grid-template-columns: repeat(var(--Nsections), var(--frameSize));
@@ -147,13 +153,13 @@ const steps = [
     </div>
     <div data-is={`multistep#${key}`} data-frameSize={sizes.translation}>
       {
-        components.map((Component, i) => (
+        form.components.map((Component, i) => (
           <section
             class="transition-transform grid place-items-center p-10 pt-20"
             data-frame={`frame#${key}`}
             data-translation="0">
             <Component product={product} />
-            <FormButtons step={i} key={key} isFirstIndex={i === 0} isLastIndex={i === components.length - 1} />
+            <FormButtons componentFor={Component.name.toLowerCase()} formSize={form.size()} step={i} key={key} />
           </section>
         ))
       }

@@ -69,6 +69,7 @@ const { id, key } = Astro.props;
       const { email, product_id, tel } = data;
 
       if (!email && !tel) {
+        console.log("No contact given");
         const infosElements = infoMap.get(product_id);
         if (!infosElements) {
           console.error(`Missing info element with ${product_id} key`);

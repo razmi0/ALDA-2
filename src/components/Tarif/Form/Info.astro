@@ -24,10 +24,15 @@ const { text, key, className } = Astro.props;
   });
 
   const config = { attributes: true, childList: false, subtree: false };
+  /**
+   * Form component mutate variant to error when validation fails. This handler resets the variant to info after a delay.
+   */
   const onMutation = (mutationList: MutationRecord[]) => {
+    console.log("Mutation observed");
     for (const mutation of mutationList) {
       if (mutation.type === "attributes") {
         const output = mutation.target as HTMLElement;
+        console.log("Resetting");
         const key = output.dataset.info?.split("#")[1] as string;
         if (!key) throw new Error("Key not found");
         setTimeout(() => {

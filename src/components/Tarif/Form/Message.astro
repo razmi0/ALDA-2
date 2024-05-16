@@ -29,17 +29,63 @@ const key = product.id;
 <script>
   const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
 
-  const messageMap = new Map<string, [HTMLElement, HTMLInputElement, HTMLInputElement, HTMLTextAreaElement]>();
+  const findType = (type: string, elements: HTMLElement[]) => {
+    return elements.find((info) => info.dataset.type === type);
+  };
+
+  const noContactGivenError = (infosElements: HTMLElement[]) => {
+    const errorText = "Nous avons besoin d'au moins un moyen de vous contacter";
+
+    const emailInfo = findType("email", infosElements);
+    const telInfo = findType("tel", infosElements);
+
+    if (!emailInfo || !telInfo) {
+      console.error("Missing info element");
+      return;
+    }
+
+    emailInfo.textContent = errorText;
+    telInfo.textContent = errorText;
+    emailInfo.dataset.variant = "error";
+    telInfo.dataset.variant = "error";
+  };
+
+  const getDOM = (section: HTMLElement, key: string) => {
+    type Elements = [
+      HTMLInputElement,
+      HTMLInputElement,
+      HTMLTextAreaElement,
+      HTMLButtonElement,
+      HTMLElement,
+      HTMLElement,
+    ];
+    const elements = [
+      section.querySelector(`input[type="email"]`), // [0] email
+      section.querySelector(`input[type="tel"]`), // [1] tel
+      section.querySelector(`textarea`), // [2] textarea
+      document.querySelector(`[data-for='message'][data-action="next#${key}"]`), // [3] validateTrigger
+      section.querySelector(`[data-variant][data-type="email"]`), // [4] infoEmail
+      section.querySelector(`[data-variant][data-type="tel"]`), // [5] infoTel
+    ];
+    return elements as Elements;
+  };
 
   sections.forEach((section) => {
     const action = section.dataset.action;
     if (!action) throw new Error("No action found on section");
     const key = action.split("#")[1] as string;
-    const email = section.querySelector(`input[type="email"]`) as HTMLInputElement;
-    const tel = section.querySelector(`input[type="tel"]`) as HTMLInputElement;
-    const textarea = section.querySelector(`textarea`) as HTMLTextAreaElement;
 
-    messageMap.set(key, [section, email, tel, textarea]);
+    const [email, tel, textarea, validateTrigger, infoEmail, infoTel] = getDOM(section, key);
+    if (!email || !tel || !textarea || !validateTrigger || !infoEmail || !infoTel) throw new Error("Missing element");
+
+    validateTrigger.addEventListener("click", (e: MouseEvent) => {
+      if (!email.value && !tel.value) {
+        console.log("No contact given");
+        noContactGivenError([infoEmail, infoTel]);
+        e.stopImmediatePropagation();
+        return;
+      }
+    });
 
     tel.addEventListener("input", () => {
       const value = tel.value.replace(/\./g, "");
@@ -49,10 +95,15 @@ const key = product.id;
       }
     });
 
+    tel.addEventListener("blur", () => {
+      const value = tel.value;
+      if (value[value.length - 1] === ".") tel.value = value.slice(0, -1);
+    });
+
     tel.addEventListener("keydown", (e) => {
       const key = e.key;
-      const isNotAllowed = key.match(/[a-zA-Z]/);
-      if (isNotAllowed) e.preventDefault();
+      const allowed = key.match(/[0-9]/);
+      if (!allowed) e.preventDefault();
       switch (key) {
         case "Backspace":
           tel.value = tel.value.slice(0, -1);

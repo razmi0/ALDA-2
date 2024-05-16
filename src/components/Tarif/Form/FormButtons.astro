@@ -4,18 +4,28 @@ import { ArrowBigLeft, ArrowBigRight, Send } from "lucide-react";
 
 interface Props {
   key: string | number;
-  isLastIndex: boolean;
-  isFirstIndex: boolean;
   step: number;
+  componentFor: string;
+  formSize: number;
 }
 
-const { key, isLastIndex, isFirstIndex, step } = Astro.props;
+const { key, componentFor, formSize, step } = Astro.props;
+
+const isFirstIndex = step === 0;
+const isLastIndex = step === formSize - 1;
 ---
 
 <div class="horizontal w-full justify-end items-center gap-5">
   {
     !isFirstIndex && (
-      <Button data-action={`prev#${key}`} size="md" variant="filled" leftIcon ring="sm" data-step={step - 1}>
+      <Button
+        data-for={componentFor}
+        data-action={`prev#${key}`}
+        size="md"
+        variant="filled"
+        leftIcon
+        ring="sm"
+        data-step={step - 1}>
         <ArrowBigLeft className="stroke-1" slot="icon" />
         Précédent
       </Button>
@@ -23,12 +33,19 @@ const { key, isLastIndex, isFirstIndex, step } = Astro.props;
   }
   {
     isLastIndex ? (
-      <Button type="submit" size="md" variant="filled" rightIcon ring="sm">
+      <Button data-for={componentFor} type="submit" size="md" variant="filled" rightIcon ring="sm">
         Valider
         <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
       </Button>
     ) : (
-      <Button data-action={`next#${key}`} size="md" variant="filled" rightIcon ring="sm" data-step={step + 1}>
+      <Button
+        data-for={componentFor}
+        data-action={`next#${key}`}
+        size="md"
+        variant="filled"
+        rightIcon
+        ring="sm"
+        data-step={step + 1}>
         Suivant
         <ArrowBigRight className="stroke-1" slot="icon" />
       </Button>
