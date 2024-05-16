@@ -33,6 +33,7 @@
       "materials": ["corde", "gants", "casque"],
       "price": "120",
       "unit": "heure",
+      "duration": "3 hours",
       "rating": "5",
       "stats": [{ "label": "difficulté", "value": "5" }],
       "tags": ["outdoor", "exciting", "team-building"],
