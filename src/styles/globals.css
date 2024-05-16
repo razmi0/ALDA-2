@@ -76,6 +76,7 @@ h6 {
   @apply im-fell-dw-pica-regular;
 }
 
-p {
+p,
+li {
   font-size: 0.98rem;
 }
