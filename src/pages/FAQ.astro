@@ -1,4 +1,5 @@
 ---
+import CTA from "@/components/CTA.astro";
 import ReactAccordion from "@/components/FAQs/Accordion.tsx";
 import rawFaqs from "@/components/FAQs/faq.json" assert { type: "json" };
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
@@ -9,18 +10,22 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="FAQ">
   <HeaderFooter slot="header" />
-  <Section className={"vertical items-center justify-between mb-10"}>
-    <div class="text-center vertical center">
+  <Section className={"vertical items-center justify-start mt-20 gap-20"} size="full" extension="xl">
+    <div class="text-center vertical center mb-20">
       <h2 class="text-3xl uppercase mb-5">Questions fréquentes</h2>
-      <p class="max-w-[50ch] mb-5">
+      <p class="max-w-[50ch] mb-5 text-[1rem]">
         Retrouvez la plupart des questions et réponses que vous vous posez sur le fonctionnement de l'association, qui
         nous sommes, comment payer ou encore comment rejoindre le lieu de grimpe
       </p>
       <ArrowDown size="32" />
     </div>
-    <div class="w-1/2">
+    <div class="w-1/2 h-full vertical justify-end">
       <ReactAccordion client:visible faqs={rawFaqs.faqs} />
     </div>
+    <Section size="quarter" className={"vertical center mb-10"}>
+      <CTA className="hover:underline" href="/contact"> Vous n'avez pas trouvé votre réponse ? Contactez-nous </CTA>
+    </Section>
   </Section>
+
   <HeaderFooter slot="footer" />
 </Layout>
