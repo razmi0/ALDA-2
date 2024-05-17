@@ -19,8 +19,8 @@ const { id, key } = Astro.props;
     tel: string;
     textarea: string;
   };
-
   type LabelsType = Record<string, Record<"label" | "value", string>>;
+
   const labels: LabelsType = {
     quantity_person: { label: "Vous avez réservé pour", value: "inherit" },
     date: { label: "Le", value: "inherit" },
