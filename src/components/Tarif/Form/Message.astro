@@ -2,10 +2,15 @@
 import type { ProductType } from "@/components/Products/types";
 import type { OptionType } from "@/components/Tarif/types";
 import Checkbox from "@/components/ui/checkbox.astro";
+import { cn } from "@/lib/utils";
 import Info from "./Info.astro";
 
 interface Props {
-  product: ProductType;
+  product?: ProductType;
+  key?: string;
+  telClass?: string;
+  emailClass?: string;
+  textareaClass?: string;
 }
 
 const option: OptionType = {
@@ -13,8 +18,10 @@ const option: OptionType = {
   value: "recontact",
 };
 
-const { product } = Astro.props;
-const key = product.id;
+const { product, emailClass, telClass, textareaClass } = Astro.props;
+
+const key = product ? product.id : Astro.props.key;
+if (!key) throw new Error("No key found");
 ---
 
 <style>
@@ -27,92 +34,96 @@ const key = product.id;
 </style>
 
 <script>
-  const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
+  document.addEventListener("astro:page-load", () => {
+    const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
 
-  const findType = (type: string, elements: HTMLElement[]) => {
-    return elements.find((info) => info.dataset.type === type);
-  };
+    const findType = (type: string, elements: HTMLElement[]) => {
+      return elements.find((info) => info.dataset.type === type);
+    };
 
-  const noContactGivenError = (infosElements: HTMLElement[]) => {
-    const errorText = "Nous avons besoin d'au moins un moyen de vous contacter";
+    const noContactGivenError = (infosElements: HTMLElement[]) => {
+      const errorText = "Nous avons besoin d'au moins un moyen de vous contacter";
 
-    const emailInfo = findType("email", infosElements);
-    const telInfo = findType("tel", infosElements);
+      const emailInfo = findType("email", infosElements);
+      const telInfo = findType("tel", infosElements);
 
-    if (!emailInfo || !telInfo) {
-      console.error("Missing info element");
-      return;
-    }
-
-    emailInfo.textContent = errorText;
-    telInfo.textContent = errorText;
-    emailInfo.dataset.variant = "error";
-    telInfo.dataset.variant = "error";
-  };
-
-  const getDOM = (section: HTMLElement, key: string) => {
-    type Elements = [
-      HTMLInputElement,
-      HTMLInputElement,
-      HTMLTextAreaElement,
-      HTMLButtonElement,
-      HTMLElement,
-      HTMLElement,
-    ];
-    const elements = [
-      section.querySelector(`input[type="email"]`), // [0] email
-      section.querySelector(`input[type="tel"]`), // [1] tel
-      section.querySelector(`textarea`), // [2] textarea
-      document.querySelector(`[data-for='message'][data-action="next#${key}"]`), // [3] validateTrigger
-      section.querySelector(`[data-variant][data-type="email"]`), // [4] infoEmail
-      section.querySelector(`[data-variant][data-type="tel"]`), // [5] infoTel
-    ];
-    return elements as Elements;
-  };
-
-  sections.forEach((section) => {
-    const action = section.dataset.action;
-    if (!action) throw new Error("No action found on section");
-    const key = action.split("#")[1] as string;
-
-    const [email, tel, textarea, validateTrigger, infoEmail, infoTel] = getDOM(section, key);
-    if (!email || !tel || !textarea || !validateTrigger || !infoEmail || !infoTel) throw new Error("Missing element");
-
-    validateTrigger.addEventListener("click", (e: MouseEvent) => {
-      if (!email.value && !tel.value) {
-        console.log("No contact given");
-        noContactGivenError([infoEmail, infoTel]);
-        e.stopImmediatePropagation();
+      if (!emailInfo || !telInfo) {
+        console.error("Missing info element");
         return;
       }
-    });
 
-    tel.addEventListener("input", () => {
-      const value = tel.value.replace(/\./g, "");
-      const mod = value.length % 2;
-      if (mod === 0 && value.length > 0) {
-        tel.value += ".";
-      }
-    });
+      emailInfo.textContent = errorText;
+      telInfo.textContent = errorText;
+      emailInfo.dataset.variant = "error";
+      telInfo.dataset.variant = "error";
+    };
 
-    tel.addEventListener("blur", () => {
-      const value = tel.value;
-      if (value[value.length - 1] === ".") tel.value = value.slice(0, -1);
-    });
+    const getDOM = (section: HTMLElement, key: string) => {
+      type Elements = [
+        HTMLInputElement,
+        HTMLInputElement,
+        HTMLTextAreaElement,
+        HTMLButtonElement,
+        HTMLElement,
+        HTMLElement,
+      ];
+      const elements = [
+        section.querySelector(`input[type="email"]`), // [0] email
+        section.querySelector(`input[type="tel"]`), // [1] tel
+        section.querySelector(`textarea`), // [2] textarea
+        document.querySelector(`[data-for='message'][data-action="next#${key}"]`), // [3] validateTrigger
+        section.querySelector(`[data-variant][data-type="email"]`), // [4] infoEmail
+        section.querySelector(`[data-variant][data-type="tel"]`), // [5] infoTel
+      ];
+      return elements as Elements;
+    };
 
-    tel.addEventListener("keydown", (e) => {
-      const key = e.key;
-      const allowed = key.match(/[0-9]/);
-      if (!allowed) e.preventDefault();
-      switch (key) {
-        case "Backspace":
-          tel.value = tel.value.slice(0, -1);
-          break;
-      }
-    });
+    sections.forEach((section) => {
+      const action = section.dataset.action;
+      if (!action) throw new Error("No action found on section");
+      const key = action.split("#")[1] as string;
 
-    textarea.addEventListener("input", () => {
-      textarea.style.height = `${textarea.scrollHeight}px`;
+      const [email, tel, textarea, validateTrigger, infoEmail, infoTel] = getDOM(section, key);
+      if (!email || !tel || !textarea || !validateTrigger || !infoEmail || !infoTel)
+        throw new Error(`Missing element : ${email} ${tel} ${textarea} ${validateTrigger} ${infoEmail} ${infoTel}`);
+
+      validateTrigger.addEventListener("click", (e: MouseEvent) => {
+        if (!email.value && !tel.value) {
+          console.log("No contact given");
+          noContactGivenError([infoEmail, infoTel]);
+          e.stopImmediatePropagation();
+
+          return;
+        }
+      });
+
+      tel.addEventListener("input", () => {
+        const value = tel.value.replace(/\./g, "");
+        const mod = value.length % 2;
+        if (mod === 0 && value.length > 0) {
+          tel.value += ".";
+        }
+      });
+
+      tel.addEventListener("blur", () => {
+        const value = tel.value;
+        if (value[value.length - 1] === ".") tel.value = value.slice(0, -1);
+      });
+
+      tel.addEventListener("keydown", (e) => {
+        const key = e.key;
+        const allowed = key.match(/[0-9]/);
+        if (!allowed) e.preventDefault();
+        switch (key) {
+          case "Backspace":
+            tel.value = tel.value.slice(0, -1);
+            break;
+        }
+      });
+
+      textarea.addEventListener("input", () => {
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      });
     });
   });
 </script>
@@ -122,12 +133,18 @@ const key = product.id;
   data-action={`section-message#${key}`}>
   <label for={`email-${key}`}>
     <span>Votre email :</span>
-    <input id={`email-${key}`} type="email" name={`email`} placeholder="monemail@email.com" class="mb-1" />
+    <input
+      id={`email-${key}`}
+      type="email"
+      name={`email`}
+      placeholder="monemail@email.com"
+      class={cn("mb-1", emailClass)}
+    />
     <Info text="Votre email nous permettra de nous mettre en contact" data-type="email" key={`${key}`} />
   </label>
   <label for={`tel-${key}`}>
     <span>Votre téléphone :</span>
-    <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." class="mb-1" />
+    <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." class={cn("mb-1", telClass)} />
     <Info text="Votre téléphone nous permettra de nous mettre en contact" data-type="tel" key={`${key}`} />
   </label>
   <label for={`textarea-${key}`}>
@@ -135,7 +152,7 @@ const key = product.id;
     <textarea
       id={`textarea-${key}`}
       name={`textarea`}
-      class="w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52 mb-1"
+      class={cn("w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52 mb-1", textareaClass)}
       placeholder="Message..."></textarea>
     <Info text="Votre message nous permettra de mieux comprendre votre demande" />
   </label>
