@@ -55,4 +55,11 @@ const credibilyScore = (data: { [key: string]: unknown }) => {
   return percentage.toFixed(2);
 };
 
-export { cn, credibilyScore, generateLorem, getFromLS, isDev, needDOM, setToLS };
+const hasProp = <T extends object, K extends PropertyKey>(
+  obj: T,
+  prop: K
+): obj is Extract<T, { [P in K]?: unknown }> => {
+  return prop in obj;
+};
+
+export { cn, credibilyScore, generateLorem, getFromLS, isDev, needDOM, setToLS, hasProp };
