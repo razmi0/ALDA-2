@@ -18,88 +18,93 @@ const { product } = Astro.props;
     "output[data-action]", // [1] : outputEls HTMLOutputElement[]
     "input[type=number]", // [2] : inputEls HTMLInputElement[]
   ];
-  const elements = selectors.map((selector) => needDOM<HTMLElement[]>(selector, { multiple: true })) as HTMLElement[][];
 
-  const inputMap = new Map<string, HTMLInputElement>();
-  (elements[2] as HTMLInputElement[]).forEach((input) => {
-    const id = input.id.split("#")[0];
-    if (!id) throw new Error("No id found on the input element");
-    inputMap.set(id, input);
-  });
+  document.addEventListener("astro:page-load", () => {
+    const elements = selectors.map((selector) =>
+      needDOM<HTMLElement[]>(selector, { multiple: true })
+    ) as HTMLElement[][];
 
-  const productButtons = {
-    add: [] as HTMLButtonElement[],
-    remove: [] as HTMLButtonElement[],
-    build: function (elements: HTMLElement[]) {
-      for (const child of elements) {
-        if (child.nodeName === "BUTTON") {
-          const action = child.dataset.action as (`add#${number}` | `remove#${number}`) & string;
-          action.startsWith("add")
-            ? this.add.push(child as HTMLButtonElement)
-            : this.remove.push(child as HTMLButtonElement);
+    const inputMap = new Map<string, HTMLInputElement>();
+    (elements[2] as HTMLInputElement[]).forEach((input) => {
+      const id = input.id.split("#")[0];
+      if (!id) throw new Error("No id found on the input element");
+      inputMap.set(id, input);
+    });
+
+    const productButtons = {
+      add: [] as HTMLButtonElement[],
+      remove: [] as HTMLButtonElement[],
+      build: function (elements: HTMLElement[]) {
+        for (const child of elements) {
+          if (child.nodeName === "BUTTON") {
+            const action = child.dataset.action as (`add#${number}` | `remove#${number}`) & string;
+            action.startsWith("add")
+              ? this.add.push(child as HTMLButtonElement)
+              : this.remove.push(child as HTMLButtonElement);
+          }
         }
+      },
+    };
+
+    elements[0]!.forEach((section) => productButtons.build(Array.from(section.children) as HTMLElement[]));
+
+    if (productButtons.add.length === 0 || productButtons.remove.length === 0)
+      throw new Error("No add or remove buttons found");
+
+    type OutputMapValue = [HTMLOutputElement, string];
+    const outputs = new Map<string, OutputMapValue>();
+    (elements[1] as HTMLOutputElement[]).forEach((element) => {
+      const action = element.dataset.action;
+      if (!action) return;
+      const [id, price] = action.split("#") as [string, string];
+      outputs.set(id, [element, price]);
+    });
+
+    /**
+     * @description Map of product id and amount element display (span)
+     */
+    const amountEls = new Map<string, HTMLSpanElement>();
+    elements[0]!.forEach((section) => {
+      const productId = section.dataset.id as string;
+      const amountEl = section.children[1] as HTMLSpanElement;
+      amountEls.set(productId, amountEl);
+    });
+
+    if (amountEls.size === 0) throw new Error("No amount elements found");
+
+    /**
+     * @description Handle the estimation of the product with the add and remove buttons
+     */
+    const estimationHandler = (e: MouseEvent) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      if (!target.dataset.action) {
+        throw new Error("No action found on the button");
       }
-    },
-  };
 
-  elements[0]!.forEach((section) => productButtons.build(Array.from(section.children) as HTMLElement[]));
+      const [actionType, id] = target.dataset.action.split("#") as [string, string];
+      const amountEl = amountEls.get(id) as HTMLSpanElement;
+      const [outputEl, price] = outputs.get(id) as OutputMapValue;
+      const inputEl = inputMap.get(id);
 
-  if (productButtons.add.length === 0 || productButtons.remove.length === 0)
-    throw new Error("No add or remove buttons found");
-
-  type OutputMapValue = [HTMLOutputElement, string];
-  const outputs = new Map<string, OutputMapValue>();
-  (elements[1] as HTMLOutputElement[]).forEach((element) => {
-    const action = element.dataset.action;
-    if (!action) return;
-    const [id, price] = action.split("#") as [string, string];
-    outputs.set(id, [element, price]);
-  });
-
-  /**
-   * @description Map of product id and amount element display (span)
-   */
-  const amountEls = new Map<string, HTMLSpanElement>();
-  elements[0]!.forEach((section) => {
-    const productId = section.dataset.id as string;
-    const amountEl = section.children[1] as HTMLSpanElement;
-    amountEls.set(productId, amountEl);
-  });
-
-  if (amountEls.size === 0) throw new Error("No amount elements found");
-
-  /**
-   * @description Handle the estimation of the product with the add and remove buttons
-   */
-  const estimationHandler = (e: MouseEvent) => {
-    const target = e.currentTarget as HTMLButtonElement;
-    if (!target.dataset.action) {
-      throw new Error("No action found on the button");
-    }
-
-    const [actionType, id] = target.dataset.action.split("#") as [string, string];
-    const amountEl = amountEls.get(id) as HTMLSpanElement;
-    const [outputEl, price] = outputs.get(id) as OutputMapValue;
-    const inputEl = inputMap.get(id);
-
-    if (!amountEl || !outputEl || !inputEl) {
-      throw new Error("No action found on the button");
-    }
-
-    const currentAmount = parseInt(amountEl.textContent || "1") || 1;
-    const newAmount = actionType === "add" ? Math.max(currentAmount + 1, 1) : Math.max(currentAmount - 1, 1);
-    const newPrice = newAmount * parseInt(price);
-    amountEl.textContent = newAmount.toString();
-    outputEl.textContent = newPrice.toString();
-    inputEl.value = newAmount.toString();
-  };
-
-  [productButtons.add, productButtons.remove].forEach((typedBtns) => {
-    typedBtns.forEach((btn) => {
-      if (btn.nodeName !== "BUTTON") {
-        throw new Error("A element is not a button in the product buttons : " + btn.nodeName);
+      if (!amountEl || !outputEl || !inputEl) {
+        throw new Error("No action found on the button");
       }
-      btn.addEventListener("click", estimationHandler);
+
+      const currentAmount = parseInt(amountEl.textContent || "1") || 1;
+      const newAmount = actionType === "add" ? Math.max(currentAmount + 1, 1) : Math.max(currentAmount - 1, 1);
+      const newPrice = newAmount * parseInt(price);
+      amountEl.textContent = newAmount.toString();
+      outputEl.textContent = newPrice.toString();
+      inputEl.value = newAmount.toString();
+    };
+
+    [productButtons.add, productButtons.remove].forEach((typedBtns) => {
+      typedBtns.forEach((btn) => {
+        if (btn.nodeName !== "BUTTON") {
+          throw new Error("A element is not a button in the product buttons : " + btn.nodeName);
+        }
+        btn.addEventListener("click", estimationHandler);
+      });
     });
   });
 </script>
