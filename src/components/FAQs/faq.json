@@ -1,0 +1,49 @@
+{
+  "faqs": [
+    {
+      "id": "1",
+      "question": "What is the purpose of this site?",
+      "answer": "The purpose of this site is to provide a platform for people to share their experiences with the world. We believe that everyone has a story to tell and we want to provide a place for people to share their stories."
+    },
+    {
+      "id": "2",
+      "question": "How do I submit a story?",
+      "answer": "To submit a story, simply click on the 'Submit a Story' link in the navigation bar and fill out the form. You can also submit a story by sending an email to"
+    },
+    {
+      "id": "3",
+      "question": "Can I submit a story anonymously?",
+      "answer": "Yes, you can submit a story anonymously. Just indicate in your submission that you would like to remain anonymous and we will respect your privacy."
+    },
+    {
+      "id": "4",
+      "question": "Can I submit a story on behalf of someone else?",
+      "answer": "Yes, you can submit a story on behalf of someone else. Just make sure to get their permission before sharing their story and indicate in your submission that you are submitting on their behalf."
+    },
+    {
+      "id": "5",
+      "question": "How do I contact the site admin?",
+      "answer": "You can contact the site admin by sending an email to [email address]. We are always happy to hear from our users and welcome any feedback or suggestions."
+    },
+    {
+      "id": "6",
+      "question": "How do I report inappropriate content?",
+      "answer": "If you come across any inappropriate content on the site, please report it to the site admin by sending an email to [email address]. We take the safety and well-being of our users seriously and will take appropriate action to address any issues."
+    },
+    {
+      "id": "7",
+      "question": "How do I share a story on social media?",
+      "answer": "You can share a story on social media by clicking on the social media icons at the bottom of each story. You can also copy the URL of the story and paste it into your social media post."
+    },
+    {
+      "id": "8",
+      "question": "How do I subscribe to the site?",
+      "answer": "You can subscribe to the site by entering your email address in the subscription box at the bottom of the page. You will receive updates on new stories and other site news."
+    },
+    {
+      "id": "9",
+      "question": "How do I unsubscribe from the site?",
+      "answer": "You can unsubscribe from the site by clicking on the 'Unsubscribe' link in the email you received from us. You can also contact the site admin to request to be removed from the subscription list."
+    }
+  ]
+}

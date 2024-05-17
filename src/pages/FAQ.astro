@@ -1,10 +1,26 @@
 ---
+import ReactAccordion from "@/components/FAQs/Accordion.tsx";
+import rawFaqs from "@/components/FAQs/faq.json" assert { type: "json" };
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
+import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="FAQ">
-    <HeaderFooter slot="header" />
-    <Section />
-  </Layout>
+  <HeaderFooter slot="header" />
+  <Section className={"vertical items-center justify-between mb-10"}>
+    <div class="text-center vertical center">
+      <h2 class="text-3xl uppercase mb-5">Questions fréquentes</h2>
+      <p class="max-w-[50ch] mb-5">
+        Retrouvez la plupart des questions et réponses que vous vous posez sur le fonctionnement de l'association, qui
+        nous sommes, comment payer ou encore comment rejoindre le lieu de grimpe
+      </p>
+      <ArrowDown size="32" />
+    </div>
+    <div class="w-1/2">
+      <ReactAccordion client:visible faqs={rawFaqs.faqs} />
+    </div>
+  </Section>
+  <HeaderFooter slot="footer" />
+</Layout>
