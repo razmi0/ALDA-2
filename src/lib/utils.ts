@@ -41,9 +41,9 @@ const getFromLS = (key: string) => {
   return localStorage.getItem(key);
 };
 
-const setToLS = (key: string, value: string): null | void => {
+const setToLS = (key: string, value: string) => {
   if (typeof window === "undefined") {
-    return null;
+    return;
   }
   localStorage.setItem(key, value);
 };
@@ -62,4 +62,4 @@ const hasProp = <T extends object, K extends PropertyKey>(
   return prop in obj;
 };
 
-export { cn, credibilyScore, generateLorem, getFromLS, isDev, needDOM, setToLS, hasProp };
+export { cn, credibilyScore, generateLorem, getFromLS, hasProp, isDev, needDOM, setToLS };

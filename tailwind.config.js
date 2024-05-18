@@ -4,7 +4,7 @@ import twAnimate from "tailwindcss-animate";
 //
 //
 export default {
-  darkMode: ["class"],
+  darkMode: ["selector"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   prefix: "",
   theme: {
@@ -29,6 +29,11 @@ export default {
         },
         map: {
           dark: "#0b0e16",
+        },
+        darkMode: {
+          300: "#27374c",
+          400: "#242729",
+          500: "#131516",
         },
         earth: {
           400: "#3d393d",

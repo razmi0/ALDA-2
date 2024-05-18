@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import MoonIcon from "./svg/moon.svg";
+
+interface Props {
+  className?: HTMLAttributes<"svg">["class"];
+}
+
+const { className } = Astro.props;
+---
+
+<Image src={MoonIcon} alt="Tree" class={className} />

@@ -88,15 +88,16 @@ if (!key) throw new Error("No key found");
         throw new Error(`Missing element : ${email} ${tel} ${textarea} ${validateTrigger} ${infoEmail} ${infoTel}`);
 
       validateTrigger.addEventListener("click", (e: MouseEvent) => {
-        if (!email.value && !tel.value) {
+        const areDataValids = [email, tel].every((el) => el.dataset.valid === "true");
+        if (!areDataValids) {
           console.log("No contact given");
           noContactGivenError([infoEmail, infoTel]);
           e.stopImmediatePropagation();
-
           return;
         }
       });
 
+      email.addEventListener("change", () => (email.dataset.valid = email.value ? "true" : "false"));
       tel.addEventListener("input", () => {
         const value = tel.value.replace(/\./g, "");
         const mod = value.length % 2;
@@ -107,6 +108,7 @@ if (!key) throw new Error("No key found");
 
       tel.addEventListener("blur", () => {
         const value = tel.value;
+        tel.dataset.valid = value ? "true" : "false";
         if (value[value.length - 1] === ".") tel.value = value.slice(0, -1);
       });
 
@@ -139,12 +141,20 @@ if (!key) throw new Error("No key found");
       name={`email`}
       placeholder="monemail@email.com"
       class={cn("mb-1", emailClass)}
+      data-valid="false"
     />
     <Info text="Votre email nous permettra de nous mettre en contact" data-type="email" key={`${key}`} />
   </label>
   <label for={`tel-${key}`}>
     <span>Votre téléphone :</span>
-    <input id={`tel-${key}`} type="tel" name={`tel`} placeholder="Téléphone..." class={cn("mb-1", telClass)} />
+    <input
+      id={`tel-${key}`}
+      type="tel"
+      name={`tel`}
+      placeholder="Téléphone..."
+      class={cn("mb-1", telClass)}
+      data-valid="false"
+    />
     <Info text="Votre téléphone nous permettra de nous mettre en contact" data-type="tel" key={`${key}`} />
   </label>
   <label for={`textarea-${key}`}>

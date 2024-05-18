@@ -12,7 +12,9 @@ interface Props {
 }
 
 const { dark, words1, words2, className, pClass, title = generateLorem(5) } = Astro.props;
-const theme = dark ? { title: "text-black", text: "text-black/60" } : { title: "text-white", text: "text-white/60" };
+const theme = dark
+  ? { title: "text-black dark:text-white", text: "text-black/60 dark:text-white/60" }
+  : { title: "text-white", text: "text-white/60" };
 ---
 
 <div class={cn("vertical gap-4 leading-5", theme.text, className)}>

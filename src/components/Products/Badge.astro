@@ -11,9 +11,9 @@ const { tag, className, variant = "default" } = Astro.props;
 
 const variants = {
   outline:
-    "inline-flex items-center rounded-md border px-2.5 py-0.5 text-sm font-semibold transition-colors focus:outline-none border-slate-200 bg-transparent text-black hover:bg-slate-100",
+    "inline-flex items-center rounded-md border px-2.5 py-0.5 text-sm font-semibold transition-colors focus:outline-none border-slate-200 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-darkMode-400 dark:ring-darkMode-400",
   default:
-    "inline-flex items-center rounded-md border px-2.5 py-0.5 text-sm font-semibold transition-colors focus:outline-none border-transparent bg-slate-200 text-black hover:bg-slate-100",
+    "inline-flex items-center rounded-md border px-2.5 py-0.5 text-sm font-semibold transition-colors focus:outline-none border-transparent bg-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-darkMode-400 dark:ring-darkMode-400",
 };
 ---
 

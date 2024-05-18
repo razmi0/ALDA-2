@@ -18,24 +18,23 @@ const theme = dark ? "dark" : "light";
 
 const themed = {
   light: {
-    text: "text-white",
-    separator: "bg-white",
+    text: "text-white dark:text-black",
+    separator: "bg-white dark:bg-black",
   },
   dark: {
-    text: "text-black",
-    separator: "bg-black",
+    text: "text-black dark:text-white",
+    separator: "bg-black dark:bg-white",
   },
 };
 ---
 
 <div
   class={cn(
-    "horizontal center absolute z-20 text-white font-medium text-xs uppercase -rotate-90 h-fit w-fit gap-5",
+    "horizontal center absolute z-20 text-white dark:text-black font-medium text-xs uppercase -rotate-90 h-fit w-fit gap-5",
     positions[position],
     themed[theme].text,
     className
-  )}
->
+  )}>
   <hr class={cn("h-[1px] w-40", themed[theme].separator)} />
   <span class="whitespace-nowrap">
     <slot />

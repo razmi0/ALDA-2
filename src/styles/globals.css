@@ -9,7 +9,9 @@
   line-height: 1.6;
   font-size: 0.98rem;
 
-  /* scroll-behavior: smooth; */
+  @apply dark:bg-darkMode-500 dark:text-white;
+
+  /* scroll-behavior: smooth; dark:bg-darkMode-400 text-white */
 }
 
 body {

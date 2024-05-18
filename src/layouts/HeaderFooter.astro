@@ -1,17 +1,16 @@
 ---
+import ModeToogle from "@/components/ModeToggle.astro";
 import { cn } from "@/lib/utils";
 import type { HTMLTag } from "astro/types";
 import Nav from "./Nav.astro";
 import Section from "./Section.astro";
 import Socials from "./Socials.astro";
-
 interface Props {
   className?: string;
-  as?: HTMLTag;
+  as: HTMLTag;
 }
 
-const currentPage = Astro.url.pathname;
-const { as = currentPage === "/" ? "footer" : "header", className } = Astro.props as Props;
+const { as, className } = Astro.props as Props;
 ---
 
 <Section
@@ -33,7 +32,10 @@ const { as = currentPage === "/" ? "footer" : "header", className } = Astro.prop
           <Socials />
         </article>
       ) : (
-        <span class="font-bold text-2xl">LOGO</span>
+        <>
+          <span class="font-bold text-2xl">LOGO</span>
+          <ModeToogle />
+        </>
       )
     }
   </section>
