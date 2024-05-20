@@ -5,7 +5,7 @@ import type { StepType } from "../types";
 
 interface Props {
   product: ProductType;
-  size: number;
+  size: string;
   steps: StepType[];
 }
 
@@ -20,7 +20,7 @@ const { product, size, steps } = Astro.props;
 
 <section
   class="vertical justify-between items-center rounded-tl-lg rounded-bl-lg py-8 px-2 bg-slate-700 text-white ps-4 gap-14"
-  style={`min-width : ${size}px`}>
+  style={`min-width : ${size}`}>
   <Steps key={product.id} steps={steps} />
   <article class="space-y-5 w-full">
     <div>

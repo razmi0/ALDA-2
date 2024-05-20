@@ -35,11 +35,13 @@ const { text, key, className } = Astro.props;
           console.log("Resetting");
           const key = output.dataset.info?.split("#")[1] as string;
           if (!key) throw new Error("Key not found");
-          setTimeout(() => {
+          const timeId = setTimeout(() => {
+            if (output.dataset.variant === "info") return;
             output.dataset.variant = "info" as "info" | "error";
             if (initial.has(key)) {
               const initialData = initial.get(key);
               if (initialData) output.textContent = initialData.baseText;
+              clearTimeout(timeId);
             }
           }, resetDelay);
         }
