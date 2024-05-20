@@ -1,6 +1,6 @@
 ---
 import Button from "@/components/Button.astro";
-import Section from "@/layouts/Section.astro";
+import Nav from "@/layouts/Nav.astro";
 import { generateLorem } from "@/lib/utils";
 import { Mountain } from "lucide-react";
 import CTA from "../CTA.astro";
@@ -10,45 +10,28 @@ import Heading from "./Heading.astro";
 ---
 
 <style>
-  [data-is="global-header"] {
-    --primary: #0b0e16;
-    --color-start: rgba(11, 14, 22, 0);
-    --fade-to-b: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, #0b0e16 100%);
-  }
-
   .fade-out-bottom {
-    background: var(--fade-to-b);
+    @apply absolute-align full z-10;
+    background: linear-gradient(to bottom, #0b0e1600 0%, #0b0e1600 80%, #0b0e16 100%);
   }
 </style>
 
-<Section className="relative text-white" data-is="global-header" as="header">
+<header class={"vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 h-32"} transition:animate={"none"}>
+  <section class="full horizontal items-center justify-between">
+    <h1 class="text-2xl">
+      <a href="/"> A l'abordarbre</a>
+    </h1>
+    <Nav className="text-black/80 font-semibold space-x-16" />
+    <span class="font-bold text-2xl">LOGO</span>
+  </section>
+</header>
+<section class="relative text-white">
+  <div class="fade-out-bottom"></div>
   <ImageSwitch
     uniqueKey="hero"
     alt="hero"
-    className="absolute full max-w-screen object-cover z-[0] brightness-110 contrast-125"
+    className="w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125"
   />
-  <!-- OVERLAY -->
-  <div class="relative h-screen fade-out-bottom z-[10]"></div>
-  <!-- OVERLAY -->
-  <section class="absolute-align z-10 w-full px-52 py-2 h-1/4 pointer-events-auto">
-    <nav class="full [&>div]:full">
-      <div class="horizontal center gap-12 font-bold [&_a:hover]:underline text-lg">
-        <a href="/">
-          <h1 class="text-2xl">A l'abordarbre</h1>
-        </a>
-        <div class="grow"></div>
-        <a href="/contact">contact</a>
-        <a href="/nous">nous</a>
-        <a href="/FAQ">FAQs</a>
-        <a href=`/tarifs`>
-          <button
-            class="pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold group text-white/95 hover:bg-white/20 px-3 py-1 ring-2 ring-white/95"
-            data-is="hero-button">activités et tarifs</button
-          >
-        </a>
-      </div>
-    </nav>
-  </section>
   <div class="text-white">
     <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
     <div
@@ -71,4 +54,4 @@ import Heading from "./Heading.astro";
       <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
     </div>
   </div>
-</Section>
+</section>
