@@ -2,7 +2,11 @@
 import Heading from "@/components/Hero/Heading.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
-import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
+// import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
+import Button from "@/components/Button.astro";
+import MinimalPrice from "@/components/Products/MinimalPrice.astro";
+import Inputs from "@/components/Tarif/Form/Inputs.astro";
+import Message from "@/components/Tarif/Form/Message.astro";
 import Orientation from "@/components/Tarif/Orientation.astro";
 import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
@@ -11,8 +15,33 @@ import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown, Backpack, CircleChevronRight, Gauge, Hourglass, MapPin } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+// import type { ProductType } from "@/components/Products/types";
+import Title from "@/components/Tarif/Form/Title.astro";
+// import type { HTMLAttributes } from "astro/types";
+import Form from "@/components/Tarif/Form/Form.astro";
+// import FormButtons from "@/components/Tarif/Form/FormButtons.astro";
+// import SumUp from "@/components/Tarif/Form/SumUp.astro";
+import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
+import ContactDetail from "@/components/Tarif/Dialog/ContactDetail.astro";
+import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 
 const products = rawProducts.products as ProductType[];
+
+const steps = [
+  {
+    title: "Etape 1",
+    description: "Choisissez quand et pour combien de personne",
+  },
+
+  {
+    title: "Etape 2",
+    description: "Contactez-nous",
+  },
+  {
+    title: "Etape 3",
+    description: "Récapitulatif",
+  },
+];
 ---
 
 <style>
@@ -35,6 +64,66 @@ const products = rawProducts.products as ProductType[];
     @apply ring-1 ring-pink-400;
   }
 </style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const gap = 50;
+    const dialogs = Array.from(document.querySelectorAll("dialog")) as HTMLDialogElement[];
+    dialogs.forEach((dialog) => {
+      const action = dialog.dataset.action as string;
+      const key = action.split("#")[1];
+
+      const openBtn = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
+      const multistep = document.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
+      // const stepIndicator = document.querySelector(`[data-picture='${key}']`) as HTMLElement;
+      // --
+      const closeBtns = Array.from(document.querySelectorAll(`[data-action='close#${key}']`)) as HTMLButtonElement[];
+      const nextBtns = Array.from(document.querySelectorAll(`[data-action^='next#${key}']`)) as HTMLButtonElement[];
+      const prevBtns = Array.from(document.querySelectorAll(`[data-action^='prev#${key}']`)) as HTMLButtonElement[];
+      const frames = Array.from(document.querySelectorAll(`[data-frame^='frame#${key}']`)) as HTMLElement[];
+
+      if (!openBtn || !multistep || !closeBtns || !nextBtns || !prevBtns || !frames)
+        console.error(`Missing DOM elements`);
+
+      // const handleNavigation = (direction: "prev" | "next", e: MouseEvent) => {
+      //   /**
+      //    * Update steps display
+      //    */
+      //   const target = e.currentTarget as HTMLButtonElement;
+      //   const nextStep = target.dataset.step as string;
+      //   stepIndicator.style.setProperty("--step", nextStep);
+
+      //   const frameSize = (multistep as HTMLElement).dataset.framesize as string;
+      //   const translationSize = parseInt(frameSize);
+      //   const firstFrame = frames[0] as HTMLElement;
+      //   const translationData = firstFrame.dataset.translation as string;
+      //   const currentTranslation = parseInt(translationData) || 0;
+
+      //   frames.forEach((frame) => {
+      //     const nextMove =
+      //       direction === "prev" ? currentTranslation + translationSize : currentTranslation - translationSize;
+      //     frame.dataset.translation = `${nextMove}`;
+      //     frame.style.transform = `translateX(${nextMove}px)`;
+      //   });
+      // };
+
+      // (nextBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
+      //   btn.addEventListener("click", (e) => handleNavigation("next", e))
+      // );
+
+      // (prevBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
+      //   btn.addEventListener("click", (e) => handleNavigation("prev", e))
+      // );
+
+      openBtn.addEventListener("click", () => {
+        dialog.showModal();
+        const translationX = (frames[0]?.clientWidth ?? 0) + gap;
+        multistep.dataset.framesize = `${translationX}`;
+      });
+      (closeBtns as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
+    });
+  });
+</script>
 
 <Layout title="tarif">
   <HeaderFooter slot="header" />
@@ -85,7 +174,24 @@ const products = rawProducts.products as ProductType[];
                   </ul>
                 </div>
               </div>
-              <Dialog product={product} dialogSize={"90%"} />
+              {/* <Dialog product={product} dialogSize={"90%"} /> */}
+              <Dialog data-action={`dialog#${product.id}`} key={product.id}>
+                <ContactDetail product={product} steps={steps} />
+                <Form key={product.id} id={product.id}>
+                  <Title>{product.name}</Title>
+                  <section class="transition-transform grid place-items-center p-10 pt-20">
+                    <Inputs product={product} />
+                    <Message product={product} />
+                  </section>
+                </Form>
+                <CloseButton key={product.id} />
+              </Dialog>
+              <div class="horizontal center gap-5">
+                <Button data-action={`open#${product.id}`} dark size="lg">
+                  S'inscrire
+                </Button>
+                <MinimalPrice price={product.price} unit={product.unit} />
+              </div>
             </section>
           </Orientation>
         );

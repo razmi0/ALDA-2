@@ -5,11 +5,11 @@ import type { StepType } from "../types";
 
 interface Props {
   product: ProductType;
-  size: string;
+  size?: string;
   steps: StepType[];
 }
 
-const { product, size, steps } = Astro.props;
+const { product, size = "inherit", steps } = Astro.props;
 ---
 
 <style>

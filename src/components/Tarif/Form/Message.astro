@@ -84,27 +84,27 @@ if (!key) throw new Error("No key found");
       const key = action.split("#")[1] as string;
 
       const [email, tel, textarea, nextFrameBtn, infoEmail, infoTel] = getDOM(section, key);
-      if (!email || !tel || !textarea || !nextFrameBtn || !infoEmail || !infoTel)
-        throw new Error(`Missing element : ${email} ${tel} ${textarea} ${nextFrameBtn} ${infoEmail} ${infoTel}`);
+      // if (!email || !tel || !textarea || !nextFrameBtn || !infoEmail || !infoTel)
+      //   throw new Error(`Missing element : ${email} ${tel} ${textarea} ${nextFrameBtn} ${infoEmail} ${infoTel}`);
 
-      nextFrameBtn.disabled = true;
-      nextFrameBtn.type = "submit";
-      const enabledNextFrame = (valids: [string | undefined, string | undefined]) =>
-        valids.some((valid) => valid === "true") ? (nextFrameBtn.disabled = false) : (nextFrameBtn.disabled = true);
+      // nextFrameBtn.disabled = true;
+      // nextFrameBtn.type = "submit";
+      // const enabledNextFrame = (valids: [string | undefined, string | undefined]) =>
+      //   valids.some((valid) => valid === "true") ? (nextFrameBtn.disabled = false) : (nextFrameBtn.disabled = true);
 
-      nextFrameBtn.addEventListener("click", () => {
-        (!email.dataset.valid || !tel.dataset.valid) && noContactGivenError([infoEmail, infoTel]);
-      });
+      // nextFrameBtn.addEventListener("click", () => {
+      //   (!email.dataset.valid || !tel.dataset.valid) && noContactGivenError([infoEmail, infoTel]);
+      // });
 
-      email.addEventListener("input", () => {
-        email.dataset.valid = email.value ? "true" : "false";
-        enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
-      });
+      // email.addEventListener("input", () => {
+      //   email.dataset.valid = email.value ? "true" : "false";
+      //   enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
+      // });
 
-      tel.addEventListener("input", () => {
-        tel.dataset.valid = tel.value ? "true" : "false";
-        enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
-      });
+      // tel.addEventListener("input", () => {
+      //   tel.dataset.valid = tel.value ? "true" : "false";
+      //   enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
+      // });
 
       textarea.addEventListener("input", () => {
         textarea.style.height = `${textarea.scrollHeight}px`;

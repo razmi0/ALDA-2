@@ -1,16 +1,9 @@
 ---
-import Button from "@/components/Button.astro";
-import MinimalPrice from "@/components/Products/MinimalPrice.astro";
 import type { ProductType } from "@/components/Products/types";
-import Title from "@/components/Tarif/Form/Title.astro";
 import type { HTMLAttributes } from "astro/types";
-import Form from "../Form/Form.astro";
-import FormButtons from "../Form/FormButtons.astro";
-import Inputs from "../Form/Inputs.astro";
-import Message from "../Form/Message.astro";
-import SumUp from "../Form/SumUp.astro";
-import CloseButton from "./CloseButton.astro";
-import ContactDetail from "./ContactDetail.astro";
+// import Inputs from "../Form/Inputs.astro";
+// import Message from "../Form/Message.astro";
+// import SumUp from "../Form/SumUp.astro";
 
 interface Props {
   rest?: HTMLAttributes<"dialog">;
@@ -18,74 +11,76 @@ interface Props {
   dialogSize?: number | string;
 }
 
-let { product, dialogSize = 800 } = Astro.props;
+let { product } = Astro.props;
 
-let frameSize, detailsSize;
+// let frameSize, detailsSize;  dialogSize = 800
 
-const proportions = {
-  frame: 1,
-  detail: 0.3,
-};
+// const proportions = {
+//   frame: 1,
+//   detail: 0.3,
+// };
 // --
-const form = {
-  components: [Inputs, Message, SumUp],
-  size: function () {
-    return this.components.length;
-  },
-};
+// const form = {
+//   components: [Inputs, Message, SumUp],
+//   size: function () {
+//     return this.components.length;
+//   },
+// };
 // --
 const key = product.id;
 // --
 
-let sizeUnit = "";
-let isTypeNumber = false;
-if (typeof dialogSize === "string") {
-  let sizeUnits: string[] = [];
-  let sizeValues: string[] = [];
+// let sizeUnit = "";
+// let isTypeNumber = false;
+// if (typeof dialogSize === "string") {
+//   let sizeUnits: string[] = [];
+//   let sizeValues: string[] = [];
 
-  dialogSize.split("").forEach((char) => (isNaN(parseInt(char)) ? sizeUnits.push(char) : sizeValues.push(char)));
+//   dialogSize.split("").forEach((char) => (isNaN(parseInt(char)) ? sizeUnits.push(char) : sizeValues.push(char)));
 
-  sizeUnit = sizeUnits.join("");
-  const sizeValue = parseInt(sizeValues.join(""));
+//   sizeUnit = sizeUnits.join("");
+//   const sizeValue = parseInt(sizeValues.join(""));
 
-  frameSize = frameSize ? frameSize : sizeValue * proportions.frame;
-  detailsSize = detailsSize ? detailsSize : sizeValue * proportions.detail;
-} else {
-  // dialogSize type number here
-  isTypeNumber = true;
-  frameSize = frameSize ? frameSize : dialogSize * proportions.frame;
-  detailsSize = detailsSize ? detailsSize : dialogSize * proportions.detail;
-}
+//   frameSize = frameSize ? frameSize : sizeValue * proportions.frame;
+//   detailsSize = detailsSize ? detailsSize : sizeValue * proportions.detail;
+// } else {
+//   // dialogSize type number here
+//   isTypeNumber = true;
+//   frameSize = frameSize ? frameSize : dialogSize * proportions.frame;
+//   detailsSize = detailsSize ? detailsSize : dialogSize * proportions.detail;
+// }
 
-sizeUnit = isTypeNumber ? "px" : sizeUnit;
+// sizeUnit = isTypeNumber ? "px" : sizeUnit;
 
-const sizes = {
-  dialog: `${dialogSize}${isTypeNumber ? "px" : ""}`,
-  frameSize: `${frameSize}${sizeUnit}`,
-  unit: `${sizeUnit}`,
-};
+// const sizes = {
+//   dialog: `${dialogSize}${isTypeNumber ? "px" : ""}`,
+//   frameSize: `${frameSize}${sizeUnit}`,
+//   unit: `${sizeUnit}`,
+// };
 
-const steps = [
-  {
-    title: "Etape 1",
-    description: "Choisissez quand et pour combien de personne",
-  },
+// const steps = [
+//   {
+//     title: "Etape 1",
+//     description: "Choisissez quand et pour combien de personne",
+//   },
 
-  {
-    title: "Etape 2",
-    description: "Contactez-nous",
-  },
-  {
-    title: "Etape 3",
-    description: "Récapitulatif",
-  },
-];
+//   {
+//     title: "Etape 2",
+//     description: "Contactez-nous",
+//   },
+//   {
+//     title: "Etape 3",
+//     description: "Récapitulatif",
+//   },
+// ];
 ---
 
-<script>
+<!-- <script>
   document.addEventListener("astro:page-load", () => {
-    const gap = 50;
+    // const gap = 50;
     const dialogs = Array.from(document.querySelectorAll("dialog")) as HTMLDialogElement[];
+    // const dialogMap = new Map<string, HTMLDialogElement>();
+
     dialogs.forEach((dialog) => {
       const action = dialog.dataset.action as string;
       const key = action.split("#")[1];
@@ -140,14 +135,13 @@ const steps = [
       (closeBtns as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
     });
   });
-</script>
-
-<style define:vars={{ frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, Nsections: form.size() }}>
-  [data-is^="multistep"] {
+</script> -->
+<style define:vars={{}}>
+  /* [data-is^="multistep"] { frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, Nsections: form.size() 
     @apply grid [&>section]:text-center [&>section]:vertical [&>section]:justify-between [&>section]:full overflow-hidden h-full;
     grid-template-columns: repeat(var(--Nsections), var(--frameSize));
     gap: 50px;
-  }
+  } */
   dialog:modal {
     /* px-5 py-5 */
     @apply ring-1 ring-stone-300 ring-offset-1 horizontal bg-zinc-200 text-black shadow-md shadow-black/20 rounded-md;
@@ -158,28 +152,33 @@ const steps = [
     @apply bg-black/40 backdrop-blur-[1px];
   }
 </style>
-
-<dialog {...Astro.props.rest} data-action={`dialog#${key}`} class="overflow-hidden">
-  <ContactDetail product={product} size={`${detailsSize}${sizeUnit}`} steps={steps} />
+<!-- class="overflow-hidden" -->
+<dialog {...Astro.props.rest} data-action={`dialog#${key}`}>
+  <slot />
+  <!-- <ContactDetail product={product} size={`${detailsSize}${sizeUnit}`} steps={steps} />
   <Form key={key} id={product.id}>
     <Title>{product.name}</Title>
     <div data-is={`multistep#${key}`}>
+      
       {
         form.components.map((Component, i) => (
           <section
             class="transition-transform grid place-items-center p-10 pt-20"
             data-frame={`frame#${key}`}
             data-translation="0">
-            <Component product={product} />
+            <Inputs product={product} />
+            <Message product={product} />
+            {/* <Component product={product} /> */}
             <FormButtons componentFor={Component.name.toLowerCase()} formSize={form.size()} step={i} key={key} />
           </section>
         ))
       }
     </div>
   </Form>
-  <CloseButton key={key} />
+  <CloseButton key={key} /> -->
 </dialog>
+<!-- </dialog>
 <div class="horizontal center gap-5">
   <Button data-action={`open#${key}`} dark size="lg">S'inscrire</Button>
   <MinimalPrice price={product.price} unit={product.unit} />
-</div>
+</div> -->
