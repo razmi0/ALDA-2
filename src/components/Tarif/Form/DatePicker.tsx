@@ -8,30 +8,13 @@ export function DatePickerWithPresets({ id }: { id: string | number }) {
   const [date, setDate] = React.useState<Date>();
   const [reveal, setReveal] = React.useState(false);
 
-  // const selectRef = React.useRef<HTMLButtonElement>(null);
-  // const calendarRef = React.useRef<HTMLDivElement>(null);
-
-  // React.useEffect(() => {
-  //   const handleClickOutside = (e: MouseEvent) => {
-  //     console.log(selectRef.current);
-  //     console.log(calendarRef.current);
-  //     console.log(e.target);
-  //     reveal &&
-  //       (e.target as HTMLElement).dataset.button !== `calendar#${id}` &&
-  //       (e.target as HTMLElement) !== selectRef.current &&
-  //       (e.target as HTMLElement) !== calendarRef.current &&
-  //       setReveal(false);
-  //   };
-  //   window.addEventListener("click", handleClickOutside);
-  //   return () => window.removeEventListener("click", handleClickOutside);
-  // });
-
   return (
     <div className="relative w-72">
       <label className="mb-1 text-left text-sm w-full block">Réservez une date :</label>
       <button
         onClick={() => setReveal((p) => !p)}
         data-button={`calendar#${id}`}
+        type="button"
         className="w-full horizontal gap-2 items-center justify-start px-2 h-10 text-left font-normal transition-colors whitespace-nowrap mb-2 bg-white hover:bg-white/80 rounded-md">
         <CalendarIcon className=" h-5 w-5 stroke-[1.5] text-black/60 hover:text-black/50" />
         <output data-dateoutput={id} className="translate-y-[2px]">

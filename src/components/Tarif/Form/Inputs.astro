@@ -121,13 +121,13 @@ const options: OptionType[] = rawOptions.options;
   <h4 class="text-lg">Pour votre confort</h4>
   <p class="leading-5">{generateLorem(50)}</p>
 </div>
-<div class="grid grid-cols-2 gap-3 w-full px-10">
-  <section class="vertical text-black select-none">
+<div class="grid grid-cols-2 gap-3 w-full center">
+  <section class="vertical text-black select-none w-72 mb-2">
     <div class="font-normal text-sm mb-1 text-left">
       <label>Nombre de {product.unit} :</label>
     </div>
     <div
-      class="w-full max-w-60 inline-flex h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-zinc-100 hover:text-zinc-900 font-normal">
+      class="w-full inline-flex h-10 justify-between items-center whitespace-nowrap shadcn-border text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-zinc-100 hover:text-zinc-900 font-normal">
       <Buttons product={product} />
       <p class="px-2">
         <small> €</small>
@@ -138,7 +138,7 @@ const options: OptionType[] = rawOptions.options;
       </p>
     </div>
   </section>
-  <section class="vertical center w-full">
+  <section class="vertical items-start justify-center w-full">
     <DatePickerWithPresets client:visible id={product.id} />
   </section>
 </div>
