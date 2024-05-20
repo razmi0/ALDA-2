@@ -48,11 +48,20 @@ const setToLS = (key: string, value: string) => {
   localStorage.setItem(key, value);
 };
 
+const regs = {
+  tel: {
+    fr: /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/g,
+  },
+  email: /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
+};
+
 const credibilyScore = (data: { [key: string]: unknown }) => {
+  const validEmail = data.email ? regs.email.test(data.email as string) : false;
+  const validTel = data.tel ? regs.tel.fr.test(data.tel as string) : false;
   const arr = Object.values(data);
   const rawScore: number = arr.reduce((acc: number, curr: unknown) => (!curr ? acc : acc + 1), 0);
   const percentage = (rawScore * 100) / arr.length;
-  return percentage.toFixed(2);
+  return `score : ${percentage.toFixed(2)}, valid-email : ${validEmail}, valid-tel : ${validTel}`;
 };
 
 const hasProp = <T extends object, K extends PropertyKey>(

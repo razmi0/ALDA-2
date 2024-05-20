@@ -83,44 +83,27 @@ if (!key) throw new Error("No key found");
       if (!action) throw new Error("No action found on section");
       const key = action.split("#")[1] as string;
 
-      const [email, tel, textarea, validateTrigger, infoEmail, infoTel] = getDOM(section, key);
-      if (!email || !tel || !textarea || !validateTrigger || !infoEmail || !infoTel)
-        throw new Error(`Missing element : ${email} ${tel} ${textarea} ${validateTrigger} ${infoEmail} ${infoTel}`);
+      const [email, tel, textarea, nextFrameBtn, infoEmail, infoTel] = getDOM(section, key);
+      if (!email || !tel || !textarea || !nextFrameBtn || !infoEmail || !infoTel)
+        throw new Error(`Missing element : ${email} ${tel} ${textarea} ${nextFrameBtn} ${infoEmail} ${infoTel}`);
 
-      validateTrigger.addEventListener("click", (e: MouseEvent) => {
-        const areDataValids = [email, tel].every((el) => el.dataset.valid === "true");
-        if (!areDataValids) {
-          console.log("No contact given");
-          noContactGivenError([infoEmail, infoTel]);
-          e.stopImmediatePropagation();
-          return;
-        }
+      nextFrameBtn.disabled = true;
+      nextFrameBtn.type = "submit";
+      const enabledNextFrame = (valids: [string | undefined, string | undefined]) =>
+        valids.some((valid) => valid === "true") ? (nextFrameBtn.disabled = false) : (nextFrameBtn.disabled = true);
+
+      nextFrameBtn.addEventListener("click", () => {
+        (!email.dataset.valid || !tel.dataset.valid) && noContactGivenError([infoEmail, infoTel]);
       });
 
-      email.addEventListener("change", () => (email.dataset.valid = email.value ? "true" : "false"));
+      email.addEventListener("input", () => {
+        email.dataset.valid = email.value ? "true" : "false";
+        enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
+      });
+
       tel.addEventListener("input", () => {
-        const value = tel.value.replace(/\./g, "");
-        const mod = value.length % 2;
-        if (mod === 0 && value.length > 0) {
-          tel.value += ".";
-        }
-      });
-
-      tel.addEventListener("blur", () => {
-        const value = tel.value;
-        tel.dataset.valid = value ? "true" : "false";
-        if (value[value.length - 1] === ".") tel.value = value.slice(0, -1);
-      });
-
-      tel.addEventListener("keydown", (e) => {
-        const key = e.key;
-        const allowed = key.match(/[0-9]/);
-        if (!allowed) e.preventDefault();
-        switch (key) {
-          case "Backspace":
-            tel.value = tel.value.slice(0, -1);
-            break;
-        }
+        tel.dataset.valid = tel.value ? "true" : "false";
+        enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
       });
 
       textarea.addEventListener("input", () => {

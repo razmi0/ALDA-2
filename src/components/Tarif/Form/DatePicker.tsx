@@ -27,7 +27,7 @@ export function DatePickerWithPresets({ id }: { id: string | number }) {
         data-dateinput={id}
         type="hidden"
         name="date"
-        value={date ? format(date, "PPP") : "Pick a date"}
+        value={date ? format(date, "PPP") : ""}
         className=" font-normal"
       />
       <div className="rounded-md max-w-72 w-72 space-y-2 absolute">

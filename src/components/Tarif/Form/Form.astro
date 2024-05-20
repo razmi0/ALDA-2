@@ -72,6 +72,7 @@ const { id, key } = Astro.props;
       const submitter = e.submitter as HTMLButtonElement;
       const filteredKeys = ["product_id", "hp", "textarea"];
 
+      console.log(submitter.getAttribute("data-for"));
       if (submitter.getAttribute("data-for") === "message") {
         // buildRecap
         const rootRecap = document.querySelector(`[data-recap="recap#${key}"]`) as HTMLElement;
