@@ -18,7 +18,7 @@ const websiteLinks = [
 ];
 ---
 
-<nav class={cn("", className)}>
+<nav class={cn("text-black/95 dark:text-white/95", className)}>
   {
     websiteLinks.map(({ name, href, isActive }) => (
       <a href={href} class={cn(isActive ? "text-pur-500" : "")}>

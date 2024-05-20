@@ -1,12 +1,12 @@
 ---
-import { generateLorem } from "@/lib/utils";
 import Button from "@/components/Button.astro";
-import { Mountain } from "lucide-react";
-import VerticalText from "../VerticalText.astro";
-import ImageSwitch from "../ImageSwitch/ImageSwitch.astro";
 import Section from "@/layouts/Section.astro";
-import Heading from "./Heading.astro";
+import { generateLorem } from "@/lib/utils";
+import { Mountain } from "lucide-react";
 import CTA from "../CTA.astro";
+import ImageSwitch from "../ImageSwitch/ImageSwitch.astro";
+import VerticalText from "../VerticalText.astro";
+import Heading from "./Heading.astro";
 ---
 
 <style>
@@ -41,8 +41,9 @@ import CTA from "../CTA.astro";
         <a href="/nous">nous</a>
         <a href="/FAQ">FAQs</a>
         <a href=`/tarifs`>
-          <Button className="hover:bg-white/20 pb-1" size="sm" ring="md" variant="outline" data-is="hero-button"
-            >activités et tarifs</Button
+          <button
+            class="pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold group text-white/95 hover:bg-white/20 px-3 py-1 ring-2 ring-white/95"
+            data-is="hero-button">activités et tarifs</button
           >
         </a>
       </div>

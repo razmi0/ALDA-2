@@ -12,7 +12,7 @@ const key = "contact";
 
 <Layout title="contact">
   <HeaderFooter slot="header" />
-  <Section size="quarter" className="vertical center">
+  <Section size="half" className="vertical center">
     <div class="text-center vertical center">
       <h2 class="text-3xl uppercase mb-5">Contactez-nous</h2>
       <p class="max-w-[50ch] mb-5 text-[1rem]">
@@ -22,9 +22,33 @@ const key = "contact";
       <ArrowDown size="32" />
     </div>
   </Section>
-  <Section data-action={`section-message#${key}`} size="full" extension="sm" fixedHeight>
-    <div class={"horizontal items-center full justify-around"}>
-      <form class="py-10 px-14 rounded-lg shadow-sm shadow-black/30 space-y-5">
+  <Section data-action={`section-message#${key}`} size="full" extension="sm" fixedHeight className={"grid center"}>
+    <div class={"horizontal items-start justify-center dark:bg-slate-600 bg-slate-300 rounded-lg h-[600px] gap-20"}>
+      <div
+        class="py-10 px-14 rounded-tl-lg rounded-bl-lg vertical justify-between h-full gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow dark:bg-slate-700 bg-slate-400">
+        <article>
+          <h3>Notre adresse</h3>
+          <p>12 rue de la Paix</p>
+          <p>Toulouse</p>
+          <p>31100</p>
+        </article>
+        <article>
+          <h3>Nos contact</h3>
+          <p>
+            <span>Email : </span>
+            <span class="font-semibold">alabordarbre@contact.com</span>
+          </p>
+          <p>
+            <span>Téléphone : </span>
+            <span class="font-semibold">06 12 34 56 78</span>
+          </p>
+        </article>
+        <article class="vertical justify-end">
+          <h3>Nos réseaux</h3>
+          <Socials />
+        </article>
+      </div>
+      <form class="py-10 px-14 rounded-lg space-y-5">
         <div class="max-w-lg vertical center">
           <Message key={key} telClass="bg-stone-100" textareaClass="bg-stone-100" emailClass="bg-stone-100" />
         </div>
@@ -44,29 +68,6 @@ const key = "contact";
           </Button>
         </div>
       </form>
-      <div class="py-10 px-14 rounded-lg shadow-sm shadow-black/30 space-y-8 [&>article>h3]:mb-2">
-        <article>
-          <h3>Notre adresse</h3>
-          <p>12 rue de la Paix</p>
-          <p>Toulouse</p>
-          <p>31100</p>
-        </article>
-        <article>
-          <h3>Nos réseaux</h3>
-          <Socials />
-        </article>
-        <article>
-          <h3>Nos contact</h3>
-          <p>
-            <span>Email : </span>
-            <span class="font-semibold">alabordarbre@contact.com</span>
-          </p>
-          <p>
-            <span>Téléphone : </span>
-            <span class="font-semibold">06 12 34 56 78</span>
-          </p>
-        </article>
-      </div>
     </div>
   </Section>
   <HeaderFooter slot="footer" as="footer" />

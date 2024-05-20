@@ -1,32 +1,29 @@
 ---
-import Facebook from "@/components/icons/Facebook.astro";
-import Insta from "@/components/icons/Insta.astro";
-import Linkedin from "@/components/icons/Linkedin.astro";
-import Youtube from "@/components/icons/Youtube.astro";
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 ---
 
 <ul class="horizontal gap-10">
   <li>
     <a href="/">
-      <Youtube className={"w-6 h-6"} />
+      <Youtube className={"w-6 h-6 stroke-1"} />
       <span class="sr-only">youtube link</span>
     </a>
   </li>
   <li>
     <a href="/">
-      <Linkedin className={"w-6 h-6"} />
+      <Linkedin className={"w-5 h-5 stroke-1"} />
       <span class="sr-only">Linkedin link</span>
     </a>
   </li>
   <li>
-    <Insta className={"w-6 h-6"} />
+    <Instagram className={"w-5 h-5 stroke-1"} />
     <a href="/">
       <span class="sr-only">Instagram link</span>
     </a>
   </li>
   <li>
     <a href="/">
-      <Facebook className={"w-6 h-6"} />
+      <Facebook className={"w-5 h-5 stroke-1"} />
       <span class="sr-only">Facebook link</span>
     </a>
   </li>

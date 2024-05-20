@@ -18,7 +18,7 @@ interface Props {
 
 const {
   className,
-  variant,
+  variant = "outline",
   dark,
   size,
   ring,
@@ -58,7 +58,7 @@ const variants = {
     lg: "ring-4",
     xl: "ring-8",
     dark: "ring-black dark:ring-white",
-    light: "ring-white/95 dar:ring-black/95 ",
+    light: "ring-white/95 dark:ring-black/95 ",
   },
 };
 ---

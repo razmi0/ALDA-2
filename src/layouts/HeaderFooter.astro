@@ -1,5 +1,4 @@
 ---
-import ModeToogle from "@/components/ModeToggle.astro";
 import { cn } from "@/lib/utils";
 import type { HTMLTag } from "astro/types";
 import Nav from "./Nav.astro";
@@ -28,13 +27,13 @@ const { as, className } = Astro.props as Props;
 
     {
       as === "footer" ? (
-        <article class="text-black/50 font-bold">
+        <article class=" font-bold">
           <Socials />
         </article>
       ) : (
         <>
           <span class="font-bold text-2xl">LOGO</span>
-          <ModeToogle />
+          {/* <ModeToogle /> */}
         </>
       )
     }
