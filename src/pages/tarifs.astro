@@ -46,6 +46,7 @@ const statsComponents: StatsComponent[] = [
 ---
 
 <script>
+  import { setupIntersectionObserver } from "@/lib/utils";
   document.addEventListener("astro:page-load", () => {
     const getThem = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll(s) as unknown as T[]);
 
@@ -72,7 +73,35 @@ const statsComponents: StatsComponent[] = [
       closeBtns.forEach((btn) => btn.addEventListener("click", close));
     });
   });
+
+  const intersectionAnchor = document.querySelector("[data-observer]") as HTMLElement;
+  const pictures = document.querySelector("[data-pictures]") as HTMLElement;
+  if (!intersectionAnchor || !pictures)
+    console.error(`Missing picture container : ${pictures} ; ${intersectionAnchor}`);
+
+  setupIntersectionObserver({
+    element: intersectionAnchor,
+    debugLog: "intersectionAnchor",
+    onIntersect: () => {
+      console.log("intersectionAnchor intersecting");
+    },
+    onDisappear: () => {
+      console.log("intersectionAnchor not intersecting");
+    },
+  });
 </script>
+
+<style>
+  .picture-container {
+    display: grid;
+    grid-template-areas: "area";
+    /* position: sticky; */
+  }
+
+  .sticky-area {
+    grid-area: area;
+  }
+</style>
 
 <Layout title="tarif">
   <HeaderFooter slot="header" />
@@ -82,18 +111,30 @@ const statsComponents: StatsComponent[] = [
       <ArrowDown size="32" />
     </Heading>
   </Section>
-  <Section className={"grid grid-cols-2 container gap-y-72 gap-x-20"}>
-    {
-      products.map((product) => {
-        // const orientation = i % 2 === 0 ? "ltr" : "rtl";
-        return (
-          // <Orientation anchorId={`${product.id}`}>
-          // <>
-          <>
-            <section class="relative vertical center full">
-              <Pictures size={500} />
-            </section>
-            <section class="vertical h-full gap-7 items-start justify-evenly">
+  <div class={`relative`}>
+    <div class="absolute w-screen h-screen ring-1 ring-yellow-500 -top-[25vh]" data-observer></div>
+  </div>
+  <Section className={"grid grid-cols-2 items-start container gap-y-72 gap-x-20"}>
+    <div class="full relative">
+      <div class={`picture-container w-full absolute top-0`} data-pictures={products.length}>
+        {
+          products.map((_, i) => {
+            return (
+              <>
+                <section class="w-full h-[500px] sticky-area" data-index={`${i + 1}`}>
+                  <Pictures size={500} />
+                </section>
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+    <div>
+      {
+        products.map((product) => {
+          return (
+            <section class="vertical max-h-[600px] gap-7 items-start justify-evenly mb-80">
               <TarifText title={product.title} description={product.description.long} />
               <div class="grid grid-cols-2">
                 <div class="vertical gap-1">
@@ -136,12 +177,10 @@ const statsComponents: StatsComponent[] = [
                 <MinimalPrice price={product.price} unit={product.unit} />
               </div>
             </section>
-          </>
-          // </>
-          // </Orientation>
-        );
-      })
-    }
+          );
+        })
+      }
+    </div>
   </Section>
 
   <HeaderFooter slot="footer" as="footer" className="mt-32" />

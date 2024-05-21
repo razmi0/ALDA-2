@@ -71,4 +71,42 @@ const hasProp = <T extends object, K extends PropertyKey>(
   return prop in obj;
 };
 
-export { cn, credibilyScore, generateLorem, getFromLS, hasProp, isDev, needDOM, setToLS };
+const handleIntersection = (
+  entries: IntersectionObserverEntry[],
+  debugLog: string,
+  onIntersect: () => void,
+  onDisappear: () => void
+) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      console.log(`Element ${debugLog} is intersecting`);
+      onIntersect();
+    } else {
+      onDisappear();
+      console.log(`Element ${debugLog} is not intersecting`);
+    }
+  });
+};
+
+type SetupObserverProps = {
+  element: HTMLElement;
+  debugLog?: string;
+  threshold?: number;
+  onIntersect?: () => void;
+  onDisappear?: () => void;
+};
+
+const setupIntersectionObserver = ({
+  element,
+  debugLog = "",
+  threshold = 0.98,
+  onIntersect = () => {},
+  onDisappear = () => {},
+}: SetupObserverProps) => {
+  const observer = new IntersectionObserver((entry) => handleIntersection(entry, debugLog, onIntersect, onDisappear), {
+    threshold: threshold,
+  });
+  observer.observe(element);
+};
+
+export { cn, credibilyScore, generateLorem, getFromLS, hasProp, isDev, needDOM, setToLS, setupIntersectionObserver };
