@@ -76,8 +76,8 @@ const variants = {
     "pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold group disabled:pointer-events-none disabled:bg-neutral-300",
     variants[variant || "outline"][dark ? "dark" : "light"],
     variants.sizes[size || "md"],
-    variants.rings[ring || "sm"],
-    variants.rings[dark ? "dark" : "light"],
+    ring && variants.rings[ring || "sm"],
+    ring && variants.rings[dark ? "dark" : "light"],
     iconClass,
     className
   )}
