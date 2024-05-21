@@ -1,10 +1,15 @@
 ---
+import { Ban, Send } from "lucide-react";
+// import FormButtons from "./FormButtons.astro";
+import Button from "@/components/Button.astro";
+
 interface Props {
   key: string | number;
   id: string | number;
+  className?: string;
 }
 
-const { id, key } = Astro.props;
+const { id, key, className } = Astro.props;
 ---
 
 <script>
@@ -133,8 +138,20 @@ const { id, key } = Astro.props;
   }
 </style>
 
-<form data-form={`form#${key}`}>
+<form class={`h-full ${className}`} data-form={`form#${key}`} class="relative">
   <input type="hidden" name="product_id" value={id} />
   <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
-  <slot />
+  <section class="vertical items-start justify-center gap-14 p-20">
+    <slot />
+    <div class="horizontal gap-5 center w-full">
+      <Button data-for={"form"} type="submit" size="md" variant="filled" rightIcon ring="sm">
+        Valider
+        <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
+      </Button>
+      <Button data-action={`close#${key}`} type={"button"} size="md" variant="danger" rightIcon>
+        Annuler
+        <Ban className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
+      </Button>
+    </div>
+  </section>
 </form>

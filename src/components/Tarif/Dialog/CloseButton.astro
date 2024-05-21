@@ -3,16 +3,19 @@ import { X } from "lucide-react";
 
 interface Props {
   key: string | number;
+  className?: string;
 }
 
-const { key } = Astro.props;
+const { key, className } = Astro.props;
 ---
 
-<div class="absolute-center full pointer-events-none">
-  <button
-    type="button"
-    data-action={`close#${key}`}
-    class="absolute h-16 w-16 bg-slate-700 hover:bg-slate-600 rounded-full pointer-events-auto -right-7 -top-7 text-white focus:text-slate-500 focus-visible:text-slate-500">
-    <X className="absolute ml-2" />
-  </button>
+<div class="absolute top-0 right-0 pointer-events-none z-10">
+  <div class={`relative pointer-events-auto`}>
+    <button type="button" data-action={`close#${key}`} class={`h-16 w-16 group pointer-events-auto ${className}`}>
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="0" r="80" class={` fill-slate-700`}></circle>
+      </svg>
+      <X className="absolute top-3 right-2 mb-3 text-zinc-200 group-hover:text-slate-200" />
+    </button>
+  </div>
 </div>

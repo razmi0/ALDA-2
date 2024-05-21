@@ -1,0 +1,10 @@
+{
+  "class": {
+    "scope": "",
+    "prefix": "class",
+    "body": [
+      "class={`${1:className}`}"
+    ],
+    "description": ""
+  }
+}

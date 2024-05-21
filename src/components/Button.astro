@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 interface Props {
-  variant?: "outline" | "filled";
+  variant?: "outline" | "filled" | "danger";
   size?: "sm" | "md" | "lg";
   ring?: "sm" | "md" | "lg" | "xl";
   className?: string;
@@ -45,6 +45,10 @@ const variants = {
   filled: {
     dark: "text-white/95 dark:text-vlack/95 bg-black dark:bg-white hover:bg-black/90 hover:dark:bg-white/90",
     light: "text-black dark:text-white dark:bg-black bg-white dark:hover:bg-black/80 hover:bg-white/80",
+  },
+  danger: {
+    dark: "text-red-500 dark:text-red-500 hover:bg-red-500/20 dark:hover:bg-red-500/20",
+    light: "text-red-500 dark:text-red-500 hover:bg-red-500/20 dark:hover:bg-red-500/20",
   },
   sizes: {
     sm: "px-3 py-1",

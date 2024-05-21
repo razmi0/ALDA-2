@@ -24,24 +24,10 @@ import Form from "@/components/Tarif/Form/Form.astro";
 import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
 import ContactDetail from "@/components/Tarif/Dialog/ContactDetail.astro";
 import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
+import { generateLorem } from "@/lib/utils";
 
 const products = rawProducts.products as ProductType[];
 
-const steps = [
-  {
-    title: "Etape 1",
-    description: "Choisissez quand et pour combien de personne",
-  },
-
-  {
-    title: "Etape 2",
-    description: "Contactez-nous",
-  },
-  {
-    title: "Etape 3",
-    description: "Récapitulatif",
-  },
-];
 ---
 
 <style>
@@ -67,62 +53,72 @@ const steps = [
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const gap = 50;
-    const dialogs = Array.from(document.querySelectorAll("dialog")) as HTMLDialogElement[];
-    dialogs.forEach((dialog) => {
+    const getThem = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll(s) as unknown as T[]);
+
+    getThem<HTMLDialogElement>("dialog").forEach((dialog) => {
       const action = dialog.dataset.action as string;
       const key = action.split("#")[1];
 
       const openBtn = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
-      const multistep = document.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
-      // const stepIndicator = document.querySelector(`[data-picture='${key}']`) as HTMLElement;
-      // --
-      const closeBtns = Array.from(document.querySelectorAll(`[data-action='close#${key}']`)) as HTMLButtonElement[];
-      const nextBtns = Array.from(document.querySelectorAll(`[data-action^='next#${key}']`)) as HTMLButtonElement[];
-      const prevBtns = Array.from(document.querySelectorAll(`[data-action^='prev#${key}']`)) as HTMLButtonElement[];
-      const frames = Array.from(document.querySelectorAll(`[data-frame^='frame#${key}']`)) as HTMLElement[];
+      const closeBtns = getThem<HTMLButtonElement>(`[data-action='close#${key}']`);
 
-      if (!openBtn || !multistep || !closeBtns || !nextBtns || !prevBtns || !frames)
-        console.error(`Missing DOM elements`);
+      if (!openBtn || !closeBtns || !frames) console.error(`Missing DOM elements`);
 
-      // const handleNavigation = (direction: "prev" | "next", e: MouseEvent) => {
-      //   /**
-      //    * Update steps display
-      //    */
-      //   const target = e.currentTarget as HTMLButtonElement;
-      //   const nextStep = target.dataset.step as string;
-      //   stepIndicator.style.setProperty("--step", nextStep);
+      const close = () => {
+        dialog.close();
+        document.body.style.overflow = "auto";
+      };
 
-      //   const frameSize = (multistep as HTMLElement).dataset.framesize as string;
-      //   const translationSize = parseInt(frameSize);
-      //   const firstFrame = frames[0] as HTMLElement;
-      //   const translationData = firstFrame.dataset.translation as string;
-      //   const currentTranslation = parseInt(translationData) || 0;
-
-      //   frames.forEach((frame) => {
-      //     const nextMove =
-      //       direction === "prev" ? currentTranslation + translationSize : currentTranslation - translationSize;
-      //     frame.dataset.translation = `${nextMove}`;
-      //     frame.style.transform = `translateX(${nextMove}px)`;
-      //   });
-      // };
-
-      // (nextBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
-      //   btn.addEventListener("click", (e) => handleNavigation("next", e))
-      // );
-
-      // (prevBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
-      //   btn.addEventListener("click", (e) => handleNavigation("prev", e))
-      // );
-
-      openBtn.addEventListener("click", () => {
+      const open = () => {
         dialog.showModal();
-        const translationX = (frames[0]?.clientWidth ?? 0) + gap;
-        multistep.dataset.framesize = `${translationX}`;
-      });
-      (closeBtns as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
+        document.body.style.overflow = "hidden";
+      };
+
+      openBtn.addEventListener("click", open);
+      closeBtns.forEach((btn) => btn.addEventListener("click", close));
     });
   });
+
+  // const translationX = (frames[0]?.clientWidth ?? 0) + gap; !multistep || !nextBtns || !prevBtns
+  // multistep.dataset.framesize = `${translationX}`;
+  // const gap = 50;
+  // const dialogs = getThem("dialog") as HTMLDialogElement[];
+  // const multistep = document.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
+  // const stepIndicator = document.querySelector(`[data-picture='${key}']`) as HTMLElement;
+  // --
+  // const nextBtns = getThem<HTMLButtonElement>(`[data-action^='next#${key}']`)
+  // const prevBtns = getThem<HTMLButtonElement>(`[data-action^='prev#${key}']`)
+  // const frames = getThem(`[data-frame^='frame#${key}']`)
+
+  // const handleNavigation = (direction: "prev" | "next", e: MouseEvent) => {
+  //   /**
+  //    * Update steps display
+  //    */
+  //   const target = e.currentTarget as HTMLButtonElement;
+  //   const nextStep = target.dataset.step as string;
+  //   stepIndicator.style.setProperty("--step", nextStep);
+
+  //   const frameSize = (multistep as HTMLElement).dataset.framesize as string;
+  //   const translationSize = parseInt(frameSize);
+  //   const firstFrame = frames[0] as HTMLElement;
+  //   const translationData = firstFrame.dataset.translation as string;
+  //   const currentTranslation = parseInt(translationData) || 0;
+
+  //   frames.forEach((frame) => {
+  //     const nextMove =
+  //       direction === "prev" ? currentTranslation + translationSize : currentTranslation - translationSize;
+  //     frame.dataset.translation = `${nextMove}`;
+  //     frame.style.transform = `translateX(${nextMove}px)`;
+  //   });
+  // };
+
+  // (nextBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
+  //   btn.addEventListener("click", (e) => handleNavigation("next", e))
+  // );
+
+  // (prevBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
+  //   btn.addEventListener("click", (e) => handleNavigation("prev", e))
+  // );
 </script>
 
 <Layout title="tarif">
@@ -174,17 +170,22 @@ const steps = [
                   </ul>
                 </div>
               </div>
-              {/* <Dialog product={product} dialogSize={"90%"} /> */}
-              <Dialog data-action={`dialog#${product.id}`} key={product.id}>
-                <ContactDetail product={product} steps={steps} />
-                <Form key={product.id} id={product.id}>
-                  <Title>{product.name}</Title>
-                  <section class="transition-transform grid place-items-center p-10 pt-20">
+              <Dialog product={product}>
+                <>
+                  <Form key={product.id} id={product.id}>
+                    <CloseButton key={product.id} />
+                    <Title>{product.name}</Title>
+                    <div class="text-left">
+                      <h4 class="text-xl">Contactez-nous</h4>
+                      <div class={`horizontal items-center justify-between gap-5`}>
+                        <p class="leading-5 max-w-[50ch] text-balance">{generateLorem(50)}</p>
+                        <ContactDetail product={product} />
+                      </div>
+                    </div>
                     <Inputs product={product} />
                     <Message product={product} />
-                  </section>
-                </Form>
-                <CloseButton key={product.id} />
+                  </Form>
+                </>
               </Dialog>
               <div class="horizontal center gap-5">
                 <Button data-action={`open#${product.id}`} dark size="lg">

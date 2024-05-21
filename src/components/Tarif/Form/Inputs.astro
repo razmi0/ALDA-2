@@ -2,7 +2,6 @@
 import type { ProductType } from "@/components/Products/types";
 import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "json" };
 import Checkbox from "@/components/ui/checkbox.astro";
-import { generateLorem } from "@/lib/utils";
 import Buttons from "../Dialog/Buttons.astro";
 import type { OptionType } from "../types";
 import { DatePickerWithPresets } from "./DatePicker";
@@ -117,11 +116,7 @@ const options: OptionType[] = rawOptions.options;
   });
 </script>
 
-<div class="text-left">
-  <h4 class="text-lg">Pour votre confort</h4>
-  <p class="leading-5">{generateLorem(50)}</p>
-</div>
-<div class="grid grid-cols-2 gap-3 w-full center">
+<fieldset class="gap-5 flex w-fit justify-between items-center">
   <section class="vertical text-black select-none w-72 mb-2">
     <div class="font-normal text-sm mb-1 text-left">
       <label>Nombre de {product.unit} :</label>
@@ -141,11 +136,11 @@ const options: OptionType[] = rawOptions.options;
   <section class="vertical items-start justify-center w-full">
     <DatePickerWithPresets client:visible id={product.id} />
   </section>
-</div>
-<section class={"h-fit grid grid-cols-2 gap-0 select-none"}>
+</fieldset>
+<fieldset class={"h-fit grid grid-cols-2 gap-0 select-none"}>
   {
     options.map((option) => {
       return <Checkbox option={option} key={key} />;
     })
   }
-</section>
+</fieldset>

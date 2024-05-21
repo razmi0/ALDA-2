@@ -4,12 +4,27 @@ import { addDays, format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import * as React from "react";
 
+const useClickOutside = (ref: React.RefObject<HTMLDivElement>, callback: () => void) => {
+  React.useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        callback();
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [ref, callback]);
+};
+
 export function DatePickerWithPresets({ id }: { id: string | number }) {
   const [date, setDate] = React.useState<Date>();
   const [reveal, setReveal] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  useClickOutside(ref, () => setReveal(false));
 
   return (
-    <div className="relative w-72">
+    <div ref={ref} className="relative w-72">
       <label className="mb-1 text-left text-sm w-full block">Réservez une date :</label>
       <button
         onClick={() => setReveal((p) => !p)}

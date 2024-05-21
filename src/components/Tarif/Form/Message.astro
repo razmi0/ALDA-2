@@ -37,26 +37,26 @@ if (!key) throw new Error("No key found");
   document.addEventListener("astro:page-load", () => {
     const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
 
-    const findType = (type: string, elements: HTMLElement[]) => {
-      return elements.find((info) => info.dataset.type === type);
-    };
+    // const findType = (type: string, elements: HTMLElement[]) => {
+    //   return elements.find((info) => info.dataset.type === type);
+    // };
 
-    const noContactGivenError = (infosElements: HTMLElement[]) => {
-      const errorText = "Nous avons besoin d'au moins un moyen de vous contacter";
+    // const noContactGivenError = (infosElements: HTMLElement[]) => {
+    //   const errorText = "Nous avons besoin d'au moins un moyen de vous contacter";
 
-      const emailInfo = findType("email", infosElements);
-      const telInfo = findType("tel", infosElements);
+    //   const emailInfo = findType("email", infosElements);
+    //   const telInfo = findType("tel", infosElements);
 
-      if (!emailInfo || !telInfo) {
-        console.error("Missing info element");
-        return;
-      }
+    //   if (!emailInfo || !telInfo) {
+    //     console.error("Missing info element");
+    //     return;
+    //   }
 
-      emailInfo.textContent = errorText;
-      telInfo.textContent = errorText;
-      emailInfo.dataset.variant = "error";
-      telInfo.dataset.variant = "error";
-    };
+    //   emailInfo.textContent = errorText;
+    //   telInfo.textContent = errorText;
+    //   emailInfo.dataset.variant = "error";
+    //   telInfo.dataset.variant = "error";
+    // };
 
     const getDOM = (section: HTMLElement, key: string) => {
       type Elements = [
@@ -82,39 +82,41 @@ if (!key) throw new Error("No key found");
       const action = section.dataset.action;
       if (!action) throw new Error("No action found on section");
       const key = action.split("#")[1] as string;
-
-      const [email, tel, textarea, nextFrameBtn, infoEmail, infoTel] = getDOM(section, key);
-      // if (!email || !tel || !textarea || !nextFrameBtn || !infoEmail || !infoTel)
-      //   throw new Error(`Missing element : ${email} ${tel} ${textarea} ${nextFrameBtn} ${infoEmail} ${infoTel}`);
-
-      // nextFrameBtn.disabled = true;
-      // nextFrameBtn.type = "submit";
-      // const enabledNextFrame = (valids: [string | undefined, string | undefined]) =>
-      //   valids.some((valid) => valid === "true") ? (nextFrameBtn.disabled = false) : (nextFrameBtn.disabled = true);
-
-      // nextFrameBtn.addEventListener("click", () => {
-      //   (!email.dataset.valid || !tel.dataset.valid) && noContactGivenError([infoEmail, infoTel]);
-      // });
-
-      // email.addEventListener("input", () => {
-      //   email.dataset.valid = email.value ? "true" : "false";
-      //   enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
-      // });
-
-      // tel.addEventListener("input", () => {
-      //   tel.dataset.valid = tel.value ? "true" : "false";
-      //   enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
-      // });
-
+      /**
+       * email, tel, nextFrameBtn, infoEmail, infoTel
+       */
+      const [textarea] = getDOM(section, key);
       textarea.addEventListener("input", () => {
         textarea.style.height = `${textarea.scrollHeight}px`;
       });
     });
   });
+
+  // if (!email || !tel || !textarea || !nextFrameBtn || !infoEmail || !infoTel)
+  //   console.error(`Missing element : ${email} ${tel} ${textarea} ${nextFrameBtn} ${infoEmail} ${infoTel}`);
+
+  // nextFrameBtn.disabled = true;
+  // nextFrameBtn.type = "submit";
+  // const enabledNextFrame = (valids: [string | undefined, string | undefined]) =>
+  //   valids.some((valid) => valid === "true") ? (nextFrameBtn.disabled = false) : (nextFrameBtn.disabled = true);
+
+  // nextFrameBtn.addEventListener("click", () => {
+  //   (!email.dataset.valid || !tel.dataset.valid) && noContactGivenError([infoEmail, infoTel]);
+  // });
+
+  // email.addEventListener("input", () => {
+  //   email.dataset.valid = email.value ? "true" : "false";
+  //   enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
+  // });
+
+  // tel.addEventListener("input", () => {
+  //   tel.dataset.valid = tel.value ? "true" : "false";
+  //   enabledNextFrame([email.dataset.valid, tel.dataset.valid]);
+  // });
 </script>
 
-<section
-  class={"h-full w-full vertical gap-5 justify-between [&>label]:vertical [&>label]:items-start [&>label]:justify-center"}
+<fieldset
+  class={"h-full w-full py-7 vertical gap-5 justify-between [&>label]:vertical [&>label]:items-start [&>label]:justify-center"}
   data-action={`section-message#${key}`}>
   <label for={`email-${key}`}>
     <span>Votre email :</span>
@@ -150,4 +152,4 @@ if (!key) throw new Error("No key found");
     <Info text="Votre message nous permettra de mieux comprendre votre demande" />
   </label>
   <Checkbox option={option} />
-</section>
+</fieldset>
