@@ -46,7 +46,7 @@ const statsComponents: StatsComponent[] = [
 ---
 
 <script>
-  import { setupIntersectionObserver } from "@/lib/utils";
+  // import { setupIntersectionObserver } from "@/lib/utils";
   document.addEventListener("astro:page-load", () => {
     const getThem = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll(s) as unknown as T[]);
 
@@ -74,56 +74,63 @@ const statsComponents: StatsComponent[] = [
     });
   });
 
-  const intersectionAnchor = document.querySelector("[data-observer]") as HTMLElement;
-  const pictures = document.querySelector("[data-pictures]") as HTMLElement;
-  if (!intersectionAnchor || !pictures)
-    console.error(`Missing picture container : ${pictures} ; ${intersectionAnchor}`);
+  // const intersectionAnchor = document.querySelector("[data-observer]") as HTMLElement;
+  // const pictureContainer = document.querySelector("[data-pictures]") as HTMLElement;
+  // if (!intersectionAnchor || !pictureContainer)
+  //   console.error(`Missing picture container : ${pictureContainer} ; ${intersectionAnchor}`);
+  // const initialPosition = pictureContainer.getBoundingClientRect().y;
+  // console.log("initialPosition : ", initialPosition);
 
-  setupIntersectionObserver({
-    element: intersectionAnchor,
-    debugLog: "intersectionAnchor",
-    onIntersect: () => {
-      console.log("intersectionAnchor intersecting");
-    },
-    onDisappear: () => {
-      console.log("intersectionAnchor not intersecting");
-    },
-  });
+  // const onIntersect = () => {
+  //   document.addEventListener("scroll", () => {
+  //     const newPosition = window.scrollY - initialPosition + 200;
+  //     pictureContainer.style.top = `${newPosition}px`;
+  //   });
+  // };
+
+  // const onDisappear = () => console.log("intersectionAnchor not intersecting");
+  // setupIntersectionObserver({
+  //   element: intersectionAnchor,
+  //   debugLog: "intersectionAnchor",
+  //   onIntersect,
+  //   onDisappear,
+  // });
+  // Step 1: Get ALL elements on the page
 </script>
 
-<style>
+<!-- <style>
   .picture-container {
     display: grid;
     grid-template-areas: "area";
-    /* position: sticky; */
   }
 
   .sticky-area {
     grid-area: area;
   }
-</style>
-
+</style> -->
 <Layout title="tarif">
   <HeaderFooter slot="header" />
   <Section>
-    <Heading h2="Nos tarifs" h3="Composable et personalisable" className="">
+    <Heading h2="Nos tarifs" h3="Composable et personalisable">
       <div class="grow max-h-[10%]"></div>
       <ArrowDown size="32" />
     </Heading>
   </Section>
-  <div class={`relative`}>
-    <div class="absolute w-screen h-screen ring-1 ring-yellow-500 -top-[25vh]" data-observer></div>
-  </div>
+
+  <!-- <div class={`relative`}>
+    <div class="absolute w-screen h-screen ring-1 ring-yellow-500 -top-[25vh]" data-observer></div> w-[500px] h-[500px] w-full h-[500px] 
+  </div> -->
   <Section className={"grid grid-cols-2 items-start container gap-y-72 gap-x-20"}>
-    <div class="full relative">
-      <div class={`picture-container w-full absolute top-0`} data-pictures={products.length}>
+    <div class="full flex vertical" style="align-items:flex-start;">
+      <div class={`absolute picture-container h-full`} data-pictures={products.length}>
+        <div class={`sticky bg-red-500 h-20 w-20`}></div>
         {
           products.map((_, i) => {
             return (
               <>
-                <section class="w-full h-[500px] sticky-area" data-index={`${i + 1}`}>
-                  <Pictures size={500} />
-                </section>
+                {/* <section class="sticky-area" data-index={`${i + 1}`}> */}
+                {/* <Pictures size={500} /> */}
+                {/* </section> */}
               </>
             );
           })

@@ -15,14 +15,10 @@ const orientationClasses = {
 const { size = 400, orientation = "rtl" } = Astro.props;
 ---
 
-<RandomImage
-  seed={size}
-  className="w-full aspect-square ring-offset-2 ring-1 ring-stone-200"
-  style={`height : ${size}px`}
-/>
+<RandomImage seed={size} className="w-full aspect-square ring-offset-2 ring-1 ring-stone-200 sticky" />
 <div
   class={cn(
-    `absolute bottom-5 horizontal w-full gap-5 items-center [&>*]:ring-1 [&>*]:ring-white [&>*]:aspect-square`,
+    `sticky bottom-5 horizontal w-full gap-5 items-center [&>*]:ring-1 [&>*]:ring-white [&>*]:aspect-square`,
     orientationClasses[orientation]
   )}>
   <RandomImage size={110} className="hover:brightness-105 transition-all hover:scale-105" />
