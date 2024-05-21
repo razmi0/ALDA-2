@@ -104,10 +104,21 @@ const { id, key, className } = Astro.props;
 
   [data-loading="success"] ~ div {
     @apply flex;
+    animation: fadeIn 0.3s ease-in forwards;
   }
 
   [data-loading="success"] {
     @apply ring-green-500;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 </style>
 
@@ -122,7 +133,8 @@ const { id, key, className } = Astro.props;
           Valider
           <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
         </Button>
-        <div class={`absolute -bottom-5 hidden text-sm whitespace-nowrap center gap-2 font-semibold`}>
+        <div
+          class={`absolute -bottom-6 left-0 hidden text-sm whitespace-nowrap center gap-2 font-medium transition-transform -translate-x-24`}>
           <ThumbsUp className="stroke-1 h-5 w-5" />
           Votre message a bien été envoyé
         </div>

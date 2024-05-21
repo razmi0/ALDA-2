@@ -1,9 +1,6 @@
 ---
 import type { ProductType } from "@/components/Products/types";
-import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "json" };
-import Checkbox from "@/components/ui/checkbox.astro";
 import Buttons from "../Dialog/Buttons.astro";
-import type { OptionType } from "../types";
 import { DatePickerWithPresets } from "./DatePicker";
 
 interface Props {
@@ -11,10 +8,6 @@ interface Props {
 }
 
 const { product } = Astro.props;
-
-const key = product.id;
-
-const options: OptionType[] = rawOptions.options;
 ---
 
 <script>
@@ -136,11 +129,4 @@ const options: OptionType[] = rawOptions.options;
   <section class="vertical items-start justify-center w-full">
     <DatePickerWithPresets client:visible id={product.id} />
   </section>
-</fieldset>
-<fieldset class={"h-fit grid grid-cols-2 gap-0 select-none"}>
-  {
-    options.map((option) => {
-      return <Checkbox option={option} key={key} />;
-    })
-  }
 </fieldset>

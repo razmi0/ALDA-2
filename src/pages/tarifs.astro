@@ -6,27 +6,26 @@ import rawProducts from "@/components/Products/product.json" assert { type: "jso
 import type { ProductType } from "@/components/Products/types";
 import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
 import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
+import Checkboxes from "@/components/Tarif/Form/Checkboxes.astro";
 import Form from "@/components/Tarif/Form/Form.astro";
 import FormHeading from "@/components/Tarif/Form/FormHeading.astro";
 import Inputs from "@/components/Tarif/Form/Inputs.astro";
 import Message from "@/components/Tarif/Form/Message.astro";
+import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "json" };
 import Orientation from "@/components/Tarif/Orientation.astro";
 import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
+import type { OptionType } from "@/components/Tarif/types";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown, type LucideProps } from "lucide-react";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import Layout from "../layouts/Layout.astro";
 
+const options = rawOptions.options as OptionType[];
 const products = rawProducts.products as ProductType[];
 
-// , Icon: Hourglass
-// , Icon: Gauge
-// , Icon: Backpack
-// , Icon: MapPin
-// , Icon: MapPin
 
 type StatsComponent = {
   label: string;
@@ -35,6 +34,12 @@ type StatsComponent = {
   productKey: keyof ProductType;
 };
 const statsComponents: StatsComponent[] = [
+  
+// , Icon: Hourglass
+// , Icon: Gauge
+// , Icon: Backpack
+// , Icon: MapPin
+// , Icon: MapPin
   { label: "duration", type: "none", productKey: "duration" },
   { label: "dificulty", type: "bar", productKey: "stats" },
   { label: "matériels", type: "badge", productKey: "materials" },
@@ -120,6 +125,7 @@ const statsComponents: StatsComponent[] = [
                   <Form key={product.id} id={product.id}>
                     <FormHeading product={product} />
                     <Inputs product={product} />
+                    <Checkboxes options={options} key={product.id} />
                     <Message product={product} />
                   </Form>
                 </>

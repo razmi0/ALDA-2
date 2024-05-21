@@ -1,0 +1,19 @@
+---
+import Checkbox from "@/components/ui/checkbox.astro";
+import type { OptionType } from "../types";
+
+interface Props {
+  key: string | number;
+  options: OptionType[];
+}
+
+const { key, options } = Astro.props;
+---
+
+<fieldset class={"h-fit grid grid-cols-2 gap-0 select-none"}>
+  {
+    options.map((option) => {
+      return <Checkbox option={option} key={key} />;
+    })
+  }
+</fieldset>
