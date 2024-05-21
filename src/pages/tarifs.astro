@@ -1,10 +1,9 @@
 ---
-import rawProducts from "@/components/Products/product.json" assert { type: "json" };
-import type { ProductType } from "@/components/Products/types";
-// import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 import Button from "@/components/Button.astro";
 import Heading from "@/components/Hero/Heading.astro";
 import MinimalPrice from "@/components/Products/MinimalPrice.astro";
+import rawProducts from "@/components/Products/product.json" assert { type: "json" };
+import type { ProductType } from "@/components/Products/types";
 import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
 import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 import Form from "@/components/Tarif/Form/Form.astro";
@@ -17,32 +16,26 @@ import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown, Backpack, CircleChevronRight, Gauge, Hourglass, MapPin } from "lucide-react";
+import { ArrowDown, Backpack, CircleChevronRight, Gauge, Hourglass, MapPin, type LucideProps } from "lucide-react";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import Layout from "../layouts/Layout.astro";
 
 const products = rawProducts.products as ProductType[];
----
 
-<style>
-  .debug-1 {
-    @apply ring-1 ring-red-400;
-  }
-  .debug-2 {
-    @apply ring-1 ring-green-400;
-  }
-  .debug-3 {
-    @apply ring-1 ring-blue-400;
-  }
-  .debug-4 {
-    @apply ring-1 ring-yellow-400;
-  }
-  .debug-5 {
-    @apply ring-1 ring-purple-400;
-  }
-  .debug-6 {
-    @apply ring-1 ring-pink-400;
-  }
-</style>
+type StatsComponent = {
+  label: string;
+  type: "none" | "bar" | "badge";
+  Icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+  productKey: keyof ProductType;
+};
+const statsComponents: StatsComponent[] = [
+  { label: "duration", type: "none", Icon: Hourglass, productKey: "duration" },
+  { label: "dificulty", type: "bar", Icon: Gauge, productKey: "stats" },
+  { label: "matériels", type: "badge", Icon: Backpack, productKey: "materials" },
+  { label: "lieux", type: "badge", Icon: MapPin, productKey: "locations" },
+  { label: "public", type: "none", Icon: MapPin, productKey: "public" },
+];
+---
 
 <script>
   document.addEventListener("astro:page-load", () => {
@@ -55,7 +48,7 @@ const products = rawProducts.products as ProductType[];
       const openBtn = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
       const closeBtns = getThem<HTMLButtonElement>(`[data-action='close#${key}']`);
 
-      if (!openBtn || !closeBtns || !frames) console.error(`Missing DOM elements`);
+      if (!openBtn || !closeBtns) console.error(`Missing DOM elements`);
 
       const close = () => {
         dialog.close();
@@ -71,47 +64,6 @@ const products = rawProducts.products as ProductType[];
       closeBtns.forEach((btn) => btn.addEventListener("click", close));
     });
   });
-
-  // const translationX = (frames[0]?.clientWidth ?? 0) + gap; !multistep || !nextBtns || !prevBtns
-  // multistep.dataset.framesize = `${translationX}`;
-  // const gap = 50;
-  // const dialogs = getThem("dialog") as HTMLDialogElement[];
-  // const multistep = document.querySelector(`[data-is='multistep#${key}']`) as HTMLElement;
-  // const stepIndicator = document.querySelector(`[data-picture='${key}']`) as HTMLElement;
-  // --
-  // const nextBtns = getThem<HTMLButtonElement>(`[data-action^='next#${key}']`)
-  // const prevBtns = getThem<HTMLButtonElement>(`[data-action^='prev#${key}']`)
-  // const frames = getThem(`[data-frame^='frame#${key}']`)
-
-  // const handleNavigation = (direction: "prev" | "next", e: MouseEvent) => {
-  //   /**
-  //    * Update steps display
-  //    */
-  //   const target = e.currentTarget as HTMLButtonElement;
-  //   const nextStep = target.dataset.step as string;
-  //   stepIndicator.style.setProperty("--step", nextStep);
-
-  //   const frameSize = (multistep as HTMLElement).dataset.framesize as string;
-  //   const translationSize = parseInt(frameSize);
-  //   const firstFrame = frames[0] as HTMLElement;
-  //   const translationData = firstFrame.dataset.translation as string;
-  //   const currentTranslation = parseInt(translationData) || 0;
-
-  //   frames.forEach((frame) => {
-  //     const nextMove =
-  //       direction === "prev" ? currentTranslation + translationSize : currentTranslation - translationSize;
-  //     frame.dataset.translation = `${nextMove}`;
-  //     frame.style.transform = `translateX(${nextMove}px)`;
-  //   });
-  // };
-
-  // (nextBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
-  //   btn.addEventListener("click", (e) => handleNavigation("next", e))
-  // );
-
-  // (prevBtns as HTMLButtonElement[]).forEach((btn: HTMLButtonElement) =>
-  //   btn.addEventListener("click", (e) => handleNavigation("prev", e))
-  // );
 </script>
 
 <Layout title="tarif">
@@ -135,21 +87,14 @@ const products = rawProducts.products as ProductType[];
               <TarifText title={product.title} description={product.description.long} />
               <div class="grid grid-cols-2">
                 <div class="vertical gap-1">
-                  <Stats label="duration" type="none" stats={product.duration}>
-                    <Hourglass slot="icon" />
-                  </Stats>
-                  <Stats label="dificulty" type="bar" stats={product.stats}>
-                    <Gauge slot="icon" />
-                  </Stats>
-                  <Stats label="matériels" type="badge" stats={product.materials}>
-                    <Backpack slot="icon" />
-                  </Stats>
-                  <Stats label="lieux" type="badge" stats={product.locations}>
-                    <MapPin slot="icon" />
-                  </Stats>
-                  <Stats label="public" type="none" stats={product.public}>
-                    <MapPin slot="icon" />
-                  </Stats>
+                  {statsComponents.map((stat) => {
+                    const { label, type, Icon, productKey } = stat;
+                    return (
+                      <Stats label={label} type={type} stats={product[productKey]}>
+                        {Icon && <Icon slot="icon" />}
+                      </Stats>
+                    );
+                  })}
                 </div>
                 <div class="grid items-start justify-end">
                   <ul class="w-full">
@@ -168,7 +113,6 @@ const products = rawProducts.products as ProductType[];
                   <CloseButton key={product.id} />
                   <Form key={product.id} id={product.id}>
                     <FormHeading product={product} />
-
                     <Inputs product={product} />
                     <Message product={product} />
                   </Form>

@@ -52,6 +52,43 @@ const { id, key, className } = Astro.props;
       //-- Add score to data
       const treatedData = { ...data, score: credibilyScore(data) } as FormDataTarif & { score: string };
       console.log(treatedData);
+
+      fakeLoading(form);
+    };
+
+    const timeline = (tasks: { cb: () => void; delay: number }[]) =>
+      tasks.reduce((promise, task) => {
+        return promise.then(
+          () =>
+            new Promise((resolve) => {
+              setTimeout(() => {
+                task.cb();
+                resolve();
+              }, task.delay);
+            })
+        );
+      }, Promise.resolve());
+
+    const fakeLoading = (form: HTMLFormElement) => {
+      const submitButton = form.querySelector("button[type=submit]") as HTMLButtonElement;
+
+      const task1 = () => {
+        submitButton.dataset.loading = "loading";
+        submitButton.disabled = true;
+      };
+      const task2 = () => (submitButton.dataset.loading = "success");
+      const task3 = () => {
+        submitButton.dataset.loading = "idle";
+        submitButton.disabled = false;
+      };
+
+      const tasks = [
+        { cb: task1, delay: 0 },
+        { cb: task2, delay: 2000 },
+        { cb: task3, delay: 3000 },
+      ];
+
+      timeline(tasks);
     };
 
     forms.forEach((form) => {
@@ -72,10 +109,12 @@ const { id, key, className } = Astro.props;
   <section class="vertical items-start justify-center gap-14 p-20">
     <slot />
     <div class="horizontal gap-5 center w-full">
-      <Button data-for={"form"} type="submit" size="md" variant="filled" rightIcon ring="sm">
-        Valider
-        <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
-      </Button>
+      <div class={`vertical center`}>
+        <Button data-loading="idle" data-for={"form"} type="submit" size="md" variant="filled" rightIcon ring="sm">
+          Valider
+          <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
+        </Button>
+      </div>
       <Button data-action={`close#${key}`} type={"button"} size="md" variant="danger" rightIcon>
         Annuler
         <Ban className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
