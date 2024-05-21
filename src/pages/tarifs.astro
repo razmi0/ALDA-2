@@ -27,7 +27,6 @@ import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 import { generateLorem } from "@/lib/utils";
 
 const products = rawProducts.products as ProductType[];
-
 ---
 
 <style>
@@ -172,8 +171,8 @@ const products = rawProducts.products as ProductType[];
               </div>
               <Dialog product={product}>
                 <>
+                  <CloseButton key={product.id} />
                   <Form key={product.id} id={product.id}>
-                    <CloseButton key={product.id} />
                     <Title>{product.name}</Title>
                     <div class="text-left">
                       <h4 class="text-xl">Contactez-nous</h4>
