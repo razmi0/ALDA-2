@@ -2,11 +2,11 @@
 import { cn } from "@/lib/utils";
 
 interface Props {
-  orientation: "ltr" | "rtl";
+  orientation?: "ltr" | "rtl";
   anchorId?: string | number;
 }
 
-const { orientation, anchorId } = Astro.props;
+const { orientation = "ltr", anchorId } = Astro.props;
 
 const orientationClasses = {
   ltr: "horizontal",

@@ -12,7 +12,6 @@ import FormHeading from "@/components/Tarif/Form/FormHeading.astro";
 import Inputs from "@/components/Tarif/Form/Inputs.astro";
 import Message from "@/components/Tarif/Form/Message.astro";
 import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "json" };
-import Orientation from "@/components/Tarif/Orientation.astro";
 import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
@@ -26,7 +25,6 @@ import Layout from "../layouts/Layout.astro";
 const options = rawOptions.options as OptionType[];
 const products = rawProducts.products as ProductType[];
 
-
 type StatsComponent = {
   label: string;
   type: "none" | "bar" | "badge";
@@ -34,12 +32,11 @@ type StatsComponent = {
   productKey: keyof ProductType;
 };
 const statsComponents: StatsComponent[] = [
-  
-// , Icon: Hourglass
-// , Icon: Gauge
-// , Icon: Backpack
-// , Icon: MapPin
-// , Icon: MapPin
+  // , Icon: Hourglass
+  // , Icon: Gauge
+  // , Icon: Backpack
+  // , Icon: MapPin
+  // , Icon: MapPin
   { label: "duration", type: "none", productKey: "duration" },
   { label: "dificulty", type: "bar", productKey: "stats" },
   { label: "matériels", type: "badge", productKey: "materials" },
@@ -85,16 +82,18 @@ const statsComponents: StatsComponent[] = [
       <ArrowDown size="32" />
     </Heading>
   </Section>
-  <Section className={"vertical center container gap-72"}>
+  <Section className={"grid grid-cols-2 container gap-y-72 gap-x-20"}>
     {
-      products.map((product, i) => {
-        const orientation = i % 2 === 0 ? "ltr" : "rtl";
+      products.map((product) => {
+        // const orientation = i % 2 === 0 ? "ltr" : "rtl";
         return (
-          <Orientation orientation={orientation} anchorId={`${product.id}`}>
-            <section class="relative vertical w-fit h-full">
-              <Pictures size={500} orientation={orientation} />
+          // <Orientation anchorId={`${product.id}`}>
+          // <>
+          <>
+            <section class="relative vertical center full">
+              <Pictures size={500} />
             </section>
-            <section class="vertical w-fit h-full gap-7 items-start justify-evenly max-w-[50%]">
+            <section class="vertical h-full gap-7 items-start justify-evenly">
               <TarifText title={product.title} description={product.description.long} />
               <div class="grid grid-cols-2">
                 <div class="vertical gap-1">
@@ -137,7 +136,9 @@ const statsComponents: StatsComponent[] = [
                 <MinimalPrice price={product.price} unit={product.unit} />
               </div>
             </section>
-          </Orientation>
+          </>
+          // </>
+          // </Orientation>
         );
       })
     }

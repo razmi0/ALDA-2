@@ -4,7 +4,7 @@ import RandomImage from "../RandomImage.astro";
 
 interface Props {
   size: number;
-  orientation: "ltr" | "rtl";
+  orientation?: "ltr" | "rtl";
 }
 
 const orientationClasses = {
@@ -12,7 +12,7 @@ const orientationClasses = {
   rtl: "left-5 justify-end",
 };
 
-const { size = 400, orientation } = Astro.props;
+const { size = 400, orientation = "rtl" } = Astro.props;
 ---
 
 <RandomImage
