@@ -16,7 +16,7 @@ const { label, type, stats } = Astro.props;
 <article class="horizontal items-center justify-start w-fit gap-5 h-11">
   <div class="horizontal center gap-1 [&>*]:h-5 [&>*]:-translate-y-[2px] [&>*]:stroke-1">
     <slot name="icon" />
-    <p class="font-semibold">{label}</p>
+    <p class="font-semibold uppercase">{label}</p>
   </div>
   <div class="space-x-3 horizontal wrap">
     {type === "bar" && (stats as StatType[]).map((stat) => <Bar barSize={175} value={stat.value} />)}

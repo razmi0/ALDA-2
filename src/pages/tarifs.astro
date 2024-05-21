@@ -16,11 +16,17 @@ import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown, Backpack, CircleChevronRight, Gauge, Hourglass, MapPin, type LucideProps } from "lucide-react";
+import { ArrowDown, type LucideProps } from "lucide-react";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import Layout from "../layouts/Layout.astro";
 
 const products = rawProducts.products as ProductType[];
+
+// , Icon: Hourglass
+// , Icon: Gauge
+// , Icon: Backpack
+// , Icon: MapPin
+// , Icon: MapPin
 
 type StatsComponent = {
   label: string;
@@ -29,11 +35,11 @@ type StatsComponent = {
   productKey: keyof ProductType;
 };
 const statsComponents: StatsComponent[] = [
-  { label: "duration", type: "none", Icon: Hourglass, productKey: "duration" },
-  { label: "dificulty", type: "bar", Icon: Gauge, productKey: "stats" },
-  { label: "matériels", type: "badge", Icon: Backpack, productKey: "materials" },
-  { label: "lieux", type: "badge", Icon: MapPin, productKey: "locations" },
-  { label: "public", type: "none", Icon: MapPin, productKey: "public" },
+  { label: "duration", type: "none", productKey: "duration" },
+  { label: "dificulty", type: "bar", productKey: "stats" },
+  { label: "matériels", type: "badge", productKey: "materials" },
+  { label: "lieux", type: "badge", productKey: "locations" },
+  { label: "public", type: "none", productKey: "public" },
 ];
 ---
 
@@ -98,10 +104,10 @@ const statsComponents: StatsComponent[] = [
                 </div>
                 <div class="grid items-start justify-end">
                   <ul class="w-full">
-                    <p class="font-semibold mb-2">Programme :</p>
+                    <p class="font-semibold mb-2">Au programme :</p>
                     {product.tasks.map((task) => (
                       <li class="w-full horizontal items-center gap-3 mb-1">
-                        <CircleChevronRight className="stroke-1 h-4 w-4" />
+                        {/* <CircleChevronRight className="stroke-1 h-4 w-4" /> */}
                         <p class="full">{task}</p>
                       </li>
                     ))}
@@ -119,7 +125,7 @@ const statsComponents: StatsComponent[] = [
                 </>
               </Dialog>
               <div class="horizontal center gap-5">
-                <Button data-action={`open#${product.id}`} dark size="lg">
+                <Button data-action={`open#${product.id}`} dark size="lg" ring="sm">
                   S'inscrire
                 </Button>
                 <MinimalPrice price={product.price} unit={product.unit} />
