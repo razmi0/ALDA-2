@@ -24,24 +24,6 @@ const { id, key, className } = Astro.props;
     tel: string;
     textarea: string;
   };
-  type LabelsType = Record<string, Record<"label" | "value", string>>;
-
-  const labels: LabelsType = {
-    quantity_person: { label: "Vous avez réservé pour", value: "inherit" },
-    date: { label: "Le", value: "inherit" },
-    tel: { label: "Votre téléphone", value: "inherit" },
-    email: { label: "Votre email", value: "inherit" },
-    textarea: { label: "Votre message", value: "inherit" },
-    // --
-    hasMaterial: { label: "Vous amenez votre matériel ?", value: "Oui" },
-    isPro: { label: "Vous êtes un professionnel ?", value: "Oui" },
-    isParticular: { label: "Vous êtes un particulier ?", value: "Oui" },
-    isCompany: { label: "Vous êtes une entreprise ?", value: "Oui" },
-    hasDisability: { label: "Vous avez un handicap ?", value: "Oui" },
-    isAssociation: { label: "Vous êtes une association ?", value: "Oui" },
-    isAccompanist: { label: "Vous êtes un accompagnant ?", value: "Oui" },
-    recontact: { label: "Vous souhaitez être recontacté ?", value: "Oui" },
-  };
 
   document.addEventListener("astro:page-load", () => {
     const forms = Array.from(document.querySelectorAll("form[data-form]")) as HTMLFormElement[];
@@ -67,60 +49,6 @@ const { id, key, className } = Astro.props;
         window.location.assign("/honey");
         return;
       }
-
-      const key = data.product_id;
-      /**
-       * submitter is "message" or "sumup"
-       * "message" => buildRecap
-       * "sumup" => send to server
-       */
-      const submitter = e.submitter as HTMLButtonElement;
-      const filteredKeys = ["product_id", "hp", "textarea"];
-
-      console.log(submitter.getAttribute("data-for"));
-      if (submitter.getAttribute("data-for") === "message") {
-        // buildRecap
-        const rootRecap = document.querySelector(`[data-recap="recap#${key}"]`) as HTMLElement;
-        const entries = Object.entries(data).filter(([key]) => !filteredKeys.includes(key));
-
-        const sectionMessage = form.querySelector("section[data-is='recap-message']") as HTMLElement;
-        if (sectionMessage) {
-          sectionMessage.textContent = "";
-
-          const spanLabel = document.createElement("span");
-          spanLabel.className = "label";
-          spanLabel.textContent = labels["textarea"]?.label ?? key;
-
-          const pValue = document.createElement("p");
-          pValue.className = "value";
-          pValue.textContent = data.textarea;
-
-          sectionMessage.appendChild(spanLabel);
-          sectionMessage.appendChild(pValue);
-        }
-
-        rootRecap.textContent = "";
-
-        const ul = document.createElement("ul");
-        entries.forEach(([key, value]) => {
-          const li = document.createElement("li");
-
-          const spanLabel = document.createElement("span");
-          spanLabel.className = "label";
-          spanLabel.textContent = labels[key]?.label ?? key;
-
-          const pValue = document.createElement("p");
-          pValue.className = "value";
-          pValue.textContent = labels[key]?.value === "inherit" ? value : labels[key]?.value ?? value;
-
-          li.appendChild(spanLabel);
-          li.appendChild(pValue);
-          ul.appendChild(li);
-        });
-
-        rootRecap.appendChild(ul);
-      }
-
       //-- Add score to data
       const treatedData = { ...data, score: credibilyScore(data) } as FormDataTarif & { score: string };
       console.log(treatedData);
