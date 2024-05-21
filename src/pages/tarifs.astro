@@ -1,10 +1,14 @@
 ---
-import Heading from "@/components/Hero/Heading.astro";
 import rawProducts from "@/components/Products/product.json" assert { type: "json" };
 import type { ProductType } from "@/components/Products/types";
 // import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 import Button from "@/components/Button.astro";
+import Heading from "@/components/Hero/Heading.astro";
 import MinimalPrice from "@/components/Products/MinimalPrice.astro";
+import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
+import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
+import Form from "@/components/Tarif/Form/Form.astro";
+import FormHeading from "@/components/Tarif/Form/FormHeading.astro";
 import Inputs from "@/components/Tarif/Form/Inputs.astro";
 import Message from "@/components/Tarif/Form/Message.astro";
 import Orientation from "@/components/Tarif/Orientation.astro";
@@ -15,16 +19,6 @@ import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown, Backpack, CircleChevronRight, Gauge, Hourglass, MapPin } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-// import type { ProductType } from "@/components/Products/types";
-import Title from "@/components/Tarif/Form/Title.astro";
-// import type { HTMLAttributes } from "astro/types";
-import Form from "@/components/Tarif/Form/Form.astro";
-// import FormButtons from "@/components/Tarif/Form/FormButtons.astro";
-// import SumUp from "@/components/Tarif/Form/SumUp.astro";
-import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
-import ContactDetail from "@/components/Tarif/Dialog/ContactDetail.astro";
-import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
-import { generateLorem } from "@/lib/utils";
 
 const products = rawProducts.products as ProductType[];
 ---
@@ -173,14 +167,8 @@ const products = rawProducts.products as ProductType[];
                 <>
                   <CloseButton key={product.id} />
                   <Form key={product.id} id={product.id}>
-                    <Title>{product.name}</Title>
-                    <div class="text-left">
-                      <h4 class="text-xl">Contactez-nous</h4>
-                      <div class={`horizontal items-center justify-between gap-5`}>
-                        <p class="leading-5 max-w-[50ch] text-balance">{generateLorem(50)}</p>
-                        <ContactDetail product={product} />
-                      </div>
-                    </div>
+                    <FormHeading product={product} />
+
                     <Inputs product={product} />
                     <Message product={product} />
                   </Form>
