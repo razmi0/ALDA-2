@@ -30,12 +30,10 @@ const { as, className } = Astro.props as Props;
     <Nav className="text-white font-semibold space-x-16" />
 
     {
-      as === "footer" ? (
+      as === "footer" && (
         <article class=" font-bold">
           <Socials />
         </article>
-      ) : (
-        <>{/* <ModeToogle /> */}</>
       )
     }
   </section>
