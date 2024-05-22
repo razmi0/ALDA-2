@@ -12,39 +12,43 @@ import Heading from "./Heading.astro";
 
 <style>
   .fade-out-bottom {
-    @apply absolute-align full z-10;
     background: linear-gradient(to bottom, #0b0e1600 0%, #0b0e1600 80%, #0b0e16 100%);
   }
 </style>
 
 <HeaderFooter as="header" />
 <Section className="relative text-white vertical center">
-  <div class="fade-out-bottom"></div>
+  <div class="absolute-align full z-10 fade-out-bottom pointer-events-none"></div>
   <ImageSwitch
     uniqueKey="hero"
     alt="hero"
-    className="absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125"
+    className="absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125 pointer-events-none"
   />
-  <div class="text-white">
+  <div class="z-50 vertical items-center h-screen max-h-[90vh] justify-between text-center">
+    <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
+    <div class="h-1/4 w-full"></div>
     <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
-    <div
-      class="absolute-align justify-end items-center vertical z-10 full gap-6 text-center pointer-events-none max-h-[95%]">
-      <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
-
-      <p class="text-white/80 line-clamp-3 max-w-[55ch] leading-4" style="z-index : inherit">
+    <div class={`space-y-10`}>
+      <p class="text-white/80 line-clamp-3 max-w-[55ch] leading-4">
         {generateLorem(30)}
       </p>
-      <Button
-        className="pointer-events-auto hover:bg-white/20"
-        variant="outline"
-        size="lg"
-        data-is="hero-button"
-        textClass="-translate-x-2"
-        leftIcon>
-        <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
-        <CTA href="/tarifs"><span>S'inscrire</span></CTA>
-      </Button>
-      <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
+
+      <div class={`horizontal center gap-10`}>
+        <CTA href="/tarifs">
+          <Button
+            className="pointer-events-auto hover:bg-white/20"
+            variant="outline"
+            ring="sm"
+            size="lg"
+            data-is="hero-button"
+            textClass="-translate-x-2"
+            leftIcon>
+            <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
+            S'inscrire
+          </Button>
+        </CTA>
+        <p>Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
+      </div>
     </div>
   </div>
 </Section>

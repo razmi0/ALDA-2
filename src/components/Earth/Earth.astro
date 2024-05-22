@@ -1,5 +1,6 @@
 ---
 import Section from "@/layouts/Section.astro";
+import ForestMask from "../Forest/ForestMask.astro";
 import VerticalText from "../VerticalText.astro";
 import EarthArticle from "./EarthArticle.astro";
 import EarthFigure from "./EarthFigure.astro";
@@ -7,14 +8,13 @@ import EarthTestimony from "./EarthTestimony.astro";
 import Gradients from "./Gradients.astro";
 ---
 
+<ForestMask />
 <Section
   extension="none"
   className="relative vertical md:horizontal flex-wrap center pb-32 bg-earth-600 overflow-hidden gap-20"
-  size="full"
->
+  size="full">
   <Gradients />
   <VerticalText position="left" className="bottom-96">Découvrez la grimpe d'arbre</VerticalText>
-
   <div class="w-full horizontal center gap-48">
     <EarthArticle />
     <EarthFigure />
