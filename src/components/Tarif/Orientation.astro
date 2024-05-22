@@ -1,20 +1,30 @@
 ---
 import { cn } from "@/lib/utils";
+import type { HTMLTag } from "astro/types";
+
+type OrientationType = "ltr" | "rtl";
 
 interface Props {
-  orientation?: "ltr" | "rtl";
+  orientation?: OrientationType;
   anchorId?: string | number;
+  className?: string;
+  as?: HTMLTag;
 }
 
-const { orientation = "ltr", anchorId } = Astro.props;
+const { orientation = "ltr", anchorId, as = "div", className = "" } = Astro.props as Props;
 
-const orientationClasses = {
+const filteredProps = ["className", "as", "orientation", "anchorId"];
+const props = Object.fromEntries(Object.entries(Astro.props).filter(([key]) => !filteredProps.includes(key)));
+
+const Tag = as as HTMLTag;
+
+const orientationClasses: Record<OrientationType, string> = {
   ltr: "horizontal",
   rtl: "horizontal-reverse",
 };
 ---
 
-<div {...Astro.props} class={cn(`relative full px-5 gap-10 items-end justify-evenly`, orientationClasses[orientation])}>
-  <div id={`${anchorId}`} aria-hidden="true" class="absolute -top-[50%]"></div>
+<Tag {...props} class={cn(className, orientationClasses[orientation as OrientationType])}>
+  {anchorId && <div id={`${anchorId}`} aria-hidden="true" class="absolute -top-[25%]" />}
   <slot />
-</div>
+</Tag>

@@ -139,7 +139,10 @@ const statsComponents: StatsComponent[] = [
       products.map((product, i) => {
         const orientation = i % 2 === 0 ? "ltr" : "rtl";
         return (
-          <Orientation anchorId={`${product.id}`} orientation={orientation}>
+          <Orientation
+            anchorId={`${product.id}`}
+            orientation={orientation}
+            className="relative full px-5 gap-10 items-end justify-evenly">
             <>
               <section class="relative vertical center full" data-observer="titlePicture">
                 <h3
