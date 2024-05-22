@@ -1,0 +1,16 @@
+---
+interface Props {
+  description?: string;
+  className?: string;
+}
+
+const { description, className } = Astro.props;
+---
+
+{
+  description && (
+    <div class="overflow-auto leading-5">
+      <p class={`text-balance ${className}`}>{description}</p>
+    </div>
+  )
+}
