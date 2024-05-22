@@ -2,11 +2,24 @@
 interface Props {
   href: string;
   className?: string;
+  prefetch?: boolean;
+  prefetchType?: "load" | "tap" | "viewport" | "hover";
 }
 
-const { href, className } = Astro.props;
+const { href, className, prefetch = true, prefetchType = "hover" } = Astro.props;
 ---
 
-<a href={href} class={className || ""}>
-  <slot />
-</a>
+{
+  prefetch && (
+    <a href={href} class={className || ""} data-astro-prefetch={prefetchType}>
+      <slot />
+    </a>
+  )
+}
+{
+  !prefetch && (
+    <a href={href} class={className || ""}>
+      <slot />
+    </a>
+  )
+}

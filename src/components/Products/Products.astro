@@ -36,7 +36,9 @@ const imgSize = {
       const articleOrientation = i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal";
       return (
         <article class={articleOrientation} data-is={`product-${i}`}>
-          <RandomImage width={imgSize.width} height={imgSize.height} />
+          <div transition:name={`random-image-${id}`}>
+            <RandomImage width={imgSize.width} height={imgSize.height} />
+          </div>
           <div class="vertical gap-10 w-fit" data-id={id}>
             <Article
               title={title}
@@ -50,7 +52,7 @@ const imgSize = {
               </div>
             </Article>
             <footer class="horizontal items-center justify-start gap-10">
-              <CTA href={`/tarifs#${id}`}>
+              <CTA href={`/tarifs#${id}`} prefetch prefetchType="viewport">
                 <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">
                   En savoir plus
                 </Button>

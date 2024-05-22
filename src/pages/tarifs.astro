@@ -150,12 +150,14 @@ const statsComponents: StatsComponent[] = [
                   class={`text-6xl uppercase text-left w-full mb-10 grandstander transition-transform ${orientation === "ltr" ? "-translate-x-[100vw]" : "translate-x-[100vw]"} `}>
                   {product.title}
                 </h3>
-                <Pictures
-                  className="blur-[1px] opacity-0 translate-y-5"
-                  data-observer="picture"
-                  size={500}
-                  orientation={orientation}
-                />
+                <div transition:name={`random-image-${product.id}`} class={`full`}>
+                  <Pictures
+                    className="blur-[1px] opacity-0 translate-y-5"
+                    data-observer="picture"
+                    size={500}
+                    orientation={orientation}
+                  />
+                </div>
               </section>
               <section class="vertical h-full gap-7 items-start justify-evenly max-w-[50%]">
                 <Text description={product.description.long} title={product.name} />
