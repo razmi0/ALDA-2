@@ -1,11 +1,15 @@
 ---
 import Section from "@/layouts/Section.astro";
 import { BirdIcon } from "lucide-react";
-import Product from "./Product.astro";
-import data from "./product.json" assert { type: "json" };
-import type { ProductType } from "./types";
+import Article from "../Article.astro";
+import Button from "../Button.astro";
+import CTA from "../CTA.astro";
 import RandomImage from "../RandomImage.astro";
 import VerticalText from "../VerticalText.astro";
+import Badge from "./Badge.astro";
+import MinimalPrice from "./MinimalPrice.astro";
+import data from "./product.json" assert { type: "json" };
+import type { ProductType } from "./types";
 
 const rawProducts = data.products as ProductType[];
 
@@ -19,8 +23,7 @@ const imgSize = {
 
 <Section
   extension="md"
-  className=" max-w-[100vw] relative vertical center md:py-52 md:px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28"
->
+  className=" max-w-[100vw] relative vertical center md:py-52 md:px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28">
   <VerticalText position="right" dark>Le meilleur de nos propositions</VerticalText>
   <style>
     .before-footer-fade {
@@ -28,22 +31,39 @@ const imgSize = {
       background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 85%, #94c2e7 100%);
     }
   </style>
-  <!-- OVERLAY -->
-  <!-- <div class="absolute-align full before-footer-fade -z-10"></div> -->
-  <!-- OVERLAY -->
   <div class="vertical gap-10 w-full">
     <BirdIcon className="h-10 w-10" />
     <h2 class="text-xl text-left">Ce que l'on vous conseille</h2>
   </div>
   {
     topProducts.map((product: ProductType, i: number) => {
+      const { id, title, description, tags, price, unit } = product;
       return (
         <article
           class={`${i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal"}`}
-          data-is={`product-${i}`}
-        >
+          data-is={`product-${i}`}>
           <RandomImage width={imgSize.width} height={imgSize.height} />
-          <Product {...product} />
+          <div class="vertical gap-10 w-fit" data-id={id}>
+            <Article
+              title={title}
+              words1={description.short}
+              pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"}
+              dark>
+              <div class="w-full h-full space-x-4 text-left" slot="subtitle">
+                {tags.map((tag) => {
+                  return <Badge tag={tag} />;
+                })}
+              </div>
+            </Article>
+            <footer class="horizontal items-center justify-start gap-10">
+              <CTA href={`/tarifs#${id}`}>
+                <Button size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">
+                  En savoir plus
+                </Button>
+              </CTA>
+              <MinimalPrice price={price} unit={unit} />
+            </footer>
+          </div>
         </article>
       );
     })
