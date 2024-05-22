@@ -1,6 +1,7 @@
 ---
 import Button from "@/components/Button.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
+import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { Mountain } from "lucide-react";
 import CTA from "../CTA.astro";
@@ -17,12 +18,12 @@ import Heading from "./Heading.astro";
 </style>
 
 <HeaderFooter as="header" />
-<section class="relative text-white">
+<Section className="relative text-white vertical center">
   <div class="fade-out-bottom"></div>
   <ImageSwitch
     uniqueKey="hero"
     alt="hero"
-    className="w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125"
+    className="absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125"
   />
   <div class="text-white">
     <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
@@ -46,4 +47,4 @@ import Heading from "./Heading.astro";
       <p style="z-index : inherit">Start at <span class="text-lg font-bold">100</span>&#8364; / night</p>
     </div>
   </div>
-</section>
+</Section>
