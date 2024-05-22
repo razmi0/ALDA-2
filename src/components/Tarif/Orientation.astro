@@ -14,9 +14,7 @@ const orientationClasses = {
 };
 ---
 
-<div
-  {...Astro.props}
-  class={cn(`relative full px-5 gap-10 items-center justify-evenly`, orientationClasses[orientation])}>
+<div {...Astro.props} class={cn(`relative full px-5 gap-10 items-end justify-evenly`, orientationClasses[orientation])}>
   <div id={`${anchorId}`} aria-hidden="true" class="absolute -top-[50%]"></div>
   <slot />
 </div>

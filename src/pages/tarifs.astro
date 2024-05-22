@@ -12,6 +12,7 @@ import FormHeading from "@/components/Tarif/Form/FormHeading.astro";
 import Inputs from "@/components/Tarif/Form/Inputs.astro";
 import Message from "@/components/Tarif/Form/Message.astro";
 import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "json" };
+import Orientation from "@/components/Tarif/Orientation.astro";
 import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
 import TarifText from "@/components/Tarif/TarifText.astro";
@@ -82,63 +83,61 @@ const statsComponents: StatsComponent[] = [
       <ArrowDown size="32" />
     </Heading>
   </Section>
-  <Section className={"grid grid-cols-2 container gap-y-72 gap-x-20"}>
+  <Section className={"horizontal flex-wrap container gap-y-72 gap-x-20"}>
     {
-      products.map((product) => {
-        // const orientation = i % 2 === 0 ? "ltr" : "rtl";
+      products.map((product, i) => {
+        const orientation = i % 2 === 0 ? "ltr" : "rtl";
         return (
-          // <Orientation anchorId={`${product.id}`}>
-          // <>
-          <>
-            <section class="relative vertical center full">
-              <Pictures size={500} />
-            </section>
-            <section class="vertical h-full gap-7 items-start justify-evenly">
-              <TarifText title={product.title} description={product.description.long} />
-              <div class="grid grid-cols-2">
-                <div class="vertical gap-1">
-                  {statsComponents.map((stat) => {
-                    const { label, type, Icon, productKey } = stat;
-                    return (
-                      <Stats label={label} type={type} stats={product[productKey]}>
-                        {Icon && <Icon slot="icon" />}
-                      </Stats>
-                    );
-                  })}
+          <Orientation anchorId={`${product.id}`} orientation={orientation}>
+            <>
+              <section class="relative vertical center full">
+                <h3 class={`text-6xl uppercase text-left w-full mb-10 grandstander`}>{product.title}</h3>
+                <Pictures size={500} />
+              </section>
+              <section class="vertical h-full gap-7 items-start justify-evenly max-w-[50%]">
+                <TarifText description={product.description.long} />
+                <div class="grid grid-cols-2">
+                  <div class="vertical gap-1">
+                    {statsComponents.map((stat) => {
+                      const { label, type, Icon, productKey } = stat;
+                      return (
+                        <Stats label={label} type={type} stats={product[productKey]}>
+                          {Icon && <Icon slot="icon" />}
+                        </Stats>
+                      );
+                    })}
+                  </div>
+                  <div class="grid items-start justify-end">
+                    <ul class="w-full">
+                      <p class="font-semibold mb-2">Au programme :</p>
+                      {product.tasks.map((task) => (
+                        <li class="w-full horizontal items-center gap-3 mb-1">
+                          <p class="full">{task}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div class="grid items-start justify-end">
-                  <ul class="w-full">
-                    <p class="font-semibold mb-2">Au programme :</p>
-                    {product.tasks.map((task) => (
-                      <li class="w-full horizontal items-center gap-3 mb-1">
-                        {/* <CircleChevronRight className="stroke-1 h-4 w-4" /> */}
-                        <p class="full">{task}</p>
-                      </li>
-                    ))}
-                  </ul>
+                <Dialog product={product}>
+                  <>
+                    <CloseButton key={product.id} />
+                    <Form key={product.id} id={product.id}>
+                      <FormHeading product={product} />
+                      <Inputs product={product} />
+                      <Checkboxes options={options} key={product.id} />
+                      <Message product={product} />
+                    </Form>
+                  </>
+                </Dialog>
+                <div class="horizontal center gap-5">
+                  <Button data-action={`open#${product.id}`} dark size="lg" ring="sm">
+                    S'inscrire
+                  </Button>
+                  <MinimalPrice price={product.price} unit={product.unit} />
                 </div>
-              </div>
-              <Dialog product={product}>
-                <>
-                  <CloseButton key={product.id} />
-                  <Form key={product.id} id={product.id}>
-                    <FormHeading product={product} />
-                    <Inputs product={product} />
-                    <Checkboxes options={options} key={product.id} />
-                    <Message product={product} />
-                  </Form>
-                </>
-              </Dialog>
-              <div class="horizontal center gap-5">
-                <Button data-action={`open#${product.id}`} dark size="lg" ring="sm">
-                  S'inscrire
-                </Button>
-                <MinimalPrice price={product.price} unit={product.unit} />
-              </div>
-            </section>
-          </>
-          // </>
-          // </Orientation>
+              </section>
+            </>
+          </Orientation>
         );
       })
     }
