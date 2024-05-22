@@ -33,10 +33,9 @@ const imgSize = {
   {
     topProducts.map((product: ProductType, i: number) => {
       const { id, title, description, tags, price, unit } = product;
+      const articleOrientation = i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal";
       return (
-        <article
-          class={`${i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal"}`}
-          data-is={`product-${i}`}>
+        <article class={articleOrientation} data-is={`product-${i}`}>
           <RandomImage width={imgSize.width} height={imgSize.height} />
           <div class="vertical gap-10 w-fit" data-id={id}>
             <Article
