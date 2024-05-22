@@ -10,13 +10,13 @@ const { className } = Astro.props;
 
 const isActivePath = (path: string) => Astro.url.pathname === path;
 
-const coreCTA = { name: "tarifs", href: "/tarifs", isActive: isActivePath("/tarifs") };
+const coreCTA = { name: "Tarifs", href: "/tarifs", isActive: isActivePath("/tarifs") };
 
 const websiteLinks = [
-  { name: "accueil", href: "/", isActive: isActivePath("/") },
-  { name: "nous", href: "/nous", isActive: isActivePath("/nous") },
+  { name: "Accueil", href: "/", isActive: isActivePath("/") },
+  { name: "Nous", href: "/nous", isActive: isActivePath("/nous") },
   { name: "FAQs", href: "/FAQ", isActive: isActivePath("/FAQ") },
-  { name: "contact", href: "/contact", isActive: isActivePath("/contact") },
+  { name: "Contact", href: "/contact", isActive: isActivePath("/contact") },
 ];
 ---
 
@@ -30,7 +30,7 @@ const websiteLinks = [
   }
   <CTA href={coreCTA.href}>
     <button
-      class={`px-10 py-3 rounded-lg bg-pur-500 hover:bg-pur-500/80 hover:text-white/80 text-black ring-1 ring-stone-200 transition-all`}>
+      class={`px-10 py-3 rounded-lg bg-pur-500 hover:brightness-110 hover:text-white/80 text-black ring-1 ring-stone-400 transition-all`}>
       {coreCTA.name}
     </button>
   </CTA>

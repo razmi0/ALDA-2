@@ -15,9 +15,10 @@ const key = "contact";
   <Section data-action={`section-message#${key}`} size="full" extension="sm" className={"grid center"}>
     <div class={"horizontal center gap-32 w-full h-fit"}>
       <div class="text-left vertical items-start justify-between h-full gap-20">
-        <div>
+        <!--  -->
+        <div transition:name="heading">
           <h2 class="text-3xl uppercase mb-5">Contactez-nous</h2>
-          <p class="max-w-[50ch] text-[1rem]">
+          <p class="max-w-[50ch] text-[1rem] text-balance">
             Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ? N'hésitez pas
             à nous contacter via le formulaire ci-dessous.
           </p>
