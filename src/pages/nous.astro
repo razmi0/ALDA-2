@@ -1,10 +1,20 @@
 ---
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
+import { generateLorem } from "@/lib/utils";
+import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="nous">
   <HeaderFooter slot="header" />
-  <Section class={"absolute-center full"} />
+  <Section className="vertical center">
+    <div class="text-center vertical center mb-20" transition:name="heading">
+      <h2 class="text-3xl uppercase mb-5">Qui sommes-nous</h2>
+      <p class="max-w-[50ch] mb-5 text-[1rem]">
+        {generateLorem(20)}
+      </p>
+      <ArrowDown size="32" />
+    </div>
+  </Section>
 </Layout>
