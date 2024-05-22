@@ -14,16 +14,20 @@ const { as, className } = Astro.props as Props;
 
 <Section
   as={as}
-  size="quarter"
+  size="small"
   extension="none"
-  className={cn("vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10", className)}
+  className={cn(
+    "vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 backdrop-blur-sm bg-darkMode-500 text-white border-b border-b-stone-400",
+    className
+  )}
   data-is={`global-${as}`}
   transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
     <h1 class="text-2xl">
+      <span class="font-bold mr-3">LOGO</span>
       <a href="/"> A l'abordarbre</a>
     </h1>
-    <Nav className="text-black/80 font-semibold space-x-16" />
+    <Nav className="text-white font-semibold space-x-16" />
 
     {
       as === "footer" ? (
@@ -31,10 +35,7 @@ const { as, className } = Astro.props as Props;
           <Socials />
         </article>
       ) : (
-        <>
-          <span class="font-bold text-2xl">LOGO</span>
-          {/* <ModeToogle /> */}
-        </>
+        <>{/* <ModeToogle /> */}</>
       )
     }
   </section>

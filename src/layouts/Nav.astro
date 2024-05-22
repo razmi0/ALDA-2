@@ -1,4 +1,5 @@
 ---
+import CTA from "@/components/CTA.astro";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -9,12 +10,13 @@ const { className } = Astro.props;
 
 const isActivePath = (path: string) => Astro.url.pathname === path;
 
+const coreCTA = { name: "tarifs", href: "/tarifs", isActive: isActivePath("/tarifs") };
+
 const websiteLinks = [
   { name: "accueil", href: "/", isActive: isActivePath("/") },
-  { name: "contact", href: "/contact", isActive: isActivePath("/contact") },
   { name: "nous", href: "/nous", isActive: isActivePath("/nous") },
-  { name: "tarifs", href: "/tarifs", isActive: isActivePath("/tarifs") },
   { name: "FAQs", href: "/FAQ", isActive: isActivePath("/FAQ") },
+  { name: "contact", href: "/contact", isActive: isActivePath("/contact") },
 ];
 ---
 
@@ -26,4 +28,10 @@ const websiteLinks = [
       </a>
     ))
   }
+  <CTA href={coreCTA.href}>
+    <button
+      class={`px-10 py-3 rounded-lg bg-pur-500 hover:bg-pur-500/80 hover:text-white/80 text-black ring-1 ring-stone-200 transition-all`}>
+      {coreCTA.name}
+    </button>
+  </CTA>
 </nav>

@@ -5,67 +5,65 @@ import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/layouts/Section.astro";
 import Socials from "@/layouts/Socials.astro";
-import { ArrowDown, Send } from "lucide-react";
-
+import { Send, ThumbsUp } from "lucide-react";
 const key = "contact";
 ---
 
 <Layout title="contact">
   <HeaderFooter slot="header" />
-  <Section size="half" className="vertical center">
-    <div class="text-center vertical center">
-      <h2 class="text-3xl uppercase mb-5">Contactez-nous</h2>
-      <p class="max-w-[50ch] mb-5 text-[1rem]">
-        Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ? N'hésitez pas à
-        nous contacter via le formulaire ci-dessous.
-      </p>
-      <ArrowDown size="32" />
-    </div>
-  </Section>
-  <Section data-action={`section-message#${key}`} size="full" extension="sm" fixedHeight className={"grid center"}>
-    <div class={"horizontal items-start justify-center dark:bg-slate-600 bg-slate-300 rounded-lg h-[600px] gap-20"}>
-      <div
-        class="py-10 px-14 rounded-tl-lg rounded-bl-lg vertical justify-between h-full gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow dark:bg-slate-700 bg-slate-400">
-        <article>
-          <h3>Notre adresse</h3>
-          <p>12 rue de la Paix</p>
-          <p>Toulouse</p>
-          <p>31100</p>
-        </article>
-        <article>
-          <h3>Nos contact</h3>
-          <p>
-            <span>Email : </span>
-            <span class="font-semibold">alabordarbre@contact.com</span>
+
+  <Section data-action={`section-message#${key}`} size="full" extension="sm" className={"grid center"}>
+    <div class={"horizontal center gap-32 w-full h-fit"}>
+      <div class="text-left vertical items-start justify-between h-full gap-20">
+        <div>
+          <h2 class="text-3xl uppercase mb-5">Contactez-nous</h2>
+          <p class="max-w-[50ch] text-[1rem]">
+            Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ? N'hésitez pas
+            à nous contacter via le formulaire ci-dessous.
           </p>
-          <p>
-            <span>Téléphone : </span>
-            <span class="font-semibold">06 12 34 56 78</span>
-          </p>
-        </article>
-        <article class="vertical justify-end">
-          <h3>Nos réseaux</h3>
-          <Socials />
-        </article>
+        </div>
+        <div
+          class="py-10 px-14 rounded-lg vertical items-start text-left justify-between h-fit gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow bg-zinc-200 text-black shadow-md shadow-black/20">
+          <article>
+            <h3>Notre adresse</h3>
+            <p>12 rue de la Paix</p>
+            <p>Toulouse</p>
+            <p>31100</p>
+          </article>
+          <article>
+            <h3>Nos contact</h3>
+            <p>
+              <span>Email : </span>
+              <span class="font-semibold">alabordarbre@contact.com</span>
+            </p>
+            <p>
+              <span>Téléphone : </span>
+              <span class="font-semibold">06 12 34 56 78</span>
+            </p>
+          </article>
+          <article class="vertical justify-end">
+            <h3>Nos réseaux</h3>
+            <Socials />
+          </article>
+        </div>
       </div>
-      <form class="py-10 px-14 rounded-lg space-y-5">
+      <form
+        class="py-10 px-14 space-y-5 ring-1 ring-stone-300 ring-offset-1 vertical bg-zinc-200 text-black shadow-md shadow-black/20 rounded-md">
         <div class="max-w-lg vertical center">
           <Message key={key} telClass="bg-stone-100" textareaClass="bg-stone-100" emailClass="bg-stone-100" />
         </div>
         <div class="w-full horizontal-reverse">
-          <Button
-            dark
-            data-for={"message"}
-            data-action={`next#${key}`}
-            type="submit"
-            size="md"
-            variant="outline"
-            rightIcon
-            className="ring-stone-800 text-stone-800"
-            ring="sm">
-            Valider
-            <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
-          </Button>
+          <div class={`relative vertical center`}>
+            <Button data-loading="idle" data-for={"form"} type="submit" size="md" variant="filled" rightIcon ring="sm">
+              Valider
+              <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
+            </Button>
+            <div
+              class={`absolute -bottom-6 left-0 hidden text-sm whitespace-nowrap center gap-2 font-medium transition-transform translate-y-5`}>
+              <ThumbsUp className="stroke-1 h-5 w-5" />
+              Votre message a bien été envoyé
+            </div>
+          </div>
         </div>
       </form>
     </div>

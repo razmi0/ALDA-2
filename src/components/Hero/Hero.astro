@@ -1,6 +1,6 @@
 ---
 import Button from "@/components/Button.astro";
-import Nav from "@/layouts/Nav.astro";
+import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import { generateLorem } from "@/lib/utils";
 import { Mountain } from "lucide-react";
 import CTA from "../CTA.astro";
@@ -16,7 +16,7 @@ import Heading from "./Heading.astro";
   }
 </style>
 
-<header class={"vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 h-32"} transition:animate={"none"}>
+<!-- <header class={"vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 h-32"} transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
     <h1 class="text-2xl">
       <a href="/"> A l'abordarbre</a>
@@ -24,7 +24,8 @@ import Heading from "./Heading.astro";
     <Nav className="text-black/80 font-semibold space-x-16" />
     <span class="font-bold text-2xl">LOGO</span>
   </section>
-</header>
+</header> -->
+<HeaderFooter as="header" />
 <section class="relative text-white">
   <div class="fade-out-bottom"></div>
   <ImageSwitch
