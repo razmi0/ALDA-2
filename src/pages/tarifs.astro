@@ -15,14 +15,13 @@ import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "jso
 import Orientation from "@/components/Tarif/Orientation.astro";
 import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
-import TarifText from "@/components/Tarif/Description.astro";
+import Text from "@/components/Tarif/Text.astro";
 import type { OptionType } from "@/components/Tarif/types";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown, type LucideProps } from "lucide-react";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import Layout from "../layouts/Layout.astro";
-import Description from "@/components/Tarif/Description.astro";
 
 const options = rawOptions.options as OptionType[];
 const products = rawProducts.products as ProductType[];
@@ -48,9 +47,14 @@ const statsComponents: StatsComponent[] = [
 ---
 
 <script>
+  import { setupIntersectionObserver } from "@/lib/utils";
   document.addEventListener("astro:page-load", () => {
     const getThem = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll(s) as unknown as T[]);
+    const getHim = <T extends HTMLElement>(s: string, el: HTMLElement) => el.querySelector(s) as unknown as T;
 
+    /**
+     * Dialogs
+     */
     getThem<HTMLDialogElement>("dialog").forEach((dialog) => {
       const action = dialog.dataset.action as string;
       const key = action.split("#")[1];
@@ -73,13 +77,59 @@ const statsComponents: StatsComponent[] = [
       openBtn.addEventListener("click", open);
       closeBtns.forEach((btn) => btn.addEventListener("click", close));
     });
+
+    /**
+     * Intersection Observers
+     */
+
+    const elements: [HTMLElement, HTMLHeadingElement, HTMLDivElement][] = [];
+    getThem<HTMLElement>("[data-observer='titlePicture']").forEach((titlePicture) => {
+      elements.push([
+        titlePicture,
+        getHim<HTMLHeadingElement>("[data-observer='title']", titlePicture),
+        getHim<HTMLDivElement>("[data-observer='picture']", titlePicture),
+      ]);
+    });
+
+    elements.forEach(([titlePicture, title, picture]) => {
+      const options = {
+        debug: false,
+        onIntersect: () => {
+          title.classList.add("reveal-title");
+          picture.classList.add("reveal-picture");
+        },
+        onDisappear: () => {
+          title.classList.remove("reveal-title");
+        },
+      };
+      setupIntersectionObserver(titlePicture, options);
+    });
   });
 </script>
+
+<style is:raw>
+  .reveal-title {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .reveal-picture {
+    animation: reveal-picture 0.3s ease-in forwards;
+  }
+
+  @keyframes reveal-picture {
+    to {
+      opacity: 1;
+      filter: blur(0px) brightness(1);
+      transform: translateY(0);
+    }
+  }
+</style>
 
 <Layout title="tarif">
   <HeaderFooter slot="header" />
   <Section>
-    <Heading h2="Nos tarifs" h3="Composable et personalisable" className="">
+    <Heading h2="Nos tarifs" h3="Composable et personalisable">
       <div class="grow max-h-[10%]"></div>
       <ArrowDown size="32" />
     </Heading>
@@ -91,12 +141,21 @@ const statsComponents: StatsComponent[] = [
         return (
           <Orientation anchorId={`${product.id}`} orientation={orientation}>
             <>
-              <section class="relative vertical center full">
-                <h3 class={`text-6xl uppercase text-left w-full mb-10 grandstander`}>{product.title}</h3>
-                <Pictures size={500} orientation={orientation} />
+              <section class="relative vertical center full" data-observer="titlePicture">
+                <h3
+                  data-observer="title"
+                  class={`text-6xl uppercase text-left w-full mb-10 grandstander transition-transform ${orientation === "ltr" ? "-translate-x-[100vw]" : "translate-x-[100vw]"} `}>
+                  {product.title}
+                </h3>
+                <Pictures
+                  className="blur-[1px] opacity-0 translate-y-5"
+                  data-observer="picture"
+                  size={500}
+                  orientation={orientation}
+                />
               </section>
               <section class="vertical h-full gap-7 items-start justify-evenly max-w-[50%]">
-                <Description description={product.description.long} />
+                <Text description={product.description.long} title={product.name} />
                 <div class="grid grid-cols-2">
                   <div class="vertical gap-1">
                     {statsComponents.map((stat) => {

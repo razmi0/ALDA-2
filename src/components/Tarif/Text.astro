@@ -2,11 +2,13 @@
 interface Props {
   description?: string;
   className?: string;
+  title?: string;
 }
 
-const { description, className } = Astro.props;
+const { title, description, className } = Astro.props;
 ---
 
+{title && <h4 class="text-2xl font-bold text-balance">{title}</h4>}
 {
   description && (
     <div class="overflow-auto leading-5">
