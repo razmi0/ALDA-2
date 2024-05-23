@@ -1,6 +1,6 @@
 ---
-import { Image } from "astro:assets";
 import Bird from "@/assets/bird-profile.webp";
+import { Image } from "astro:assets";
 
 const textRing =
   "    oui bonjour    ⚪    c'est moi le texte    ⚪    qui tourne en rond    ⚪    vijay t'es    ⚪    trés jolie et    ⚪    magnifique ackchually    ⚪";
@@ -27,10 +27,10 @@ const charInText = textRing.length;
   .text-ring {
     --duration: 180s;
     animation: spin var(--duration) infinite linear;
+  }
 
-    & > img {
-      animation: counter-spin var(--duration) infinite linear;
-    }
+  .text-ring > img {
+    animation: counter-spin var(--duration) infinite linear;
   }
 
   @keyframes spin {
