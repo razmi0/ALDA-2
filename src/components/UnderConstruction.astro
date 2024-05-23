@@ -1,28 +1,10 @@
 ---
 import Section from "@/layouts/Section.astro";
 import { Wrench } from "lucide-react";
-import Button from "./Button.astro";
-import SpringMenu from "./SpringMenu.astro";
 import VerticalText from "./VerticalText.astro";
 ---
 
-<script>
-  const colors = ["129f04", "76be00", "98cb0f", "147700", "209e00"];
-  const btn = document.querySelector("button[data-color]") as HTMLButtonElement;
-  const colorTarget = document.querySelector("section[data-color]") as HTMLElement;
-  if (!btn || !colorTarget) throw new Error("No button or color target");
-
-  btn.addEventListener("click", (e: Event) => {
-    const currentIndex = (e.currentTarget as HTMLButtonElement).dataset.color;
-    if (!currentIndex) return console.error("No data-color attribute");
-    const nextIndex = (parseInt(currentIndex) + 1) % colors.length;
-    (e.currentTarget as HTMLButtonElement).dataset.color = nextIndex.toString();
-    colorTarget.style.backgroundColor = `#${colors[nextIndex]}`;
-    btn.textContent = `Color ${currentIndex}`;
-  });
-</script>
-
-<Section className={"horizontal center bg-slate-800 text-black"} data-color>
+<Section className={"horizontal center bg-pur-500 text-black"} data-color>
   <VerticalText position="right" className="" dark><p>En construction</p></VerticalText>
   <div class="vertical center gap-10">
     <div
@@ -30,7 +12,5 @@ import VerticalText from "./VerticalText.astro";
       <Wrench size={32} strokeWidth={1} />
       <p class="text-2xl h-fit">Section en construction</p>
     </div>
-    <SpringMenu />
-    <Button dark data-color="0">Color 0</Button>
   </div>
 </Section>

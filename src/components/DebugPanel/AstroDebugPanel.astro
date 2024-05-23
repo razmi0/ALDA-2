@@ -1,8 +1,0 @@
----
-import "@/components/DebugPanel/react/panel.css";
-import Panel from "./react/Panel";
-
-const isDev = import.meta.env.DEV;
----
-
-{isDev && <Panel client:only="react" />}
