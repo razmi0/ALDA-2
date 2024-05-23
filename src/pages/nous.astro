@@ -1,20 +1,135 @@
 ---
+import Button from "@/components/Button.astro";
+import CTA from "@/components/CTA.astro";
+import Badge from "@/components/Products/Badge.astro";
+import RandomImage from "@/components/RandomImage.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
-import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+
+const gridImgTemplate = [
+  [1, 2],
+  [1, 2, 3],
+];
+
+const values = [
+  {
+    title: "Valeur 1",
+    content: generateLorem(30),
+  },
+  {
+    title: "Valeur 2",
+    content: generateLorem(40),
+  },
+  {
+    title: "Valeur 3",
+    content: generateLorem(35),
+  },
+  {
+    title: "Valeur 4",
+    content: generateLorem(30),
+  },
+];
+
+const ourWords = [
+  {
+    title: "Lou",
+    subtitle: "CEO",
+    content: generateLorem(30),
+    badges: new Array(6).fill("badge").map(() => generateLorem(1)),
+  },
+  {
+    title: "Vijay",
+    subtitle: "CTO",
+    content: generateLorem(40),
+    badges: new Array(6).fill("badge").map(() => generateLorem(1)),
+  },
+];
 ---
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr;
+    gap: 20px;
+
+    & > * {
+      /* @apply ring-1 ring-red-500; */
+    }
+  }
+</style>
 
 <Layout title="nous">
   <HeaderFooter slot="header" />
-  <Section className="vertical center">
-    <div class="text-center vertical center mb-20" transition:name="heading">
-      <h2 class="text-3xl uppercase mb-5">Qui sommes-nous</h2>
+  <Section size="half" extension="md" fixedHeight className="vertical items-start justify-center px-14">
+    <div class="text-left vertical items-start w-fit mb-20" transition:name="heading">
+      <h2 class="text-5xl uppercase mb-5">Qui sommes-nous</h2>
       <p class="max-w-[50ch] mb-5 text-[1rem]">
         {generateLorem(20)}
       </p>
-      <ArrowDown size="32" />
     </div>
   </Section>
+  <Section className={`container grid  px-14`} fixedHeight>
+    <div class={`vertical full justify-between items-start [&_h4]:text-3xl`}>
+      <h3 class={`text-4xl grandstander`}>Nos valeurs</h3>
+      {
+        values.map((value) => (
+          <article class={`space-y-2`}>
+            <h4>{value.title}</h4>
+            <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
+            <p class={`max-w-[50ch]`}>{value.content}</p>
+          </article>
+        ))
+      }
+    </div>
+    {
+      gridImgTemplate.map((row, rowIndex) => {
+        const firstCol = rowIndex === 0;
+        return (
+          <div class={`space-y-5 full vertical center`}>
+            {row.map((_, colIndex) => {
+              const firstRow = colIndex === 0;
+              return (
+                <RandomImage
+                  className={`ring-offset-2 ring-1 ring-stone-200 aspect-[10/11] max-h-[250px] w-full ${firstCol && firstRow && "mt-16"}`}
+                  seed={400}
+                />
+              );
+            })}
+          </div>
+        );
+      })
+    }
+  </Section>
+  <div class={`vertical center w-full h-[75vh]`}>
+    <h4 class={`text-3xl grandstander mb-5`}>Titre de transition</h4>
+    <p class={`max-w-[50ch] text-center text-[1rem]`}>{generateLorem(45)}</p>
+  </div>
+  <Section className={"container px-14 horizontal items-start justify-center gap-28"} fixedHeight>
+    {
+      ourWords.map((word) => (
+        <article class={`space-y-5`}>
+          <RandomImage seed={400} className={`aspect-square max-h-[350px] full mb-5`} />
+          <div class={`horizontal gap-3`}>
+            <h4 class={`text-3xl`}>{word.title}</h4>
+            <small class={`text-black/80`}>{word.subtitle}</small>
+          </div>
+          <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
+          <p class={`max-w-[50ch]`}>{word.content}</p>
+          <div class={`horizontal gap-2 max-w-[75%] flex-wrap`}>
+            {word.badges.map((badge) => (
+              <Badge tag={badge} />
+            ))}
+          </div>
+          <CTA href={`/contact`} prefetch prefetchType="viewport">
+            <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap mt-10">
+              Contactez-moi
+            </Button>
+          </CTA>
+        </article>
+      ))
+    }
+  </Section>
+  <HeaderFooter slot="footer" as="footer" />
 </Layout>
