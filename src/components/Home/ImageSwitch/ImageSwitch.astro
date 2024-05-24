@@ -12,7 +12,7 @@ interface Props {
 
 const { alt, className, uniqueKey } = Astro.props;
 
-let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/ImageSwitch/screen/*.png`);
+let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Home/ImageSwitch/screen/*.png`);
 ---
 
 <script>
