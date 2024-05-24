@@ -1,6 +1,6 @@
 ---
-import Button from "@/components/Button.astro";
 import CTA from "@/components/CTA.astro";
+import ContactButton from "@/components/ContactButton.astro";
 import Badge from "@/components/Products/Badge.astro";
 import RandomImage from "@/components/RandomImage.astro";
 import HeaderFooter from "@/layouts/HeaderFooter.astro";
@@ -123,9 +123,9 @@ const ourWords = [
             ))}
           </div>
           <CTA href={`/contact`} prefetch prefetchType="viewport">
-            <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap mt-10">
+            <ContactButton className="mt-10" color="rgb(0 0 0 / 0.8)">
               Contactez-moi
-            </Button>
+            </ContactButton>
           </CTA>
         </article>
       ))

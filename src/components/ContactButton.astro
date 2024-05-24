@@ -1,0 +1,66 @@
+---
+interface Props {
+  color?: string;
+  className?: string;
+}
+
+const { color = "rgb(148 163 184)", className = "" } = Astro.props;
+---
+
+<style define:vars={{ color }}>
+  .icon {
+    @apply w-fit h-fit transition-transform z-[1] p-1 rounded-full border-2 -translate-x-full;
+    transform: translateX(calc(calc(var(--translate) + 20) * -1px));
+    border-color: var(--color);
+    color: var(--color);
+  }
+
+  button {
+    @apply bg-transparent relative z-[1] transition-all font-bold py-1 pe-1 rounded-full gap-[20px];
+    padding-inline-start: calc(var(--padding-button) * 1px);
+  }
+
+  button:hover {
+    @apply text-white ring-1 ring-inset ring-neutral-500;
+    background-color: var(--color);
+    transition: color background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  button:hover .icon {
+    @apply text-white translate-x-0  border-white;
+    transition: transform border background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll('[data-is="contact-button"]')) as HTMLButtonElement[];
+  if (!buttons) throw new Error("Button not found");
+  buttons.forEach((button) => {
+    button.style.setProperty("--padding-button", "20");
+    const icon = button.querySelector(".icon") as HTMLElement;
+    icon.style.setProperty("--translate", `${button.clientWidth + 20}`);
+  });
+</script>
+
+<div class={`h-fit w-fit relative `}>
+  <button data-is={`contact-button`} class={`horizontal center ${className}`}>
+    <span class={`whitespace-nowrap`}>
+      <slot />
+    </span>
+    <div class="icon horizontal center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </div>
+  </button>
+</div>
