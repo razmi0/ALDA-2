@@ -1,15 +1,15 @@
 ---
+import VerticalText from "@/components/Home/VerticalText.astro";
+import data from "@/components/shared/product-data/product.json" assert { type: "json" };
 import Section from "@/layouts/Section.astro";
 import { BirdIcon } from "lucide-react";
-import Article from "../Article.astro";
-import Button from "../Button.astro";
-import CTA from "../CTA.astro";
-import RandomImage from "../RandomImage.astro";
-import VerticalText from "../VerticalText.astro";
-import Badge from "./Badge.astro";
-import MinimalPrice from "./MinimalPrice.astro";
-import data from "./product.json" assert { type: "json" };
-import type { ProductType } from "./types";
+import type { ProductType } from "@/components/shared/product-data/types";
+import Article from "../shared/Article.astro";
+import Badge from "../shared/Badge.astro";
+import Button from "../shared/Button.astro";
+import CTA from "../shared/CTA.astro";
+import MinimalPrice from "../shared/MinimalPrice.astro";
+import RandomImage from "../shared/RandomImage.astro";
 
 const rawProducts = data.products as ProductType[];
 

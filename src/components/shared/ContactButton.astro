@@ -1,0 +1,63 @@
+---
+interface Props {
+  color?: string;
+  className?: string;
+}
+
+const { color = "rgb(0 0 0 / 0.7)", className = "" } = Astro.props;
+---
+
+<style define:vars={{ color }}>
+  .wrapper {
+    transform: translateX(calc(var(--iconWidth) * 1px));
+  }
+  .icon {
+    @apply w-fit h-fit transition-transform z-[1] p-1 rounded-full border-2 -translate-x-full absolute left-0;
+    border-color: var(--color);
+    color: var(--color);
+  }
+
+  button {
+    @apply w-fit bg-transparent relative z-[1] transition-all font-bold py-2 px-4 rounded-full gap-[20px];
+    padding-inline-start: calc(var(--padding-button) * 1px);
+  }
+
+  button:hover .icon {
+    @apply transition-transform;
+    transform: translateX(calc((var(--translate)) * 1px));
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const buttons = Array.from(document.querySelectorAll('[data-is="contact-button"]')) as HTMLButtonElement[];
+    if (!buttons) throw new Error("Button not found");
+    buttons.forEach((button) => {
+      const icon = button.querySelector(".icon") as HTMLElement;
+      icon.style.setProperty("--translate", `${button.clientWidth}`);
+    });
+  });
+</script>
+
+<div class={`h-fit w-fit relative`}>
+  <button data-is={`contact-button`} style="--padding-button : 20" class={`horizontal center ${className}`}>
+    <span class={`whitespace-nowrap`}>
+      <slot />
+    </span>
+    <div class="icon horizontal center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </div>
+  </button>
+</div>

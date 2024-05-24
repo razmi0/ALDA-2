@@ -112,4 +112,22 @@ const setupIntersectionObserver = (
 
   observer.observe(element);
 };
-export { cn, credibilyScore, generateLorem, getFromLS, hasProp, isDev, needDOM, setToLS, setupIntersectionObserver };
+
+const securePath = (e: Event, allowedPath: string[]) => {
+  const path = (e.target as Window).location.pathname as string;
+  if (!allowedPath.includes(path)) return false;
+  return true;
+};
+
+export {
+  cn,
+  credibilyScore,
+  generateLorem,
+  getFromLS,
+  hasProp,
+  isDev,
+  needDOM,
+  securePath,
+  setToLS,
+  setupIntersectionObserver,
+};

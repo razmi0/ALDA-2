@@ -1,9 +1,5 @@
 ---
-import Button from "@/components/Button.astro";
-import Heading from "@/components/Hero/Heading.astro";
-import MinimalPrice from "@/components/Products/MinimalPrice.astro";
-import rawProducts from "@/components/Products/product.json" assert { type: "json" };
-import type { ProductType } from "@/components/Products/types";
+import type { ProductType } from "@/components/shared/product-data/types";
 import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
 import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 import Checkboxes from "@/components/Tarif/Form/Checkboxes.astro";
@@ -17,13 +13,18 @@ import Pictures from "@/components/Tarif/Pictures.astro";
 import Stats from "@/components/Tarif/Stats.astro";
 import Text from "@/components/Tarif/Text.astro";
 import type { OptionType } from "@/components/Tarif/types";
-import HeaderFooter from "@/layouts/HeaderFooter.astro";
+import Button from "@/components/shared/Button.astro";
+import CTA from "@/components/shared/CTA.astro";
+import ContactButton from "@/components/shared/ContactButton.astro";
+import Heading from "@/components/shared/Heading.astro";
+import MinimalPrice from "@/components/shared/MinimalPrice.astro";
+import rawProducts from "@/components/shared/product-data/product.json" assert { type: "json" };
+import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { ArrowDown, type LucideProps } from "lucide-react";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import Layout from "../layouts/Layout.astro";
-import CTA from "@/components/CTA.astro";
 
 const options = rawOptions.options as OptionType[];
 const products = rawProducts.products as ProductType[];
@@ -213,9 +214,7 @@ const statsComponents: StatsComponent[] = [
     <h4 class={`text-3xl grandstander mb-5`}>Une idée, une recommendation ?</h4>
     <p class={`max-w-[50ch] text-center text-[1rem]`}>{generateLorem(10)}</p>
     <CTA href={`/contact`} prefetch prefetchType="viewport">
-      <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap mt-10">
-        Contactez-nous
-      </Button>
+      <ContactButton className="mt-10"> Contactez-nous </ContactButton>
     </CTA>
   </Section>
 
