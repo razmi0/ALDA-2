@@ -8,4 +8,7 @@
 - [x] implement related information (blog like)
 - [x] implement next/prev button command to navigate through points
 
-- [ ] convert each script ot inline script for reexecution on page specific load
+#### aprés 1er retour
+
+- [ ] section produit présentation home page => bouger vers design cards // [evènementielle, sensorielle et bien-être (arbothérapie), recherche, animation]
+- [ ] enlever difficulté / enlever programme sauf pour animation

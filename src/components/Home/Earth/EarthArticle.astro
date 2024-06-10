@@ -13,8 +13,9 @@ const title = "Quand les arbres nous accueillent...";
 
 <div class="w-fit h-fit vertical px-12 gap-10">
   <div class="vertical items-start gap-6 z-10">
-    <Article words1={p1} words2={p2} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/60"} title={title} />
-    <BirdIcon />
+    <Article words1={p1} words2={p2} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/60"} title={title}>
+      <BirdIcon />
+    </Article>
   </div>
   <CTA href="/contact">
     <Button ring="sm" className="hover:bg-white/20" size="lg">Contact</Button>
