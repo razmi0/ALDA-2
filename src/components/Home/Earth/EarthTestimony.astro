@@ -1,13 +1,15 @@
 ---
+import Vijay from "@/components/Home/Earth/assets/hyadj-1.jpeg";
 import OpenQuote from "@/components/Icons/OpenQuote.astro";
-import RandomImage from "@/components/shared/RandomImage.astro";
+import { Image } from "astro:assets";
 
 const quote =
-  "Quand le dernier arbre aura été abattu, quand la dernière rivière aura été empoisonnée, quand les derniers poissons aura été pêché, alors on saura que l'argent ne se mange pas";
+  "Quand je grimpe aux arbres, je me sens comme un enfant qui découvre le monde pour la première fois. C'est un sentiment d'émerveillement pur et intact, qui me rappelle que la sagesse réside dans la capacité à s'étonner.";
+const alt = "Vijay fondateur de l'entreprise et cordiste exégète et pationné";
 ---
 
 <article class="horizontal center shadow-2xl shadow-black z-10 [&>*]:h-[450px] [&>*]:w-[425px] text-white/50">
-  <RandomImage size={500} className=" rounded-tl-sm rounded-bl-sm" />
+  <Image src={Vijay} alt={alt} class={"aspect-square object-cover max-w-none rounded-tl-sm rounded-bl-sm"} />
   <div class="vertical center w-5/12 bg-earth-700 px-14 gap-3 rounded-tr-sm rounded-br-sm">
     <blockquote class="leading-6">
       <div class="w-full translate-y-6" aria-roledescription="open quote">
