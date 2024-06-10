@@ -3,7 +3,7 @@ import Bird from "@/assets/bird-profile.webp";
 import { Image } from "astro:assets";
 
 const textRing =
-  "    oui bonjour    ⚪    c'est moi le texte    ⚪    qui tourne en rond    ⚪    vijay t'es    ⚪    trés jolie et    ⚪    magnifique ackchually    ⚪";
+  "    Connexion à la nature    ⚪    Emerveillement et découverte    ⚪    Sagesse et simplicité    ⚪   Partage et respect    ⚪    Branches accueillantes  ⚪";
 const textRingArray = textRing.split("");
 const charInText = textRing.length;
 ---
@@ -24,15 +24,15 @@ const charInText = textRing.length;
     transform: translate(-50%, -50%) rotate(calc(var(--inner-angle) * var(--index))) translateY(var(--radius, -5ch));
   }
 
-  /* .text-ring {
+  .text-ring {
     --duration: 180s;
     animation: spin var(--duration) infinite linear;
   }
 
   .text-ring > img {
     animation: counter-spin var(--duration) infinite linear;
-  } */
-  /* 
+  }
+
   @keyframes spin {
     to {
       transform: rotate(360deg);
@@ -42,8 +42,8 @@ const charInText = textRing.length;
   @keyframes counter-spin {
     to {
       transform: rotate(-360deg);
-    } */
-  /* } */
+    }
+  }
 </style>
 <figure class="relative w-fit h-fit text-ring text-xs text-white/60">
   <Image src={Bird} alt="beautifull bird" class="rounded-full object-cover h-[500px] object-top" />
