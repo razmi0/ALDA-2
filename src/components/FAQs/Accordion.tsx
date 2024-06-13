@@ -31,7 +31,11 @@ export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
                 {faq.question}
               </span>
             </AccordionTrigger>
-            <AccordionContent>{faq.answer}</AccordionContent>
+            <AccordionContent>
+              {faq.answer.map((a) => {
+                return <p key={a}>{a}</p>;
+              })}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

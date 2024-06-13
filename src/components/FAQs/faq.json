@@ -2,48 +2,56 @@
   "faqs": [
     {
       "id": "1",
-      "question": "What is the purpose of this site?",
-      "answer": "The purpose of this site is to provide a platform for people to share their experiences with the world. We believe that everyone has a story to tell and we want to provide a place for people to share their stories."
+      "question": "Pourquoi faire de la grimpe d'arbre ?",
+      "answer": [
+        "L'activité de grimpe d'arbre a de multiples bienfaits, qu'ils soient physiques, cognitifs, thérapeutiques ou sociaux. Elle permet de se déconnecter du quotidien, de se retrouver et partager un moment de plaisir, de travailler la cohésion, etc."
+      ]
     },
     {
       "id": "2",
-      "question": "How do I submit a story?",
-      "answer": "To submit a story, simply click on the 'Submit a Story' link in the navigation bar and fill out the form. You can also submit a story by sending an email to"
+      "question": "Qui peut faire de la grimpe d'arbre ?",
+      "answer": [
+        "La grimpe est accessible à tout le monde, que ce soit les enfants, les personnes âgées, ou les personnes en situation de handicap. L'important est de pouvoir adapté l'activité et le matériel en fonction des spécificité afin que afin que chacun puisse prendre du plaisir en se sentant en sécurité. Il est donc essentiel de nous en informer pour que nous puissions nous organiser en amont. Concernant les offres d'immersion, comme le bivouac en hauteur, nous limitons l'âge minimum à 4 ans."
+      ]
     },
     {
       "id": "3",
-      "question": "Can I submit a story anonymously?",
-      "answer": "Yes, you can submit a story anonymously. Just indicate in your submission that you would like to remain anonymous and we will respect your privacy."
+      "question": "Comment se déroule une activité ?",
+      "answer": [
+        "Accueil : Un premier temps d'accueil vous sera proposé pour se rencontrer, découvrir le lieu de l'activité et prendre connaissance du matériel à disposition. Nous profiteront de ce moment pour vous présenter l'environnement et en apprendre un peu plus sur le lieu de l'activité, l'essence d'arbre choisi, et la faune et la flore qui l'accompagne. Enfin, nous vous demanderont de nous partager les attentes que vous avez concernant l'activité. ",
+        "Équipement et sécurité : Après avoir équipé le groupe et vérifié les réglages, nous prendront un temps pour vous expliquer les règles de sécurité et vous partager les principales techniques de grimpe d'arbre en vous montrant les gestes à effectuer.",
+        "Envol : Nous resteront à votre disponibilité au sol, pour vous conseiller, vous soutenir et vous aider, à appréhender votre matériel et à découvrir vos nouvelles capacités motrices. Nous effectueront également les premiers nœuds de sécurité, pour vous permettre de vous élancer vers les cimes en toute sérénité. Pour rappel, il n'y a aucun minimum de hauteur à atteindre, vous êtes maîtres de votre ascension et pouvez vous arrêter à tout moment pour redescendre et réessayer. Le travail du vertige faisant partie de nos missions, nous vous accompagneront, avec bienveillance et sans jugement, dans la relève de vos propres défis, adapté à vos capacités et difficultés du moment. ",
+        "A tout moment : Durant toute l'activité, nous restons disponibles pour répondre à vos questions et vous conseiller. Même en hauteur, si vous rencontrez des difficultés, nous pouvons vous rejoindre à votre niveau rapidement grâce à un matériel et des techniques spécifiques.",
+        " Un bilan calmement : A la fin de l'activité, nous pourront alors partager collectivement les ressentis de chacun, qu'ils soient positifs ou négatifs. Se sera également le moment de faire un point sur les attentes que vous aviez en arrivant, les objectifs que vous vous étiez fixé, et les difficulté que vous avez rencontré pour vous aider à progresser. Nous serons attentifs à toutes les critiques constructives que vous pourrez nous apporter afin de continuer à améliorer notre activité. "
+      ]
     },
     {
       "id": "4",
-      "question": "Can I submit a story on behalf of someone else?",
-      "answer": "Yes, you can submit a story on behalf of someone else. Just make sure to get their permission before sharing their story and indicate in your submission that you are submitting on their behalf."
+      "question": "Que dois-je prévoir pour l'activité ?",
+      "answer": [
+        "L'important est d'avoir des vêtements confortable et que l'on puisse salir (sève) et des chaussures fermées. Il est donc conseillé d'avoir des vêtements qui couvrent le ventre et les cuisses pour éviter le frottement avec le baudrier. Si vous le souhaitez, vous pouvez également apporter des gants type jardinage qui vont permettront de garder un minimum de dextérité tout en vous protégeant des frottements avec les cordes. N'oubliez pas votre gourde d'eau pour bien vous hydrater tout au long de l'activité. Vous pouvez d'ailleurs grimper avec un petit sac à dos qui vous permettra de monter votre gourde et votre goûter.Enfin, si vous êtes fumeur, merci de penser à amener votre cendrier de poche."
+      ]
     },
     {
       "id": "5",
-      "question": "How do I contact the site admin?",
-      "answer": "You can contact the site admin by sending an email to [email address]. We are always happy to hear from our users and welcome any feedback or suggestions."
+      "question": "Quel est le prix d'une activité ?",
+      "answer": [
+        "Le prix d'une activité va de 34€ par personne pour une demi-journée découverte, à 500€ par jours pour un groupe de 8 personnes. Le tarif dépend des ateliers a installé, donc du type de matériel utilisé et du nombre de participant. Il comprend le repérage du site, le diagnostic des arbres, l'aménagement en terme de temps et de matériel (comme la coupe de branches mortes), le temps d'installation et de démontage de l'activité, le salaire et le déplacement du ou des professionnels nécessaires, et l'usure du matériel ainsi que le temps de vérification règlementaire de chaque équipement de sécurité. "
+      ]
     },
     {
       "id": "6",
-      "question": "How do I report inappropriate content?",
-      "answer": "If you come across any inappropriate content on the site, please report it to the site admin by sending an email to [email address]. We take the safety and well-being of our users seriously and will take appropriate action to address any issues."
+      "question": "Qui est responsable au cours d'une activité ?",
+      "answer": [
+        "Ce sont les éducateurs grimpe d'arbre (EGA) qui sont responsables de la sécurité des participants sur tout le temps de l'activité. Les communes ou propriétaires de site sont pourvus de responsabilité par la convention d'occupation signée. Hormis la sécurité, les enfants restent sous la responsabilité de leur parents, et les personnes accompagnées sous la responsabilité de leurs accompagnants. "
+      ]
     },
     {
       "id": "7",
-      "question": "How do I share a story on social media?",
-      "answer": "You can share a story on social media by clicking on the social media icons at the bottom of each story. You can also copy the URL of the story and paste it into your social media post."
-    },
-    {
-      "id": "8",
-      "question": "How do I subscribe to the site?",
-      "answer": "You can subscribe to the site by entering your email address in the subscription box at the bottom of the page. You will receive updates on new stories and other site news."
-    },
-    {
-      "id": "9",
-      "question": "How do I unsubscribe from the site?",
-      "answer": "You can unsubscribe from the site by clicking on the 'Unsubscribe' link in the email you received from us. You can also contact the site admin to request to be removed from the subscription list."
+      "question": "Est-ce que je peux grimper seul dans les arbres ?",
+      "answer": [
+        "A l'abord'arbre propose également des stages d'approfondissements où il est possible d'apprendre à grimper en autonomie. Plusieurs méthodes sont enseignées, les règles de sécurité transmises et des conseils sur le matériel sont apportés. Et grimper chez moi ? Si vous vous possédez un jardin avec de grands arbres, il est tout a fait possible de vous aider à réaliser une installation pour y grimper, après un stage d'approfondissement. N'hésitez pas à nous contacter pour que nous puissions venir faire un diagnostic préalable et vous conseiller dans l'achat du matériel et l'installation des ancrages. "
+      ]
     }
   ]
 }

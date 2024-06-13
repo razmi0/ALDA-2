@@ -1,7 +1,7 @@
 ---
+import Badge from "@/components/shared/Badge.astro";
 import CTA from "@/components/shared/CTA.astro";
 import ContactButton from "@/components/shared/ContactButton.astro";
-import Badge from "@/components/shared/Badge.astro";
 import RandomImage from "@/components/shared/RandomImage.astro";
 import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
@@ -15,20 +15,51 @@ const gridImgTemplate = [
 
 const values = [
   {
-    title: "Valeur 1",
-    content: generateLorem(30),
+    title: "Partage",
+    content: "Partager des expériences, des connaissances et des émotions",
   },
   {
-    title: "Valeur 2",
-    content: generateLorem(40),
+    title: "Respect",
+    content: "Respecter la vie : l'environnement et Autrui, et en prendre soin",
   },
   {
-    title: "Valeur 3",
-    content: generateLorem(35),
+    title: "Exploration",
+    content: "Déconnecter avec le quotidien pour se reconnecter avec l'essentiel",
+  },
+];
+
+const missions = [
+  {
+    title: "",
+    content: "Pour rêver et faire voyager les gens.",
   },
   {
-    title: "Valeur 4",
-    content: generateLorem(30),
+    title: "",
+    content: "Pour casser le quotidien et se déconnecter.",
+  },
+  {
+    title: "",
+    content: "Pour une prise de conscience globale sur soi et sur ce qui nous entoure.",
+  },
+  {
+    title: "",
+    content: "our faire du lien et se reconnecter avec le vivant.",
+  },
+  {
+    title: "",
+    content: "Pour se redécouvrir dans un milieu extraordinair.",
+  },
+  {
+    title: "",
+    content: "Pour prendre soin de soi, des autres et de son environnement.",
+  },
+  {
+    title: "",
+    content: "Pour partir sur de nouvelles bases.",
+  },
+  {
+    title: "",
+    content: "Pour régénérer le vivant, ensemble !",
   },
 ];
 
@@ -42,7 +73,8 @@ const ourWords = [
   {
     title: "Vijay",
     subtitle: "CTO",
-    content: generateLorem(40),
+    content:
+      "Je me suis toujours épanoui dans la nature, et les arbres, en particulier, m'émerveille depuis longtemps.     Après avoir vécu une expérience collective, d'un mois et demi, avec 81 personnes sur le bateau de l'Hermione, comme gabier volontaire, j'ai exercé en tant que cordiste pendant 6 ans, l'envie de travailler avec du vivant est apparu. J'ai donc réaliser la formation d'éducateur grimpe d'arbre. Au cours de celle-ci,un vrai amour pour les arbres s'est développé,et c'est durant mes stages que je me suis vraiment redécouvert. Tout ces moments me poussent à proposer de nouvelles expériences,à partager avec les autres,et aussi à transmettre et échanger.",
     badges: new Array(6).fill("badge").map(() => generateLorem(1)),
   },
 ];
@@ -66,7 +98,7 @@ const ourWords = [
       </p>
     </div>
   </Section>
-  <Section className={`container grid  px-14`} fixedHeight>
+  <Section className={`container grid px-14`} fixedHeight>
     <div class={`vertical full justify-between items-start [&_h4]:text-3xl`}>
       <h3 class={`text-4xl grandstander`}>Nos valeurs</h3>
       {
@@ -78,6 +110,21 @@ const ourWords = [
           </article>
         ))
       }
+      <h3 class={`text-4xl grandstander`}>Notre mission</h3>
+      <p class={`max-w-[50ch]`}>
+        Créer une déconnexion avec le quotidien pour faire voyager, transmettre et partager, en accompagnant les
+        personnes à prendre soin de ce qui nous entoure dans un cadre sécurisant et bienveillant.
+      </p>
+      <h4>Pourquoi ?</h4>
+      <ul>
+        {
+          missions.map((mission) => (
+            <li>
+              <p>{mission.content}</p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
     {
       gridImgTemplate.map((row, rowIndex) => {

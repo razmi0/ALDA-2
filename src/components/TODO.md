@@ -12,3 +12,4 @@
 
 - [ ] section produit présentation home page => bouger vers design cards // [evènementielle, sensorielle et bien-être (arbothérapie), recherche, animation]
 - [ ] enlever difficulté / enlever programme sauf pour animation
+- [ ] nous => diplome / compétences
