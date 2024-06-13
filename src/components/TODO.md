@@ -15,3 +15,4 @@
 - [ ] nous => diplome / compétences
 - [ ] remplacer titre + p de transition qui somme nous => Notre originalité ; Notre style
 - [ ] discuter avec Lise des sections vision ; missions ; valeurs ;
+- [ ] rafraichir FAQ

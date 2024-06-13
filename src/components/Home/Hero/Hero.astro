@@ -6,7 +6,6 @@ import CTA from "@/components/shared/CTA.astro";
 import Heading from "@/components/shared/Heading.astro";
 import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
-import { generateLorem } from "@/lib/utils";
 import { Mountain } from "lucide-react";
 ---
 
@@ -29,8 +28,12 @@ import { Mountain } from "lucide-react";
     <div class="h-1/4 w-full"></div>
     <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
     <div class={`space-y-10`}>
-      <p class="text-white/80 line-clamp-3 max-w-[55ch] leading-4">
-        {generateLorem(30)}
+      <p class="text-white/80 max-w-[55ch] leading-4">
+        L'activité de grimpe d'arbre consiste à grimper et à se déplacer à travers les branches et le feuillage des
+        arbres, en utilisant des techniques spécifiques. C'est une activité récréative, sportive, écologique et
+        thérapeutique qui invite les participants à se connecter avec la nature de manière immersive. Tout en apportant
+        un nouveau regard sur la biodiversité, elle encourage à relever ses propres défis physiques et mentaux dans un
+        environnement en hauteur.
       </p>
 
       <div class={`horizontal center gap-10`}>
