@@ -145,10 +145,18 @@ const ourWords = [
       })
     }
   </Section>
-  <div class={`vertical center w-full h-[75vh]`}>
-    <h4 class={`text-3xl grandstander mb-5`}>Titre de transition</h4>
-    <p class={`max-w-[50ch] text-center text-[1rem]`}>{generateLorem(45)}</p>
-  </div>
+  <section class={`h-[75vh] horizontal items-center justify-center`}>
+    <div class={`horizontal justify-around gap-10 [&>article]:text-left w-full`}>
+      <article>
+        <h4 class={`text-3xl grandstander mb-5`}>Notre originalité</h4>
+        <p class={`max-w-[25ch] text-[1.1rem]`}>Notre parcours de vie très divers et notre amitié de longue date</p>
+      </article>
+      <article>
+        <h4 class={`text-3xl grandstander mb-5`}>Notre style</h4>
+        <p class={`max-w-[25ch] text-[1.1rem]`}>On est des pirates libre et joyeux</p>
+      </article>
+    </div>
+  </section>
   <Section className={"container px-14 horizontal items-start justify-center gap-28"} fixedHeight>
     {
       ourWords.map((word) => (

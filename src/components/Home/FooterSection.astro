@@ -1,5 +1,5 @@
 ---
-import ImageSwitch from "@/components/Home/ImageSwitch/ImageSwitch.astro";
+// import ImageSwitch from "@/components/Home/ImageSwitch/ImageSwitch.astro";
 import Section from "@/layouts/Section.astro";
 ---
 
@@ -10,36 +10,34 @@ import Section from "@/layouts/Section.astro";
       background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
     }
   </style>
-  <ImageSwitch
+  <!-- <ImageSwitch
     uniqueKey="last-section"
     alt="last section images"
     className="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
-  />
+  /> -->
   <!-- OVERLAY -->
   <!-- <div class="absolute-align full footer-landscape-fade z-50"></div> -->
   <!-- OVERLAY -->
-  <article class="text-center z-10 vertical center text-black gap-7 pt-32">
-    <h2 class="max-w-[50ch]">Le moment de revenir à l'essentiel</h2>
+  <article class="text-left z-10 vertical center text-black gap-7 pt-32">
     <div class="font-bolder text-black/90">
-      <p class="max-w-[50ch]">
-        À l'heure où 10 millions d'hectares de forêt sont éliminés chaque année par la déforestation,
-      </p>
-      <p class="max-w-[50ch]">alors qu'elles abritent la moitié des espèces protégées ;</p>
-      <p class="max-w-[50ch]">À l'heure où les feux de forêt en France ont augmenté de 386%,</p>
-      <p class="max-w-[50ch]">dont la moitié sont provoqué par "inadvertance" ;</p>
-      <p class="max-w-[50ch]">À l'heure où l'humain court après le temps pour amasser des billets verts,</p>
-      <p class="max-w-[50ch]">près à la guerre et à la destruction de cette planète qui la fait naître,</p>
-      <p class="max-w-[50ch]">
+      <h2 class={`text-[22px] w-full mb-5`}>Le moment de revenir à l'essentiel</h2>
+      <p>À l'heure où 10 millions d'hectares de forêt sont éliminés chaque année par la déforestation,</p>
+      <p>alors qu'elles abritent la moitié des espèces protégées ;</p>
+      <p>À l'heure où les feux de forêt en France ont augmenté de 386%,</p>
+      <p>dont la moitié sont provoqué par "inadvertance" ;</p>
+      <p>À l'heure où l'humain court après le temps pour amasser des billets verts,</p>
+      <p>près à la guerre et à la destruction de cette planète qui la fait naître,</p>
+      <p>
         Il est essentiel de revenir à la vie, de reprendre contact avec la nature, et d'apprendre à prendre soin de soi,
       </p>
-      <p class="max-w-[50ch]">des autres et de l'environnement qui nous entoure.</p>
-      <p class="max-w-[50ch] mt-5 font-bold">"Chaque arbre est le symbole vivant de la paix et de l'espoir."</p>
-      <p class="max-w-[50ch]">Wangari Muta Maathai, Biologiste, enseignante, scientifique (1940 - 2011)</p>
-    </div>
-    <hr class="max-w-[30ch] w-full bg-slate-400" />
-    <div class="font-semibold horizontal items-center justify-around w-full max-w-[50ch] text-black/90">
-      <p>(+33) 5 62 58 95 78</p>
-      <p>info@alabordarbre.com</p>
+      <p>des autres et de l'environnement qui nous entoure.</p>
+      <p class="mt-5 font-bold">"Chaque arbre est le symbole vivant de la paix et de l'espoir."</p>
+      <p>Wangari Muta Maathai, Biologiste, enseignante, scientifique (1940 - 2011)</p>
+      <hr class="max-w-[30ch] w-full bg-slate-400 my-5" />
+      <div class="font-semibold horizontal gap-5 w-full max-w-[50ch] text-black/90">
+        <p>(+33) 5 62 58 95 78</p>
+        <p>info@alabordarbre.com</p>
+      </div>
     </div>
   </article>
 </Section>

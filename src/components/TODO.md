@@ -13,3 +13,5 @@
 - [ ] section produit présentation home page => bouger vers design cards // [evènementielle, sensorielle et bien-être (arbothérapie), recherche, animation]
 - [ ] enlever difficulté / enlever programme sauf pour animation
 - [ ] nous => diplome / compétences
+- [ ] remplacer titre + p de transition qui somme nous => Notre originalité ; Notre style
+- [ ] discuter avec Lise des sections vision ; missions ; valeurs ;
