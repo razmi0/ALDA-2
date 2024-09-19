@@ -15,4 +15,13 @@
 - [ ] nous => diplome / compétences
 - [ ] remplacer titre + p de transition qui somme nous => Notre originalité ; Notre style
 - [ ] discuter avec Lise des sections vision ; missions ; valeurs ;
-- [ ] rafraichir FAQ
+- [ ] implémenter faq
+- [ ] incorporer logo
+- [ ] incorporer home img
+- [ ] incorporer valeurs mission valeurs vision
+- [ ] incorporer imgs
+- [ ] section de lou
+- [ ] acheter dns
+- [ ] rediriger alad.fr vers deploiment vercel
+- [ ] incorporer les produits
+- [ ] incorporer les elements décoratifs

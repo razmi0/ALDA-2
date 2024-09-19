@@ -2,17 +2,20 @@
 import { cn, isDev } from "@/lib/utils";
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
-import FallBack from "./screen/screen-img-1.png";
+import MainImg from "./screen/screen-img-1.png";
 
 interface Props {
   alt: string;
   className?: string;
   uniqueKey: string;
+  disabled?: boolean;
 }
 
-const { alt, className, uniqueKey } = Astro.props;
+const { alt, className, uniqueKey, disabled = false } = Astro.props;
 
-let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Home/ImageSwitch/screen/*.png`);
+let loremPngs = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Home/ImageSwitch/screen/*.png`);
+let clientImgs = import.meta.glob<{ default: ImageMetadata }>(`/src/assets/client-imgs/*.jpg`);
+let allImgs = { ...loremPngs, ...clientImgs };
 ---
 
 <script>
@@ -68,23 +71,23 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Home/
 </script>
 
 {
-  isDev &&
-    Object.keys(images).map((imgPath, i) => {
-      const img = images[imgPath]?.();
+  isDev && !disabled &&
+    Object.keys(allImgs).map((imgPath, i) => {
+      const img = allImgs[imgPath]?.();
       return (
         <Image
           class={cn("pointer-events-none", i === 0 ? "" : "hidden", className)}
           data-image={`screen-img`}
           data-key={uniqueKey}
           data-index={i}
-          src={img || FallBack}
+          src={img || MainImg}
           alt={alt}
         />
       );
     })
 }
 {
-  isDev && (
+  isDev && !disabled && (
     <details class="ms-2 z-50 absolute top-0 right-0">
       <summary />
       <button
@@ -106,4 +109,4 @@ let images = import.meta.glob<{ default: ImageMetadata }>(`/src/components/Home/
     </details>
   )
 }
-{!isDev && <Image class={cn("pointer-events-none", className)} src={FallBack} alt={alt} />}
+{!isDev || disabled && <Image class={cn("pointer-events-none", className)} src={MainImg} alt={alt} />}
