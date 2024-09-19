@@ -16,12 +16,18 @@ const {className } = Astro.props as Props;
   size="small"
   extension="none"
   className={cn(
-    "absolute top-0 z-50 vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 backdrop-blur-sm bg-darkMode-500 text-white border-b border-b-stone-400",
+    "absolute top-0 z-50 vertical items-end justify-center [&_a:hover]:underline px-2 sm:px-5 backdrop-blur-sm bg-darkMode-500 text-white border-b border-b-stone-400",
     className
   )}
   transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
-      <Image src={Logo} alt="logo de alabordarbre" width="70" height="70" />
+      <Image 
+      src={Logo}
+      alt="logo de alabordarbre"
+      width={50}
+      height={50}
+      />
+
       <h1 class="text-2xl h-fit block ml-2">
         <a href="/">A l'abordarbre</a>
       </h1>
