@@ -25,3 +25,4 @@
 - [ ] rediriger alad.fr vers deploiment vercel
 - [ ] incorporer les produits
 - [ ] incorporer les elements décoratifs
+- [ ] RESPONSIVE
