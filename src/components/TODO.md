@@ -1,6 +1,6 @@
-## TODO
+# TODO
 
-#### DATA MAP
+## DATA MAP
 
 - [x] prepare data for map
 - [x] add latitute longitude matrice on top of map
@@ -8,7 +8,7 @@
 - [x] implement related information (blog like)
 - [x] implement next/prev button command to navigate through points
 
-#### aprés 1er retour
+### aprés 1er retour
 
 - [ ] section produit présentation home page => bouger vers design cards // [evènementielle, sensorielle et bien-être (arbothérapie), recherche, animation]
 - [ ] enlever difficulté / enlever programme sauf pour animation
