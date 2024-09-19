@@ -16,7 +16,7 @@
 - [ ] remplacer titre + p de transition qui somme nous => Notre originalité ; Notre style
 - [ ] discuter avec Lise des sections vision ; missions ; valeurs ;
 - [ ] implémenter faq
-- [ ] incorporer logo
+- [x] incorporer logo
 - [ ] incorporer home img
 - [ ] incorporer valeurs mission valeurs vision
 - [ ] incorporer imgs
