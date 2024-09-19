@@ -1,8 +1,10 @@
 ---
 import { cn } from "@/lib/utils";
 import type { HTMLTag } from "astro/types";
-import Nav from "./Nav.astro";
+import { Image } from "astro:assets";
+import Logo from "../../assets/logo/logo-1.png";
 import Section from "../Section.astro";
+import Nav from "./Nav.astro";
 import Socials from "./Socials.astro";
 interface Props {
   className?: string;
@@ -23,10 +25,11 @@ const { as, className } = Astro.props as Props;
   data-is={`global-${as}`}
   transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
-    <h1 class="text-2xl">
-      <span class="font-bold mr-3">LOGO</span>
-      <a href="/"> A l'abordarbre</a>
-    </h1>
+      <Image src={Logo} alt="logo de alabordarbre" width="70" height="70" />
+      <h1 class="text-2xl h-fit block ml-2">
+        <a href="/">A l'abordarbre</a>
+      </h1>
+      <div class={`grow`}></div>
     <Nav className="text-white font-semibold space-x-16" />
 
     {
