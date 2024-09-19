@@ -1,11 +1,12 @@
 ---
-import ImageSwitch from "@/components/Home/ImageSwitch/ImageSwitch.astro";
+import MainImg from "@/assets/hero/screen-img-1.png";
 import VerticalText from "@/components/Home/VerticalText.astro";
 import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 import Heading from "@/components/shared/Heading.astro";
 import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
+import { Image } from "astro:assets";
 import { Mountain } from "lucide-react";
 ---
 
@@ -18,12 +19,7 @@ import { Mountain } from "lucide-react";
 <HeaderFooter as="header" />
 <Section className="relative text-white vertical center">
   <div class="absolute-align full z-10 fade-out-bottom pointer-events-none"></div>
-  <ImageSwitch
-    uniqueKey="hero"
-    alt="hero"
-    className="absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125 pointer-events-none"
-    disabled
-  />
+  <Image class={"absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125 pointer-events-none"} src={MainImg} alt={"welcoming image"} />
   <div class="z-50 vertical items-center h-screen max-h-[90vh] justify-between text-center">
     <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
     <div class="h-1/4 w-full"></div>
@@ -51,7 +47,6 @@ import { Mountain } from "lucide-react";
             S'inscrire
           </Button>
         </CTA>
-        <!-- <p>Start at <span class="text-lg font-bold">100</span>&#8364; / night</p> -->
       </div>
     </div>
   </div>
