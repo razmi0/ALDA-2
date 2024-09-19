@@ -1,9 +1,9 @@
 ---
 import VerticalText from "@/components/Home/VerticalText.astro";
 import data from "@/components/shared/product-data/product.json" assert { type: "json" };
+import type { ProductType } from "@/components/shared/product-data/types";
 import Section from "@/layouts/Section.astro";
 import { BirdIcon } from "lucide-react";
-import type { ProductType } from "@/components/shared/product-data/types";
 import Article from "../shared/Article.astro";
 import Badge from "../shared/Badge.astro";
 import Button from "../shared/Button.astro";
@@ -23,7 +23,7 @@ const imgSize = {
 
 <Section
   extension="md"
-  className=" max-w-[100vw] relative vertical center md:py-52 md:px-52 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-28">
+  className="max-w-[100vw] relative vertical center p-24 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-10">
   <VerticalText position="right" dark>Le meilleur de nos propositions</VerticalText>
 
   <div class="vertical gap-10 w-full">
@@ -33,7 +33,7 @@ const imgSize = {
   {
     topProducts.map((product: ProductType, i: number) => {
       const { id, title, description, tags, price, unit } = product;
-      const articleOrientation = i % 2 !== 0 ? "vertical sm:horizontal-reverse" : "vertical sm:horizontal";
+      const articleOrientation = i % 2 !== 0 ? "vertical lg:horizontal-reverse" : "vertical lg:horizontal";
       return (
         <article class={articleOrientation} data-is={`product-${i}`}>
           <div transition:name={`random-image-${id}`}>

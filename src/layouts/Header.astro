@@ -1,14 +1,13 @@
 ---
-import Logo from "@/assets/logo/logo-1.png";
+import Logo from "@/components/shared/Logo.astro";
 import Nav from "@/layouts/Nav.astro";
 import Section from "@/layouts/Section.astro";
 import { cn } from "@/lib/utils";
-import { Image } from "astro:assets";
 interface Props {
   className?: string;
 }
 
-const {className } = Astro.props as Props;
+const { className } = Astro.props as Props;
 ---
 
 <Section
@@ -21,18 +20,12 @@ const {className } = Astro.props as Props;
   )}
   transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
-      <Image 
-      src={Logo}
-      alt="logo de alabordarbre"
-      width={50}
-      height={50}
-      />
+    <Logo />
 
-      <h1 class="text-2xl h-fit block ml-2">
-        <a href="/">A l'abordarbre</a>
-      </h1>
-      <div class={`grow`}></div>
+    <h1 class="text-2xl h-fit block ml-2">
+      <a href="/">A l'abordarbre</a>
+    </h1>
+    <div class={`grow`}></div>
     <Nav className="text-white font-semibold" />
   </section>
-
 </Section>

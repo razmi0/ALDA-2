@@ -8,8 +8,15 @@ const quote =
 const alt = "Vijay fondateur de l'entreprise et cordiste exégète et pationné";
 ---
 
-<article class="flex flex-col lg:flex-row center shadow-2xl shadow-black z-10 [&>*]:h-[450px] max-[350px]:[&>*]:w-[325px] [&>*]:w-[350px] min-[500px]:[&>*]:w-[450px] text-white/50">
-  <Image widths={[350, 450]} sizes={`(max-width : 450px) 350px, 450px`} src={Vijay} alt={alt} class={"aspect-square object-cover rounded-t-sm lg:rounded-tl-sm lg:rounded-bl-sm"} />
+<article
+  class="flex flex-col lg:flex-row center shadow-2xl shadow-black z-10 [&>*]:h-[450px] max-[350px]:[&>*]:w-[325px] [&>*]:w-[350px] min-[500px]:[&>*]:w-[450px] text-white/50">
+  <Image
+    widths={[350, 450]}
+    sizes={`(max-width : 450px) 350px, 450px`}
+    src={Vijay}
+    alt={alt}
+    class={"aspect-square object-cover rounded-t-sm lg:rounded-tl-sm lg:rounded-bl-sm"}
+  />
   <div class="vertical center w-5/12 bg-earth-700 px-10 sm:px-14 gap-3 rounded-b-sm lg:rounded-tr-sm lg:rounded-br-sm">
     <blockquote class="leading-6">
       <div class="w-full translate-y-6" aria-roledescription="open quote">

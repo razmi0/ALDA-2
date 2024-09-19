@@ -1,9 +1,9 @@
 ---
-import Logo from "@/assets/logo/logo-1.png";
+import Logo from "@/components/shared/Logo.astro";
+
 import Socials from "@/components/shared/Socials.astro";
 import Section from "@/layouts/Section.astro";
 import { cn } from "@/lib/utils";
-import { Image } from "astro:assets";
 interface Props {
   className?: string;
 }
@@ -21,11 +21,10 @@ const { className } = Astro.props as Props;
   )}
   transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
-      <Image src={Logo} alt="logo de alabordarbre" width="70" height="70" />
-      <div class={`grow`}></div>
-
-        <article class="font-bold">
-          <Socials />
-        </article>
+    <Logo />
+    <div class={`grow`}></div>
+    <article class="font-bold">
+      <Socials />
+    </article>
   </section>
 </Section>

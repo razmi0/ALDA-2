@@ -19,20 +19,14 @@ import Header from "../../layouts/Header.astro";
 <Header />
 <Section className="relative text-white vertical center">
   <div class="absolute-align full z-10 fade-out-bottom pointer-events-none"></div>
-  <Image class={"absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125 pointer-events-none"} src={MainImg} alt={"welcoming image"} />
-  <div class="z-50 vertical items-center h-screen max-h-[90vh] justify-between text-center">
+  <Image
+    class={"absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125 pointer-events-none"}
+    src={MainImg}
+    alt={"welcoming image"}
+  />
+  <div class="z-50 vertical items-center h-screen justify-center text-center">
     <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
-    <div class="h-1/4 w-full"></div>
-    <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" />
-    <div class={`space-y-10`}>
-      <p class="text-white/80 max-w-[55ch] leading-4">
-        L'activité de grimpe d'arbre consiste à grimper et à se déplacer à travers les branches et le feuillage des
-        arbres, en utilisant des techniques spécifiques. C'est une activité récréative, sportive, écologique et
-        thérapeutique qui invite les participants à se connecter avec la nature de manière immersive. Tout en apportant
-        un nouveau regard sur la biodiversité, elle encourage à relever ses propres défis physiques et mentaux dans un
-        environnement en hauteur.
-      </p>
-
+    <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" cta>
       <div class={`horizontal center gap-10`}>
         <CTA href="/tarifs">
           <Button
@@ -48,6 +42,17 @@ import Header from "../../layouts/Header.astro";
           </Button>
         </CTA>
       </div>
-    </div>
+    </Heading>
+    <!-- <p class="text-white/80 max-w-[55ch] leading-4">
+      L'activité de grimpe d'arbre consiste à grimper et à se déplacer à travers les branches et le feuillage des
+      arbres, en utilisant des techniques spécifiques. C'est une activité récréative, sportive, écologique et
+      thérapeutique qui invite les participants à se connecter avec la nature de manière immersive. Tout en apportant un
+      nouveau regard sur la biodiversité, elle encourage à relever ses propres défis physiques et mentaux dans un
+      environnement en hauteur.
+      Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour
+      toi ! Imagine-toi en train de glisser le long d'une corde, te déplacer le long des branches et feuillage, le cœur battant la chamade, avant d'atteindre la cime
+      d'un arbre majestueux spécialement choisi par nos soins. C'est une expérience unique et immersive qui te permettra de te défouler, de te relaxer et de t'apporter un nouveau regard
+      sur la biodiversité. Prêt à vivre cette aventure ?
+    </p> -->
   </div>
 </Section>
