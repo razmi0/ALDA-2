@@ -1,6 +1,7 @@
 ---
 import CTA from "@/components/shared/CTA.astro";
 import { cn } from "@/lib/utils";
+import MobileMenu from "./MobileMenu";
 
 interface Props {
   className?: string;
@@ -21,6 +22,10 @@ const websiteLinks = [
 ---
 
 <nav class={cn("text-black/95 dark:text-white/95", className)}>
+  <section class="lg:hidden">
+    <MobileMenu client:only />
+</section>
+  <section class="hidden lg:inline space-x-16">
   {
     websiteLinks.map(({ name, href, isActive }) => (
       <a href={href} class={cn(isActive ? "text-pur-500" : "")}>
@@ -28,10 +33,12 @@ const websiteLinks = [
       </a>
     ))
   }
+  
   <CTA href={coreCTA.href}>
     <button
       class={`px-10 py-3 rounded-lg bg-pur-500 hover:brightness-110 hover:text-white/80 text-white ring-1 ring-stone-400 transition-all`}>
       {coreCTA.name}
     </button>
   </CTA>
+</section>
 </nav>
