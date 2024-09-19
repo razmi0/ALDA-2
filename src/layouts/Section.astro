@@ -44,7 +44,7 @@ const props = Object.fromEntries(Object.entries(Astro.props).filter(([key]) => !
 
 <Tag
   {...props}
-  class={cn("min-w-full", className)}
+  class={cn("min-w-full w-screen", className)}
   style={`min-height : ${height}; ${fixedHeight ? `height : ${height} ` : ""} ; ${style} `}>
   <slot />
 </Tag>

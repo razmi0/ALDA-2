@@ -1,28 +1,24 @@
 ---
+import Logo from "@/assets/logo/logo-1.png";
+import Nav from "@/layouts/Nav.astro";
+import Section from "@/layouts/Section.astro";
 import { cn } from "@/lib/utils";
-import type { HTMLTag } from "astro/types";
 import { Image } from "astro:assets";
-import Logo from "../../assets/logo/logo-1.png";
-import Section from "../Section.astro";
-import Nav from "./Nav.astro";
-import Socials from "./Socials.astro";
 interface Props {
   className?: string;
-  as: HTMLTag;
 }
 
-const { as, className } = Astro.props as Props;
+const {className } = Astro.props as Props;
 ---
 
 <Section
-  as={as}
+  as={"header"}
   size="small"
   extension="none"
   className={cn(
     "vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 backdrop-blur-sm bg-darkMode-500 text-white border-b border-b-stone-400",
     className
   )}
-  data-is={`global-${as}`}
   transition:animate={"none"}>
   <section class="full horizontal items-center justify-between">
       <Image src={Logo} alt="logo de alabordarbre" width="70" height="70" />
@@ -31,18 +27,6 @@ const { as, className } = Astro.props as Props;
       </h1>
       <div class={`grow`}></div>
     <Nav className="text-white font-semibold" />
-
-    {
-      as === "footer" && (
-        <article class=" font-bold">
-          <Socials />
-        </article>
-      )
-    }
   </section>
-  {
-    // as === "footer" ? (
-    // <a class="uppercase text-[0.8rem] mt-2 block text-right" href="https://github.com/razmi0">dev by razmio</a>
-    // ) : <></>
-  }
+
 </Section>

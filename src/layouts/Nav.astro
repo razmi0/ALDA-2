@@ -1,7 +1,7 @@
 ---
 import CTA from "@/components/shared/CTA.astro";
 import { cn } from "@/lib/utils";
-import MobileMenu from "./MobileMenu";
+import MobileMenu from "./MobileMenu.tsx";
 
 interface Props {
   className?: string;
@@ -23,7 +23,7 @@ const websiteLinks = [
 
 <nav class={cn("text-black/95 dark:text-white/95", className)}>
   <section class="lg:hidden">
-    <MobileMenu client:only />
+    <MobileMenu client:only="react" />
 </section>
   <section class="hidden lg:inline space-x-16">
   {

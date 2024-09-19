@@ -1,17 +1,17 @@
 ---
-import Button from "@/components/shared/Button.astro";
 import Message from "@/components/Tarif/Form/Message.astro";
-import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
+import Button from "@/components/shared/Button.astro";
+import Footer from "@/layouts/Footer.astro";
+import Header from "@/layouts/Header.astro";
+import Socials from "@/components/shared/Socials.astro";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/layouts/Section.astro";
-import Socials from "@/layouts/HeaderFooter/Socials.astro";
 import { Send, ThumbsUp } from "lucide-react";
 const key = "contact";
 ---
 
 <Layout title="contact">
-  <HeaderFooter slot="header" />
-
+  <Header slot="header" />
   <Section data-action={`section-message#${key}`} size="full" extension="sm" className={"grid center"}>
     <div class={"horizontal center gap-32 w-full h-fit"}>
       <div class="text-left vertical items-start justify-between h-full gap-20">
@@ -69,5 +69,5 @@ const key = "contact";
       </form>
     </div>
   </Section>
-  <HeaderFooter slot="footer" as="footer" />
+  <Footer slot="footer"/>
 </Layout>

@@ -1,15 +1,14 @@
 ---
 import Earth from "@/components/Home/Earth/Earth.astro";
 import FooterSection from "@/components/Home/FooterSection.astro";
-import Hero from "@/components/Home/Hero/Hero.astro";
-// import Location from "@/components/Home/Location/Location.astro";
+import Hero from "@/components/Home/Hero.astro";
 import Products from "@/components/Home/Products.astro";
 import UnderConstruction from "@/components/UnderConstruction.astro";
-import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
-import Layout from "../layouts/Layout.astro";
+import Footer from "@/layouts/Footer.astro";
+import Layout from "@/layouts/Layout.astro";
 ---
 
-<Layout title="accueil">
+<Layout title="accueil" className="max-w-screen">
   <Hero slot="header" />
   <!-- <Location /> -->
   <!-- VIJAY -->
@@ -18,5 +17,5 @@ import Layout from "../layouts/Layout.astro";
   <UnderConstruction />
   <Products />
   <FooterSection />
-  <HeaderFooter slot="footer" as="footer" />
+  <Footer slot="footer" />
 </Layout>

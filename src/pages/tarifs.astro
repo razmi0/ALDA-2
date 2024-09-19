@@ -1,5 +1,4 @@
 ---
-import type { ProductType } from "@/components/shared/product-data/types";
 import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
 import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
 import Checkboxes from "@/components/Tarif/Form/Checkboxes.astro";
@@ -16,10 +15,12 @@ import type { OptionType } from "@/components/Tarif/types";
 import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 import ContactButton from "@/components/shared/ContactButton.astro";
+import Footer from "@/layouts/Footer.astro";
+import Header from "@/layouts/Header.astro";
 import Heading from "@/components/shared/Heading.astro";
 import MinimalPrice from "@/components/shared/MinimalPrice.astro";
 import rawProducts from "@/components/shared/product-data/product.json" assert { type: "json" };
-import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
+import type { ProductType } from "@/components/shared/product-data/types";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import { ArrowDown, type LucideProps } from "lucide-react";
@@ -130,7 +131,7 @@ const statsComponents: StatsComponent[] = [
 </style>
 
 <Layout title="tarif">
-  <HeaderFooter slot="header" />
+  <Header slot="header" />
   <Section size="half" extension="lg" className={"grid center"}>
     <!--  -->
     <Heading h2="Nos tarifs" h3="Composable et personalisable">
@@ -218,5 +219,5 @@ const statsComponents: StatsComponent[] = [
     </CTA>
   </Section>
 
-  <HeaderFooter slot="footer" as="footer" className="mt-32" />
+  <Footer slot="footer" className="mt-32" />
 </Layout>

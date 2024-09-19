@@ -2,8 +2,9 @@
 import Badge from "@/components/shared/Badge.astro";
 import CTA from "@/components/shared/CTA.astro";
 import ContactButton from "@/components/shared/ContactButton.astro";
+import Footer from "@/layouts/Footer.astro";
+import Header from "@/layouts/Header.astro";
 import RandomImage from "@/components/shared/RandomImage.astro";
-import HeaderFooter from "@/layouts/HeaderFooter/HeaderFooter.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
 import Layout from "../layouts/Layout.astro";
@@ -89,7 +90,7 @@ const ourWords = [
 </style>
 
 <Layout title="nous">
-  <HeaderFooter slot="header" />
+  <Header slot="header" />
   <Section size="half" extension="md" fixedHeight className="vertical items-start justify-center px-14">
     <div class="text-left vertical items-start w-fit mb-20" transition:name="heading">
       <h2 class="text-5xl uppercase mb-5">Qui sommes-nous</h2>
@@ -180,5 +181,5 @@ const ourWords = [
       ))
     }
   </Section>
-  <HeaderFooter slot="footer" as="footer" />
+  <Footer slot="footer" />
 </Layout>
