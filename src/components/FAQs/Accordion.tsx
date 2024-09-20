@@ -87,7 +87,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ handleSearch, match, total, all, toggleAll }: SearchBarProps) => {
   return (
-    <search className="horizontal center gap-5 mb-10">
+    <search className="horizontal center mb-10">
       <div className="relative w-full">
         <label htmlFor="searchInput" className="sr-only">
           Search for a question
