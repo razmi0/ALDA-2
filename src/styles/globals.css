@@ -15,6 +15,10 @@ body {
   background-color: #fdfdfd;
 }
 
+mark {
+  @apply bg-yellow-500;
+}
+
 * {
   scrollbar-color: #f0f3f2;
   scrollbar-width: thin;
