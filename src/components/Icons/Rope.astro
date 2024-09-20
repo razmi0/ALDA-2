@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import RopeIcon from "./svg/rope.svg";
+
+interface Props {
+  className?: HTMLAttributes<"svg">["class"];
+}
+
+const { className } = Astro.props;
+---
+
+<Image src={RopeIcon} alt="Tree" class={className} />
