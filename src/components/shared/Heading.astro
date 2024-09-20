@@ -14,6 +14,15 @@ const { h2, h3, className, cta } = Astro.props;
 <div transition:name="heading" class={cn("vertical center gap-6 text-center z-50", className)}>
   <h2 class="text-5xl uppercase">{h2}</h2>
   {h3 && !cta && <h3 class="text-2xl">{h3}</h3>}
-  {h3 && cta && <div class={`horizontal center gap-8`}><h3 class="text-2xl">{h3}</h3><slot /></div> }
+  {
+    h3 && cta && (
+      <div class={`horizontal center gap-5 flex-wrap`}>
+        <>
+          <h3 class="text-2xl">{h3}</h3>
+          <slot />
+        </>
+      </div>
+    )
+  }
   <slot name="icon" />
 </div>
