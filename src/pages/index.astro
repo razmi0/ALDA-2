@@ -1,4 +1,5 @@
 ---
+import CatchSection from "@/components/Home/CatchSection.astro";
 import Earth from "@/components/Home/Earth/Earth.astro";
 import FooterSection from "@/components/Home/FooterSection.astro";
 import Hero from "@/components/Home/Hero.astro";
@@ -6,23 +7,11 @@ import Products from "@/components/Home/Products.astro";
 import UnderConstruction from "@/components/UnderConstruction.astro";
 import Footer from "@/layouts/Footer.astro";
 import Layout from "@/layouts/Layout.astro";
-import Section from "@/layouts/Section.astro";
 ---
 
 <Layout title="accueil" className="max-w-screen">
   <Hero slot="header" />
-  <Section className={`bg-map-dark vertical center pt-28`} size="quarter">
-    <article class={`[&>p]:max-w-[50ch] text-white/80 space-y-8 px-3 sm:px-0`}>
-      <p class="text-xl font-semibold text-left">Libérez l'aventurier qui sommeille en vous !</p>
-      <p>Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !</p>
-      <p>
-        Imagine-toi en train de glisser le long d'une corde, te déplacer le long des branches et feuillage, le cœur
-        battant la chamade, avant d'atteindre la cime d'un arbre majestueux spécialement choisi par nos soins. C'est une
-        expérience unique et immersive qui te permettra de te défouler, de te relaxer et de t'apporter un nouveau regard
-        sur la biodiversité.
-      </p>
-    </article>
-  </Section>
+  <CatchSection />
   <!-- <Location /> -->
   <!-- VIJAY -->
   <Earth />
