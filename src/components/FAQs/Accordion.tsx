@@ -169,18 +169,22 @@ export default function SearchableAccordion({ faqs }: { faqs: FaqType[] }) {
         all={visibility.all}
         toggleAll={handleToggleAll}
       />
-      <Accordion type="multiple" onValueChange={handleToggle} value={visibility.open}>
+      <Accordion type="multiple" onValueChange={handleToggle} value={visibility.open} className="space-y-3">
         {filteredFaqs.map((faq) => (
-          <AccordionItem key={faq.id} value={faq.id} data-mark={faq.id}>
+          <AccordionItem
+            key={faq.id}
+            value={faq.id}
+            data-mark={faq.id}
+            className="border rounded-md px-3 py-2 bg-gray-200/50">
             <AccordionTrigger className="text-lg quattrocento-sans-bold">
               <div className="inline-flex">
                 <span className="mr-5" aria-description="Question number">
                   Q{faq.id}
                 </span>
-                <h3>{faq.question}</h3>
+                <h3 className="text-left">{faq.question}</h3>
               </div>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="bg-[#fdfdfd] rounded-md px-3 py-2">
               {faq.answer.map((text) => {
                 return <p key={text}>{text}</p>;
               })}
@@ -202,30 +206,31 @@ type SearchBarProps = {
 
 const SearchBar = ({ handleSearch, match, total, all, toggleAll }: SearchBarProps) => {
   return (
-    <search className="vertical items-start mb-10">
-      <label className="font-medium" htmlFor="searchInput">
-        Chercher par mots-clés :
-      </label>
-      <div className="relative w-full mr-2">
-        <input
-          id="searchInput"
-          onChange={handleSearch}
-          type="text"
-          placeholder="Entrer un mot-clé.."
-          className="w-full py-2 pt-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
-        />
-
-        <SearchIcon className="absolute w-5 h-5 text-gray-500 left-3 top-1/2 transition-colors -translate-y-1/2" />
-        <button type="button" onClick={toggleAll}>
-          <ListCollapse
-            className={`absolute w-7 h-7 right-3 top-1/2 transition-colors -translate-y-1/2 ${all ? "text-green-600 hover:text-green-500" : "text-gray-500 hover:text-gray-400"}`}
+    <search className="horizontal mb-10">
+      <div className="vertical grow">
+        <label className="font-medium text-gray-700" htmlFor="searchInput">
+          Chercher par mots-clés :
+        </label>
+        <div className="relative w-full mr-2">
+          <input
+            id="searchInput"
+            onChange={handleSearch}
+            type="text"
+            placeholder="Entrer un mot-clé.."
+            className="w-full py-2 pt-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
           />
-        </button>
+          <SearchIcon className="absolute w-5 h-5 text-gray-400 left-3 top-1/2 transition-colors -translate-y-1/2" />
+          <button type="button" onClick={toggleAll}>
+            <ListCollapse
+              className={`absolute w-7 h-7 right-3 top-1/2 transition-colors -translate-y-1/2 ${all ? "text-green-600 hover:text-green-500" : "text-gray-400 hover:text-gray-300"}`}
+            />
+          </button>
+          <output className="absolute right-3 -top-[1.55rem] h-fit">
+            <span>{match !== total && match}</span>
+            <span>{match !== total && `/${total}`}</span>
+          </output>
+        </div>
       </div>
-      <output>
-        <span>{match !== total && match}</span>
-        <span>{match !== total && `/${total}`}</span>
-      </output>
     </search>
   );
 };
