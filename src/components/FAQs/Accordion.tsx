@@ -100,10 +100,10 @@ const SearchBar = ({ handleSearch, match, total, all, toggleAll }: SearchBarProp
           className="w-full py-2 pt-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
         />
 
-        <SearchIcon className="absolute w-5 h-5 text-gray-500 left-3 top-1/2 transform -translate-y-1/2" />
+        <SearchIcon className="absolute w-5 h-5 text-gray-500 left-3 top-1/2 transition-colors -translate-y-1/2" />
         <button type="button" onClick={toggleAll}>
           <ListCollapse
-            className={`absolute w-7 h-7  right-3 top-1/2 transform -translate-y-1/2 ${all ? "text-green-600" : "text-gray-500"}`}
+            className={`absolute w-7 h-7  right-3 top-1/2 transition-colors  -translate-y-1/2 ${all ? "text-green-600 hover:text-green-500" : "text-gray-500 hover:text-gray-400"}`}
           />
         </button>
       </div>
