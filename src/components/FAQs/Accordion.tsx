@@ -1,16 +1,27 @@
 /**
- * @file Accordion.tsx
  * Standalone accordion component for FAQs with search functionality
- * @module src/components/FAQs/Accordion
  * npm i lucide-react, npx shadcn@latest add accordion
  */
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ListCollapse, SearchIcon } from "lucide-react";
-import { useCallback, useMemo, useState, type ChangeEvent } from "react";
+import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
 import type { FaqType } from "./types";
 
-const diacriticsMap: Record<string, string> = {
+// TYPES
+// --
+
+type Visibility = {
+  all: boolean;
+  open: string[];
+};
+
+// CONTANTS
+// --
+
+const SEARCH_THRESHOLD = 2;
+const HIGHLIGHT_WORD_THRESHOLD = 2;
+const DIACRITICS: Record<string, string> = {
   È: "e",
   É: "e",
   Ê: "e",
@@ -65,48 +76,88 @@ const diacriticsMap: Record<string, string> = {
   ø: "o",
 } as const;
 
-const replaceDiacritics = (str: string) => str.replace(/[^A-Za-z0-9]/g, (char) => diacriticsMap[char] || char);
+// HELPERS
+// --
 
-type Visibility = {
-  all: boolean;
-  past: string[];
-  current: string[];
+const replaceDiacritics = (str: string) => str.replace(/[^A-Za-z0-9]/g, (char) => DIACRITICS[char] || char);
+
+const buildRegs = (searchArr: string[]) => {
+  return searchArr.map((searchWord) => {
+    return new RegExp(
+      searchWord
+        .split("")
+        .map((char) => /** (?:a|$)(?:b|$)(?:c|$)  */ "(?:" + char + "|$)")
+        .join(""),
+      "gi"
+    );
+  });
 };
 
-export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
+const validMatch = (word: string, searchedRegs: RegExp[]) => {
+  return searchedRegs.some((reg) => {
+    const res = reg.exec(replaceDiacritics(word));
+    return res && res[0].length > HIGHLIGHT_WORD_THRESHOLD;
+  });
+};
+
+const buildMarkedText = (text: string, searchArr: string[]) => {
+  return text
+    .split(" ")
+    .map((word) => (validMatch(word, buildRegs(searchArr)) ? `<mark>${word}</mark>` : word))
+    .join(" ");
+};
+
+const insertHtml = (p: HTMLParagraphElement[], markedText: string[]) => {
+  p.forEach((p, i) => {
+    p.innerHTML = markedText[i] || "";
+  });
+};
+
+// COMPONENTS
+// --
+
+export default function SearchableAccordion({ faqs }: { faqs: FaqType[] }) {
   const [search, setSearch] = useState("");
-  const [visibility, setVisibility] = useState<Visibility>({ all: false, past: [], current: [] });
+  const [visibility, setVisibility] = useState<Visibility>({ all: false, open: [] });
+
+  useEffect(() => {
+    if (search.length > SEARCH_THRESHOLD) {
+      visibility.open.forEach((id) => {
+        Array.from(document.querySelectorAll(`[data-mark="${id}"]`)).forEach((el) => {
+          const paragraphs = Array.from(el.querySelectorAll("p")) as HTMLParagraphElement[];
+          const originalText = paragraphs.map((p) => p.textContent || "");
+          const markedText = originalText.map((text) => buildMarkedText(text, search.split(" "))); // marked text
+          insertHtml(paragraphs, markedText);
+        });
+      });
+    }
+  }, [search, visibility]);
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearch(replaceDiacritics(e.target.value.trim()));
   }, []);
 
   const handleToggle = useCallback((visible: string[]) => {
-    setVisibility((prev) => {
-      return {
-        all: false,
-        past: prev.current,
-        current: visible,
-      };
-    });
+    setVisibility({ all: false, open: visible });
   }, []);
 
   const handleToggleAll = useCallback(() => {
     setVisibility((prev) => {
       return {
         all: !prev.all,
-        past: prev.current,
-        current: !prev.all ? faqs.map((faq) => faq.id) : prev.past,
+        open: !prev.all ? faqs.map((faq) => faq.id) : [],
       };
     });
   }, []);
 
   const filteredFaqs = useMemo(() => {
-    return faqs.filter((faq) => {
+    const filtered = faqs.filter((faq) => {
       const data = replaceDiacritics(faq.question + faq.answer);
       const searchStr = search.trim().toLowerCase();
       return data.toLowerCase().includes(searchStr);
     });
+
+    return filtered;
   }, [faqs, search]);
 
   return (
@@ -118,20 +169,20 @@ export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
         all={visibility.all}
         toggleAll={handleToggleAll}
       />
-      <Accordion type="multiple" onValueChange={handleToggle} value={visibility.current}>
+      <Accordion type="multiple" onValueChange={handleToggle} value={visibility.open}>
         {filteredFaqs.map((faq) => (
-          <AccordionItem key={faq.id} value={faq.id}>
+          <AccordionItem key={faq.id} value={faq.id} data-mark={faq.id}>
             <AccordionTrigger className="text-lg quattrocento-sans-bold">
-              <span>
+              <div className="inline-flex">
                 <span className="mr-5" aria-description="Question number">
                   Q{faq.id}
                 </span>
-                {faq.question}
-              </span>
+                <h3>{faq.question}</h3>
+              </div>
             </AccordionTrigger>
             <AccordionContent>
-              {faq.answer.map((a) => {
-                return <p key={a}>{a}</p>;
+              {faq.answer.map((text) => {
+                return <p key={text}>{text}</p>;
               })}
             </AccordionContent>
           </AccordionItem>
@@ -151,23 +202,23 @@ type SearchBarProps = {
 
 const SearchBar = ({ handleSearch, match, total, all, toggleAll }: SearchBarProps) => {
   return (
-    <search className="horizontal center mb-10">
+    <search className="vertical items-start mb-10">
+      <label className="font-medium" htmlFor="searchInput">
+        Chercher par mots-clés :
+      </label>
       <div className="relative w-full mr-2">
-        <label htmlFor="searchInput" className="sr-only">
-          Search for a question
-        </label>
         <input
           id="searchInput"
           onChange={handleSearch}
           type="text"
-          placeholder="Search for a question..."
+          placeholder="Entrer un mot-clé.."
           className="w-full py-2 pt-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
         />
 
         <SearchIcon className="absolute w-5 h-5 text-gray-500 left-3 top-1/2 transition-colors -translate-y-1/2" />
         <button type="button" onClick={toggleAll}>
           <ListCollapse
-            className={`absolute w-7 h-7  right-3 top-1/2 transition-colors  -translate-y-1/2 ${all ? "text-green-600 hover:text-green-500" : "text-gray-500 hover:text-gray-400"}`}
+            className={`absolute w-7 h-7 right-3 top-1/2 transition-colors -translate-y-1/2 ${all ? "text-green-600 hover:text-green-500" : "text-gray-500 hover:text-gray-400"}`}
           />
         </button>
       </div>
