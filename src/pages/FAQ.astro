@@ -11,8 +11,8 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="FAQ">
   <Header slot="header" />
-  <Section className={"vertical items-center justify-start gap-20"} size="full" extension="xl">
-    <div class="text-center vertical center mb-20" transition:name="heading">
+  <Section className={"vertical items-center justify-start gap-0 mt-36"} size="full" extension="xl">
+    <div class="text-center vertical center mb-20 px-5" transition:name="heading">
       <h2 class="text-5xl uppercase mb-5">Questions fréquentes</h2>
       <p class="max-w-[50ch] mb-5 text-[1rem]">
         Retrouvez la plupart des questions et réponses que vous vous posez sur le fonctionnement de l'association, qui
@@ -20,7 +20,7 @@ import Layout from "../layouts/Layout.astro";
       </p>
       <ArrowDown size="32" />
     </div>
-    <div class="w-9/12 h-full vertical justify-end">
+    <div class="px-5 md:px-0 w-full md:w-9/12 h-full vertical justify-end">
       <SearchableAccordion client:visible faqs={rawFaqs.faqs} />
     </div>
     <Section size="quarter" className={"vertical center mb-10"}>
