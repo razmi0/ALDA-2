@@ -1,0 +1,22 @@
+---
+import Section from "@/layouts/Section.astro";
+import Rope from "../Icons/Rope.astro";
+
+interface Props {}
+
+const {} = Astro.props;
+---
+
+<Section className={`bg-map-dark vertical center pt-28`} size="quarter">
+  <article class={`[&>p]:max-w-[50ch] text-[#a4b1d6] space-y-8 px-5 sm:px-0`}>
+    <Rope />
+    <p class="text-xl font-semibold text-left text-white/80">Libérez l'aventurier qui sommeille en vous !</p>
+    <p>Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !</p>
+    <p class={`text-[#a4b1d6]`}>
+      Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant dans un
+      environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions authentiques et à
+      comprendre l'importance de préserver notre écosystème. Réservez dès maintenant pour vivre une expérience
+      inoubliable et riche en sensations.
+    </p>
+  </article>
+</Section>
