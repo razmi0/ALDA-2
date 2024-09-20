@@ -26,3 +26,4 @@
 - [ ] incorporer les produits
 - [ ] incorporer les elements décoratifs
 - [ ] RESPONSIVE
+  - [x] index
