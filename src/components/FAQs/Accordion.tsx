@@ -1,13 +1,41 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { SearchIcon } from "lucide-react";
+import { ListCollapse, SearchIcon } from "lucide-react";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
 import type { FaqType } from "./types";
+
+type Visibility = {
+  all: boolean;
+  past: string[];
+  current: string[];
+};
+
 export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
   const [search, setSearch] = useState("");
+  const [visibility, setVisibility] = useState<Visibility>({ all: false, past: [], current: [] });
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   }, []);
+
+  const handleToggle = (visible: string[]) => {
+    setVisibility((prev) => {
+      return {
+        all: false,
+        past: prev.current,
+        current: visible,
+      };
+    });
+  };
+
+  const handleToggleAll = () => {
+    setVisibility((prev) => {
+      return {
+        all: !prev.all,
+        past: prev.current,
+        current: !prev.all ? faqs.map((faq) => faq.id) : prev.past,
+      };
+    });
+  };
 
   const filteredFaqs = useMemo(() => {
     return faqs.filter((faq) => {
@@ -19,8 +47,14 @@ export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
 
   return (
     <>
-      <SearchBar handleSearch={handleSearch} match={filteredFaqs.length} total={faqs.length} />
-      <Accordion type="multiple">
+      <SearchBar
+        handleSearch={handleSearch}
+        match={filteredFaqs.length}
+        total={faqs.length}
+        all={visibility.all}
+        toggleAll={handleToggleAll}
+      />
+      <Accordion type="multiple" onValueChange={handleToggle} value={visibility.current}>
         {filteredFaqs.map((faq) => (
           <AccordionItem key={faq.id} value={faq.id}>
             <AccordionTrigger className="text-lg quattrocento-sans-bold">
@@ -47,9 +81,11 @@ type SearchBarProps = {
   handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
   match: number;
   total: number;
+  all: boolean;
+  toggleAll: () => void;
 };
 
-const SearchBar = ({ handleSearch, match, total }: SearchBarProps) => {
+const SearchBar = ({ handleSearch, match, total, all, toggleAll }: SearchBarProps) => {
   return (
     <search className="horizontal center gap-5 mb-10">
       <div className="relative w-full">
@@ -65,6 +101,11 @@ const SearchBar = ({ handleSearch, match, total }: SearchBarProps) => {
         />
 
         <SearchIcon className="absolute w-5 h-5 text-gray-500 left-3 top-1/2 transform -translate-y-1/2" />
+        <button type="button" onClick={toggleAll}>
+          <ListCollapse
+            className={`absolute w-7 h-7  right-3 top-1/2 transform -translate-y-1/2 ${all ? "text-green-600" : "text-gray-500"}`}
+          />
+        </button>
       </div>
       <output>
         <span>{match !== total && match}</span>
