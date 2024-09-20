@@ -1,6 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ListCollapse, SearchIcon } from "lucide-react";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
+import { replaceDiacritics } from "./diacritics";
 import type { FaqType } from "./types";
 
 type Visibility = {
@@ -14,10 +15,10 @@ export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
   const [visibility, setVisibility] = useState<Visibility>({ all: false, past: [], current: [] });
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+    setSearch(replaceDiacritics(e.target.value.trim()));
   }, []);
 
-  const handleToggle = (visible: string[]) => {
+  const handleToggle = useCallback((visible: string[]) => {
     setVisibility((prev) => {
       return {
         all: false,
@@ -25,9 +26,9 @@ export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
         current: visible,
       };
     });
-  };
+  }, []);
 
-  const handleToggleAll = () => {
+  const handleToggleAll = useCallback(() => {
     setVisibility((prev) => {
       return {
         all: !prev.all,
@@ -35,11 +36,11 @@ export default function ReactAccordion({ faqs }: { faqs: FaqType[] }) {
         current: !prev.all ? faqs.map((faq) => faq.id) : prev.past,
       };
     });
-  };
+  }, []);
 
   const filteredFaqs = useMemo(() => {
     return faqs.filter((faq) => {
-      const data = faq.question + faq.answer;
+      const data = replaceDiacritics(faq.question + faq.answer);
       const searchStr = search.trim().toLowerCase();
       return data.toLowerCase().includes(searchStr);
     });
