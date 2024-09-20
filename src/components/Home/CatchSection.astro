@@ -1,13 +1,15 @@
 ---
 import Section from "@/layouts/Section.astro";
 import Rope from "../Icons/Rope.astro";
+import VerticalText from "./VerticalText.astro";
 
 interface Props {}
 
 const {} = Astro.props;
 ---
 
-<Section className={`bg-map-dark vertical center pt-28`} size="quarter">
+<Section className={`bg-map-dark vertical center relative pt-28`} size="quarter">
+  <VerticalText position="right" className="bottom-0">Découvrez des lieux uniques</VerticalText>
   <article class={`[&>p]:max-w-[50ch] text-[#a4b1d6] space-y-8 px-5 sm:px-0`}>
     <Rope />
     <p class="text-xl font-semibold text-left text-white/80">Libérez l'aventurier qui sommeille en vous !</p>
