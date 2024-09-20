@@ -1,8 +1,71 @@
+/**
+ * @file Accordion.tsx
+ * Standalone accordion component for FAQs with search functionality
+ * @module src/components/FAQs/Accordion
+ * npm i lucide-react, npx shadcn@latest add accordion
+ */
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ListCollapse, SearchIcon } from "lucide-react";
 import { useCallback, useMemo, useState, type ChangeEvent } from "react";
-import { replaceDiacritics } from "./diacritics";
 import type { FaqType } from "./types";
+
+const diacriticsMap: Record<string, string> = {
+  È: "e",
+  É: "e",
+  Ê: "e",
+  Ë: "e",
+  è: "e",
+  é: "e",
+  ê: "e",
+  ë: "e",
+  à: "a",
+  á: "a",
+  â: "a",
+  ã: "a",
+  ä: "a",
+  å: "a",
+  æ: "a",
+  À: "a",
+  Á: "a",
+  Â: "a",
+  Ã: "a",
+  Ä: "a",
+  Å: "a",
+  Æ: "a",
+  Ù: "u",
+  Ú: "u",
+  Û: "u",
+  Ü: "u",
+  ù: "u",
+  ú: "u",
+  û: "u",
+  ü: "u",
+  Ì: "i",
+  Í: "i",
+  Î: "i",
+  Ï: "i",
+  ì: "i",
+  í: "i",
+  î: "i",
+  ï: "i",
+  Ÿ: "y",
+  ÿ: "y",
+  Ò: "o",
+  Ó: "o",
+  Ô: "o",
+  Õ: "o",
+  Ö: "o",
+  Ø: "o",
+  ò: "o",
+  ó: "o",
+  ô: "o",
+  õ: "o",
+  ö: "o",
+  ø: "o",
+} as const;
+
+const replaceDiacritics = (str: string) => str.replace(/[^A-Za-z0-9]/g, (char) => diacriticsMap[char] || char);
 
 type Visibility = {
   all: boolean;
