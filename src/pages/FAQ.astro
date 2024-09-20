@@ -1,5 +1,5 @@
 ---
-import ReactAccordion from "@/components/FAQs/Accordion.tsx";
+import SearchableAccordion from "@/components/FAQs/Accordion.tsx";
 import rawFaqs from "@/components/FAQs/faq.json" assert { type: "json" };
 import CTA from "@/components/shared/CTA.astro";
 import Footer from "@/layouts/Footer.astro";
@@ -21,7 +21,7 @@ import Layout from "../layouts/Layout.astro";
       <ArrowDown size="32" />
     </div>
     <div class="w-9/12 h-full vertical justify-end">
-      <ReactAccordion client:visible faqs={rawFaqs.faqs} />
+      <SearchableAccordion client:visible faqs={rawFaqs.faqs} />
     </div>
     <Section size="quarter" className={"vertical center mb-10"}>
       <CTA className="hover:underline" href="/contact"> Vous n'avez pas trouvé votre réponse ? Contactez-nous </CTA>
