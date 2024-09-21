@@ -1,0 +1,25 @@
+---
+import Section from "@/layouts/Section.astro";
+import VerticalText from "../VerticalText.astro";
+import Gradients from "./Gradients.astro";
+import SkyArticle from "./SkyArticle.astro";
+import SkyFigure from "./SkyFigure.astro";
+import SkyTestimony from "./SkyTestimony.astro";
+
+interface Props {}
+
+const {} = Astro.props;
+---
+
+<Section
+  extension="none"
+  className="relative vertical md:horizontal flex-wrap center pb-32 bg-pur-500 overflow-hidden gap-20"
+  size="full">
+  <Gradients />
+  <VerticalText position="left" className="bottom-96">Découvrez la grimpe d'arbre</VerticalText>
+  <div class="w-full horizontal center">
+    <SkyArticle />
+    <SkyFigure />
+  </div>
+  <SkyTestimony />
+</Section>
