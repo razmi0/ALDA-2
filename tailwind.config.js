@@ -27,8 +27,11 @@ export default {
           500: "#7b8ec3",
           600: "#f3d2ff", //#ba9bc5
         },
-        sky: {
+        fsky: {
+          400: "#518fce",
+          500: "#5d8dcf",
           600: "#5870B3",
+          700: "#004f9a",
         },
         map: {
           dark: "#0b0e16",
