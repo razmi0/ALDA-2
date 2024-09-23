@@ -1,23 +1,19 @@
 ---
-// import ImageSwitch from "@/components/Home/ImageSwitch/ImageSwitch.astro";
+import Landscape from "@/assets/client-imgs/landscape/landscape-36.webp";
 import Section from "@/layouts/Section.astro";
+import { Image } from "astro:assets";
 ---
 
 <Section className={"relative"}>
-  <style>
-    .footer-landscape-fade {
-      --color-start: transparent;
-      background: linear-gradient(to top, var(--color-start) 0%, var(--color-start) 80%, #94c2e7 100%);
-    }
-  </style>
-  <!-- <ImageSwitch
-    uniqueKey="last-section"
-    alt="last section images"
-    className="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
-  /> -->
-  <!-- OVERLAY -->
-  <!-- <div class="absolute-align full footer-landscape-fade z-50"></div> -->
-  <!-- OVERLAY -->
+  <Image
+    src={Landscape}
+    role={"presentation"}
+    alt=""
+    widths={[240, 320, 478, 648, 720, 1024, 1574]}
+    sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}
+    class="absolute full max-w-screen object-cover -z-[10] brightness-110 contrast-125"
+  />
+
   <article class="text-left z-10 vertical center text-black gap-7 pt-32">
     <div class="font-bolder text-black/90 px-4 sm:px-0">
       <h2 class={`text-[22px] w-full mb-5`}>Le moment de revenir à l'essentiel</h2>
