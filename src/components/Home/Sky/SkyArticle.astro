@@ -1,0 +1,23 @@
+---
+import Butterfly from "@/components/Icons/Butterfly.astro";
+import Article from "@/components/shared/Article.astro";
+import Button from "@/components/shared/Button.astro";
+import CTA from "@/components/shared/CTA.astro";
+
+const p1 =
+  "Grimper aux arbres, c'est apprivoiser deux rencontres : l'une avec moi-même, la découverte de mes limites et de mes capacités ; l'autre avec le monde, face à l'immensité de l'arbre ancré qui m'accueille, avec ses osbtacles et ses appuis. Mes sens sont alors en éveil : j'écoute les oiseaux, j'admire l'horizon, je sens l'odeur de pin, je m'accroche à l'écorce et je ressens dans tout mon corps un mélange d'excitation, de bien-être et d'épanouissement.";
+const p2 =
+  "L'entendre ou le voir ne suffit pas, il faut le vivre pour comprendre. Alors fais nous confiance, et viens avec nous prendre de la hauteur et te hisser en haut des cimes pour ressentir le monde autrement.";
+const title = "En haut des cimes, aux racines de soi...";
+---
+
+<div class="w-fit h-fit vertical px-6 sm:px-12 gap-10">
+  <div class="vertical items-start gap-6 z-10">
+    <Article words1={p1} words2={p2} className="max-w-[50ch]" pClass={"max-w-[50ch] text-stone-950"} title={title} dark>
+      <Butterfly />
+    </Article>
+  </div>
+  <CTA href="/contact">
+    <Button dark size="lg" className="z-50 hover:bg-black/20 transition-colors" ring="sm">Contact</Button>
+  </CTA>
+</div>

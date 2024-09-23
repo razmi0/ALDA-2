@@ -1,0 +1,31 @@
+---
+import Lou from "@/components/Home/Sky/assets/client-img-49.jpg";
+import OpenQuote from "@/components/Icons/OpenQuote.astro";
+import { Image } from "astro:assets";
+
+const quote = "Dis-moi et j'oublierai, montre-moi et je me souviendrai, implique-moi et je comprendrai.";
+const alt = "Lou Bideau fondatrice de l'entreprise et ses 5 vies";
+---
+
+<article
+  class="flex flex-col lg:flex-row center shadow-2xl shadow-black z-10 [&>*]:h-[450px] max-[350px]:[&>*]:w-[325px] [&>*]:w-[350px] min-[500px]:[&>*]:w-[450px] text-white/80">
+  <Image
+    widths={[350, 450]}
+    sizes={`(max-width : 450px) 350px, 450px`}
+    src={Lou}
+    alt={alt}
+    class={"aspect-square object-cover rounded-t-sm lg:rounded-tl-sm lg:rounded-bl-sm"}
+  />
+  <div class="vertical center w-5/12 bg-sky-600 px-10 sm:px-14 gap-3 rounded-b-sm lg:rounded-tr-sm lg:rounded-br-sm">
+    <blockquote class="leading-6">
+      <div class="w-full translate-y-6" aria-roledescription="open quote">
+        <OpenQuote />
+      </div>
+      <p class="text-lg indent-10">{quote}</p>
+    </blockquote>
+    <footer class="w-full mt-2">
+      <address class="text-white/90 font-semibold">Lou Bideau</address>
+      <p class="text-pur-400 font-semibold">Fondatrice</p>
+    </footer>
+  </div>
+</article>
