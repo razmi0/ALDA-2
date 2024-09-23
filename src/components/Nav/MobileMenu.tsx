@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { MenuIcon } from "lucide-react";
-// import { useMemo } from "react";
 import type { WebsiteLink } from "./types";
 
 type MobileMenuProps = {
