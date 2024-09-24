@@ -1,0 +1,19 @@
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const progressBar = document.querySelector("[data-progress]") as HTMLElement;
+    progressBar.dataset.progress = "idle";
+
+    document.addEventListener("astro:before-preparation", () => {
+      progressBar.dataset.progress = "before-preparation";
+    });
+  });
+</script>
+
+<style>
+  [data-progress="before-preparation"] {
+    width: 100%;
+    transition: width 0.3s linear;
+  }
+</style>
+
+<div data-progress="idle" class={`sticky w-0 top-0 h-1 md:h-[2px] bg-pur-500 z-[51]`}></div>
