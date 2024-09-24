@@ -1,9 +1,9 @@
 ---
-import Badge from "@/components/shared/Badge.astro";
-import CTA from "@/components/shared/CTA.astro";
-import ContactButton from "@/components/shared/ContactButton.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Nav/Header.astro";
+import Badge from "@/components/shared/Badge.astro";
+import Button from "@/components/shared/Button.astro";
+import CTA from "@/components/shared/CTA.astro";
 import RandomImage from "@/components/shared/RandomImage.astro";
 import Section from "@/layouts/Section.astro";
 import { generateLorem } from "@/lib/utils";
@@ -67,16 +67,17 @@ const missions = [
 const ourWords = [
   {
     title: "Lou",
-    subtitle: "CEO",
-    content: generateLorem(30),
-    badges: new Array(6).fill("badge").map(() => generateLorem(1)),
+    subtitle: "",
+    content:
+      "Après avoir obtenu un master recherche en cognition sociale, puis mon titre de psychologue en 2018, j'ai ouvert et tenu un point d'écoute. J'ai ensuite fait une pause en réalisant un CAP métallerie chez les compagnons du devoir, où j'ai découvert le plaisir des métiers manuels. En lien avec le bénévolat affectué depuis sept ans, j'ai réalisé une formation d'éducatrice spécialisée qui m'a permis de travailler en centre d'hébergement et de réinsertion sociale, en école en tant que formatrice à La Rouatière où j'encadre de futurs éducateurs. Lorsque Vijay m'a fait découvrir l'activité de grimpe d'arbre, j'ai compris qu'elle me permettrait de poursuivre ma passion et d'apporter aux personnes que j'accompagnais ses bienfaits, tout en respectant les milieux forestiers. J'ai  rejoint le projet afin de permettre aux personnes en difficulté de sortir d'un parcours institutionnel pour pouvoir travailler sur soi dans un cadre naturel sécurisant et bienveillant.",
+    badges: ["Psychologue", "Resilience", "Chemin de traverse", "Pirate"],
   },
   {
     title: "Vijay",
-    subtitle: "CTO",
+    subtitle: "",
     content:
-      "Je me suis toujours épanoui dans la nature, et les arbres, en particulier, m'émerveille depuis longtemps.     Après avoir vécu une expérience collective, d'un mois et demi, avec 81 personnes sur le bateau de l'Hermione, comme gabier volontaire, j'ai exercé en tant que cordiste pendant 6 ans, l'envie de travailler avec du vivant est apparu. J'ai donc réaliser la formation d'éducateur grimpe d'arbre. Au cours de celle-ci,un vrai amour pour les arbres s'est développé,et c'est durant mes stages que je me suis vraiment redécouvert. Tout ces moments me poussent à proposer de nouvelles expériences,à partager avec les autres,et aussi à transmettre et échanger.",
-    badges: new Array(6).fill("badge").map(() => generateLorem(1)),
+      "Je me suis toujours épanoui dans la nature, et les arbres, en particulier, m'émerveille depuis longtemps. Après avoir vécu une expérience collective, d'un mois et demi, avec 81 personnes sur le navire de l'Hermione, comme gabier volontaire, j'ai exercé en tant que cordiste pendant 6 ans, l'envie de travailler avec du vivant est apparu. J'ai donc réaliser la formation d'éducateur grimpe d'arbre. Au cours de celle-ci,un vrai amour pour les arbres s'est développé,et c'est durant mes stages que je me suis vraiment redécouvert. Tout ces moments me poussent à proposer de nouvelles expériences,à partager avec les autres,et aussi à transmettre et échanger.",
+    badges: ["Cordiste", "Marin", "Fregate", "Pirate"],
   },
 ];
 ---
@@ -91,7 +92,7 @@ const ourWords = [
 
 <Layout title="nous">
   <Header slot="header" />
-  <Section size="half" extension="md" fixedHeight className="vertical items-start justify-center px-14">
+  <Section size="half" extension="md" className="vertical items-start justify-center px-14">
     <div class="text-left vertical items-start w-fit mb-20" transition:name="heading">
       <h2 class="text-5xl uppercase mb-5">Qui sommes-nous</h2>
       <p class="max-w-[50ch] mb-5 text-[1rem]">
@@ -99,7 +100,7 @@ const ourWords = [
       </p>
     </div>
   </Section>
-  <Section className={`container grid px-14`} fixedHeight>
+  <Section className={`container grid px-14`}>
     <div class={`vertical full justify-between items-start [&_h4]:text-3xl`}>
       <h3 class={`text-4xl grandstander`}>Nos valeurs</h3>
       {
@@ -158,24 +159,26 @@ const ourWords = [
       </article>
     </div>
   </section>
-  <Section className={"container px-14 horizontal items-start justify-center gap-28"} fixedHeight>
+  <Section className={"container px-5 vertical md:horizontal gap-28"}>
     {
       ourWords.map((word) => (
         <article class={`space-y-5`}>
-          <RandomImage seed={400} className={`aspect-square max-h-[350px] full mb-5`} />
-          <div class={`horizontal gap-3`}>
+          <RandomImage seed={400} className={`aspect-square max-h-[350px] max-w-[350px] full mb-5`} />
+          <div class={`vertical gap-3`}>
             <h4 class={`text-3xl`}>{word.title}</h4>
-            <small class={`text-black/80`}>{word.subtitle}</small>
+            <div class={`horizontal gap-2 max-w-[75%] flex-wrap`}>
+              {word.badges.map((badge) => (
+                <Badge tag={badge} />
+              ))}
+            </div>
           </div>
           <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
-          <p class={`max-w-[50ch]`}>{word.content}</p>
-          <div class={`horizontal gap-2 max-w-[75%] flex-wrap`}>
-            {word.badges.map((badge) => (
-              <Badge tag={badge} />
-            ))}
-          </div>
+          <p class={`max-w-[400px]`}>{word.content}</p>
+
           <CTA href={`/contact`} prefetch prefetchType="viewport">
-            <ContactButton className="mt-10">Contactez-moi</ContactButton>
+            <Button dark={false} size="lg" className="z-50 hover:bg-white/20 transition-colors" ring="sm">
+              Contact
+            </Button>
           </CTA>
         </article>
       ))
