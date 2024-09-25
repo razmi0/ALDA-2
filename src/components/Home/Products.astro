@@ -1,23 +1,49 @@
 ---
+import SensorielImage from "@/assets/client-imgs/client-img-26.jpg";
+import EvenementielImage from "@/assets/client-imgs/client-img-44.jpg";
+import RechercheImage from "@/assets/client-imgs/client-img-53.jpg";
 import VerticalText from "@/components/Home/VerticalText.astro";
-import data from "@/components/shared/product-data/product.json" assert { type: "json" };
-import type { ProductType } from "@/components/shared/product-data/types";
+import data from "@/components/shared/product-data/main-product.json" assert { type: "json" };
+import type { MainProductType } from "@/components/shared/product-data/types";
 import Section from "@/layouts/Section.astro";
+import { capitalize } from "@/lib/utils";
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 import { BirdIcon } from "lucide-react";
 import Article from "../shared/Article.astro";
 import Badge from "../shared/Badge.astro";
 import Button from "../shared/Button.astro";
 import CTA from "../shared/CTA.astro";
-import MinimalPrice from "../shared/MinimalPrice.astro";
 import RandomImage from "../shared/RandomImage.astro";
 
-const rawProducts = data.products as ProductType[];
+const mainProducts = data.products as MainProductType[];
 
-const topProducts = rawProducts.sort((a, b) => parseInt(b.rating, 10) - parseInt(a.rating, 10)).slice(0, 3);
-
-const imgSize = {
-  width: 400,
+const imagesSizes = {
+  width: 500,
   height: 500,
+};
+
+type ImagesData = {
+  [key: MainProductType["title"]]: {
+    src: ImageMetadata ;
+    alt: string;
+  },
+  
+};
+const imagesData: ImagesData = {
+  evenementiel: {
+    src: EvenementielImage,
+    alt: "Illustration d'un évenement Alabordarbre avec des personnes souriantes en cercle écoutant les instructions de l'animatrice Lou équipée sur corde",
+  },
+  "sensoriel et sensibilisation": {
+    src: SensorielImage,
+    alt: "Illustration d'un atelier sensoriel Alabordarbre où l'on aperçoit deux personnes grimpant dans le vide sur une corde",
+  },
+  recherche: {
+    src: RechercheImage,
+    alt: "Illustration d'un atelier de recherche Alabordarbre pendant lequel un groupe de personne est en train de chercher des indices au pied d'un arbre",
+  },
+  
 };
 ---
 
@@ -28,46 +54,77 @@ const imgSize = {
     .footer-landscape-fade {
       --color-start: transparent;
       --color-end: #5190ceda;
-      background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 80%, var(--color-end) 100%);
+      background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 95%, var(--color-end) 100%);
     }
   </style>
   <VerticalText position="right" dark>Le meilleur de nos propositions</VerticalText>
   <!-- OVERLAY -->
-  <div class="absolute-align full footer-landscape-fade -z-1 pointer-events-none"></div>
+  <!-- <div class="absolute-align full footer-landscape-fade -z-1 pointer-events-none"></div> -->
   <!-- OVERLAY -->
 
   <div class="vertical gap-10 w-full">
     <BirdIcon className="h-10 w-10" />
-    <h2 class="text-xl text-left">Ce que l'on vous conseille</h2>
+    <h2 class="text-xl text-left">Nos trois pôles d'activités</h2>
   </div>
   {
-    topProducts.map((product: ProductType, i: number) => {
-      const { id, title, description, tags, price, unit } = product;
+    mainProducts.map((product: MainProductType, i: number) => {
+      const { id, title, description, tags, price, locations, program, audience } = product;
       const articleOrientation = i % 2 !== 0 ? "vertical lg:horizontal-reverse" : "vertical lg:horizontal";
       return (
         <article class={articleOrientation} data-is={`product-${i}`}>
           <div transition:name={`random-image-${id}`}>
-            <RandomImage width={imgSize.width} height={imgSize.height} />
+            
+            {title in imagesData ? (
+              //@ts-ignore
+              <Image
+                src={imagesData[title]?.src ?? ""}
+                alt={imagesData[title]?.alt ?? ""}
+                width={imagesSizes.width}
+                height={imagesSizes.height}
+                class={`aspect-square object-cover`}
+              />
+            ) : (
+              <RandomImage width={imagesSizes.width}} height={imagesSizes.height} />
+            )}
           </div>
           <div class="vertical gap-10 w-fit" data-id={id}>
-            <Article
-              title={title}
-              words1={description.short}
-              pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"}
-              dark>
-              <div class="w-full h-full space-x-4 text-left" slot="subtitle">
-                {tags.map((tag) => {
-                  return <Badge tag={tag} />;
-                })}
-              </div>
+            <Article title={capitalize(title)} words1={capitalize(description)} pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"} dark>
+              {tags && (
+                <div class="w-full h-full space-x-4 text-left" slot="subtitle">
+                  {tags.map((tag) => (
+                    <Badge tag={tag} />
+                  ))}
+                </div>
+              )}
             </Article>
+            <ul class={`max-w-[50ch]`}>
+              {price && (
+                <li>
+                  <strong>Prix</strong> : {typeof price === "string" ? capitalize(price) : price}
+                </li>
+              )}
+              {locations && (
+                <li>
+                  <strong>Lieux</strong> : {Array.isArray(locations) ? locations.map(capitalize).join(", ") : capitalize(locations)}
+                </li>
+              )}
+              {program && (
+                <li>
+                  <strong>Programme</strong> : {Array.isArray(program) ? program.map(capitalize).join(", ") : capitalize(program)}
+                </li>
+              )}
+              {audience && (
+                <li>
+                  <strong>Publique</strong> : {capitalize(audience)}
+                </li>
+              )}
+            </ul>
             <footer class="horizontal items-center justify-start gap-10">
               <CTA href={`/tarifs#${id}`} prefetch prefetchType="viewport">
                 <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">
                   En savoir plus
                 </Button>
               </CTA>
-              <MinimalPrice price={price} unit={unit} />
             </footer>
           </div>
         </article>
