@@ -1,18 +1,23 @@
 ---
-
 interface Props {
-  price : string;
-  unit : string;
+  price: string | number;
+  unit?: string;
 }
 
 const { price, unit } = Astro.props;
 ---
 
-<p class="font-semibold whitespace-nowrap">
-  Start at
-  <span class="font-bold text-lg">
-    <small> €</small>
-    {price}
-  </span>
-  / {unit}
-</p>
+{
+  typeof price === "number" ? (
+    <p class="font-semibold whitespace-nowrap">
+      Start at
+      <span class="font-bold text-lg">
+        <small> €</small>
+        {price}
+      </span>
+      {unit && <> / {unit}</>}
+    </p>
+  ) : (
+    <p class="font-semibold whitespace-nowrap">{price}</p>
+  )
+}
