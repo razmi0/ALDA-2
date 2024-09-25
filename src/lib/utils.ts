@@ -119,6 +119,8 @@ const securePath = (e: Event, allowedPath: string[]) => {
   return true;
 };
 
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
 export {
   cn,
   credibilyScore,
@@ -130,4 +132,5 @@ export {
   securePath,
   setToLS,
   setupIntersectionObserver,
+  capitalize,
 };
