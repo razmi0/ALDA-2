@@ -26,40 +26,29 @@
 - [https://papaoursnature.fr/](https://papaoursnature.fr/)
 - [http://www.libertree.fr/sites.php](http://www.libertree.fr/sites.php)
 
-## Notes structure site
+## Working-notes client
 
-- Arborescence faible, maximum 5 pages, en poussant les informations en dernière
-  page (FAQ).
-- Inclure un logo à l'entrée suivi d'une navigation (fixed) et possiblement une
-  vidéo ou une image d'accueil.
-- L'ordre suggéré des sections comprend l'accueil, la présentation, une section images et des témoignages.
-- L'idée de placer des éléments en position fixe inclut le contact, une présentation de l'équipe et les tarifs.
-- Les onglets principaux ne doivent pas dépasser 5 et doivent couvrir des aspects tels que qui sont-ils, pour qui, comment (avec tarifs et activités), pourquoi et comment les contacter.
+### 3 poles
 
-- Pages:
-  - 1 / Accueil
-  - 2 / Nos activités et tarifs
-  - 3 / Qui sommes-nous
-  - 4 / Contact
-  - 5 / FAQ.
+- Un pôle événementiel :
+  - 3 mots clefs : Création, rêve, fascinant
+  - description : Nous proposerons des animations lors d’événements locaux (atelier de grimpe simple, aménagement d'espace convivial perché, atelier à sensations fortes), mais aussi la création d'ateliers sur mesure pour tout type de festivals, les anniversaires, les enterrements de vie de jeunes filles ou de garçons, etc. Nous avons également pour projet de proposer nos propres événements avec des partenaires par la suite.
+  - Au programme : A adapter en fonction de vos demandes
+  - Prix : nous contacter afin d'établir un devis
+  - Public : tout public
+  - Sites : lieu qu'on conventionnera dans le futur, si vous avez un déjà un lieu a nous proposer nous nous déplaçons
+    Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres , et établir une convention pour autorisation d'usage du site ainsi que l'installation et l'encadrement de l'animation
+- Le pôle sensoriel et sensibilisation :
+  -3 mots clefs : Echange, bienveillance, education
 
--add site map to counter balance the low number of pages and SEO
+  - description : Nous souhaitons mettre en place des ateliers sensoriels, adaptés aux jeunes enfants et aux personnes en situation de handicap, tels que des après-midi « bibliothèque perchée », de l’éveil-musical en filet, des siestes aériennes musicales, ou des lectures de contes. Sur du plus long terme, nous souhaitons également travailler avec les écoles et avec les communes pour organiser des ateliers de sensibilisation sur la protection de l'environnement.
+  - Au programme : A adapter en fonction de l'activité à mettre en place
+  - Prix : nous contacter afin d'établir un devis
+  - Public : tout public
+  - Sites : lieux en cours de convention, si vous souhaitez réaliser une activité au sein de votre structure, contactez-nous pour que nous puissions réaliser un repérage (comprend une étude de faisabilité et un diagnostic des arbres) , puis établir une convention d'occupation pour autorisation d'usage du site.
 
-## Notes esthétiques
-
-- Couleurs vert, marron et orange recommandées, avec une cohérence esthétique.
-- Utilisation d'une police caligraphique, rappelant un style pirate mais facile à lire.
-
-### Ã€ venir
-
-- Envisager d'inclure une carte pour localiser les sites.
-
-## audit
-
-- strat inbout marketing (inbound marketing) : attirer les clients par page de blog, mots clée recherche, travail de contenu, payer par article. Partager sur réseau sociaux
-- google annonce : payer des mots clées, google te met en haut de page
-- campagne google ads, 500 euros,
-
-### ent
-
-- lyreco : fourniture de bureau
+- Le pôle recherche :
+  - description : Pour compléter la veille scientifique que nous menons sur les bienfaits psychologiques de la grimpe d'arbre, nous aimerions développer des projets de recherche en partenariat avec les universités pour enrichir la littérature scientifique sur ce sujet. Enfin, ce pôle permettra également d'intervenir sur des projets de recherche existants concernant la faune et la flore des milieux forestiers (inventaire, suivi d'espèces protégées, installation de matériel tel que des pièges photos, etc.).
+  - Prix : nous contacter afin d'établir un devis
+  - Sites : nous nous déplaçons sur le lieu ou vous avez besoin de nos compétences
+    Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres , et établir une convention pour autorisation d'usage du site ainsi que l'installation de matériel, etc...
