@@ -27,4 +27,4 @@
 - [ ] incorporer les elements décoratifs
 - [ ] RESPONSIVE
   - [x] index
-  - [ ] faq
+  - [x] faq
