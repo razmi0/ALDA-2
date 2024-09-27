@@ -20,7 +20,6 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover z-[0]
 
   const getConnection = (): ConnectionType => {
     const { effectiveType, rtt, downlink } = (navigator as NavigatorType).connection;
-    console.log({ effectiveType, rtt, downlink });
     return effectiveType === "4g" && rtt < 500 && downlink > 5
       ? "4"
       : effectiveType === "4g" && rtt < 1000 && downlink > 3
@@ -46,8 +45,12 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover z-[0]
   const connection = getConnection();
   elements.video.dataset.connection = connection;
   elements.img.dataset.connection = connection;
+
   if (connection in srcs) {
     elements.video.innerHTML = `<source src="${srcs[connection as SrcType]}" type="video/mp4" />`;
+    elements.img.remove();
+  } else {
+    elements.video.remove();
   }
 </script>
 
