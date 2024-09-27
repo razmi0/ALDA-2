@@ -1,13 +1,12 @@
 ---
-import MainImg from "@/assets/hero.png";
 import VerticalText from "@/components/Home/VerticalText.astro";
 import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 import Heading from "@/components/shared/Heading.astro";
 import Section from "@/layouts/Section.astro";
-import { Image } from "astro:assets";
 import { Mountain } from "lucide-react";
 import Header from "../Nav/Header.astro";
+import Video from "../Video.astro";
 ---
 
 <style>
@@ -19,11 +18,8 @@ import Header from "../Nav/Header.astro";
 <Header />
 <Section className="relative text-white vertical center">
   <div class="absolute-align full z-10 fade-out-bottom pointer-events-none"></div>
-  <Image
-    class={"absolute-align w-screen h-screen max-w-screen object-cover z-[0] brightness-110 contrast-125 pointer-events-none"}
-    src={MainImg}
-    alt={"welcoming image"}
-  />
+  <Video />
+
   <div class="z-50 vertical items-center h-screen justify-center text-center pointer-events-none">
     <VerticalText position="left" className="bottom-48">Embarquez avec nous</VerticalText>
     <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" cta>

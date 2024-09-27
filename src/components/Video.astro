@@ -1,4 +1,7 @@
 ---
+import HeroImg from "@/assets/landscape-36.webp";
+import { Image } from "astro:assets";
+
 const styles = "absolute-align w-screen h-screen max-w-screen object-cover z-[0] pointer-events-none";
 ---
 
@@ -11,22 +14,52 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover z-[0]
     };
   }
 
-  const videoEl = document.querySelector("video") as HTMLVideoElement;
-  const { effectiveType, rtt, downlink } = (navigator as NavigatorType).connection;
-  const isGoodConnection = (effectiveType === "4g" && rtt < 1000 && downlink > 4).toString();
-  videoEl.dataset.connection = isGoodConnection;
+  type ConnectionType = "4" | "3" | "2" | "1" | "0";
+  type SrcType = Exclude<ConnectionType, "1" | "0">;
+  type SrcValue = "hero/1080p.mp4" | "hero/720p.mp4" | "hero/480p.mp4";
+
+  const getConnection = (): ConnectionType => {
+    const { effectiveType, rtt, downlink } = (navigator as NavigatorType).connection;
+    console.log({ effectiveType, rtt, downlink });
+    return effectiveType === "4g" && rtt < 500 && downlink > 5
+      ? "4"
+      : effectiveType === "4g" && rtt < 1000 && downlink > 3
+        ? "3"
+        : effectiveType === "3g" && rtt < 2000 && downlink > 2
+          ? "2"
+          : effectiveType === "2g" && rtt < 4000 && downlink > 0.5
+            ? "1"
+            : "0";
+  };
+
+  const srcs = {
+    4: "hero/1080p.mp4",
+    3: "hero/720p.mp4",
+    2: "hero/480p.mp4",
+  } as Record<SrcType, SrcValue>;
+
+  const elements = {
+    video: document.querySelector("video[data-connection]") as HTMLVideoElement,
+    img: document.querySelector("img[data-connection]") as HTMLImageElement,
+  };
+
+  const connection = getConnection();
+  elements.video.dataset.connection = connection;
+  elements.img.dataset.connection = connection;
+  if (connection in srcs) {
+    elements.video.innerHTML = `<source src="${srcs[connection as SrcType]}" type="video/mp4" />`;
+  }
 </script>
 
 <style>
-  [data-connection="false"] {
+  video[data-connection="0"],
+  video[data-connection="1"],
+  img[data-connection="2"],
+  img[data-connection="3"],
+  img[data-connection="4"] {
     display: none;
-  }
-  [data-connection="true"] {
-    display: block;
   }
 </style>
 
-<video data-connection="false" class={styles} autoplay loop muted playsinline>
-  <source src="/videos/hero.mp4" type="video/mp4" />
-</video>
-<!-- <Image src="HeroImg" alt="hero image" class={styles} /> -->
+<video data-connection="0" class={styles} autoplay loop muted playsinline> </video>
+<Image data-connection="0" src={HeroImg} alt="hero image" class={styles} />
