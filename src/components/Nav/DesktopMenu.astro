@@ -9,7 +9,7 @@ interface Props {
 const { websiteLinks } = Astro.props;
 ---
 
-<ul class="hidden lg:inline space-x-16 [&>li]:inline [&>li]:font-bold [&>li]:text-[1rem]">
+<ul class="hidden lg:inline-flex space-x-16 [&>li]:inline [&>li]:font-bold [&>li]:text-[1rem]">
   {
     websiteLinks.map(({ name, href, isActive, cta }) => {
       return cta ? (

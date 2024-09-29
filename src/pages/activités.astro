@@ -1,17 +1,17 @@
 ---
-import CloseButton from "@/components/Tarif/Dialog/CloseButton.astro";
-import Dialog from "@/components/Tarif/Dialog/Dialog.astro";
-import Checkboxes from "@/components/Tarif/Form/Checkboxes.astro";
-import Form from "@/components/Tarif/Form/Form.astro";
-import FormHeading from "@/components/Tarif/Form/FormHeading.astro";
-import Inputs from "@/components/Tarif/Form/Inputs.astro";
-import Message from "@/components/Tarif/Form/Message.astro";
-import rawOptions from "@/components/Tarif/Form/option.json" assert { type: "json" };
-import Orientation from "@/components/Tarif/Orientation.astro";
-import Pictures from "@/components/Tarif/Pictures.astro";
-import Stats from "@/components/Tarif/Stats.astro";
-import Text from "@/components/Tarif/Text.astro";
-import type { OptionType } from "@/components/Tarif/types";
+import CloseButton from "@/components/Activité/Dialog/CloseButton.astro";
+import Dialog from "@/components/Activité/Dialog/Dialog.astro";
+import Checkboxes from "@/components/Activité/Form/Checkboxes.astro";
+import Form from "@/components/Activité/Form/Form.astro";
+import FormHeading from "@/components/Activité/Form/FormHeading.astro";
+import Inputs from "@/components/Activité/Form/Inputs.astro";
+import Message from "@/components/Activité/Form/Message.astro";
+import rawOptions from "@/components/Activité/Form/option.json" assert { type: "json" };
+import Orientation from "@/components/Activité/Orientation.astro";
+import Pictures from "@/components/Activité/Pictures.astro";
+import Stats from "@/components/Activité/Stats.astro";
+import Text from "@/components/Activité/Text.astro";
+import type { OptionType } from "@/components/Activité/types";
 import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 import ContactButton from "@/components/shared/ContactButton.astro";
@@ -130,11 +130,11 @@ const statsComponents: StatsComponent[] = [
   }
 </style>
 
-<Layout title="tarif">
+<Layout title="activité">
   <Header slot="header" />
   <Section size="half" extension="lg" className={"grid center"}>
     <!--  -->
-    <Heading h2="Nos tarifs" h3="Composable et personalisable">
+    <Heading h2="Nos activités" h3="Composable et personalisable">
       <ArrowDown size="32" slot="icon" />
     </Heading>
   </Section>

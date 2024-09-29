@@ -14,7 +14,7 @@ const { id, key, className } = Astro.props;
 <script>
   import { credibilyScore } from "@/lib/utils";
 
-  type FormDataTarif = {
+  type FormDataActivité = {
     date: string;
     email: string;
     hp: string;
@@ -43,13 +43,13 @@ const { id, key, className } = Astro.props;
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries()) as FormDataTarif;
+      const data = Object.fromEntries(formData.entries()) as FormDataActivité;
       if (data.hp) {
         window.location.assign("/honey");
         return;
       }
       //-- Add score to data
-      const treatedData = { ...data, score: credibilyScore(data) } as FormDataTarif & { score: string };
+      const treatedData = { ...data, score: credibilyScore(data) } as FormDataActivité & { score: string };
       console.log(treatedData);
 
       fakeLoading(form);

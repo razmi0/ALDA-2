@@ -20,7 +20,7 @@ const { product } = Astro.props;
   ];
 
   document.addEventListener("astro:page-load", (e: Event) => {
-    if (!securePath(e, ["/tarifs"])) return;
+    if (!securePath(e, ["/activités"])) return;
     const elements = selectors.map((selector) =>
       needDOM<HTMLElement[]>(selector, { multiple: true })
     ) as HTMLElement[][];
