@@ -6,6 +6,7 @@ import data from "@/components/shared/product-data/main-product.json" assert { t
 import Simple from "./Simple.astro";
 import TopSection from "./TopSection.astro";
 import type { ComplexProduct, Product, ProductData, ProductImage } from "./types";
+import Complex from "./Complex.astro";
 
 /**
  * @description Filter available products
@@ -45,6 +46,11 @@ const images: ProductImage[] = [
 ---
 
 <TopSection title="Nos trois pôles d'activités" verticalText="Le meilleur de nos propositions">
+  {
+    complexProducts.map((p) => {
+      return <Complex product={p} />;
+    })
+  }
   {
     simpleProducts.map((p, i) => {
       return (

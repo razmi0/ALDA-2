@@ -1,0 +1,116 @@
+---
+import { capitalize } from "@/lib/utils";
+import { Image } from "astro:assets";
+import type { ComplexProduct } from "./types";
+interface Props {
+  product: ComplexProduct;
+}
+
+//@ts-ignore
+const { product } = Astro.props;
+const { title, data } = product;
+---
+
+<section class={`w-screen h-screen center vertical gap-10`}>
+  <div class="vertical gap-10 w-full">
+    <h2 class="text-4xl text-center">{capitalize(title)}</h2>
+  </div><div class="horizontal justify-around w-full gap-4">
+    {
+      data.map((d) => {
+        return (
+          <div class="horizontal gap-4 flex-wrap [&_li]:text-[0.90rem]">
+            <div data-LEFT-CARD class={`p-4 bg-slate-100 rounded-md vertical max-w-[350px] max-h-[500px] gap-3`}>
+              <div class={`horizontal justify-between rounded-md`}>
+                <Image
+                  class={"object-cover rounded-sm"}
+                  src={`https://picsum.photos/150/200`}
+                  alt="lorem"
+                  width={150}
+                  height={200}
+                />
+                <Image
+                  class={"object-cover rounded-sm"}
+                  src={`https://picsum.photos/150/200`}
+                  alt="lorem"
+                  width={150}
+                  height={200}
+                />
+              </div>
+              <h3 class={`text-xl grandstander text-left text-balance mb-4`}>
+                {capitalize(d.title)} : "{d.subtitle}"
+              </h3>
+              <section class="vertical justify-between p-2 bg-white relative rounded-md">
+                <h5
+                  class={`whitespace-nowrap text-lg text-left size-fit bg-white absolute py-1 px-2 -top-[1.5rem] rounded-md`}>
+                  Objectifs :
+                </h5>
+                <ul class={`space-y-1 z-10`}>
+                  {d.objectifs.map((o) => {
+                    return <li>{capitalize(o)}</li>;
+                  })}
+                </ul>
+              </section>
+            </div>
+            <div data-RIGHT-CARD class="vertical max-w-[200px] max-h-[500px] justify-around">
+              {d.ateliers.map((a, i) => {
+                return (
+                  <div class="relative text-left vertical gap-0 bg-slate-100 rounded-md p-4">
+                    <span
+                      class={`im-fell-dw-pica-regular whitespace-nowrap text-lg text-left size-fit bg-slate-100 absolute py-1 px-2 -top-[1.5rem] rounded-md`}>
+                      Atelier {i + 1}
+                    </span>
+                    <h5 class="z-10">{capitalize(a.title)}</h5>
+                    <p class=" text-[0.90rem] text-black/95 z-10">{a.duration}</p>
+                    {a.activities && (
+                      <ul class="vertical gap-2">
+                        {a.activities.map((act) => {
+                          return <li>{act}</li>;
+                        })}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
+
+<!-- {d.ateliers.map((a) => {
+    return (
+      <div>
+        <h5>{a.title}</h5>
+        <p>{a.duration}</p>
+        {a.activities && (
+          <ul>
+            {a.activities.map((act) => {
+              return <li>{act}</li>;
+            })}
+          </ul>
+        )}
+      </div>
+    );
+  })} -->
+
+<!-- 
+"data": [
+        {
+          "id": 1,
+          "title": "initiation",
+          "subtitle": "découverte arborescente",
+          "objectifs": ["se déconnecter du quotidien", "éveiller la curiosité", "repartir avec l'envie d'évoluer"],
+          "ateliers": [
+            {
+              "title": "découverte de la grimpe d'arbre",
+              "duration": "formule 2h30 ou 5h"
+            },
+            {
+              "title": "ateliers à sensations",
+              "duration": "formule ½ journée ou 3 jours",
+              "activities": ["tyrolienne", "pont de singe", "filet", "saut pendulaire", "repas perché"]
+            }
+          ]
+        }, -->
