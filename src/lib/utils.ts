@@ -1,3 +1,4 @@
+import type { ComplexProduct, Product, ProductData } from "@/components/shared/product-data/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -121,7 +122,21 @@ const securePath = (e: Event, allowedPath: string[]) => {
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
+/**
+ * @description Filter available products
+ * - simpleProducts: products that doesn't contain data
+ * - complexProducts: extends the simpleProducts with data
+ */
+const buildProducts = (data: ProductData): { simpleProducts: Product[]; complexProducts: ComplexProduct[] } => {
+  const { poles, products } = data;
+  const availableProducts = products.filter((p) => poles.available.includes(p.id));
+  const simpleProducts = availableProducts.filter((p) => poles.simple.includes(p.id));
+  const complexProducts = availableProducts.filter((p) => poles.complex.includes(p.id)) as ComplexProduct[];
+  return { simpleProducts, complexProducts };
+};
+
 export {
+  capitalize,
   cn,
   credibilyScore,
   generateLorem,
@@ -132,5 +147,5 @@ export {
   securePath,
   setToLS,
   setupIntersectionObserver,
-  capitalize,
+  buildProducts,
 };
