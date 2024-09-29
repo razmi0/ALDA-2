@@ -1,0 +1,32 @@
+---
+import VerticalText from "@/components/shared/VerticalText.astro";
+import Section from "@/layouts/Section.astro";
+import { BirdIcon } from "lucide-react";
+
+interface Props {
+  title: string;
+  verticalText: string;
+  overlay?: boolean;
+}
+const { title, verticalText, overlay } = Astro.props;
+---
+
+<Section
+  extension="md"
+  className="relative vertical center px-4 py-16 sm:p-24 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-10">
+  <style>
+    .footer-landscape-fade {
+      --color-start: transparent;
+      --color-end: #5190ceda;
+      background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 95%, var(--color-end) 100%);
+    }
+  </style>
+  <VerticalText position="right" dark>{verticalText}</VerticalText>
+  {overlay && <div class="absolute-align full footer-landscape-fade -z-1 pointer-events-none" />}
+
+  <div class="vertical gap-10 w-full">
+    <BirdIcon className="h-10 w-10" />
+    <h2 class="text-xl text-left">{title}</h2>
+  </div>
+  <slot />
+</Section>
