@@ -4,8 +4,8 @@ import type { HTMLAttributes } from "astro/types";
 
 interface Props {
   title?: string;
-  words1?: number | string;
-  words2?: number | string;
+  words1?: number | string | undefined;
+  words2?: number | string | undefined;
   className?: string;
   pClass?: HTMLAttributes<"p">["class"];
   dark?: boolean;
