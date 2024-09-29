@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # client raw assets
 public/client
+
+# Testing zone
+src/pages/test.astro
