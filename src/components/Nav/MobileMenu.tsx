@@ -17,7 +17,7 @@ const MobileMenu = ({ websiteLinks }: MobileMenuProps) => {
     <section className="lg:hidden flex">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <MenuIcon className="w-9 h-9 text-pur-500 hover:text-pur-500/80" />
+          <MenuIcon className="w-9 h-9 text-white hover:text-white/80" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="inline-flex gap-5">
           {websiteLinks.map(({ href, isActive, name }) => (
