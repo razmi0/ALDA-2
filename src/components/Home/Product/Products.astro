@@ -47,73 +47,14 @@ const images: ProductImage[] = [
 <TopSection title="Nos trois pôles d'activités" verticalText="Le meilleur de nos propositions">
   {
     simpleProducts.map((p, i) => {
-      const orientation = i % 2 === 0 ? "ltr" : "rtl";
-      const image = images.find((img) => img.label === p.title);
-      return <Simple orientation={orientation} product={p} image={image} buttonText="En savoir plus" />;
+      return (
+        <Simple
+          product={p}
+          orientation={(i & 1) === 0 ? "ltr" : "rtl"}
+          image={images.find((img) => img.label === p.title)}
+          buttonText="En savoir plus"
+        />
+      );
     })
   }
 </TopSection>
-<!-- {
-    simpleProducts.map((product: Product, i: number) => {
-      const { id, title, description, tags, price, locations, program, audience } = product;
-      const articleOrientation = i % 2 !== 0 ? "vertical lg:horizontal-reverse" : "vertical lg:horizontal";
-      return (
-        <article class={articleOrientation} data-is={`product-${i}`}>
-          <div transition:name={`random-image-${id}`}>
-            {title in imagesData ? (
-              //@ts-ignore
-              <Image
-                src={imagesData[title].src}
-                alt={imagesData[title].alt}
-                width={imagesData[title].size[0]}
-                height={imagesData[title].size[1]}
-                class={`aspect-square object-cover rounded-md`}
-              />
-            ) : (
-              <RandomImage width={500}} height={500} />
-            )}
-          </div>
-          <div class="vertical gap-10 w-fit" data-id={id}>
-            <Article title={capitalize(title)} words1={description && capitalize(description)} pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"} dark>
-              {tags && (
-                <div class="w-full h-full space-x-4 text-left" slot="subtitle">
-                  {tags.map((tag) => (
-                    <Badge tag={tag} />
-                  ))}
-                </div>
-              )}
-            </Article>
-            <ul class={`max-w-[50ch]`}>
-              {price && (
-                <li>
-                  <strong>Prix</strong> : {typeof price === "string" ? capitalize(price) : price}
-                </li>
-              )}
-              {locations && (
-                <li>
-                  <strong>Lieux</strong> : {Array.isArray(locations) ? locations.map(capitalize).join(", ") : capitalize(locations)}
-                </li>
-              )}
-              {program && (
-                <li>
-                  <strong>Programme</strong> : {Array.isArray(program) ? program.map(capitalize).join(", ") : capitalize(program)}
-                </li>
-              )}
-              {audience && (
-                <li>
-                  <strong>Publique</strong> : {capitalize(audience)}
-                </li>
-              )}
-            </ul>
-            <footer class="horizontal items-center justify-start gap-10">
-              <CTA href={`/activités#${id}`} prefetch prefetchType="viewport">
-                <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">
-                  En savoir plus
-                </Button>
-              </CTA>
-            </footer>
-          </div>
-        </article>
-      );
-    })
-  } -->
