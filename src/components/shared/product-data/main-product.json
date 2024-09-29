@@ -1,31 +1,105 @@
 {
+  "poles": {
+    "available": [1, 2, 4],
+    "simple": [1, 2, 3],
+    "complex": [4],
+    "all": [
+      {
+        "id": 1,
+        "label": "evenementiel"
+      },
+      {
+        "id": 2,
+        "label": "sensoriel et sensibilisation"
+      },
+      {
+        "id": 3,
+        "label": "recherche"
+      },
+      {
+        "id": 4,
+        "label": "animation"
+      }
+    ]
+  },
   "products": [
     {
       "id": 1,
       "title": "evenementiel",
+      "pole": "evenementiel",
       "tags": ["création", "rêve", "fascinant"],
-      "description": "nous proposerons des animations lors d’événements locaux (atelier de grimpe simple, aménagement d'espace convivial perché, atelier à sensations fortes), mais aussi la création d'ateliers sur mesure pour tout type de festivals, les anniversaires, les enterrements de vie de jeunes filles ou de garçons, etc. Nous avons également pour projet de proposer nos propres événements avec des partenaires par la suite.",
+      "description": "nous proposerons des animations lors d'événements locaux (atelier de grimpe simple, aménagement d'espace convivial perché, atelier à sensations fortes), mais aussi la création d'ateliers sur mesure pour tout type de festivals, les anniversaires, les enterrements de vie de jeunes filles ou de garçons, etc. Nous avons également pour projet de proposer nos propres événements avec des partenaires par la suite.",
       "price": "nous contacter afin d'établir un devis",
       "program": "sur-mesure pour vous",
-      "public": "tout publique",
+      "audience": "tout publique",
       "locations": "lieu qu'on conventionnera dans le futur, si vous avez un déjà un lieu a nous proposer nous nous déplaçons. Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres , et établir une convention pour autorisation d'usage du site ainsi que l'installation et l'encadrement de l'animation"
     },
     {
       "id": 2,
       "title": "sensoriel et sensibilisation",
+      "pole": "sensoriel et sensibilisation",
       "tags": ["échange", "bienveillance", "éducation"],
       "description": "nous souhaitons mettre en place des ateliers sensoriels, adaptés aux jeunes enfants et aux personnes en situation de handicap, tels que des après-midi « bibliothèque perchée », de l’éveil-musical en filet, des siestes aériennes musicales, ou des lectures de contes. Sur du plus long terme, nous souhaitons également travailler avec les écoles et avec les communes pour organiser des ateliers de sensibilisation sur la protection de l'environnement.",
       "price": "nous contacter afin d'établir un devis",
-      "public": "tout publique",
+      "audience": "tout publique",
       "locations": "lieux en cours de convention, si vous souhaitez réaliser une activité au sein de votre structure, contactez-nous pour que nous puissions réaliser un repérage (comprend une étude de faisabilité et un diagnostic des arbres) , puis établir une convention d'occupation pour autorisation d'usage du site.",
       "program": "sur-mesure pour vous"
     },
     {
       "id": 3,
       "title": "recherche",
+      "pole": "recherche",
       "description": "pour compléter la veille scientifique que nous menons sur les bienfaits psychologiques de la grimpe d'arbre, nous aimerions développer des projets de recherche en partenariat avec les universités pour enrichir la littérature scientifique sur ce sujet. Enfin, ce pôle permettra également d'intervenir sur des projets de recherche existants concernant la faune et la flore des milieux forestiers (inventaire, suivi d'espèces protégées, installation de matériel tel que des pièges photos, etc.).",
       "price": "nous contacter afin d'établir un devis",
       "locations": "nous nous déplaçons sur le lieu ou vous avez besoin de nos compétences. Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres , et établir une convention pour autorisation d'usage du site ainsi que l'installation de matériel, etc..."
+    },
+
+    {
+      "id": 4,
+      "title": "animation",
+      "pole": "animation",
+      "data": [
+        {
+          "id": 1,
+          "title": "initiation",
+          "subtitle": "découverte arborescente",
+          "objectifs": ["se déconnecter du quotidien", "éveiller la curiosité", "repartir avec l'envie d'évoluer"],
+          "ateliers": [
+            {
+              "title": "découverte de la grimpe d'arbre",
+              "duration": "formule 2h30 ou 5h"
+            },
+            {
+              "title": "ateliers à sensations",
+              "duration": "formule ½ journée ou 3 jours",
+              "activities": ["tyrolienne", "pont de singe", "filet", "saut pendulaire", "repas perché"]
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "immersion",
+          "subtitle": "au coeur de la forêt",
+          "objectifs": [
+            "reconnecter avec l'instinct primaire",
+            "prendre conscience de la notion du groupe et de l'individu"
+          ],
+          "ateliers": [
+            {
+              "title": "bivouac en nuit perchée",
+              "duration": "½ journée + 1 nuit"
+            },
+            {
+              "title": "bivouac brame du cerf",
+              "duration": "½ journée + 1 nuit"
+            },
+            {
+              "title": "séjour éducatif",
+              "duration": "de 3 jours à 2 semaines"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
