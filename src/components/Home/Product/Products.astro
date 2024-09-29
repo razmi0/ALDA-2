@@ -2,93 +2,79 @@
 import SensorielImage from "@/assets/client-img-26.jpg";
 import EvenementielImage from "@/assets/client-img-44.jpg";
 import RechercheImage from "@/assets/client-img-53.jpg";
-import VerticalText from "@/components/Home/VerticalText.astro";
 import data from "@/components/shared/product-data/main-product.json" assert { type: "json" };
-import type { MainProductType } from "@/components/shared/product-data/types";
-import Section from "@/layouts/Section.astro";
-import { capitalize } from "@/lib/utils";
-import type { ImageMetadata } from "astro";
-import { Image } from "astro:assets";
-import { BirdIcon } from "lucide-react";
-import Article from "../shared/Article.astro";
-import Badge from "../shared/Badge.astro";
-import Button from "../shared/Button.astro";
-import CTA from "../shared/CTA.astro";
-import RandomImage from "../shared/RandomImage.astro";
+import Simple from "./Simple.astro";
+import TopSection from "./TopSection.astro";
+import type { ComplexProduct, Product, ProductData, ProductImage } from "./types";
 
-const mainProducts = data.products as MainProductType[];
-
-const imagesSizes = {
-  width: 500,
-  height: 500,
+/**
+ * @description Filter available products
+ * - simpleProducts: products that doesn't contain data
+ * - complexProducts: extends the simpleProducts with data
+ */
+const buildProducts = (data: ProductData): { simpleProducts: Product[]; complexProducts: ComplexProduct[] } => {
+  const { poles, products } = data;
+  const availableProducts = products.filter((p) => poles.available.includes(p.id));
+  const simpleProducts = availableProducts.filter((p) => poles.simple.includes(p.id));
+  const complexProducts = availableProducts.filter((p) => poles.complex.includes(p.id)) as ComplexProduct[];
+  return { simpleProducts, complexProducts };
 };
 
-type ImagesData = {
-  [key: MainProductType["title"]]: {
-    src: ImageMetadata ;
-    alt: string;
-  },
-  
-};
-const imagesData: ImagesData = {
-  evenementiel: {
+const { simpleProducts, complexProducts } = buildProducts(data);
+
+const images: ProductImage[] = [
+  {
+    label: "evenementiel",
     src: EvenementielImage,
     alt: "Illustration d'un évenement Alabordarbre avec des personnes souriantes en cercle écoutant les instructions de l'animatrice Lou équipée sur corde",
+    size: [500, 500],
   },
-  "sensoriel et sensibilisation": {
+  {
+    label: "sensoriel et sensibilisation",
     src: SensorielImage,
     alt: "Illustration d'un atelier sensoriel Alabordarbre où l'on aperçoit deux personnes grimpant dans le vide sur une corde",
+    size: [500, 500],
   },
-  recherche: {
+  {
+    label: "recherche",
     src: RechercheImage,
     alt: "Illustration d'un atelier de recherche Alabordarbre pendant lequel un groupe de personne est en train de chercher des indices au pied d'un arbre",
+    size: [500, 500],
   },
-  
-};
+];
 ---
 
-<Section
-  extension="md"
-  className="relative vertical center px-4 py-16 sm:p-24 gap-28 [&>article]:w-full [&>article]:justify-center [&>article]:items-center [&>article]:gap-10">
-  <style>
-    .footer-landscape-fade {
-      --color-start: transparent;
-      --color-end: #5190ceda;
-      background: linear-gradient(to bottom, var(--color-start) 0%, var(--color-start) 95%, var(--color-end) 100%);
-    }
-  </style>
-  <VerticalText position="right" dark>Le meilleur de nos propositions</VerticalText>
-  <!-- OVERLAY -->
-  <!-- <div class="absolute-align full footer-landscape-fade -z-1 pointer-events-none"></div> -->
-  <!-- OVERLAY -->
-
-  <div class="vertical gap-10 w-full">
-    <BirdIcon className="h-10 w-10" />
-    <h2 class="text-xl text-left">Nos trois pôles d'activités</h2>
-  </div>
+<TopSection title="Nos trois pôles d'activités" verticalText="Le meilleur de nos propositions">
   {
-    mainProducts.map((product: MainProductType, i: number) => {
+    simpleProducts.map((p, i) => {
+      const orientation = i % 2 === 0 ? "ltr" : "rtl";
+      const image = images.find((img) => img.label === p.title);
+      return <Simple orientation={orientation} product={p} image={image} buttonText="En savoir plus" />;
+    })
+  }
+</TopSection>
+<!-- {
+    simpleProducts.map((product: Product, i: number) => {
       const { id, title, description, tags, price, locations, program, audience } = product;
       const articleOrientation = i % 2 !== 0 ? "vertical lg:horizontal-reverse" : "vertical lg:horizontal";
       return (
         <article class={articleOrientation} data-is={`product-${i}`}>
           <div transition:name={`random-image-${id}`}>
-            
             {title in imagesData ? (
               //@ts-ignore
               <Image
-                src={imagesData[title]?.src ?? ""}
-                alt={imagesData[title]?.alt ?? ""}
-                width={imagesSizes.width}
-                height={imagesSizes.height}
-                class={`aspect-square object-cover`}
+                src={imagesData[title].src}
+                alt={imagesData[title].alt}
+                width={imagesData[title].size[0]}
+                height={imagesData[title].size[1]}
+                class={`aspect-square object-cover rounded-md`}
               />
             ) : (
-              <RandomImage width={imagesSizes.width}} height={imagesSizes.height} />
+              <RandomImage width={500}} height={500} />
             )}
           </div>
           <div class="vertical gap-10 w-fit" data-id={id}>
-            <Article title={capitalize(title)} words1={capitalize(description)} pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"} dark>
+            <Article title={capitalize(title)} words1={description && capitalize(description)} pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"} dark>
               {tags && (
                 <div class="w-full h-full space-x-4 text-left" slot="subtitle">
                   {tags.map((tag) => (
@@ -130,5 +116,4 @@ const imagesData: ImagesData = {
         </article>
       );
     })
-  }
-</Section>
+  } -->
