@@ -67,11 +67,11 @@
           "ateliers": [
             {
               "title": "découverte de la grimpe d'arbre",
-              "duration": "formule 2h30 ou 5h"
+              "duration": "2h30 ou 5h"
             },
             {
               "title": "ateliers à sensations",
-              "duration": "formule ½ journée ou 3 jours",
+              "duration": "½ journée ou 3 jours",
               "activities": ["tyrolienne", "pont de singe", "filet", "saut pendulaire", "repas perché"]
             }
           ]
@@ -82,7 +82,8 @@
           "subtitle": "au coeur de la forêt",
           "objectifs": [
             "reconnecter avec l'instinct primaire",
-            "prendre conscience de la notion du groupe et de l'individu"
+            "prendre conscience du groupe",
+            "prendre conscience de l'individu"
           ],
           "ateliers": [
             {
@@ -95,7 +96,7 @@
             },
             {
               "title": "séjour éducatif",
-              "duration": "de 3 jours à 2 semaines"
+              "duration": "3 jours à 2 semaines"
             }
           ]
         }
