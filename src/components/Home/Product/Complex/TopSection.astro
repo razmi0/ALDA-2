@@ -1,0 +1,17 @@
+---
+import VerticalText from "@/components/shared/VerticalText.astro";
+import { capitalize } from "@/lib/utils";
+
+interface Props {
+  title: string;
+  verticalText: string;
+}
+
+const { title, verticalText } = Astro.props;
+---
+
+<VerticalText position="right" dark>{verticalText}</VerticalText>
+
+<div class="space-y-8 w-full">
+  <h2 class="text-4xl text-center">{capitalize(title)}</h2>
+</div>

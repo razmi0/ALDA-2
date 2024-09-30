@@ -1,0 +1,22 @@
+---
+import { capitalize } from "@/lib/utils";
+
+interface Props {
+  objectifs: string[];
+}
+
+const { objectifs } = Astro.props;
+---
+
+<section class="vertical justify-between p-2 bg-white relative rounded-md">
+  <h5 class={`whitespace-nowrap text-lg text-left size-fit bg-white absolute py-1 px-2 -top-[1.5rem] rounded-md`}>
+    Objectifs :
+  </h5>
+  <ul class={`space-y-1 z-10`}>
+    {
+      objectifs.map((o) => {
+        return <li class={`text-black/85`}>{capitalize(o)}</li>;
+      })
+    }
+  </ul>
+</section>

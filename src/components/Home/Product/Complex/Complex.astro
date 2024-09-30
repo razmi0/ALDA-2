@@ -1,0 +1,65 @@
+---
+import Button from "@/components/shared/Button.astro";
+import type { ComplexProduct } from "../types";
+import Atelier from "./Atelier.astro";
+import CardBody from "./CardBody.astro";
+import CardHeader from "./CardHeader.astro";
+import TopSection from "./TopSection.astro";
+
+interface Props {
+  product: ComplexProduct;
+  verticalText: string;
+  buttonText: string;
+}
+
+//@ts-ignore
+const { product, buttonText, verticalText } = Astro.props;
+
+const { title, data } = product;
+const padding = "12px",
+  imgWidth = "150px",
+  height = "365px",
+  titleHeight = "44px";
+---
+
+<style define:vars={{ padding, imgWidth, height, titleHeight }}>
+  .left-card-w {
+    --imgsGap: calc(var(--padding) / 2);
+    padding: var(--padding);
+    width: calc((var(--padding) + var(--imgWidth)) * 2 + var(--imgsGap));
+    height: var(--height);
+
+    div:has(> img) {
+      gap: var(--imgsGap);
+    }
+  }
+  .titleHeight {
+    height: var(--titleHeight);
+  }
+</style>
+
+<section class={`relative w-screen center vertical gap-20`}>
+  <TopSection title={title} verticalText={verticalText} />
+  <div class="horizontal flex-wrap justify-evenly items-start w-full gap-20">
+    {
+      data.map((d) => {
+        return (
+          <section class="vertical gap-8 [&_li]:text-[0.90rem] h-full">
+            <article class={`relative left-card-w bg-slate-100 rounded-md vertical justify-between`}>
+              <CardHeader title={d.title} subtitle={d.subtitle} />
+              <CardBody objectifs={d.objectifs} />
+            </article>
+            <div class="space-y-10 max-w-[330px] max-h-[500px] vertical px-4 sm:px-0">
+              {d.ateliers.map((a, i) => 
+                 <Atelier index={i} activities={a.activities} title={a.title} duration={a.duration} />
+              )}
+              <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">
+                En savoir plus
+              </Button>
+            </div>
+          </section>
+        );
+      })
+    }
+  </div>
+</section>
