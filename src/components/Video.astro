@@ -1,8 +1,8 @@
 ---
-import HeroImg from "@/assets/landscape-36.webp";
 import { Image } from "astro:assets";
+import HeroStart from "@/assets/hero-start.jpg";
 
-const styles = "absolute-align w-screen h-screen max-w-screen object-cover z-[0] pointer-events-none";
+const styles = "absolute-align w-screen h-screen max-w-screen object-cover pointer-events-none";
 ---
 
 <script>
@@ -60,13 +60,10 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover z-[0]
 
 <style>
   video[data-connection="0"],
-  video[data-connection="1"],
-  img[data-connection="2"],
-  img[data-connection="3"],
-  img[data-connection="4"] {
+  video[data-connection="1"] {
     display: none;
   }
 </style>
 
-<video data-connection="0" class={styles} autoplay loop muted playsinline> </video>
-<Image data-connection="0" src={HeroImg} alt="hero image" class={styles} />
+<video data-connection="0" preload="auto" class={styles + " z-20"} autoplay loop muted playsinline> </video>
+<Image data-connection="0" src={HeroStart} alt="hero image" class={styles + " z-10"} />
