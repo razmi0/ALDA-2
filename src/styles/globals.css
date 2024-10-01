@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=IM+Fell+DW+Pica:ital@0;1&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=IM+Fell+DW+Pica:ital@0;1&family=Quattrocento+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +10,9 @@
   }
 
   :root {
-    @apply quattrocento-sans-regular;
+    font-family: "Quattrocento Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     line-height: 1.6;
     font-size: 1rem;
   }
@@ -86,6 +88,12 @@
   .quattrocento-sans-regular {
     font-family: "Quattrocento Sans", sans-serif;
     font-weight: 400;
+    font-style: normal;
+  }
+
+  .quattrocento-sans-semibold {
+    font-family: "Quattrocento Sans", sans-serif;
+    font-weight: 600;
     font-style: normal;
   }
 
