@@ -15,14 +15,13 @@ interface Props {
 //@ts-ignore
 const { product, buttonText, verticalText } = Astro.props;
 
-const { title, data } = product;
+const { pole, data } = product;
 const padding = "12px",
   imgWidth = "150px",
-  height = "365px",
-  titleHeight = "44px";
+  height = "380px";
 ---
 
-<style define:vars={{ padding, imgWidth, height, titleHeight }}>
+<style define:vars={{ padding, imgWidth, height }}>
   .left-card-w {
     --imgsGap: calc(var(--padding) / 2);
     padding: var(--padding);
@@ -33,26 +32,25 @@ const padding = "12px",
       gap: var(--imgsGap);
     }
   }
-  .titleHeight {
-    height: var(--titleHeight);
-  }
 </style>
 
 <section class={`relative w-screen center vertical gap-20`}>
-  <TopSection title={title} verticalText={verticalText} />
-  <div class="horizontal flex-wrap justify-evenly items-start w-full gap-20">
+  <TopSection title={pole} verticalText={verticalText} />
+  <div
+    class="horizontal flex-wrap justify-center min-[800px]:grid 2xl:horizontal min-[800px]:grid-cols-2 sm:justify-evenly items-start w-full gap-20">
     {
       data.map((d) => {
         return (
-          <section class="vertical gap-8 [&_li]:text-[0.90rem] h-full">
-            <article class={`relative left-card-w bg-slate-100 rounded-md vertical justify-between`}>
-              <CardHeader title={d.title} subtitle={d.subtitle} />
-              <CardBody objectifs={d.objectifs} />
+          <section class="px-4 vertical min-[800px]:contents 2xl:horizontal 2xl:[&>article]:mx-0 min-[800px]:[&>article]:mx-auto gap-8 h-full">
+            <article
+              class={`relative left-card-w bg-slate-100 rounded-md vertical justify-between ring-1 ring-black/80`}>
+              <CardHeader title={d.title} />
+              <CardBody subtitle={d.subtitle} objectifs={d.objectifs} />
             </article>
-            <div class="space-y-10 max-w-[330px] max-h-[500px] vertical px-4 sm:px-0">
-              {d.ateliers.map((a, i) => 
-                 <Atelier index={i} activities={a.activities} title={a.title} duration={a.duration} />
-              )}
+            <div class="space-y-10 max-w-[330px] max-h-[500px] vertical">
+              {d.ateliers.map((a, i) => (
+                <Atelier index={i} activities={a.activities} title={a.title} duration={a.duration} />
+              ))}
               <Button ring="sm" size="lg" variant="outline" dark className="w-fit font-bold whitespace-nowrap">
                 En savoir plus
               </Button>

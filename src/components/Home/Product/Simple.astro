@@ -16,9 +16,12 @@ interface Props {
 }
 
 const { orientation, product, image } = Astro.props;
-const { id, title, description, tags, price, locations, program, audience } = product;
+const { id, pole, description, tags, price, locations, program, audience } = product;
 ---
 
+<div class="w-full">
+  <h2 class="text-4xl text-center">Pôle {capitalize(pole)}</h2>
+</div>
 <article class={orientation === "rtl" ? "vertical lg:horizontal-reverse" : "vertical lg:horizontal"}>
   <div transition:name={`random-image-${id}`}>
     {
@@ -37,7 +40,6 @@ const { id, title, description, tags, price, locations, program, audience } = pr
   </div>
   <div class="vertical gap-10 w-fit" data-id={id}>
     <Article
-      title={capitalize(title)}
       words1={description && capitalize(description)}
       pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"}
       dark>

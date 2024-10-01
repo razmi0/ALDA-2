@@ -1,6 +1,7 @@
 ---
+import Badge from "@/components/shared/Badge.astro";
 import { capitalize } from "@/lib/utils";
-import { Hourglass } from "lucide-react";
+import { ChevronRight, Hourglass } from "lucide-react";
 
 interface Props {
   index: number;
@@ -12,11 +13,17 @@ interface Props {
 const { activities, duration, title, index } = Astro.props;
 ---
 
-<div class="relative h-fit w-full text-left vertical gap-2 bg-slate-100 rounded-md p-4">
-  <span class={`whitespace-nowrap text-lg text-left size-fit bg-slate-100 absolute py-1 px-2 -top-[1.5rem] rounded-md`}>
+<div class="relative h-fit w-full text-left vertical gap-2 bg-slate-100 rounded-md p-4 ring-1 ring-black/90">
+  <span
+    class={`whitespace-nowrap text-lg text-left size-fit bg-slate-100 absolute py-1 px-2 -top-[1.5rem] rounded-md grandstander text-pur-500`}>
     Atelier {index + 1}
   </span>
-  <h5 class="quattrocento-sans-regular z-10">{capitalize(title)}</h5>
+  <div class="horizontal items-center py-1 px-2 bg-white rounded-md gap-1">
+    <ChevronRight className="text-black/75 min-w-4 max-w-4 min-h-4 max-h-4 -translate-y-[1px]" />
+    <h5 class="quattrocento-sans-semibold whitespace-nowrap text-black/75 z-10 text-sm">
+      {capitalize(title)}
+    </h5>
+  </div>
   <div class="horizontal items-center py-1 px-2 bg-white rounded-md gap-1">
     <Hourglass className="text-black/75 min-w-4 max-w-4 min-h-4 max-h-4 -translate-y-[1px]" />
     <p class="whitespace-nowrap font-semibold text-black/75 z-10 text-sm">{duration}</p>
@@ -25,7 +32,11 @@ const { activities, duration, title, index } = Astro.props;
     activities && (
       <ul class="space-x-1 space-y-2 gap-2 w-full">
         {activities.map((act) => {
-          return <li class={`p-1 rounded-md bg-white font-semibold text-black/75 inline-flex w-fit`}>{act}</li>;
+          return (
+            <li class={`inline-flex text-black/60`}>
+              <Badge tag={act} />
+            </li>
+          );
         })}
       </ul>
     )

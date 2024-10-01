@@ -4,21 +4,15 @@ import Image from "astro/components/Image.astro";
 
 interface Props {
   title: string;
-  subtitle: string;
 }
 
-const { subtitle, title } = Astro.props;
+const { title } = Astro.props;
 ---
 
-<h3
-  class={`text-xl grandstander titleHeight w-fit bg-slate-100 absolute py-2 px-3 rounded-md right-1/2 translate-x-[50%] -top-[22px]`}>
+<h3 class={`text-xl grandstander`}>
   {capitalize(title)}
 </h3>
-<div class={`horizontal rounded-md relative`}>
-  <h4
-    class={`whitespace-nowrap text-xl grandstander text-center bg-slate-100 absolute py-1 px-2 rounded-md right-1/2 translate-x-[50%] -bottom-[19px]`}>
-    {capitalize(subtitle)}
-  </h4>
+<div class={`horizontal relative`}>
   <Image class={"object-cover rounded-sm"} src={`https://picsum.photos/150/200`} alt="lorem" width={150} height={200} />
   <Image class={"object-cover rounded-sm"} src={`https://picsum.photos/150/200`} alt="lorem" width={150} height={200} />
 </div>
