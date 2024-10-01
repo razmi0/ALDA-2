@@ -66,35 +66,51 @@ export default {
   plugins: [
     twAnimate,
     ({ addUtilities }) => {
-      addUtilities({
+      const nUtilities = {
         ".vertical": {
-          "@apply flex flex-col": {},
+          display: "flex",
+          "flex-direction": "column",
         },
         ".vertical-reverse": {
-          "@apply flex flex-col-reverse": {},
+          display: "flex",
+          "flex-direction": "column-reverse",
         },
         ".horizontal": {
-          "@apply flex flex-row": {},
+          display: "flex",
+          "flex-direction": "row",
         },
         ".horizontal-reverse": {
-          "@apply  flex flex-row-reverse": {},
+          display: "flex",
+          "flex-direction": "row-reverse",
         },
         ".center": {
-          "@apply justify-center justify-items-center items-center": {},
+          "justify-content": "center",
+          "justify-items": "center",
+          "align-items": "center",
         },
         ".full": {
-          "@apply w-full h-full": {},
+          width: "100%",
+          height: "100%",
         },
         ".absolute-align": {
-          "@apply absolute inset-0": {},
+          position: "absolute",
+          inset: "0",
         },
         ".absolute-center": {
-          "@apply absolute inset-0 flex justify-center items-center": {},
+          position: "absolute",
+          inset: "0",
+          display: "flex",
+          "justify-content": "center",
+          "align-items": "center",
         },
         ".shadcn-border": {
-          "@apply border rounded-md ring-offset-white border-zinc-200": {},
+          "--tw-ring-offset-color": "#fff",
+          border: "1px solid #e4e4e7",
+          "border-radius": "0.375rem",
+          "box-shadow": "0 0 0 1px #E5E7EB",
         },
-      });
+      };
+      addUtilities(nUtilities);
     },
   ],
 };
