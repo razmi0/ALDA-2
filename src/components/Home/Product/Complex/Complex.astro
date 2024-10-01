@@ -42,8 +42,7 @@ const padding = "12px",
       data.map((d) => {
         return (
           <section class="px-4 vertical min-[800px]:contents 2xl:horizontal 2xl:[&>article]:mx-0 min-[800px]:[&>article]:mx-auto gap-8 h-full">
-            <article
-              class={`relative left-card-w bg-slate-100 rounded-md vertical justify-between ring-1 ring-black/80`}>
+            <article class={`relative left-card-w bg-slate-100 rounded-md vertical justify-between shadow-md`}>
               <CardHeader title={d.title} />
               <CardBody subtitle={d.subtitle} objectifs={d.objectifs} />
             </article>
