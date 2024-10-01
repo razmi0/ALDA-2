@@ -1,5 +1,6 @@
 ---
 import Loader from "@/components/Loader.astro";
+import TopPageButton from "@/components/TopPageButton.tsx";
 import "@/styles/globals.css";
 import { ViewTransitions } from "astro:transitions";
 
@@ -21,13 +22,13 @@ const { title, className } = Astro.props;
     <ViewTransitions />
     <title>{title.charAt(0).toUpperCase() + title.slice(1)} - ALAD</title>
   </head>
-  <body>
+  <body class={`relative`}>
     <Loader />
-
     <slot name="header" />
     <main>
       <slot />
     </main>
     <slot name="footer" />
+    <TopPageButton client:idle />
   </body>
 </html>
