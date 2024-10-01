@@ -19,7 +19,7 @@ const theme = dark
 
 <div class={cn("vertical gap-4 leading-5", theme.text, className)}>
   <slot />
-  <h2 class={cn("text-xl mt-6 ", theme.title)}>{title}</h2>
+  {title && <h2 class={cn("text-xl mt-6 ", theme.title)}>{title}</h2>}
   <slot name="subtitle" />
 </div>
 {words1 && <p class={pClass || ""}>{typeof words1 === "number" ? generateLorem(words1) : words1}</p>}
