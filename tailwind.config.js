@@ -36,6 +36,7 @@ export default {
         },
         map: {
           dark: "#0b0e16",
+          darkblue: "#a4b1d6",
         },
         darkMode: {
           500: "#080808",
