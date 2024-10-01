@@ -1,6 +1,5 @@
 ---
 import Section from "@/layouts/Section.astro";
-import VerticalText from "../../shared/VerticalText.astro";
 import Gradients from "./Gradients.astro";
 import SkyArticle from "./SkyArticle.astro";
 import SkyFigure from "./SkyFigure.astro";
@@ -13,10 +12,9 @@ const {} = Astro.props;
 
 <Section
   extension="none"
-  className="relative vertical md:horizontal flex-wrap center py-32 bg-pur-500 overflow-hidden gap-20"
+  className="relative vertical md:horizontal flex-wrap center py-32 bg-pur-500 overflow-x-hidden gap-20"
   size="full">
   <Gradients />
-  <VerticalText position="left" className="bottom-96">Découvrez la grimpe d'arbre</VerticalText>
   <div class="w-full horizontal items-center justify-evenly">
     <SkyArticle />
     <SkyFigure />
