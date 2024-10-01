@@ -3,7 +3,7 @@ import Bird from "@/assets/bird-profile.webp";
 import { Image } from "astro:assets";
 
 const textRing =
-  "    Connexion à la nature    ⚪    Emerveillement et découverte    ⚪    Sagesse et simplicité    ⚪   Partage et respect    ⚪    Branches accueillantes  ⚪";
+  "    Connexion à la nature    ⚪    Branches accueillantes    ⚪    Sagesse et simplicité    ⚪   Partage et respect    ⚪   Emerveillement et découverte   ⚪";
 const textRingArray = textRing.split("");
 const charInText = textRing.length;
 ---
@@ -11,7 +11,7 @@ const charInText = textRing.length;
 <style define:vars={{ charInText }}>
   .text-ring {
     --character-width: 1;
-    --image-size: 120px;
+    --image-size: 150px;
     --image-radius: calc(var(--image-size) / 2);
   }
   .text-ring [style*="--index"] {
