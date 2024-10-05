@@ -5,6 +5,7 @@ import eslintPluginAstro from "eslint-plugin-astro";
 import a11y from "eslint-plugin-jsx-a11y";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import tailwind from "eslint-plugin-tailwindcss";
 
 /**
  * Patching the globals object to replace the globals.browser.'AudioWorkletGlobalScope  ' key by a trimmed version
@@ -26,8 +27,8 @@ import tseslint from "typescript-eslint";
 //   }
 //   patchedGlobals[key] = globals[key];
 // }
-
 export default [
+  ...tailwind.configs["flat/recommended"],
   js.configs.recommended,
   ...eslintPluginAstro.configs["flat/recommended"],
   ...tseslint.configs.recommended,
