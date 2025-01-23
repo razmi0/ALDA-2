@@ -29,3 +29,5 @@ public/client
 
 # Testing zone
 src/pages/test.astro
+
+*.sec.*

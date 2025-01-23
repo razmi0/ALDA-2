@@ -24,7 +24,7 @@ const key = "contact";
           </p>
         </div>
         <div
-          class="py-10 px-14 rounded-lg vertical items-start text-left justify-between h-fit gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow bg-zinc-200 text-black shadow-md shadow-black/20">
+          class="py-10 px-14 shadow-md rounded-md bg-slate-100 vertical items-start text-left justify-between h-fit gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow text-black">
           <article>
             <h3>Notre adresse</h3>
             <p>12 rue de la Paix</p>
@@ -49,9 +49,9 @@ const key = "contact";
         </div>
       </div>
       <form
-        class="py-10 px-14 space-y-5 ring-1 ring-stone-300 ring-offset-1 vertical bg-zinc-200 text-black shadow-md shadow-black/20 rounded-md">
+        class="py-10 px-14 shadow-md rounded-md bg-slate-100 space-y-5 ring-offset-1 vertical text-black shadow-black/20">
         <div class="max-w-lg vertical center">
-          <Message key={key} telClass="bg-stone-100" textareaClass="bg-stone-100" emailClass="bg-stone-100" />
+          <Message key={key} telClass="bg-stone-100 ring-1 ring-stone-200 bg-white" textareaClass="bg-stone-100 ring-1 ring-stone-200 bg-white" emailClass="bg-stone-100 ring-1 ring-stone-200 bg-white" />
         </div>
         <div class="w-full horizontal-reverse">
           <div class={`relative vertical center`}>

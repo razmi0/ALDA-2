@@ -119,7 +119,7 @@ if (!key) throw new Error("No key found");
   class={"h-full w-full py-7 vertical gap-5 justify-between [&>label]:vertical [&>label]:items-start [&>label]:justify-center"}
   data-action={`section-message#${key}`}>
   <label for={`email-${key}`}>
-    <span>Votre email :</span>
+    <span class="font-medium text-md">Votre email :</span>
     <input
       id={`email-${key}`}
       type="email"
@@ -131,7 +131,7 @@ if (!key) throw new Error("No key found");
     <Info text="Votre email nous permettra de nous mettre en contact" data-type="email" key={`${key}`} />
   </label>
   <label for={`tel-${key}`}>
-    <span>Votre téléphone :</span>
+    <span class="font-medium text-md">Votre téléphone :</span>
     <input
       id={`tel-${key}`}
       type="tel"
@@ -143,7 +143,7 @@ if (!key) throw new Error("No key found");
     <Info text="Votre téléphone nous permettra de nous mettre en contact" data-type="tel" key={`${key}`} />
   </label>
   <label for={`textarea-${key}`}>
-    <span>Votre message :</span>
+    <span class="font-medium text-md">Votre message :</span>
     <textarea
       id={`textarea-${key}`}
       name={`textarea`}
