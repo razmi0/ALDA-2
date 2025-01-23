@@ -6,183 +6,184 @@ import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 import RandomImage from "@/components/shared/RandomImage.astro";
 import Section from "@/layouts/Section.astro";
-import { generateLorem } from "@/lib/utils";
 import Layout from "../layouts/Layout.astro";
 
-const gridImgTemplate = [
-  [1, 2],
-  [1, 2, 3],
-];
+// const gridImgTemplate = [
+//   [1, 2],
+//   [1, 2, 3],
+// ];
 
 const values = [
-  {
-    title: "Partage",
-    content: "Partager des expériences, des connaissances et des émotions",
-  },
-  {
-    title: "Respect",
-    content: "Respecter la vie : l'environnement et Autrui, et en prendre soin",
-  },
-  {
-    title: "Exploration",
-    content: "Déconnecter avec le quotidien pour se reconnecter avec l'essentiel",
-  },
+    {
+        title: "Partage",
+        content: "Partager des expériences, des connaissances et des émotions",
+    },
+    {
+        title: "Respect",
+        content: "Respecter la vie : l'environnement et Autrui, et en prendre soin",
+    },
+    {
+        title: "Exploration",
+        content: "Déconnecter avec le quotidien pour se reconnecter avec l'essentiel",
+    },
 ];
 
 const missions = [
-  {
-    title: "",
-    content: "Pour rêver et faire voyager les gens.",
-  },
-  {
-    title: "",
-    content: "Pour casser le quotidien et se déconnecter.",
-  },
-  {
-    title: "",
-    content: "Pour une prise de conscience globale sur soi et sur ce qui nous entoure.",
-  },
-  {
-    title: "",
-    content: "our faire du lien et se reconnecter avec le vivant.",
-  },
-  {
-    title: "",
-    content: "Pour se redécouvrir dans un milieu extraordinair.",
-  },
-  {
-    title: "",
-    content: "Pour prendre soin de soi, des autres et de son environnement.",
-  },
-  {
-    title: "",
-    content: "Pour partir sur de nouvelles bases.",
-  },
-  {
-    title: "",
-    content: "Pour régénérer le vivant, ensemble !",
-  },
+    {
+        title: "",
+        content: "Pour rêver et faire voyager les gens.",
+    },
+    {
+        title: "",
+        content: "Pour casser le quotidien et se déconnecter.",
+    },
+    {
+        title: "",
+        content: "Pour une prise de conscience globale sur soi et sur ce qui nous entoure.",
+    },
+    {
+        title: "",
+        content: "our faire du lien et se reconnecter avec le vivant.",
+    },
+    {
+        title: "",
+        content: "Pour se redécouvrir dans un milieu extraordinair.",
+    },
+    {
+        title: "",
+        content: "Pour prendre soin de soi, des autres et de son environnement.",
+    },
+    {
+        title: "",
+        content: "Pour partir sur de nouvelles bases.",
+    },
+    {
+        title: "",
+        content: "Pour régénérer le vivant, ensemble !",
+    },
 ];
 
 const ourWords = [
-  {
-    title: "Lou",
-    subtitle: "",
-    content:
-      "Après avoir obtenu un master recherche en cognition sociale, puis mon titre de psychologue en 2018, j'ai ouvert et tenu un point d'écoute. J'ai ensuite fait une pause en réalisant un CAP métallerie chez les compagnons du devoir, où j'ai découvert le plaisir des métiers manuels. En lien avec le bénévolat affectué depuis sept ans, j'ai réalisé une formation d'éducatrice spécialisée qui m'a permis de travailler en centre d'hébergement et de réinsertion sociale, en école en tant que formatrice à La Rouatière où j'encadre de futurs éducateurs. Lorsque Vijay m'a fait découvrir l'activité de grimpe d'arbre, j'ai compris qu'elle me permettrait de poursuivre ma passion et d'apporter aux personnes que j'accompagnais ses bienfaits, tout en respectant les milieux forestiers. J'ai  rejoint le projet afin de permettre aux personnes en difficulté de sortir d'un parcours institutionnel pour pouvoir travailler sur soi dans un cadre naturel sécurisant et bienveillant.",
-    badges: ["Psychologue", "Resilience", "Chemin de traverse", "Pirate"],
-  },
-  {
-    title: "Vijay",
-    subtitle: "",
-    content:
-      "Je me suis toujours épanoui dans la nature, et les arbres, en particulier, m'émerveille depuis longtemps. Après avoir vécu une expérience collective, d'un mois et demi, avec 81 personnes sur le navire de l'Hermione, comme gabier volontaire, j'ai exercé en tant que cordiste pendant 6 ans, l'envie de travailler avec du vivant est apparu. J'ai donc réaliser la formation d'éducateur grimpe d'arbre. Au cours de celle-ci,un vrai amour pour les arbres s'est développé,et c'est durant mes stages que je me suis vraiment redécouvert. Tout ces moments me poussent à proposer de nouvelles expériences,à partager avec les autres,et aussi à transmettre et échanger.",
-    badges: ["Cordiste", "Marin", "Fregate", "Pirate"],
-  },
+    {
+        title: "Lou",
+        subtitle: "",
+        content:
+            "Après avoir obtenu un master recherche en cognition sociale, puis mon titre de psychologue en 2018, j'ai ouvert et tenu un point d'écoute. J'ai ensuite fait une pause en réalisant un CAP métallerie chez les compagnons du devoir, où j'ai découvert le plaisir des métiers manuels. En lien avec le bénévolat affectué depuis sept ans, j'ai réalisé une formation d'éducatrice spécialisée qui m'a permis de travailler en centre d'hébergement et de réinsertion sociale, en école en tant que formatrice à La Rouatière où j'encadre de futurs éducateurs. Lorsque Vijay m'a fait découvrir l'activité de grimpe d'arbre, j'ai compris qu'elle me permettrait de poursuivre ma passion et d'apporter aux personnes que j'accompagnais ses bienfaits, tout en respectant les milieux forestiers. J'ai  rejoint le projet afin de permettre aux personnes en difficulté de sortir d'un parcours institutionnel pour pouvoir travailler sur soi dans un cadre naturel sécurisant et bienveillant.",
+        badges: ["Psychologue", "Resilience", "Chemin de traverse", "Pirate"],
+    },
+    {
+        title: "Vijay",
+        subtitle: "",
+        content:
+            "Je me suis toujours épanoui dans la nature, et les arbres, en particulier, m'émerveille depuis longtemps. Après avoir vécu une expérience collective, d'un mois et demi, avec 81 personnes sur le navire de l'Hermione, comme gabier volontaire, j'ai exercé en tant que cordiste pendant 6 ans, l'envie de travailler avec du vivant est apparu. J'ai donc réaliser la formation d'éducateur grimpe d'arbre. Au cours de celle-ci,un vrai amour pour les arbres s'est développé,et c'est durant mes stages que je me suis vraiment redécouvert. Tout ces moments me poussent à proposer de nouvelles expériences,à partager avec les autres,et aussi à transmettre et échanger.",
+        badges: ["Cordiste", "Marin", "Fregate", "Pirate"],
+    },
 ];
+
+const introduction = {
+    top: "Plongés au cœur de la nature, nous avons fait le choix de transformer nos expériences personnelles et professionnelles en une mission tournée vers le partage, le respect et l'exploration. Notre projet s'inspire de parcours riches et variés, où la connexion avec le vivant et l'humain occupe une place centrale. ",
+    bot: "Nous croyons fermement que chacun peut se redécouvrir, se régénérer et tisser des liens authentiques dans un cadre naturel et bienveillant. Ensemble, nous créons des expériences qui permettent de se déconnecter du quotidien pour mieux se reconnecter à l’essentiel.",
+};
 ---
 
 <style>
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 0.5fr 0.5fr;
-    gap: 20px;
-  }
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 0.5fr 0.5fr;
+        gap: 20px;
+    }
 </style>
 
 <Layout title="nous">
-  <Header slot="header" />
-  <Section size="half" extension="md" className="vertical items-start justify-center px-14">
-    <div class="text-left vertical items-start w-fit mb-20" transition:name="heading">
-      <h2 class="text-5xl uppercase mb-5">Qui sommes-nous</h2>
-      <p class="max-w-[50ch] mb-5 text-[1rem]">
-        {generateLorem(20)}
-      </p>
-    </div>
-  </Section>
-  <Section className={`container grid px-14`}>
-    <div class={`vertical full justify-between items-start [&_h4]:text-3xl`}>
-      <h3 class={`text-4xl grandstander`}>Nos valeurs</h3>
-      {
-        values.map((value) => (
-          <article class={`space-y-2`}>
-            <h4>{value.title}</h4>
-            <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
-            <p class={`max-w-[50ch]`}>{value.content}</p>
-          </article>
-        ))
-      }
-      <h3 class={`text-4xl grandstander`}>Notre mission</h3>
-      <p class={`max-w-[50ch]`}>
-        Créer une déconnexion avec le quotidien pour faire voyager, transmettre et partager, en accompagnant les
-        personnes à prendre soin de ce qui nous entoure dans un cadre sécurisant et bienveillant.
-      </p>
-      <h4>Pourquoi ?</h4>
-      <ul>
-        {
-          missions.map((mission) => (
-            <li>
-              <p>{mission.content}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    {
-      gridImgTemplate.map((row, rowIndex) => {
-        const firstCol = rowIndex === 0;
-        return (
-          <div class={`space-y-5 full vertical center`}>
-            {row.map((_, colIndex) => {
-              const firstRow = colIndex === 0;
-              return (
-                <RandomImage
-                  className={`ring-offset-2 ring-1 ring-stone-200 aspect-[10/11] max-h-[250px] w-full ${firstCol && firstRow && "mt-16"}`}
-                  seed={400}
-                />
-              );
-            })}
-          </div>
-        );
-      })
-    }
-  </Section>
-  <section class={`h-[75vh] horizontal items-center justify-center`}>
-    <div class={`horizontal justify-around gap-10 [&>article]:text-left w-full`}>
-      <article>
-        <h4 class={`text-3xl grandstander mb-5`}>Notre originalité</h4>
-        <p class={`max-w-[25ch] text-[1.1rem]`}>Notre parcours de vie très divers et notre amitié de longue date</p>
-      </article>
-      <article>
-        <h4 class={`text-3xl grandstander mb-5`}>Notre style</h4>
-        <p class={`max-w-[25ch] text-[1.1rem]`}>On est des pirates libre et joyeux</p>
-      </article>
-    </div>
-  </section>
-  <Section className={"container px-5 vertical md:horizontal gap-28"}>
-    {
-      ourWords.map((word) => (
-        <article class={`space-y-5`}>
-          <RandomImage seed={400} className={`aspect-square max-h-[350px] max-w-[350px] full mb-5`} />
-          <div class={`vertical gap-3`}>
-            <h4 class={`text-3xl`}>{word.title}</h4>
-            <div class={`horizontal gap-2 max-w-[75%] flex-wrap`}>
-              {word.badges.map((badge) => (
-                <Badge tag={badge} />
-              ))}
+    <Header slot="header" />
+    <Section size="half" extension="md" className="vertical items-center justify-center mt-14 px-14">
+        <div class="vertical items-start w-fit gap-5" transition:name="heading">
+            <h2 class="text-5xl uppercase w-full text-center">Qui sommes-nous</h2>
+            <div class="max-w-[65ch]">
+                <p>
+                    {introduction.bot}
+                </p>
+                <p>
+                    {introduction.top}
+                </p>
             </div>
-          </div>
-          <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
-          <p class={`max-w-[400px]`}>{word.content}</p>
+        </div>
+    </Section>
+    <Section className={`container space-y-32`}>
+        <section class={`space-y-10`}>
+            <h3 class={`text-4xl grandstander text-center`}>Nos valeurs</h3>
+            <div class={`horizontal full justify-evenly items-start [&_h4]:text-3xl gap-3 gap-y-10 flex-wrap`}>
+                {
+                    values.map((value) => (
+                            <article
+                                class={`relative bg-slate-100 rounded-md vertical justify-between shadow-md gap-3 px-4 py-2`}>
+                                    <h4>{value.title}</h4>
+                                    <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
+                                    <p class={`max-w-[30ch]`}>{value.content}</p>
+                            </article>
+                    ))
+                }
+            </div>
+        </section>
+        <section class={`gap-10 vertical center`}>
+            <h3 class={`text-4xl grandstander text-center`}>Notre mission</h3>
+            <p class={`max-w-[50ch] text-[1rem] text-center`}>
+                Créer une déconnexion avec le quotidien pour faire voyager, transmettre et partager, en accompagnant les
+                personnes à prendre soin de ce qui nous entoure dans un cadre sécurisant et bienveillant.
+            </p>
+        </section>
+        <section class={`gap-10 vertical center text-center`}>
+            <h3 class={`text-4xl grandstander`}>Pourquoi ?</h3>
+            <ul>
+                {
+                    missions.map((mission) => (
+                        <li>
+                            <p>{mission.content}</p>
+                        </li>
+                    ))
+                }
+            </ul>
+            <p>Mais aussi...</p>
+        </section>
+        <section class={`horizontal justify-around gap-10 [&>article]:text-left w-full [&_p]:max-w-[25ch]`}>
+            <article>
+                <h4 class={`text-3xl grandstander mb-5`}>Notre originalité</h4>
+                <p>Notre parcours de vie très divers et notre amitié de longue date</p>
+            </article>
+            <article>
+                <h4 class={`text-3xl grandstander mb-5`}>Notre style</h4>
+                <p>On est des pirates libre et joyeux</p>
+            </article>
+        </section>
+        <div class={`container px-5 vertical center md:horizontal gap-28`}>
+            {
+                ourWords.map((word) => (
+                    <article class={`space-y-5`}>
+                        <RandomImage seed={400} className={`aspect-square max-h-[350px] max-w-[350px] full mb-5`} />
+                        <div class={`vertical gap-3`}>
+                            <h4 class={`text-3xl`}>{word.title}</h4>
+                            <div class={`horizontal gap-2 max-w-[75%] flex-wrap`}>
+                                {word.badges.map((badge) => (
+                                    <Badge tag={badge} />
+                                ))}
+                            </div>
+                        </div>
+                        <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
+                        <p class={`max-w-[400px]`}>{word.content}</p>
 
-          <CTA href={`/contact`} prefetch prefetchType="viewport">
-            <Button dark={false} size="lg" className="z-50 hover:bg-white/20 transition-colors" ring="sm">
-              Contact
-            </Button>
-          </CTA>
-        </article>
-      ))
-    }
-  </Section>
-  <Footer slot="footer" />
+                        <CTA href={`/contact`} prefetch prefetchType="viewport">
+                            <Button
+                                dark={false}
+                                size="lg"
+                                className="z-50 hover:bg-white/20 transition-colors"
+                                ring="sm">
+                                Contact
+                            </Button>
+                        </CTA>
+                    </article>
+                ))
+            }
+        </div>
+    </Section>
+    <Footer slot="footer" />
 </Layout>
