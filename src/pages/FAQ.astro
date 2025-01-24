@@ -7,14 +7,20 @@ import CTA from "@/components/shared/CTA.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Pattern3 from "@/assets/pattern_3.webp";
 ---
 
 <Layout title="FAQ">
+  <div class={`absolute inset-0 w-full -z-10 overflow-hidden`}>
+    <Image src={Pattern3} alt="pattern" class="object-cover opacity-10" />
+    <Image src={Pattern3} alt="pattern" class="object-cover opacity-10" />
+  </div>
   <Header slot="header" />
   <Section className={"vertical items-center justify-start gap-0 mt-36"} size="full" extension="xl">
     <div class="text-center vertical center mb-20 px-5" transition:name="heading">
       <h2 class="text-5xl uppercase mb-5">Questions fréquentes</h2>
-      <p class="max-w-[50ch] mb-5 text-[1rem]">
+      <p class="max-w-[50ch] mb-5 text-[1rem] text-balance">
         Retrouvez la plupart des questions et réponses que vous vous posez sur le fonctionnement de l'association, qui
         nous sommes, comment payer ou encore comment rejoindre le lieu de grimpe
       </p>

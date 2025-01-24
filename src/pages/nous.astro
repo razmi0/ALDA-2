@@ -7,6 +7,8 @@ import CTA from "@/components/shared/CTA.astro";
 import RandomImage from "@/components/shared/RandomImage.astro";
 import Section from "@/layouts/Section.astro";
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Pattern2 from "@/assets/pattern_2.webp";
 
 // const gridImgTemplate = [
 //   [1, 2],
@@ -95,6 +97,11 @@ const introduction = {
 </style>
 
 <Layout title="nous">
+    <div class={`absolute inset-0 opacity-15 overflow-hidden -z-10`}>
+    <Image src={Pattern2} alt="pattern" class="object-cover" />
+    <Image src={Pattern2} alt="pattern" class="object-cover" />
+    <Image src={Pattern2} alt="pattern" class="object-cover" />
+</div>
     <Header slot="header" />
     <Section size="half" extension="md" className="vertical items-center justify-center mt-28 sm:mt-14 px-3 sm:px-15">
         <div class="vertical items-start w-fit gap-5" transition:name="heading">
