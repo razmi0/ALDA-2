@@ -96,10 +96,10 @@ const introduction = {
 
 <Layout title="nous">
     <Header slot="header" />
-    <Section size="half" extension="md" className="vertical items-center justify-center mt-28 sm:mt-14 px-14">
+    <Section size="half" extension="md" className="vertical items-center justify-center mt-28 sm:mt-14 px-3 sm:px-15">
         <div class="vertical items-start w-fit gap-5" transition:name="heading">
             <h2 class="text-5xl uppercase w-full text-center">Qui sommes-nous</h2>
-            <div class="max-w-[65ch]">
+            <div class="max-w-[65ch] space-y-3 text-center">
                 <p>
                     {introduction.bot}
                 </p>
@@ -109,7 +109,7 @@ const introduction = {
             </div>
         </div>
     </Section>
-    <Section className={`container space-y-32`}>
+    <Section className={`container space-y-32 mt-32 sm:mt-0`}>
         <section class={`space-y-10`}>
             <h3 class={`text-4xl grandstander text-center`}>Nos valeurs</h3>
             <div class={`horizontal full justify-evenly items-start [&_h4]:text-3xl gap-3 gap-y-10 flex-wrap`}>
@@ -138,7 +138,7 @@ const introduction = {
                 {
                     missions.map((mission) => (
                         <li>
-                            <p>{mission.content}</p>
+                            <p class={`text-balance`}>{mission.content}</p>
                         </li>
                     ))
                 }
@@ -147,15 +147,15 @@ const introduction = {
         </section>
         <section class={`horizontal justify-around gap-10 [&>article]:text-left w-full [&_p]:max-w-[25ch] flex-wrap`}>
             <article>
-                <h4 class={`text-3xl grandstander mb-5`}>Notre originalité</h4>
-                <p>Notre parcours de vie très divers et notre amitié de longue date</p>
+                <h4 class={`text-3xl grandstander mb-5 text-center`}>Notre originalité</h4>
+                <p class={`text-center`}>Notre parcours de vie très divers et notre amitié de longue date</p>
             </article>
             <article>
-                <h4 class={`text-3xl grandstander mb-5`}>Notre style</h4>
-                <p>On est des pirates libre et joyeux</p>
+                <h4 class={`text-3xl grandstander mb-5 text-center`}>Notre style</h4>
+                <p class={`text-center`}>On est des pirates libre et joyeux</p>
             </article>
         </section>
-        <div class={`container px-5 vertical center md:horizontal gap-28`}>
+        <div class={`container px-0 sm:px-5 vertical center md:horizontal gap-28`}>
             {
                 ourWords.map((word) => (
                     <article class={`space-y-5`}>
