@@ -7,6 +7,8 @@ import Complex from "./Complex/Complex.astro";
 import Simple from "./Simple.astro";
 import TopSection from "./TopSection.astro";
 import type { ComplexProduct, Product, ProductData, ProductImage } from "./types";
+import { Image } from "astro:assets";
+import Pattern1 from "@/assets/pattern_1.webp";
 
 /**
  * @description Filter available products
@@ -46,6 +48,11 @@ const images: ProductImage[] = [
 ---
 
 <TopSection title="Nos trois pôles d'activités">
+  <div class={`absolute top-0 left-0 w-full  -z-10 `}>
+  <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
+  <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
+  <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
+</div>
   {
     complexProducts.map((p) => {
       return <Complex verticalText="le meilleur de nos propositions" buttonText="En savoir plus" product={p} />;
