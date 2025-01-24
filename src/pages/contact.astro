@@ -9,6 +9,22 @@ import Section from "@/layouts/Section.astro";
 import { Send, ThumbsUp } from "lucide-react";
 
 const key = "contact";
+
+
+const companyContact = {
+  email : "contact@alabordarbre.fr",
+  tel : "06 12 34 56 78"
+}
+
+
+const adresse = {
+  title : "Notre adresse",
+  content : [
+    "12 rue de la Paix",
+    "Toulouse",
+    "31100"
+  ]
+}
 ---
 
   <script>
@@ -27,34 +43,35 @@ const key = "contact";
 
 <Layout title="contact">
   <Header slot="header" />
-  <Section data-action={`section-message#${key}`} size="full" extension="sm" className={"grid center"}>
-    <div class={"horizontal center gap-32 w-full h-fit"}>
-      <div class="text-left vertical items-start justify-between h-full gap-20">
+  <Section data-action={`section-message#${key}`} size="full" extension="sm" className={"grid center mt-40 md:mt-0 mb-20 md:mb-0"}>
+    <div class={"vertical md:horizontal center gap-3 gap-y-20 w-full h-fit px-2"}>
+      <div class="text-left vertical center h-full gap-20">
         <!--  -->
         <div transition:name="heading">
-          <h2 class="text-5xl uppercase mb-5">Contactez-nous</h2>
-          <p class="max-w-[50ch] text-[1rem] text-balance">
+          <h2 class="text-5xl uppercase mb-5 text-center">Contactez-nous</h2>
+          <p class="max-w-[50ch] text-[1rem] text-balance text-center">
             Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ? N'hésitez pas
             à nous contacter via le formulaire ci-dessous.
           </p>
         </div>
         <div
-          class="py-10 px-14 shadow-md rounded-md bg-slate-100 vertical items-start text-left justify-between h-fit gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow text-black">
+          class="sm:py-10 sm:px-14 px-9 py-5 shadow-md rounded-md bg-slate-100 vertical items-start text-left justify-between h-fit gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow text-black">
           <article>
-            <h3>Notre adresse</h3>
-            <p>12 rue de la Paix</p>
-            <p>Toulouse</p>
-            <p>31100</p>
+            <h3>{adresse.title}</h3>
+            {adresse.content.map((line) => (
+              <p>{line}</p>
+            ))}
           </article>
           <article>
             <h3>Nos contact</h3>
+            
             <p>
               <span>Email : </span>
-              <span class="font-semibold">alabordarbre@contact.com</span>
+              <span class="font-semibold">{companyContact.email}</span>
             </p>
             <p>
               <span>Téléphone : </span>
-              <span class="font-semibold">06 12 34 56 78</span>
+              <span class="font-semibold">{companyContact.tel}</span>
             </p>
           </article>
           <article class="vertical justify-end">
@@ -64,7 +81,7 @@ const key = "contact";
         </div>
       </div>
       <form
-        class="py-10 px-14 shadow-md rounded-md bg-slate-100 space-y-5 ring-offset-1 vertical text-black shadow-black/20"
+        class="p-3 sm:py-5 sm:px-7 md:py-10 md:px-14 shadow-md rounded-md bg-slate-100 space-y-5 ring-offset-1 vertical text-black shadow-black/20"
          method="POST"
         >
         <div class="max-w-lg vertical center">
