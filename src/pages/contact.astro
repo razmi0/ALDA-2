@@ -7,8 +7,23 @@ import Socials from "@/components/shared/Socials.astro";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/layouts/Section.astro";
 import { Send, ThumbsUp } from "lucide-react";
+
 const key = "contact";
 ---
+
+  <script>
+  import { actions } from 'astro:actions';
+  import { navigate } from 'astro:transitions/client';
+
+  const form = document.querySelector('form');
+  form?.addEventListener('submit', async (event) => {
+    console.log('submit');
+    event.preventDefault();
+    const formData = new FormData(form);
+    const { error } = await actions.send(formData);
+    if (!error) navigate('/confirmation');
+  })
+</script>
 
 <Layout title="contact">
   <Header slot="header" />
@@ -49,7 +64,9 @@ const key = "contact";
         </div>
       </div>
       <form
-        class="py-10 px-14 shadow-md rounded-md bg-slate-100 space-y-5 ring-offset-1 vertical text-black shadow-black/20">
+        class="py-10 px-14 shadow-md rounded-md bg-slate-100 space-y-5 ring-offset-1 vertical text-black shadow-black/20"
+         method="POST"
+        >
         <div class="max-w-lg vertical center">
           <Message key={key} telClass="bg-stone-100 ring-1 ring-stone-200 bg-white" textareaClass="bg-stone-100 ring-1 ring-stone-200 bg-white" emailClass="bg-stone-100 ring-1 ring-stone-200 bg-white" />
         </div>

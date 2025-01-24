@@ -123,7 +123,7 @@ if (!key) throw new Error("No key found");
     <input
       id={`email-${key}`}
       type="email"
-      name={`email`}
+      name="email"
       placeholder="monemail@email.com"
       class={cn("mb-1", emailClass)}
       data-valid="false"
@@ -146,7 +146,7 @@ if (!key) throw new Error("No key found");
     <span class="font-medium text-md">Votre message :</span>
     <textarea
       id={`textarea-${key}`}
-      name={`textarea`}
+      name={`message`}
       class={cn("w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52 mb-1", textareaClass)}
       placeholder="Message..."></textarea>
     <Info text="Votre message nous permettra de mieux comprendre votre demande" />
