@@ -4,114 +4,117 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    scrollbar-color: #f0f3f2;
-    scrollbar-width: thin;
-  }
+    * {
+        scrollbar-color: #f0f3f2;
+        scrollbar-width: thin;
+    }
 
-  :root {
-    font-family: "Quattrocento Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 1.6;
-    font-size: 1rem;
-  }
+    :root {
+        font-family: "Quattrocento Sans", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        line-height: 1.6;
+        font-size: 1rem;
+    }
 
-  body {
-    overflow-x: hidden;
-    background-color: #fdfdfd;
-  }
+    main {
+        overflow-y: hidden;
+    }
+    body {
+        overflow-x: hidden;
+        background-color: #fdfdfd;
+    }
 
-  mark {
-    background-color: #eab308;
-  }
+    mark {
+        background-color: #eab308;
+    }
 
-  h1,
-  h2 h3,
-  h4,
-  h5,
-  h6 {
-    text-wrap: balance;
-  }
+    h1,
+    h2 h3,
+    h4,
+    h5,
+    h6 {
+        text-wrap: balance;
+    }
 
-  h1,
-  h2 {
-    font-family: "Grandstander", cursive;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-  }
+    h1,
+    h2 {
+        font-family: "Grandstander", cursive;
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-style: normal;
+    }
 
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "IM Fell DW Pica", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "IM Fell DW Pica", serif;
+        font-weight: 400;
+        font-style: normal;
+    }
 
-  p,
-  li {
-    font-size: 1rem;
-  }
+    p,
+    li {
+        font-size: 1rem;
+    }
 
-  span.label {
-    font-weight: 600;
-  }
+    span.label {
+        font-weight: 600;
+    }
 
-  p.value {
-    font-weight: 400;
-  }
+    p.value {
+        font-weight: 400;
+    }
 }
 
 @layer utilities {
-  .grandstander {
-    font-family: "Grandstander", cursive;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-  }
+    .grandstander {
+        font-family: "Grandstander", cursive;
+        font-optical-sizing: auto;
+        font-weight: 600;
+        font-style: normal;
+    }
 
-  .im-fell-dw-pica-regular {
-    font-family: "IM Fell DW Pica", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+    .im-fell-dw-pica-regular {
+        font-family: "IM Fell DW Pica", serif;
+        font-weight: 400;
+        font-style: normal;
+    }
 
-  .im-fell-dw-pica-regular-italic {
-    font-family: "IM Fell DW Pica", serif;
-    font-weight: 400;
-    font-style: italic;
-  }
+    .im-fell-dw-pica-regular-italic {
+        font-family: "IM Fell DW Pica", serif;
+        font-weight: 400;
+        font-style: italic;
+    }
 
-  .quattrocento-sans-regular {
-    font-family: "Quattrocento Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+    .quattrocento-sans-regular {
+        font-family: "Quattrocento Sans", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
 
-  .quattrocento-sans-semibold {
-    font-family: "Quattrocento Sans", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-  }
+    .quattrocento-sans-semibold {
+        font-family: "Quattrocento Sans", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+    }
 
-  .quattrocento-sans-bold {
-    font-family: "Quattrocento Sans", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-  }
+    .quattrocento-sans-bold {
+        font-family: "Quattrocento Sans", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+    }
 
-  .quattrocento-sans-regular-italic {
-    font-family: "Quattrocento Sans", sans-serif;
-    font-weight: 400;
-    font-style: italic;
-  }
+    .quattrocento-sans-regular-italic {
+        font-family: "Quattrocento Sans", sans-serif;
+        font-weight: 400;
+        font-style: italic;
+    }
 
-  .quattrocento-sans-bold-italic {
-    font-family: "Quattrocento Sans", sans-serif;
-    font-weight: 700;
-    font-style: italic;
-  }
+    .quattrocento-sans-bold-italic {
+        font-family: "Quattrocento Sans", sans-serif;
+        font-weight: 700;
+        font-style: italic;
+    }
 }
