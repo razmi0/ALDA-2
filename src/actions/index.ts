@@ -1,7 +1,7 @@
+import { companyContact } from "@/pages/contact.astro";
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { Resend } from "resend";
-
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 const content = {
@@ -19,7 +19,7 @@ const content = {
         title: "Merci pour votre message",
         body: "Nous avons bien reçu votre message et nous vous répondrons dans les plus brefs délais. Voici un résumé de ce que vous nous avez envoyé :",
         thanks: "Nous vous remercions pour votre patience et reviendrons vers vous dès que possible.",
-        footer: "Cordialement,<br>L'équipe Alabordarbre",
+        footer: `Cordialement,<br>L'équipe Alabordarbre<br>${companyContact.tel}`,
     },
 };
 
@@ -66,7 +66,6 @@ export const server = {
                         <p><strong>Message :</strong> ${message}</p>
                         <p><strong>Téléphone :</strong> ${tel || "N/A"}</p>
                     </div>
-                    <p>${content.toClient.footer}</p>
                     <p style="font-size: 14px; color: #555;">${content.toClient.footer}</p>
                 </div>
             `,
