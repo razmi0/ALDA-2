@@ -3,67 +3,102 @@ import SensorielImage from "@/assets/client-img-26.jpg";
 import EvenementielImage from "@/assets/client-img-44.jpg";
 import RechercheImage from "@/assets/client-img-53.jpg";
 import data from "@/components/shared/product-data/main-product.json" assert { type: "json" };
-import Complex from "./Complex/Complex.astro";
 import Simple from "./Simple.astro";
 import TopSection from "./TopSection.astro";
-import type { ComplexProduct, Product, ProductData, ProductImage } from "./types";
+import type { Product, ProductData, ProductImage } from "./types";
 import { Image } from "astro:assets";
 import Pattern1 from "@/assets/pattern_1.webp";
+import { capitalize } from "@/lib/utils";
+import RandomImage from "@/components/shared/RandomImage.astro";
+import CTA from "@/components/shared/CTA.astro";
+import Button from "@/components/shared/Button.astro";
 
-/**
- * @description Filter available products
- * - simpleProducts: products that doesn't contain data
- * - complexProducts: extends the simpleProducts with data
- */
-const buildProducts = (data: ProductData): { simpleProducts: Product[]; complexProducts: ComplexProduct[] } => {
-  const { poles, products } = data;
-  const availableProducts = products.filter((p) => poles.available.includes(p.id));
-  const simpleProducts = availableProducts.filter((p) => poles.simple.includes(p.id));
-  const complexProducts = availableProducts.filter((p) => poles.complex.includes(p.id)) as ComplexProduct[];
-  return { simpleProducts, complexProducts };
+const buildProducts = (data: ProductData): { simpleProducts: Product[]; withSubproducts: Product[] } => {
+    const { poles, products } = data;
+    const availableProducts = products.filter((p) => poles.available.includes(p.id));
+    const simpleProducts = availableProducts.filter((p) => !p.subproducts);
+    const withSubproducts = availableProducts.filter((p) => p.subproducts);
+    return { simpleProducts, withSubproducts };
 };
 
-const { simpleProducts, complexProducts } = buildProducts(data);
+const { simpleProducts, withSubproducts } = buildProducts(data);
 
 const images: ProductImage[] = [
-  {
-    label: "evenementiel",
-    src: EvenementielImage,
-    alt: "Illustration d'un évenement Alabordarbre avec des personnes souriantes en cercle écoutant les instructions de l'animatrice Lou équipée sur corde",
-    size: [500, 500],
-  },
-  {
-    label: "sensoriel et sensibilisation",
-    src: SensorielImage,
-    alt: "Illustration d'un atelier sensoriel Alabordarbre où l'on aperçoit deux personnes grimpant dans le vide sur une corde",
-    size: [500, 500],
-  },
-  {
-    label: "recherche",
-    src: RechercheImage,
-    alt: "Illustration d'un atelier de recherche Alabordarbre pendant lequel un groupe de personne est en train de chercher des indices au pied d'un arbre",
-    size: [500, 500],
-  },
+    {
+        label: "evenementiel",
+        src: EvenementielImage,
+        alt: "Illustration d'un évenement Alabordarbre avec des personnes souriantes en cercle écoutant les instructions de l'animatrice Lou équipée sur corde",
+        size: [500, 500],
+    },
+    {
+        label: "sensoriel et sensibilisation",
+        src: SensorielImage,
+        alt: "Illustration d'un atelier sensoriel Alabordarbre où l'on aperçoit deux personnes grimpant dans le vide sur une corde",
+        size: [500, 500],
+    },
+    {
+        label: "recherche",
+        src: RechercheImage,
+        alt: "Illustration d'un atelier de recherche Alabordarbre pendant lequel un groupe de personne est en train de chercher des indices au pied d'un arbre",
+        size: [500, 500],
+    },
 ];
 ---
 
-<TopSection title="Nos trois pôles d'activités">
-  <div class={`absolute inset-0 w-full -z-10`}>
-  <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
-  <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
-  <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
-</div>
-  {
-    complexProducts.map((p) => {
-      return <Complex verticalText="le meilleur de nos propositions" buttonText="En savoir plus" product={p} />;
-    })
-  }
-  {
-    simpleProducts.map((p, i) => {
-      const orientation = (i & 1) === 0 ? "ltr" : "rtl";
-      const img = images.find((img) => img.label === p.title);
+<TopSection title="Nos quatres pôles d'activités">
+    <div class={`absolute inset-0 w-full -z-10`}>
+        <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
+        <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
+        <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
+    </div>
 
-      return <Simple product={p} orientation={orientation} image={img} buttonText="En savoir plus" />;
-    })
-  }
+    {
+        withSubproducts.map((p) => {
+            return (
+                <section class={`vertical center gap-10`}>
+                    <div class="w-full">
+                        <h2 class="text-4xl text-center">Pôle {capitalize(p.title)}</h2>
+                    </div>
+                    <p class={`text-black/90 max-w-[60ch] text-center`}>
+                        Le pôle Animation propose des activités immersives et captivantes pour encourager l'exploration,
+                        la connexion à la nature et l'éveil des sens. Il se divise en deux volets complémentaires :
+                    </p>
+                    <div class={`horizontal center gap-10`}>
+                        {p.subproducts &&
+                            p.subproducts.map((p) => {
+                                return (
+                                    <div class={`vertical center gap-5`}>
+                                        <h3 class={`text-xl`}>{capitalize(p.title)}</h3>
+                                        <RandomImage
+                                            width={300}
+                                            height={300}
+                                            className="aspect-square object-cover rounded-md"
+                                        />
+                                        <p class={`text-center`}>{p.description}</p>
+                                        <CTA href={`/activités#${p.title}`} prefetch prefetchType="hover">
+                                            <Button
+                                                ring="sm"
+                                                size="lg"
+                                                variant="outline"
+                                                dark
+                                                className="w-fit font-bold whitespace-nowrap">
+                                                En savoir plus
+                                            </Button>
+                                        </CTA>
+                                    </div>
+                                );
+                            })}
+                    </div>
+                </section>
+            );
+        })
+    }
+    {
+        simpleProducts.map((p, i) => {
+            const orientation = (i & 1) === 0 ? "ltr" : "rtl";
+            const img = images.find((img) => img.label === p.title);
+
+            return <Simple product={p} orientation={orientation} image={img} buttonText="En savoir plus" />;
+        })
+    }
 </TopSection>

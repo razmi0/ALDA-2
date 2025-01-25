@@ -3,14 +3,22 @@ import Section from "@/layouts/Section.astro";
 import { Image } from "astro:assets";
 import BackgroundForest from "./assets/forest-bg.webp";
 import Forest from "./assets/forest.webp";
+import ForestWhite from "./assets/forest_white.webp";
+
+
+interface Props {
+  className? : string;
+  type?: "dark" | "white";
+}
 ---
 
 <Section
   size="quarter"
   extension="sm"
-  className="bg-map-dark relative overflow-hidden z-10 flex justify-start items-start">
+  className={`relative overflow-hidden z-10 flex justify-start items-start ${Astro.props.className || ""}`}> 
+  <!-- bg-map-dark -->
   <Image
-    src={Forest}
+    src={Astro.props.type === "white" ? ForestWhite : Forest}
     role={"presentation"}
     alt={""}
     class={"absolute bottom-0 object-cover min-w-[632px] w-full z-[1] [transform:_scale(-1,1)_translateY(75px)] xl:[transform:_scale(-1,1)_translateY(125px)]"}

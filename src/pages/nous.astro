@@ -9,26 +9,29 @@ import Section from "@/layouts/Section.astro";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Pattern2 from "@/assets/pattern_2.webp";
+import VerticalText from "@/components/shared/VerticalText.astro";
+import Earth from "@/components/Home/Earth/Earth.astro";
+import Sky from "@/components/Home/Sky/Sky.astro";
 
 // const gridImgTemplate = [
 //   [1, 2],
 //   [1, 2, 3],
 // ];
 
-const values = [
-    {
-        title: "Partage",
-        content: "Partager des expériences, des connaissances et des émotions",
-    },
-    {
-        title: "Respect",
-        content: "Respecter la vie : l'environnement et Autrui, et en prendre soin",
-    },
-    {
-        title: "Exploration",
-        content: "Déconnecter avec le quotidien pour se reconnecter avec l'essentiel",
-    },
-];
+// const values = [
+//     {
+//         title: "Partage",
+//         content: "Partager des expériences, des connaissances et des émotions",
+//     },
+//     {
+//         title: "Respect",
+//         content: "Respecter la vie : l'environnement et Autrui, et en prendre soin",
+//     },
+//     {
+//         title: "Exploration",
+//         content: "Déconnecter avec le quotidien pour se reconnecter avec l'essentiel",
+//     },
+// ];
 
 const missions = [
     {
@@ -116,8 +119,13 @@ const introduction = {
             </div>
         </div>
     </Section>
+    <div class="relative">
+        <VerticalText position="left" className="top-1/2">Découvrez la grimpe d'arbre</VerticalText>
+        <Earth />
+        <Sky />
+      </div>
     <Section className={`container space-y-32 mt-32 sm:mt-0`}>
-        <section class={`space-y-10`}>
+        <!-- <section class={`space-y-10`}>
             <h3 class={`text-4xl grandstander text-center`}>Nos valeurs</h3>
             <div class={`horizontal full justify-evenly items-start [&_h4]:text-3xl gap-3 gap-y-10 flex-wrap`}>
                 {
@@ -131,8 +139,8 @@ const introduction = {
                     ))
                 }
             </div>
-        </section>
-        <section class={`gap-10 vertical center`}>
+        </section> -->
+        <section class={`gap-10 vertical center mt-32`}>
             <h3 class={`text-4xl grandstander text-center`}>Notre mission</h3>
             <p class={`max-w-[50ch] text-[1rem] text-center`}>
                 Créer une déconnexion avec le quotidien pour faire voyager, transmettre et partager, en accompagnant les
