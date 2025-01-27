@@ -1,20 +1,74 @@
 ---
-import VerticalText from "@/components/shared/VerticalText.astro";
-import Section from "@/layouts/Section.astro";
-import { Wrench } from "lucide-react";
+import { companyContact } from "@/pages/contact.astro";
 
-// const quoteLou = "Dis-moi et j'oublierai, montre-moi et je me souviendrai, implique-moi et je comprendrai.";
-// const articleText = "Grimper aux arbres, c'est apprivoiser deux rencontres : l'une avec moi-même, la découverte de mes limites et de mes capacités ; l'autre avec le monde, face à l'immensité de l'arbre qui m'accueille, avec ses osbtacles et ses appuis. Mes sens sont alors en éveil : j'écoute les oiseaux, j'admire l'horizon, je sens l'odeur de pin, je m'accroche à l'écorce et je ressens dans tout mon corps un mélange d'excitation, de bien-être et d'épanouissement. L'entendre ou le voir ne suffit pas, il faut le vivre pour comprendre. Alors fais nous confiance, et viens avec nous prendre de la hauteur et te hisser en haut des cimes pour ressentir le monde autrement."
-// const textRing = "Estime de soi et valorisation   ⚪   Ancrage et liens   ⚪   Accompagnement et bienveillance   ⚪   Apprentissage et amusement   ⚪   Sécurité et sérenité "
+// UnderConstruction.astro
 ---
 
-<Section className={"horizontal center bg-pur-500 text-black"} data-color>
-  <VerticalText position="right" className="" dark><p>En construction</p></VerticalText>
-  <div class="vertical center gap-10">
-    <div
-      class="horizontal center gap-5 text-black font-medium ring-1 ring-black py-5 pe-6 ps-5 rounded-lg shadow-md shadow-black/50">
-      <Wrench size={32} strokeWidth={1} />
-      <p class="text-2xl h-fit">Section en construction</p>
+<div class="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4 text-yellow-500">Site en Maintenance</h1>
+        <p class="text-lg mb-6">Nous travaillons actuellement sur une mise à jour. Merci de votre patience.</p>
+        <div class="animate-bounce text-yellow-500 center">
+            <svg
+                viewBox="0 0 30 30"
+                class={`size-10`}
+                id="Layer_1"
+                version="1.1"
+                xml:space="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                fill="#000000"
+                ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"
+                    ><style type="text/css">
+                        .st0 {
+                            fill: #fd6a7e;
+                        }
+                        .st1 {
+                            fill: #17b978;
+                        }
+                        .st2 {
+                            fill: #8797ee;
+                        }
+                        .st3 {
+                            fill: #41a6f9;
+                        }
+                        .st4 {
+                            fill: #37e0ff;
+                        }
+                        .st5 {
+                            fill: #2fd9b9;
+                        }
+                        .st6 {
+                            fill: #f498bd;
+                        }
+                        .st7 {
+                            fill: #ffdf1d;
+                        }
+                        .st8 {
+                            fill: #c6c9cc;
+                        }
+                    </style><path
+                        class="st2"
+                        d="M26.6,12.9l-2.9-0.3c-0.2-0.7-0.5-1.4-0.8-2l1.8-2.3c0.2-0.2,0.1-0.5,0-0.7l-2.2-2.2c-0.2-0.2-0.5-0.2-0.7,0 l-2.3,1.8c-0.6-0.4-1.3-0.6-2-0.8l-0.3-2.9C17,3.2,16.8,3,16.6,3h-3.1c-0.3,0-0.5,0.2-0.5,0.4l-0.3,2.9c-0.7,0.2-1.4,0.5-2,0.8 L8.3,5.4c-0.2-0.2-0.5-0.1-0.7,0L5.4,7.6c-0.2,0.2-0.2,0.5,0,0.7l1.8,2.3c-0.4,0.6-0.6,1.3-0.8,2l-2.9,0.3C3.2,13,3,13.2,3,13.4v3.1 c0,0.3,0.2,0.5,0.4,0.5l2.9,0.3c0.2,0.7,0.5,1.4,0.8,2l-1.8,2.3c-0.2,0.2-0.1,0.5,0,0.7l2.2,2.2c0.2,0.2,0.5,0.2,0.7,0l2.3-1.8 c0.6,0.4,1.3,0.6,2,0.8l0.3,2.9c0,0.3,0.2,0.4,0.5,0.4h3.1c0.3,0,0.5-0.2,0.5-0.4l0.3-2.9c0.7-0.2,1.4-0.5,2-0.8l2.3,1.8 c0.2,0.2,0.5,0.1,0.7,0l2.2-2.2c0.2-0.2,0.2-0.5,0-0.7l-1.8-2.3c0.4-0.6,0.6-1.3,0.8-2l2.9-0.3c0.3,0,0.4-0.2,0.4-0.5v-3.1 C27,13.2,26.8,13,26.6,12.9z M15,19c-2.2,0-4-1.8-4-4c0-2.2,1.8-4,4-4s4,1.8,4,4C19,17.2,17.2,19,15,19z"
+                    ></path></g
+                ></svg
+            >
+        </div>
+        <p class="mt-6 text-sm text-gray-400">Revenez bientôt pour découvrir nos améliorations.</p>
+        <p class="mt-6 text-sm text-gray-400">En attendant, vous pouvez nous contacter :</p>
+        <div class={`vertical center`}>
+            <p class={`text-sm text-gray-400`}>
+                <span>Email : </span>
+                <span class="font-semibold">{companyContact.email}</span>
+            </p>
+            <p class={`text-sm text-gray-400`}>
+                <span>Téléphone : </span>
+                <span class="font-semibold">{companyContact.tel}</span>
+            </p>
+          </div>
+          <p class="mt-6">Revenez bientôt pour découvrir nos améliorations.</p>
     </div>
-  </div>
-</Section>
+</div>
