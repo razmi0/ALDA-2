@@ -7,12 +7,19 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    react(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
-  ],
+    redirects: {
+        "/": "/maintenance",
+        "/activités": "/maintenance",
+        "/contact": "/maintenance",
+        "/faq": "/maintenance",
+        "/nous": "/maintenance",
+    },
+    integrations: [
+        react(),
+        tailwind({
+            applyBaseStyles: false,
+        }),
+    ],
 
-  adapter: vercel(),
+    adapter: vercel(),
 });
