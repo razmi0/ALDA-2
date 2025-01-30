@@ -1,7 +1,9 @@
 ---
-import SensorielImage from "@/assets/client-img-26.jpg";
-import EvenementielImage from "@/assets/client-img-44.jpg";
+import SensorielImage from "@/assets/client-img-56.jpeg";
+import EvenementielImage from "@/assets/client-img-55.jpeg";
 import RechercheImage from "@/assets/client-img-54.jpeg";
+import ImmersionImage from "@/assets/client-img-57.jpeg";
+import InitiationImage from "@/assets/client-img-58.jpeg";
 import data from "@/components/shared/product-data/main-product.json" assert { type: "json" };
 import Simple from "./Simple.astro";
 import TopSection from "./TopSection.astro";
@@ -42,6 +44,18 @@ const images: ProductImage[] = [
         alt: "Illustration d'un atelier de recherche Alabordarbre pendant lequel un groupe de personne est en train de chercher des indices au pied d'un arbre",
         size: [500, 500],
     },
+    {
+        label: "initiation",
+        src: InitiationImage,
+        alt: "",
+        size: [500, 500],
+    },
+    {
+        label: "immersion",
+        src: ImmersionImage,
+        alt: "",
+        size: [500, 500],
+    },
 ];
 ---
 
@@ -63,16 +77,19 @@ const images: ProductImage[] = [
                         Le pôle Animation propose des activités immersives et captivantes pour encourager l'exploration,
                         la connexion à la nature et l'éveil des sens. Il se divise en deux volets complémentaires :
                     </p>
-                    <div class={`horizontal center gap-10 flex-wrap`}>
+                    <div class={`vertical md:horizontal center gap-10`}>
                         {p.subproducts &&
                             p.subproducts.map((p) => {
+                                const image = images.find((img) => img.label === p.title);
                                 return (
                                     <div class={`vertical center gap-5`}>
-                                        <h3 class={`text-2xl`}>{capitalize(p.title)}</h3>
-                                        <RandomImage
-                                            width={300}
-                                            height={300}
-                                            className="aspect-square object-cover rounded-md"
+                                        <h3 class={`text-4xl`}>{capitalize(p.title)}</h3>
+                                        <Image
+                                            src={image.src}
+                                            alt={image.alt}
+                                            width={image.size[0] ?? 500}
+                                            height={image.size[1] ?? 500}
+                                            class={`aspect-square object-cover rounded-md`}
                                         />
                                         <p class={`text-center max-w-[60ch]`}>{p.description}</p>
                                         <CTA href={`/activites#${p.title}`} prefetch prefetchType="hover">
