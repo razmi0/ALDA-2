@@ -5,15 +5,48 @@ import ForestMask from "@/components/Home/Forest/ForestMask.astro";
 // import Earth from "@/components/Home/Earth/Earth.astro";
 import Hero from "@/components/Home/Hero.astro";
 import Products from "@/components/Home/Product/Products.astro";
+import Button from "@/components/shared/Button.astro";
+import CTA from "@/components/shared/CTA.astro";
 // import Sky from "@/components/Home/Sky/Sky.astro";
 // import VerticalText from "@/components/shared/VerticalText.astro";
 import Layout from "@/layouts/Layout.astro";
+import Section from "@/layouts/Section.astro";
 ---
 
 <Layout title="accueil" className="max-w-screen">
-  <Hero slot="header" />
-  <CatchSection />
-  <ForestMask className="bg-map-dark" type="white" />
-  <Products />
-  <Footer slot="footer" />
+    <Hero slot="header" />
+    <CatchSection />
+    <ForestMask className="bg-map-dark" type="white" />
+    <Products />
+    <Section
+        size="half"
+        className="flex flex-col gap-y-6 py-12 center [&_p]:text-left [&_p]:text-balance [&_div]:gap-y-3">
+        <div class="grid gap-y-4 px-10 max-w-[680px]">
+            <!--  -->
+            <div class="sm:flex sm:gap-y-3 justify-center items-center">
+                <p class={`max-w-[35ch] sm:max-w-[50ch]`}>
+                    Vous souhaitez en savoir plus sur notre démarche et nos valeurs ? C'est par ici !
+                </p>
+                <CTA href="/nous" prefetch prefetchType="hover" className="font-bold grow justify-end underline">
+                    Nous connaitre
+                </CTA>
+            </div>
+            <div class="sm:flex sm:gap-y-3 justify-center items-center">
+                <p class={`max-w-[35ch] sm:max-w-[50ch]`}>
+                    Vous avez une question ? Nous avons peut-être la réponse dans notre FAQ.
+                </p>
+                <CTA href="/faq" prefetch prefetchType="hover" className="font-bold grow justify-end underline">
+                    FAQ
+                </CTA>
+            </div>
+            <div class="sm:flex sm:gap-y-3 justify-center items-center">
+                <p class={`max-w-[35ch] sm:max-w-[50ch] grow`}>Vous souhaitez nous contacter ? C'est par ici !</p>
+                <CTA href="/contact" prefetch prefetchType="hover" className="font-bold grow justify-end underline">
+                    Contact
+                </CTA>
+            </div>
+            <!--  -->
+        </div>
+    </Section>
+    <Footer slot="footer" />
 </Layout>
