@@ -63,18 +63,18 @@ const images: ProductImage[] = [
                         Le pôle Animation propose des activités immersives et captivantes pour encourager l'exploration,
                         la connexion à la nature et l'éveil des sens. Il se divise en deux volets complémentaires :
                     </p>
-                    <div class={`horizontal center gap-10`}>
+                    <div class={`horizontal center gap-10 flex-wrap`}>
                         {p.subproducts &&
                             p.subproducts.map((p) => {
                                 return (
                                     <div class={`vertical center gap-5`}>
-                                        <h3 class={`text-xl`}>{capitalize(p.title)}</h3>
+                                        <h3 class={`text-2xl`}>{capitalize(p.title)}</h3>
                                         <RandomImage
                                             width={300}
                                             height={300}
                                             className="aspect-square object-cover rounded-md"
                                         />
-                                        <p class={`text-center`}>{p.description}</p>
+                                        <p class={`text-center max-w-[60ch]`}>{p.description}</p>
                                         <CTA href={`/activités#${p.title}`} prefetch prefetchType="hover">
                                             <Button
                                                 ring="sm"
