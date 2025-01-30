@@ -10,34 +10,34 @@ import Video from "../HeroVideo.astro";
 ---
 
 <style>
-  .fade-out-bottom {
-    background: linear-gradient(to bottom, #0b0e1600 0%, #0b0e1600 80%, #0b0e16 100%);
-  }
+    .fade-out-bottom {
+        background: linear-gradient(to bottom, #0b0e1600 0%, #0b0e1600 80%, #0b0e16 100%);
+    }
 </style>
 
 <Header />
 <Section className="relative text-white vertical center">
-  <div class="absolute-align full z-30 fade-out-bottom pointer-events-none"></div>
-  <Video />
+    <div class="absolute-align full z-30 fade-out-bottom pointer-events-none"></div>
+    <Video />
 
-  <div class="z-50 vertical items-center h-screen justify-center text-center pointer-events-none">
-    <VerticalText position="right" className="bottom-48">Embarquez avec nous</VerticalText>
-    <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" cta>
-      <div class={`horizontal center gap-10`}>
-        <CTA href="/activités">
-          <Button
-            className="pointer-events-auto hover:bg-white/90"
-            variant="filled"
-            ring="sm"
-            size="lg"
-            data-is="hero-button"
-            textClass="-translate-x-2"
-            leftIcon>
-            <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
-            S'inscrire
-          </Button>
-        </CTA>
-      </div>
-    </Heading>
-  </div>
+    <div class="z-50 vertical items-center h-screen justify-center text-center pointer-events-none">
+        <VerticalText position="right" className="bottom-48">Embarquez avec nous</VerticalText>
+        <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" cta>
+            <div class={`horizontal center gap-10`}>
+                <CTA href="/activités">
+                    <Button
+                        className="pointer-events-auto hover:bg-white"
+                        variant="filled"
+                        ring="sm"
+                        size="lg"
+                        data-is="hero-button"
+                        textClass="-translate-x-2"
+                        leftIcon>
+                        <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
+                        S'inscrire
+                    </Button>
+                </CTA>
+            </div>
+        </Heading>
+    </div>
 </Section>
