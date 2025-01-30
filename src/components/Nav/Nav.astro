@@ -1,20 +1,20 @@
 ---
 import DesktopMenu from "./DesktopMenu.astro";
-import MobileMenu from "./MobileMenu.tsx";
-import type { WebsiteLink } from "./types.ts";
+import MobileMenu from "./MobileMenu";
+import type { WebsiteLink } from "./types";
 
 const isActivePath = (path: string) => Astro.url.pathname === path;
 
 const websiteLinks: WebsiteLink[] = [
-  { name: "Accueil", href: "/", isActive: isActivePath("/") },
-  { name: "Nous", href: "/nous", isActive: isActivePath("/nous") },
-  { name: "FAQs", href: "/FAQ", isActive: isActivePath("/FAQ") },
-  { name: "Contact", href: "/contact", isActive: isActivePath("/contact") },
-  { name: "Activités", href: "/activités", isActive: isActivePath("/activités") },
+    { name: "Accueil", href: "/", isActive: isActivePath("/") },
+    { name: "Nous", href: "/nous", isActive: isActivePath("/nous") },
+    { name: "FAQs", href: "/FAQ", isActive: isActivePath("/FAQ") },
+    { name: "Contact", href: "/contact", isActive: isActivePath("/contact") },
+    { name: "Activités", href: "/activités", isActive: isActivePath("/activités") },
 ];
 ---
 
 <nav class="text-white font-semibold">
-  <MobileMenu client:only="react" websiteLinks={websiteLinks} />
-  <DesktopMenu websiteLinks={websiteLinks} />
+    <MobileMenu client:only="react" websiteLinks={websiteLinks} />
+    <DesktopMenu websiteLinks={websiteLinks} />
 </nav>

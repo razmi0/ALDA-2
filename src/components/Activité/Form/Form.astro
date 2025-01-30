@@ -3,145 +3,67 @@ import { Send, ThumbsUp, X } from "lucide-react";
 import Button from "@/components/shared/Button.astro";
 
 interface Props {
-  key: string | number;
-  id: string | number;
-  className?: string;
+    key: string | number;
+    id: string | number;
+    className?: string;
 }
 
 const { id, key, className } = Astro.props;
 ---
 
-<script>
-  import { credibilyScore } from "@/lib/utils";
-
-  type FormDataActivité = {
-    date: string;
-    email: string;
-    hp: string;
-    product_id: string;
-    quantity_person: string;
-    tel: string;
-    textarea: string;
-  };
-
-  document.addEventListener("astro:page-load", () => {
-    const forms = Array.from(document.querySelectorAll("form[data-form]")) as HTMLFormElement[];
-    const infos = Array.from(document.querySelectorAll("[data-info][data-variant][data-type]")) as HTMLElement[];
-
-    const infoMap = new Map<string, HTMLElement[]>();
-    for (const info of infos) {
-      const key = info.dataset.info?.split("#")[1] as string;
-      if (infoMap.has(key)) {
-        const currentElement = infoMap.get(key) as HTMLElement[];
-        infoMap.set(key, [...currentElement, info]);
-        continue;
-      }
-      infoMap.set(key, [info]);
-    }
-
-    const handleSubmit = (e: SubmitEvent) => {
-      e.preventDefault();
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries()) as FormDataActivité;
-      if (data.hp) {
-        window.location.assign("/honey");
-        return;
-      }
-      //-- Add score to data
-      const treatedData = { ...data, score: credibilyScore(data) } as FormDataActivité & { score: string };
-      console.log(treatedData);
-
-      fakeLoading(form);
-    };
-
-    const timeline = (tasks: { cb: () => void; delay: number }[]) =>
-      tasks.reduce(async (promise, task) => {
-        return promise.then(
-          () =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                task.cb();
-                resolve();
-              }, task.delay);
-            })
-        );
-      }, Promise.resolve());
-
-    const fakeLoading = (form: HTMLFormElement) => {
-      const submitButton = form.querySelector("button[type=submit]") as HTMLButtonElement;
-
-      const task1 = () => {
-        submitButton.dataset.loading = "loading";
-        submitButton.disabled = true;
-      };
-      const task2 = () => (submitButton.dataset.loading = "success");
-      const task3 = () => {
-        submitButton.dataset.loading = "idle";
-        submitButton.disabled = false;
-      };
-
-      const tasks = [
-        { cb: task1, delay: 0 },
-        { cb: task2, delay: 500 },
-        { cb: task3, delay: 5000 },
-      ];
-
-      timeline(tasks);
-    };
-
-    forms.forEach((form) => {
-      form.addEventListener("submit", handleSubmit);
-    });
-  });
-</script>
-
 <style>
-  .hp {
-    @apply hidden;
-  }
-
-  [data-loading="success"] ~ div {
-    @apply flex;
-    animation: fadeIn 0.3s ease-in forwards;
-  }
-
-  [data-loading="success"] {
-    @apply ring-green-500;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
+    .hp {
+        @apply hidden;
     }
-    to {
-      transform: translateY(0);
-      opacity: 1;
+
+    [data-loading="success"] ~ div {
+        @apply flex;
+        animation: fadeIn 0.3s ease-in forwards;
     }
-  }
+
+    [data-loading="success"] {
+        @apply ring-green-500;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
 </style>
 
 <form class={`h-full ${className}`} data-form={`form#${key}`} class="relative">
-  <input type="hidden" name="product_id" value={id} />
-  <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
-  <section class="vertical items-start justify-center gap-14 p-20">
-    <slot />
-    <div class="horizontal gap-5 center w-full">
-      <div class={`relative vertical center`}>
-        <Button data-loading="idle" data-for={"form"} type="submit" size="md" variant="filled" rightIcon ring="sm">
-          Valider
-          <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
-        </Button>
-        <div
-          class={`absolute -bottom-6 left-0 hidden text-sm whitespace-nowrap center gap-2 font-medium transition-transform translate-y-5`}>
-          <ThumbsUp className="stroke-1 h-5 w-5" />
-          Votre message a bien été envoyé
+    <input type="hidden" name="product_id" value={id} />
+    <label class="hp" for="hp">Hi honey !<input type="text" id="hp" name="hp" /></label>
+    <section class="vertical items-start justify-center gap-14 p-20">
+        <slot />
+        <div class="horizontal gap-5 center w-full">
+            <div class={`relative vertical center`}>
+                <Button
+                    data-loading="idle"
+                    data-for={"form"}
+                    type="submit"
+                    size="md"
+                    variant="filled"
+                    rightIcon
+                    ring="sm">
+                    Valider
+                    <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
+                </Button>
+                <div
+                    class={`absolute -bottom-6 left-0 hidden text-sm whitespace-nowrap center gap-2 font-medium transition-transform translate-y-5`}>
+                    <ThumbsUp className="stroke-1 h-5 w-5" />
+                    Votre message a bien été envoyé
+                </div>
+            </div>
+            <Button data-action={`close#${key}`} type={"button"} size="md" variant="danger" rightIcon>
+                Fermer
+                <X className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
+            </Button>
         </div>
-      </div>
-      <Button data-action={`close#${key}`} type={"button"} size="md" variant="danger" rightIcon>
-        Fermer
-        <X className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
-      </Button>
-    </div>
-  </section>
+    </section>
 </form>

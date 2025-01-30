@@ -1,34 +1,34 @@
 ---
 import Loader from "@/components/Loader.astro";
-import TopPageButton from "@/components/TopPageButton.tsx";
+import TopPageButton from "@/components/TopPageButton";
 import "@/styles/globals.css";
 import { ClientRouter } from "astro:transitions";
 
 interface Props {
-  title: string;
-  className?: string;
+    title: string;
+    className?: string;
 }
 
 const { title, className } = Astro.props;
 ---
 
 <html lang="en" transition:animate="slide" transition:persist class={className}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <ClientRouter />
-    <title>{title.charAt(0).toUpperCase() + title.slice(1)} - ALAD</title>
-  </head>
-  <body class={`relative`}>
-    <Loader />
-    <slot name="header" />
-    <main>
-      <slot />
-    </main>
-    <slot name="footer" />
-    <TopPageButton client:idle />
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Astro description" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <ClientRouter />
+        <title>{title.charAt(0).toUpperCase() + title.slice(1)} - ALAD</title>
+    </head>
+    <body class={`relative`}>
+        <Loader />
+        <slot name="header" />
+        <main>
+            <slot />
+        </main>
+        <slot name="footer" />
+        <TopPageButton client:idle />
+    </body>
 </html>
