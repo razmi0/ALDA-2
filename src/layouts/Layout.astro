@@ -2,7 +2,7 @@
 import Loader from "@/components/Loader.astro";
 import TopPageButton from "@/components/TopPageButton";
 import "@/styles/globals.css";
-// import { ClientRouter } from "astro:transitions";
+import { AstroFont } from "astro-font";
 
 interface Props {
     title: string;
@@ -19,7 +19,66 @@ const { title, className } = Astro.props;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
-        <!-- <ClientRouter /> -->
+        <AstroFont
+            config={[
+                {
+                    name: "Grandstander",
+                    src: [
+                        {
+                            style: "normal",
+                            weight: "600",
+                            path: "./public/fonts/Grandstander.ttf",
+                        },
+                    ],
+                    preload: true,
+                    display: "swap",
+                    selector: "h1, h2, .grandstander",
+                    fallback: "sans-serif",
+                },
+                {
+                    name: "IMFellDWPica",
+                    src: [
+                        {
+                            weight: "normal",
+                            style: "normal",
+                            path: "./public/fonts/IMFellDWPica.ttf",
+                        },
+                    ],
+                    preload: true,
+                    display: "swap",
+                    selector: "h3, h4, h5, h6, .im-fell-dw-pica-regular",
+                    fallback: "sans-serif",
+                },
+                {
+                    name: "QuattrocentoSans-Regular",
+                    src: [
+                        {
+                            weight: "normal",
+                            style: "normal",
+                            path: "./public/fonts/QuattrocentoSans-Regular.ttf",
+                        },
+                    ],
+                    preload: true,
+                    display: "swap",
+                    selector: "body, .quattrocento-sans-regular",
+                    fallback: "sans-serif",
+                },
+                {
+                    name: "QuattrocentoSans-Bold",
+                    src: [
+                        {
+                            weight: "bold",
+                            style: "normal",
+                            path: "./public/fonts/QuattrocentoSans-Bold.ttf",
+                        },
+                    ],
+                    preload: true,
+                    display: "swap",
+                    selector: ".quattrocento-sans-bold",
+                    fallback: "sans-serif",
+                },
+            ]}
+        />
         <title>{title.charAt(0).toUpperCase() + title.slice(1)} - ALAD</title>
     </head>
     <body class={`relative`}>
