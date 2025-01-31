@@ -1,52 +1,11 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=IM+Fell+DW+Pica:ital@0;1&family=Quattrocento+Sans:ital,wght@0,100..900;1,100..900&display=swap"); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-    font-family: "Grandstander";
-    src: url("/fonts/Grandstander.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "IMFellDWPica";
-    src: url("/fonts/IMFellDWPica.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "QuattrocentoSans-Regular";
-    src: url("/fonts/QuattrocentoSans-Regular.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "QuattrocentoSans-Bold";
-    src: url("/fonts/QuattrocentoSans-Bold.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
 @layer base {
     * {
         scrollbar-color: #f0f3f2;
         scrollbar-width: thin;
-    }
-
-    :root {
-        font-family: "QuattrocentoSans-Regular", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        line-height: 1.6;
-        font-size: 1rem;
     }
 
     main {
@@ -69,23 +28,6 @@
         text-wrap: balance;
     }
 
-    h1,
-    h2 {
-        font-family: "Grandstander", cursive;
-        font-optical-sizing: auto;
-        font-weight: 600;
-        font-style: normal;
-    }
-
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: "IMFellDWPica", serif;
-        font-weight: 400;
-        font-style: normal;
-    }
-
     p,
     li {
         font-size: 1rem;
@@ -97,38 +39,5 @@
 
     p.value {
         font-weight: 400;
-    }
-}
-
-@layer utilities {
-    .grandstander {
-        font-family: "Grandstander", cursive;
-        font-optical-sizing: auto;
-        font-weight: 600;
-        font-style: normal;
-    }
-
-    .im-fell-dw-pica-regular {
-        font-family: "IMFellDWPica", serif;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    .quattrocento-sans-regular {
-        font-family: "QuattrocentoSans-Regular", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    .quattrocento-sans-semibold {
-        font-family: "QuattrocentoSans-Regular", sans-serif;
-        font-weight: 600;
-        font-style: normal;
-    }
-
-    .quattrocento-sans-bold {
-        font-family: "QuattrocentoSans-Bold", sans-serif;
-        font-weight: 700;
-        font-style: normal;
     }
 }
