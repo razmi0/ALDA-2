@@ -4,34 +4,39 @@ import { Image } from "astro:assets";
 import BackgroundForest from "./assets/forest-bg.webp";
 import Forest from "./assets/forest.webp";
 import ForestWhite from "./assets/forest_white.webp";
-
+import { cn } from "@/lib/utils";
 
 interface Props {
-  className? : string;
-  type?: "dark" | "white";
+    className?: string;
+    type?: "dark" | "white";
+    imgOneClasses?: string;
+    imgTwoClasses?: string;
 }
 ---
 
 <Section
-  size="quarter"
-  extension="sm"
-  className={`relative overflow-hidden z-10 flex justify-start items-start ${Astro.props.className || ""}`}> 
-  <!-- bg-map-dark -->
-  <Image
-    src={Astro.props.type === "white" ? ForestWhite : Forest}
-    role={"presentation"}
-    alt={""}
-    class={"absolute bottom-0 object-cover min-w-[632px] w-full z-[1] [transform:_scale(-1,1)_translateY(75px)] xl:[transform:_scale(-1,1)_translateY(125px)]"}
-    widths={[240, 320, 478, 648, 720, 1024, 1574]}
-    sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}
-  />
-  <Image
-    src={BackgroundForest}
-    role={"presentation"}
-    alt={""}
-    style={"transform: translateY(-20px);"}
-    class={"absolute bottom-0 object-cover min-w-[632px] w-full z-0"}
-    widths={[240, 320, 478, 648, 720, 1024, 1574]}
-    sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}
-  />
+    size="quarter"
+    extension="sm"
+    className={`relative overflow-hidden z-10 flex justify-start items-start ${Astro.props.className || ""}`}>
+    <!-- bg-map-dark -->
+    <Image
+        src={Astro.props.type === "white" ? ForestWhite : Forest}
+        role={"presentation"}
+        alt={""}
+        class={cn(
+            "absolute bottom-0 object-cover min-w-[632px] w-full z-[1] [transform:_scale(-1,1)_translateY(75px)] xl:[transform:_scale(-1,1)_translateY(125px)]",
+            Astro.props.imgOneClasses
+        )}
+        widths={[240, 320, 478, 648, 720, 1024, 1574]}
+        sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}
+    />
+    <Image
+        src={BackgroundForest}
+        role={"presentation"}
+        alt={""}
+        style={"transform: translateY(-20px);"}
+        class={cn("absolute bottom-0 object-cover min-w-[632px] w-full z-0", Astro.props.imgTwoClasses)}
+        widths={[240, 320, 478, 648, 720, 1024, 1574]}
+        sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}
+    />
 </Section>

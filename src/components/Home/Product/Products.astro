@@ -9,7 +9,7 @@ import Simple from "./Simple.astro";
 import TopSection from "./TopSection.astro";
 import type { Product, ProductData, ProductImage } from "./types";
 import { Image } from "astro:assets";
-import Pattern1 from "@/assets/pattern_1.webp";
+// import Pattern1 from "@/assets/pattern_1.webp";
 import { capitalize } from "@/lib/utils";
 import CTA from "@/components/shared/CTA.astro";
 import Button from "@/components/shared/Button.astro";
@@ -59,12 +59,6 @@ const images: ProductImage[] = [
 ---
 
 <TopSection title="Nos quatres pôles d'activités">
-    <div class={`absolute inset-0 w-full -z-10`}>
-        <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
-        <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
-        <Image src={Pattern1} alt="pattern" class="object-cover opacity-25" />
-    </div>
-
     {
         withSubproducts.map((p) => {
             return (
@@ -91,13 +85,13 @@ const images: ProductImage[] = [
                                             class={`aspect-square object-cover rounded-md`}
                                         />
                                         <p class={`text-center max-w-[60ch]`}>{p.description}</p>
-                                        <CTA href={`/activites#${p.title}`} prefetch prefetchType="hover">
+                                        <CTA href={`/contact`} prefetch prefetchType="hover">
                                             <Button
                                                 ring="sm"
                                                 size="lg"
                                                 variant="outline"
                                                 dark
-                                                className="w-fit font-bold whitespace-nowrap">
+                                                className="w-fit font-bold whitespace-nowrap bg-white">
                                                 En savoir plus
                                             </Button>
                                         </CTA>

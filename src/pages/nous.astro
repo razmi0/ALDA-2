@@ -8,30 +8,12 @@ import RandomImage from "@/components/shared/RandomImage.astro";
 import Section from "@/layouts/Section.astro";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import Pattern2 from "@/assets/pattern_2.webp";
 import VerticalText from "@/components/shared/VerticalText.astro";
 import Earth from "@/components/Home/Earth/Earth.astro";
 import Sky from "@/components/Home/Sky/Sky.astro";
-
-// const gridImgTemplate = [
-//   [1, 2],
-//   [1, 2, 3],
-// ];
-
-// const values = [
-//     {
-//         title: "Partage",
-//         content: "Partager des expériences, des connaissances et des émotions",
-//     },
-//     {
-//         title: "Respect",
-//         content: "Respecter la vie : l'environnement et Autrui, et en prendre soin",
-//     },
-//     {
-//         title: "Exploration",
-//         content: "Déconnecter avec le quotidien pour se reconnecter avec l'essentiel",
-//     },
-// ];
+import Vijay from "@/assets/vijay.jpeg";
+import Lou from "@/assets/lou.jpeg";
+import ForestMask from "@/components/Home/Forest/ForestMask.astro";
 
 const missions = [
     {
@@ -75,6 +57,7 @@ const ourWords = [
         content:
             "Après avoir obtenu un master recherche en cognition sociale, puis mon titre de psychologue en 2018, j'ai ouvert et tenu un point d'écoute. J'ai ensuite fait une pause en réalisant un CAP métallerie chez les compagnons du devoir, où j'ai découvert le plaisir des métiers manuels. En lien avec le bénévolat affectué depuis sept ans, j'ai réalisé une formation d'éducatrice spécialisée qui m'a permis de travailler en centre d'hébergement et de réinsertion sociale, en école en tant que formatrice à La Rouatière où j'encadre de futurs éducateurs. Lorsque Vijay m'a fait découvrir l'activité de grimpe d'arbre, j'ai compris qu'elle me permettrait de poursuivre ma passion et d'apporter aux personnes que j'accompagnais ses bienfaits, tout en respectant les milieux forestiers. J'ai  rejoint le projet afin de permettre aux personnes en difficulté de sortir d'un parcours institutionnel pour pouvoir travailler sur soi dans un cadre naturel sécurisant et bienveillant.",
         badges: ["Psychologue", "Resilience", "Chemin de traverse", "Pirate"],
+        image: Lou,
     },
     {
         title: "Vijay",
@@ -82,6 +65,7 @@ const ourWords = [
         content:
             "Je me suis toujours épanoui dans la nature, et les arbres, en particulier, m'émerveille depuis longtemps. Après avoir vécu une expérience collective, d'un mois et demi, avec 81 personnes sur le navire de l'Hermione, comme gabier volontaire, j'ai exercé en tant que cordiste pendant 6 ans, l'envie de travailler avec du vivant est apparu. J'ai donc réaliser la formation d'éducateur grimpe d'arbre. Au cours de celle-ci,un vrai amour pour les arbres s'est développé,et c'est durant mes stages que je me suis vraiment redécouvert. Tout ces moments me poussent à proposer de nouvelles expériences,à partager avec les autres,et aussi à transmettre et échanger.",
         badges: ["Cordiste", "Marin", "Fregate", "Pirate"],
+        image: Vijay,
     },
 ];
 
@@ -99,12 +83,7 @@ const introduction = {
     }
 </style>
 
-<Layout title="nous">
-    <div class={`absolute inset-0 opacity-15 overflow-hidden -z-10`}>
-    <Image src={Pattern2} alt="pattern" class="object-cover" />
-    <Image src={Pattern2} alt="pattern" class="object-cover" />
-    <Image src={Pattern2} alt="pattern" class="object-cover" />
-</div>
+<Layout title="nous" className="bg-pattern">
     <Header slot="header" />
     <Section size="half" extension="md" className="vertical items-center justify-center mt-28 sm:mt-14 px-3 sm:px-15">
         <div class="vertical items-start w-fit gap-5" transition:name="heading">
@@ -121,25 +100,13 @@ const introduction = {
     </Section>
     <div class="relative">
         <VerticalText position="left" className="top-1/2">Découvrez la grimpe d'arbre</VerticalText>
+        <ForestMask
+            imgOneClasses="[transform:_scale(-1,1)_translateY(40px)] xl:[transform:_scale(-1,1)_translateY(100px)]"
+        />
         <Earth />
         <Sky />
-      </div>
+    </div>
     <Section className={`container space-y-32 mt-32 sm:mt-0`}>
-        <!-- <section class={`space-y-10`}>
-            <h3 class={`text-4xl grandstander text-center`}>Nos valeurs</h3>
-            <div class={`horizontal full justify-evenly items-start [&_h4]:text-3xl gap-3 gap-y-10 flex-wrap`}>
-                {
-                    values.map((value) => (
-                            <article
-                                class={`relative bg-slate-100 rounded-md vertical justify-between shadow-md gap-3 px-6 py-3`}>
-                                    <h4>{value.title}</h4>
-                                    <div class={`h-[1px] bg-black/80 max-w-[15ch]`} />
-                                    <p class={`max-w-[30ch]`}>{value.content}</p>
-                            </article>
-                    ))
-                }
-            </div>
-        </section> -->
         <section class={`gap-10 vertical center mt-32`}>
             <h3 class={`text-4xl grandstander text-center`}>Notre mission</h3>
             <p class={`max-w-[50ch] text-[1rem] text-center`}>
@@ -170,11 +137,18 @@ const introduction = {
                 <p class={`text-center`}>On est des pirates libre et joyeux</p>
             </article>
         </section>
-        <div class={`container px-0 sm:px-5 vertical center md:horizontal gap-28`}>
+        <div
+            class={`container px-0 sm:px-5 vertical items-center md:items-start md:justify-center md:horizontal gap-28`}>
             {
                 ourWords.map((word) => (
                     <article class={`space-y-5`}>
-                        <RandomImage seed={400} className={`aspect-square max-h-[350px] max-w-[350px] full mb-5`} />
+                        <Image
+                            src={word.image}
+                            alt={"Photo de " + word.title}
+                            width={350}
+                            height={350}
+                            class={`aspect-square max-h-[350px] max-w-[350px] full mb-5 rounded-md`}
+                        />
                         <div class={`vertical gap-3`}>
                             <h4 class={`text-3xl`}>{word.title}</h4>
                             <div class={`horizontal gap-2 max-w-[75%] flex-wrap`}>

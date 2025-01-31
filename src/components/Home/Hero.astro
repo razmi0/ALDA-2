@@ -19,12 +19,11 @@ import Video from "../HeroVideo.astro";
 <Section className="relative text-white vertical center">
     <div class="absolute-align full z-30 fade-out-bottom pointer-events-none"></div>
     <Video />
-
     <div class="z-50 vertical items-center h-screen justify-center text-center pointer-events-none">
         <VerticalText position="right" className="bottom-48">Embarquez avec nous</VerticalText>
         <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" cta>
             <div class={`horizontal center gap-10`}>
-                <CTA href="/activites">
+                <CTA href="/contact">
                     <Button
                         className="pointer-events-auto hover:bg-white"
                         variant="filled"
@@ -34,7 +33,7 @@ import Video from "../HeroVideo.astro";
                         textClass="-translate-x-2"
                         leftIcon>
                         <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
-                        S'inscrire
+                        Nous contacter
                     </Button>
                 </CTA>
             </div>

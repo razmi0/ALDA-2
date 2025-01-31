@@ -8,7 +8,6 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/layouts/Section.astro";
 import { Send, ThumbsUp } from "lucide-react";
 import { Image } from "astro:assets";
-import Pattern1 from "@/assets/pattern_1.webp";
 
 const key = "contact";
 
@@ -37,10 +36,7 @@ const adresse = {
     });
 </script>
 
-<Layout title="contact">
-    <div class={`absolute inset-0 opacity-20 overflow-hidden -z-10`}>
-        <Image src={Pattern1} alt="pattern" class="object-cover" />
-    </div>
+<Layout title="contact" className="bg-pattern">
     <Header slot="header" />
     <Section
         data-action={`section-message#${key}`}

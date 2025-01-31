@@ -3,27 +3,43 @@ import Section from "@/layouts/Section.astro";
 import CTA from "../shared/CTA.astro";
 ---
 
-<section class="h-[75vh] flex flex-col gap-y-6 py-12 center [&_p]:text-left [&_p]:text-balance [&_div]:gap-y-3">
-    <h2 class={`text-2xl text-center`}>Pour aller plus loin</h2>
-    <div class="grid gap-y-4 px-10 max-w-[680px]">
+<section class="h-[75vh] flex flex-col gap-y-6 py-3 sm:py-12 center [&_p]:text-balance [&_div]:gap-y-3">
+    <h2 class={`text-2xl text-center mb-5`}>Pour aller plus loin</h2>
+    <div class="grid px-10 max-w-[680px]" style="row-gap: 2rem;">
         <!--  -->
         <div class="sm:flex sm:gap-y-3 justify-center items-center">
-            <p class={`max-w-[35ch] sm:max-w-[50ch]`}>
+            <p class={`max-w-[35ch] sm:max-w-[50ch] text-center sm:text-left`}>
                 Vous souhaitez en savoir plus sur notre démarche et nos valeurs ? C'est par ici !
             </p>
-            <CTA href="/nous" prefetch prefetchType="hover" className="font-bold grow justify-end underline">
+            <CTA
+                href="/nous"
+                prefetch
+                prefetchType="hover"
+                className="font-bold grow justify-center sm:justify-end underline whitespace-nowrap w-full sm:w-auto">
                 Nous connaitre
             </CTA>
         </div>
         <div class="sm:flex sm:gap-y-3 justify-center items-center">
-            <p class={`max-w-[35ch] sm:max-w-[50ch]`}>
+            <p class={`max-w-[35ch] sm:max-w-[50ch] text-center sm:text-left`}>
                 Vous avez une question ? Nous avons peut-être la réponse dans notre FAQ.
             </p>
-            <CTA href="/FAQ" prefetch prefetchType="hover" className="font-bold grow justify-end underline"> FAQ </CTA>
+            <CTA
+                href="/FAQ"
+                prefetch
+                prefetchType="hover"
+                className="font-bold grow justify-center sm:justify-end underline whitespace-nowrap w-full sm:w-auto">
+                FAQ
+            </CTA>
         </div>
         <div class="sm:flex sm:gap-y-3 justify-center items-center">
-            <p class={`max-w-[35ch] sm:max-w-[50ch] grow`}>Vous souhaitez nous contacter ? C'est par ici !</p>
-            <CTA href="/contact" prefetch prefetchType="hover" className="font-bold grow justify-end underline">
+            <p class={`max-w-[35ch] sm:max-w-[50ch] grow  text-center sm:text-left`}>
+                Vous souhaitez nous contacter ? C'est par ici !
+            </p>
+            <CTA
+                href="/contact"
+                prefetch
+                prefetchType="hover"
+                className="font-bold grow justify-center sm:justify-end underline whitespace-nowrap w-full sm:w-auto">
                 Contact
             </CTA>
         </div>

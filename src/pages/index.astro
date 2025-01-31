@@ -3,22 +3,18 @@ import Footer from "@/components/Footer.astro";
 import CatchSection from "@/components/Home/CatchSection.astro";
 import FooterSectionSimple from "@/components/Home/FooterSectionSimple.astro";
 import ForestMask from "@/components/Home/Forest/ForestMask.astro";
-// import Earth from "@/components/Home/Earth/Earth.astro";
 import Hero from "@/components/Home/Hero.astro";
 import Products from "@/components/Home/Product/Products.astro";
-import Button from "@/components/shared/Button.astro";
-import CTA from "@/components/shared/CTA.astro";
-// import Sky from "@/components/Home/Sky/Sky.astro";
-// import VerticalText from "@/components/shared/VerticalText.astro";
 import Layout from "@/layouts/Layout.astro";
-import Section from "@/layouts/Section.astro";
 ---
 
 <Layout title="accueil" className="max-w-screen">
     <Hero slot="header" />
     <CatchSection />
     <ForestMask className="bg-map-dark" type="white" />
-    <Products />
-    <FooterSectionSimple />
+    <div class={`bg-pattern`}>
+        <Products />
+        <FooterSectionSimple />
+    </div>
     <Footer slot="footer" />
 </Layout>
