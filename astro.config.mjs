@@ -22,7 +22,7 @@ const maintenancyRedirections = {
 
 export default defineConfig({
     site: "https://alabordarbre.fr",
-    // redirects: OFFLINE_PROD ? maintenancyRedirections : {},
+    redirects: OFFLINE_PROD ? maintenancyRedirections : {},
     integrations: [
         react(),
         tailwind({
