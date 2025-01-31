@@ -1,7 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=IM+Fell+DW+Pica:ital@0;1&family=Quattrocento+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=IM+Fell+DW+Pica:ital@0;1&family=Quattrocento+Sans:ital,wght@0,100..900;1,100..900&display=swap"); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Grandstander";
+    src: url("/fonts/Grandstander.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IMFellDWPica";
+    src: url("/fonts/IMFellDWPica.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "QuattrocentoSans-Regular";
+    src: url("/fonts/QuattrocentoSans-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "QuattrocentoSans-Bold";
+    src: url("/fonts/QuattrocentoSans-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 @layer base {
     * {
@@ -10,7 +42,7 @@
     }
 
     :root {
-        font-family: "Quattrocento Sans", sans-serif;
+        font-family: "QuattrocentoSans-Regular", sans-serif;
         font-weight: 400;
         font-style: normal;
         line-height: 1.6;
@@ -49,7 +81,7 @@
     h4,
     h5,
     h6 {
-        font-family: "IM Fell DW Pica", serif;
+        font-family: "IMFellDWPica", serif;
         font-weight: 400;
         font-style: normal;
     }
@@ -77,44 +109,26 @@
     }
 
     .im-fell-dw-pica-regular {
-        font-family: "IM Fell DW Pica", serif;
+        font-family: "IMFellDWPica", serif;
         font-weight: 400;
         font-style: normal;
     }
 
-    .im-fell-dw-pica-regular-italic {
-        font-family: "IM Fell DW Pica", serif;
-        font-weight: 400;
-        font-style: italic;
-    }
-
     .quattrocento-sans-regular {
-        font-family: "Quattrocento Sans", sans-serif;
+        font-family: "QuattrocentoSans-Regular", sans-serif;
         font-weight: 400;
         font-style: normal;
     }
 
     .quattrocento-sans-semibold {
-        font-family: "Quattrocento Sans", sans-serif;
+        font-family: "QuattrocentoSans-Regular", sans-serif;
         font-weight: 600;
         font-style: normal;
     }
 
     .quattrocento-sans-bold {
-        font-family: "Quattrocento Sans", sans-serif;
+        font-family: "QuattrocentoSans-Bold", sans-serif;
         font-weight: 700;
         font-style: normal;
-    }
-
-    .quattrocento-sans-regular-italic {
-        font-family: "Quattrocento Sans", sans-serif;
-        font-weight: 400;
-        font-style: italic;
-    }
-
-    .quattrocento-sans-bold-italic {
-        font-family: "Quattrocento Sans", sans-serif;
-        font-weight: 700;
-        font-style: italic;
     }
 }
