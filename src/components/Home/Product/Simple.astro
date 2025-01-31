@@ -57,14 +57,15 @@ const { id, pole, description, tags, price, locations, program, audience } = pro
             {
                 price && (
                     <li>
-                        <strong>Prix</strong> : {typeof price === "string" ? capitalize(price) : price}
+                        <strong class={`quattrocento-sans-bold`}>Prix</strong> :{" "}
+                        {typeof price === "string" ? capitalize(price) : price}
                     </li>
                 )
             }
             {
                 locations && (
                     <li>
-                        <strong>Lieux</strong> :{" "}
+                        <strong class={`quattrocento-sans-bold`}>Lieux</strong> :{" "}
                         {Array.isArray(locations) ? locations.map(capitalize).join(", ") : capitalize(locations)}
                     </li>
                 )
@@ -72,7 +73,7 @@ const { id, pole, description, tags, price, locations, program, audience } = pro
             {
                 program && (
                     <li>
-                        <strong>Programme</strong> :{" "}
+                        <strong class={`quattrocento-sans-bold`}>Programme</strong> :{" "}
                         {Array.isArray(program) ? program.map(capitalize).join(", ") : capitalize(program)}
                     </li>
                 )
@@ -80,7 +81,7 @@ const { id, pole, description, tags, price, locations, program, audience } = pro
             {
                 audience && (
                     <li>
-                        <strong>Publique</strong> : {capitalize(audience)}
+                        <strong class={`quattrocento-sans-bold`}>Publique</strong> : {capitalize(audience)}
                     </li>
                 )
             }
