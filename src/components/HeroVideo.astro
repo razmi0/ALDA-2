@@ -6,56 +6,55 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover point
 ---
 
 <script>
-    document.addEventListener("astro:page-load", () => {
-        interface NavigatorType extends Navigator {
-            connection: {
-                effectiveType: string;
-                rtt: number;
-                downlink: number;
-            };
-        }
-
-        type ConnectionType = "4" | "3" | "2" | "1" | "0";
-        type SrcType = Exclude<ConnectionType, "1" | "0">;
-        type SrcValue = "hero/1080p.mp4" | "hero/720p.mp4" | "hero/480p.mp4";
-
-        const srcs = {
-            4: "hero/1080p.mp4",
-            3: "hero/720p.mp4",
-            2: "hero/480p.mp4",
-        } as Record<SrcType, SrcValue>;
-
-        let elementsOk = true;
-        const elements = {
-            video: document.querySelector("video[data-connection]") as HTMLVideoElement,
-            img: document.querySelector("img[data-connection]") as HTMLImageElement,
+    interface NavigatorType extends Navigator {
+        connection: {
+            effectiveType: string;
+            rtt: number;
+            downlink: number;
         };
-        if (!elements.video || !elements.img) elementsOk = false;
+    }
 
-        const getConnection = (): ConnectionType => {
-            if (!("connection" in navigator)) return "3";
-            const { effectiveType, rtt, downlink } = (navigator as NavigatorType).connection;
-            return effectiveType === "4g" && rtt < 500 && downlink > 5
-                ? "4"
-                : effectiveType === "4g" && rtt < 1000 && downlink > 3
-                  ? "3"
-                  : effectiveType === "3g" && rtt < 2000 && downlink > 2
-                    ? "2"
-                    : effectiveType === "2g" && rtt < 4000 && downlink > 0.5
-                      ? "1"
-                      : "0";
-        };
+    type ConnectionType = "4" | "3" | "2" | "1" | "0";
+    type SrcType = Exclude<ConnectionType, "1" | "0">;
+    type SrcValue = "hero/1080p.mp4" | "hero/720p.mp4" | "hero/480p.mp4";
 
-        if (elementsOk) {
-            const connection = getConnection();
-            elements.video.dataset.connection = connection;
-            elements.img.dataset.connection = connection;
+    const srcs = {
+        4: "hero/1080p.mp4",
+        3: "hero/720p.mp4",
+        2: "hero/480p.mp4",
+    } as Record<SrcType, SrcValue>;
 
-            if (parseInt(connection, 10) > 2) {
-                elements.video.innerHTML = `<source src="${srcs[connection as SrcType]}" type="video/mp4" />`;
-            }
+    let elementsOk = true;
+    const elements = {
+        video: document.querySelector("video[data-connection]") as HTMLVideoElement,
+        img: document.querySelector("img[data-connection]") as HTMLImageElement,
+    };
+    if (!elements.video || !elements.img) elementsOk = false;
+
+    const getConnection = (): ConnectionType => {
+        if (!("connection" in navigator)) return "3";
+        const { effectiveType, rtt, downlink } = (navigator as NavigatorType).connection;
+        console.log(effectiveType, rtt, downlink);
+        return effectiveType === "4g" && rtt < 500 && downlink > 5
+            ? "4"
+            : effectiveType === "4g" && rtt < 1000 && downlink > 3
+              ? "3"
+              : effectiveType === "3g" && rtt < 2000 && downlink > 2
+                ? "2"
+                : effectiveType === "2g" && rtt < 4000 && downlink > 0.5
+                  ? "1"
+                  : "0";
+    };
+
+    if (elementsOk) {
+        const connection = getConnection();
+        elements.video.dataset.connection = connection;
+        elements.img.dataset.connection = connection;
+
+        if (parseInt(connection, 10) > 2) {
+            elements.video.innerHTML = `<source src="${srcs[connection as SrcType]}" type="video/mp4" />`;
         }
-    });
+    }
 </script>
 
 <style>

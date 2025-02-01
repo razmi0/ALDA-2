@@ -4,14 +4,13 @@ import Sun from "@/components/Icons/Sun.astro";
 ---
 
 <script>
-  import { getFromLS, setToLS } from "@/lib/utils";
+    import { getFromLS, setToLS } from "@/lib/utils";
 
-  document.addEventListener("astro:page-load", () => {
     const htmlTag = document.documentElement;
     const button = document.querySelector("button[data-mode]") as HTMLButtonElement;
     const figure = button.firstElementChild as HTMLElement;
     if (!htmlTag || !button) {
-      console.warn(`html: ${htmlTag}, button: ${button}`);
+        console.warn(`html: ${htmlTag}, button: ${button}`);
     }
 
     const value = getFromLS("theme");
@@ -19,53 +18,52 @@ import Sun from "@/components/Icons/Sun.astro";
     if (value) htmlTag.classList.toggle(value);
 
     button.addEventListener("click", () => {
-      const currentTheme = htmlTag.classList.contains("dark") ? "dark" : "light";
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const currentTheme = htmlTag.classList.contains("dark") ? "dark" : "light";
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
 
-      figure.classList.remove(currentTheme);
-      figure.classList.add(newTheme);
+        figure.classList.remove(currentTheme);
+        figure.classList.add(newTheme);
 
-      htmlTag.classList.add(newTheme);
-      htmlTag.classList.remove(currentTheme);
+        htmlTag.classList.add(newTheme);
+        htmlTag.classList.remove(currentTheme);
 
-      setToLS("theme", newTheme);
+        setToLS("theme", newTheme);
     });
-  });
 </script>
 
 <style>
-  .light {
-    animation: snapLight 0.3s forwards;
-  }
-
-  .dark {
-    animation: snapDark 0.3s forwards;
-  }
-
-  @keyframes snapLight {
-    0% {
-      transform: translateY(0%);
+    .light {
+        animation: snapLight 0.3s forwards;
     }
 
-    100% {
-      transform: translateY(-50%);
-    }
-  }
-
-  @keyframes snapDark {
-    0% {
-      transform: translateY(-50%);
+    .dark {
+        animation: snapDark 0.3s forwards;
     }
 
-    100% {
-      transform: translateY(0%);
+    @keyframes snapLight {
+        0% {
+            transform: translateY(0%);
+        }
+
+        100% {
+            transform: translateY(-50%);
+        }
     }
-  }
+
+    @keyframes snapDark {
+        0% {
+            transform: translateY(-50%);
+        }
+
+        100% {
+            transform: translateY(0%);
+        }
+    }
 </style>
 
 <button data-mode class="overflow-hidden max-h-[24px] max-w-[24px] h-[24px] w-[24px]">
-  <figure class="transition-all text-black dark:text-darkMode-300">
-    <Moon className={"text-white"} />
-    <Sun />
-  </figure>
+    <figure class="transition-all text-black dark:text-darkMode-300">
+        <Moon className={"text-white"} />
+        <Sun />
+    </figure>
 </button>

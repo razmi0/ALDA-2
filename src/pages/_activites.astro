@@ -31,28 +31,27 @@ const options = rawOptions.options as OptionType[];
 const products = rawProducts.products as ProductType[];
 
 type StatsComponent = {
-  label: string;
-  type: "none" | "bar" | "badge";
-  Icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
-  productKey: keyof ProductType;
+    label: string;
+    type: "none" | "bar" | "badge";
+    Icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+    productKey: keyof ProductType;
 };
 const statsComponents: StatsComponent[] = [
-  // , Icon: Hourglass
-  // , Icon: Gauge
-  // , Icon: Backpack
-  // , Icon: MapPin
-  // , Icon: MapPin
-  { label: "duration", type: "none", productKey: "duration" },
-  { label: "dificulty", type: "bar", productKey: "stats" },
-  { label: "matériels", type: "badge", productKey: "materials" },
-  { label: "lieux", type: "badge", productKey: "locations" },
-  { label: "public", type: "none", productKey: "public" },
+    // , Icon: Hourglass
+    // , Icon: Gauge
+    // , Icon: Backpack
+    // , Icon: MapPin
+    // , Icon: MapPin
+    { label: "duration", type: "none", productKey: "duration" },
+    { label: "dificulty", type: "bar", productKey: "stats" },
+    { label: "matériels", type: "badge", productKey: "materials" },
+    { label: "lieux", type: "badge", productKey: "locations" },
+    { label: "public", type: "none", productKey: "public" },
 ];
 ---
 
 <script>
-  import { setupIntersectionObserver } from "@/lib/utils";
-  document.addEventListener("astro:page-load", () => {
+    import { setupIntersectionObserver } from "@/lib/utils";
     const getThem = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll(s) as unknown as T[]);
     const getHim = <T extends HTMLElement>(s: string, el: HTMLElement) => el.querySelector(s) as unknown as T;
 
@@ -60,26 +59,26 @@ const statsComponents: StatsComponent[] = [
      * Dialogs
      */
     getThem<HTMLDialogElement>("dialog").forEach((dialog) => {
-      const action = dialog.dataset.action as string;
-      const key = action.split("#")[1];
+        const action = dialog.dataset.action as string;
+        const key = action.split("#")[1];
 
-      const openBtn = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
-      const closeBtns = getThem<HTMLButtonElement>(`[data-action='close#${key}']`);
+        const openBtn = document.querySelector(`[data-action='open#${key}']`) as HTMLButtonElement;
+        const closeBtns = getThem<HTMLButtonElement>(`[data-action='close#${key}']`);
 
-      if (!openBtn || !closeBtns) console.error(`Missing DOM elements`);
+        if (!openBtn || !closeBtns) console.error(`Missing DOM elements`);
 
-      const close = () => {
-        dialog.close();
-        document.body.style.overflow = "auto";
-      };
+        const close = () => {
+            dialog.close();
+            document.body.style.overflow = "auto";
+        };
 
-      const open = () => {
-        dialog.showModal();
-        document.body.style.overflow = "hidden";
-      };
+        const open = () => {
+            dialog.showModal();
+            document.body.style.overflow = "hidden";
+        };
 
-      openBtn.addEventListener("click", open);
-      closeBtns.forEach((btn) => btn.addEventListener("click", close));
+        openBtn.addEventListener("click", open);
+        closeBtns.forEach((btn) => btn.addEventListener("click", close));
     });
 
     /**
@@ -88,136 +87,135 @@ const statsComponents: StatsComponent[] = [
 
     const elements: [HTMLElement, HTMLHeadingElement, HTMLDivElement][] = [];
     getThem<HTMLElement>("[data-observer='titlePicture']").forEach((titlePicture) => {
-      elements.push([
-        titlePicture,
-        getHim<HTMLHeadingElement>("[data-observer='title']", titlePicture),
-        getHim<HTMLDivElement>("[data-observer='picture']", titlePicture),
-      ]);
+        elements.push([
+            titlePicture,
+            getHim<HTMLHeadingElement>("[data-observer='title']", titlePicture),
+            getHim<HTMLDivElement>("[data-observer='picture']", titlePicture),
+        ]);
     });
 
     elements.forEach(([titlePicture, title, picture]) => {
-      const options = {
-        debug: false,
-        onIntersect: () => {
-          title.classList.add("reveal-title");
-          picture.classList.add("reveal-picture");
-        },
-        onDisappear: () => {
-          title.classList.remove("reveal-title");
-        },
-      };
-      setupIntersectionObserver(titlePicture, options);
+        const options = {
+            debug: false,
+            onIntersect: () => {
+                title.classList.add("reveal-title");
+                picture.classList.add("reveal-picture");
+            },
+            onDisappear: () => {
+                title.classList.remove("reveal-title");
+            },
+        };
+        setupIntersectionObserver(titlePicture, options);
     });
-  });
 </script>
 
 <style is:raw>
-  .reveal-title {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  .reveal-picture {
-    animation: reveal-picture 0.3s ease-in forwards;
-  }
-
-  @keyframes reveal-picture {
-    to {
-      opacity: 1;
-      filter: blur(0px) brightness(1);
-      transform: translateY(0);
+    .reveal-title {
+        transform: translateX(0);
+        opacity: 1;
     }
-  }
+
+    .reveal-picture {
+        animation: reveal-picture 0.3s ease-in forwards;
+    }
+
+    @keyframes reveal-picture {
+        to {
+            opacity: 1;
+            filter: blur(0px) brightness(1);
+            transform: translateY(0);
+        }
+    }
 </style>
 
 <Layout title="activité">
-  <Header slot="header" />
-  <Section size="half" extension="lg" className={"grid center"}>
-    <!--  -->
-    <Heading h2="Nos activités" h3="Composable et personalisable">
-      <ArrowDown size="32" slot="icon" />
-    </Heading>
-  </Section>
-  <Section className={"horizontal flex-wrap container gap-y-72 gap-x-20"}>
-    {
-      products.map((product, i) => {
-        const orientation = i % 2 === 0 ? "ltr" : "rtl";
-        return (
-          <Orientation
-            anchorId={`${product.id}`}
-            orientation={orientation}
-            className="relative full px-5 gap-10 items-end justify-evenly">
-            <>
-              <section class="relative vertical center full" data-observer="titlePicture">
-                <h3
-                  data-observer="title"
-                  class={`text-6xl uppercase text-left w-full mb-10 grandstander transition-transform ${orientation === "ltr" ? "-translate-x-[100vw]" : "translate-x-[100vw]"} `}>
-                  {product.title}
-                </h3>
-                <div transition:name={`random-image-${product.id}`} class={`full`}>
-                  <Pictures
-                    className="blur-[1px] opacity-0 translate-y-5"
-                    data-observer="picture"
-                    size={500}
-                    orientation={orientation}
-                  />
-                </div>
-              </section>
-              <section class="vertical h-full gap-7 items-start justify-evenly max-w-[50%]">
-                <Text description={product.description.long} title={product.name} />
-                <div class="grid grid-cols-2">
-                  <div class="vertical gap-1">
-                    {statsComponents.map((stat) => {
-                      const { label, type, Icon, productKey } = stat;
-                      return (
-                        <Stats label={label} type={type} stats={product[productKey]}>
-                          {Icon && <Icon slot="icon" />}
-                        </Stats>
-                      );
-                    })}
-                  </div>
-                  <div class="grid items-start justify-end">
-                    <ul class="w-full">
-                      <p class="font-semibold mb-2">Au programme :</p>
-                      {product.tasks.map((task) => (
-                        <li class="w-full horizontal items-center gap-3 mb-1">
-                          <p class="full">{task}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <Dialog product={product}>
-                  <>
-                    <CloseButton key={product.id} />
-                    <Form key={product.id} id={product.id}>
-                      <FormHeading product={product} />
-                      <Inputs product={product} />
-                      <Checkboxes options={options} key={product.id} />
-                      <Message product={product} />
-                    </Form>
-                  </>
-                </Dialog>
-                <div class="horizontal center gap-5">
-                  <Button data-action={`open#${product.id}`} dark size="lg" ring="sm">
-                    S'inscrire
-                  </Button>
-                  <MinimalPrice price={product.price} unit={product.unit} />
-                </div>
-              </section>
-            </>
-          </Orientation>
-        );
-      })
-    }
-  </Section>
-  <Section fixedHeight extension="md" size="half" className={"vertical center"}>
-    <h4 class={`text-3xl grandstander mb-5`}>Une idée, une recommendation ?</h4>
-    <p class={`max-w-[50ch] text-center text-[1rem]`}>{generateLorem(10)}</p>
-    <CTA href={`/contact`} prefetch prefetchType="viewport">
-      <ContactButton className="mt-10"> Contactez-nous </ContactButton>
-    </CTA>
-  </Section>
+    <Header slot="header" />
+    <Section size="half" extension="lg" className={"grid center"}>
+        <!--  -->
+        <Heading h2="Nos activités" h3="Composable et personalisable">
+            <ArrowDown size="32" slot="icon" />
+        </Heading>
+    </Section>
+    <Section className={"horizontal flex-wrap container gap-y-72 gap-x-20"}>
+        {
+            products.map((product, i) => {
+                const orientation = i % 2 === 0 ? "ltr" : "rtl";
+                return (
+                    <Orientation
+                        anchorId={`${product.id}`}
+                        orientation={orientation}
+                        className="relative full px-5 gap-10 items-end justify-evenly">
+                        <>
+                            <section class="relative vertical center full" data-observer="titlePicture">
+                                <h3
+                                    data-observer="title"
+                                    class={`text-6xl uppercase text-left w-full mb-10 grandstander transition-transform ${orientation === "ltr" ? "-translate-x-[100vw]" : "translate-x-[100vw]"} `}>
+                                    {product.title}
+                                </h3>
+                                <div transition:name={`random-image-${product.id}`} class={`full`}>
+                                    <Pictures
+                                        className="blur-[1px] opacity-0 translate-y-5"
+                                        data-observer="picture"
+                                        size={500}
+                                        orientation={orientation}
+                                    />
+                                </div>
+                            </section>
+                            <section class="vertical h-full gap-7 items-start justify-evenly max-w-[50%]">
+                                <Text description={product.description.long} title={product.name} />
+                                <div class="grid grid-cols-2">
+                                    <div class="vertical gap-1">
+                                        {statsComponents.map((stat) => {
+                                            const { label, type, Icon, productKey } = stat;
+                                            return (
+                                                <Stats label={label} type={type} stats={product[productKey]}>
+                                                    {Icon && <Icon slot="icon" />}
+                                                </Stats>
+                                            );
+                                        })}
+                                    </div>
+                                    <div class="grid items-start justify-end">
+                                        <ul class="w-full">
+                                            <p class="font-semibold mb-2">Au programme :</p>
+                                            {product.tasks.map((task) => (
+                                                <li class="w-full horizontal items-center gap-3 mb-1">
+                                                    <p class="full">{task}</p>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <Dialog product={product}>
+                                    <>
+                                        <CloseButton key={product.id} />
+                                        <Form key={product.id} id={product.id}>
+                                            <FormHeading product={product} />
+                                            <Inputs product={product} />
+                                            <Checkboxes options={options} key={product.id} />
+                                            <Message product={product} />
+                                        </Form>
+                                    </>
+                                </Dialog>
+                                <div class="horizontal center gap-5">
+                                    <Button data-action={`open#${product.id}`} dark size="lg" ring="sm">
+                                        S'inscrire
+                                    </Button>
+                                    <MinimalPrice price={product.price} unit={product.unit} />
+                                </div>
+                            </section>
+                        </>
+                    </Orientation>
+                );
+            })
+        }
+    </Section>
+    <Section fixedHeight extension="md" size="half" className={"vertical center"}>
+        <h4 class={`text-3xl grandstander mb-5`}>Une idée, une recommendation ?</h4>
+        <p class={`max-w-[50ch] text-center text-[1rem]`}>{generateLorem(10)}</p>
+        <CTA href={`/contact`} prefetch prefetchType="viewport">
+            <ContactButton className="mt-10"> Contactez-nous </ContactButton>
+        </CTA>
+    </Section>
 
-  <Footer slot="footer" className="mt-32" />
+    <Footer slot="footer" className="mt-32" />
 </Layout>

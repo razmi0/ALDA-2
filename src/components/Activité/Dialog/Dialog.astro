@@ -8,10 +8,10 @@ import type { ProductType } from "@/components/shared/product-data/types";
 // import SumUp from "../Form/SumUp.astro";
 
 interface Props {
-  //   rest?: HTMLAttributes<"dialog">;
-  className?: string;
-  product: ProductType;
-  //   // dialogSize?: number | string;
+    //   rest?: HTMLAttributes<"dialog">;
+    className?: string;
+    product: ProductType;
+    //   // dialogSize?: number | string;
 }
 
 let { product, className } = Astro.props;
@@ -80,7 +80,6 @@ let { product, className } = Astro.props;
 ---
 
 <!-- <script>
-  document.addEventListener("astro:page-load", () => {
     // const gap = 50;
     const dialogs = Array.from(document.querySelectorAll("dialog")) as HTMLDialogElement[];
     // const dialogMap = new Map<string, HTMLDialogElement>();
@@ -138,7 +137,6 @@ let { product, className } = Astro.props;
       });
       (closeBtns as HTMLButtonElement[]).forEach((btn) => btn.addEventListener("click", () => dialog.close()));
     });
-  });
 </script>
  --><!-- <style define:vars={{}}>
   /* [data-is^="multistep"] { frameSize: sizes.frameSize, dialogMaxSize: sizes.dialog, Nsections: form.size() 
@@ -156,11 +154,11 @@ let { product, className } = Astro.props;
   }
 </style> --><!-- class="overflow-hidden" -->
 <dialog data-action={`dialog#${product.id}`} class={`backdrop:bg-black/40 backdrop:backdrop-blur-sm rounded-md `}>
-  <div
-    class={`relative w-full ring-1 ring-stone-300 ring-offset-1 horizontal bg-zinc-200 text-black shadow-md shadow-black/20 rounded-md ${className}`}>
-    <slot />
-  </div>
-  <!-- <ContactDetail product={product} size={`${detailsSize}${sizeUnit}`} steps={steps} />
+    <div
+        class={`relative w-full ring-1 ring-stone-300 ring-offset-1 horizontal bg-zinc-200 text-black shadow-md shadow-black/20 rounded-md ${className}`}>
+        <slot />
+    </div>
+    <!-- <ContactDetail product={product} size={`${detailsSize}${sizeUnit}`} steps={steps} />
   <Form key={key} id={product.id}>
     <Title>{product.name}</Title>
     <div data-is={`multistep#${key}`}>

@@ -59,7 +59,6 @@ const locations = rawLocations.map((loc, i) => {
   /**
    * script view transition reexecuted at each page load
    */
-  document.addEventListener("astro:page-load", () => {
     /**
      * MARKS PLACEMENT
      * ctn is sliced in a grid of 30x30 cells
@@ -136,7 +135,6 @@ const locations = rawLocations.map((loc, i) => {
       marks.forEach((mark) => {
         mark.addEventListener("click", handleMarkClick as EventListener);
       });
-  });
 </script>
 
 <style define:vars={{ totalPages, navArticleWidth, articleContentWidth }}>

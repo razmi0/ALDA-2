@@ -3,25 +3,24 @@ import { cn } from "@/lib/utils";
 import { InfoIcon } from "lucide-react";
 
 interface Props {
-  key?: string;
-  text: string;
-  className?: string;
-  ["data-type"]?: "email" | "tel";
+    key?: string;
+    text: string;
+    className?: string;
+    ["data-type"]?: "email" | "tel";
 }
 
 const { text, key, className } = Astro.props;
 ---
 
 <script>
-  document.addEventListener("astro:page-load", () => {
     const outputs = Array.from(document.querySelectorAll('[data-info^="info"]')) as HTMLElement[];
     const resetDelay = 10000;
 
     const initial = new Map<string, { element: HTMLElement; baseText: string }>();
 
     outputs.forEach((output) => {
-      const key = output.dataset.info?.split("#")[1] as string;
-      initial.set(key, { element: output, baseText: output.textContent as string });
+        const key = output.dataset.info?.split("#")[1] as string;
+        initial.set(key, { element: output, baseText: output.textContent as string });
     });
 
     const config = { attributes: true, childList: false, subtree: false };
@@ -29,48 +28,47 @@ const { text, key, className } = Astro.props;
      * Form component mutate variant to error when validation fails. This handler resets the variant to info after a delay.
      */
     const onMutation = (mutationList: MutationRecord[]) => {
-      for (const mutation of mutationList) {
-        if (mutation.type === "attributes") {
-          const output = mutation.target as HTMLElement;
-          console.log("Resetting");
-          const key = output.dataset.info?.split("#")[1] as string;
-          if (!key) throw new Error("Key not found");
-          const timeId = setTimeout(() => {
-            if (output.dataset.variant === "info") return;
-            output.dataset.variant = "info" as "info" | "error";
-            if (initial.has(key)) {
-              const initialData = initial.get(key);
-              if (initialData) output.textContent = initialData.baseText;
-              clearTimeout(timeId);
+        for (const mutation of mutationList) {
+            if (mutation.type === "attributes") {
+                const output = mutation.target as HTMLElement;
+                console.log("Resetting");
+                const key = output.dataset.info?.split("#")[1] as string;
+                if (!key) throw new Error("Key not found");
+                const timeId = setTimeout(() => {
+                    if (output.dataset.variant === "info") return;
+                    output.dataset.variant = "info" as "info" | "error";
+                    if (initial.has(key)) {
+                        const initialData = initial.get(key);
+                        if (initialData) output.textContent = initialData.baseText;
+                        clearTimeout(timeId);
+                    }
+                }, resetDelay);
             }
-          }, resetDelay);
         }
-      }
     };
     const observer = new MutationObserver(onMutation);
     outputs.forEach((output) => observer.observe(output, config));
-  });
 </script>
 
 <style>
-  div:has(> [data-variant="error"]) {
-    @apply text-red-500 ring-1 ring-red-500;
-  }
+    div:has(> [data-variant="error"]) {
+        @apply text-red-500 ring-1 ring-red-500;
+    }
 </style>
 
 <div class={cn("horizontal center text-[0.98rem] w-full", className)}>
-  <InfoIcon className="inline-block w-5 h-5 mr-1.5 stroke-1" />
-  {
-    key ? (
-      <small
-        data-type={Astro.props["data-type"]}
-        data-info={`info#${key}`}
-        data-variant="info"
-        class="block w-full text-left leading-4 translate-y-[1px]">
-        {text}
-      </small>
-    ) : (
-      <small class="block w-full text-left leading-4 translate-y-[1px]">{text}</small>
-    )
-  }
+    <InfoIcon className="inline-block w-5 h-5 mr-1.5 stroke-1" />
+    {
+        key ? (
+            <small
+                data-type={Astro.props["data-type"]}
+                data-info={`info#${key}`}
+                data-variant="info"
+                class="block w-full text-left leading-4 translate-y-[1px]">
+                {text}
+            </small>
+        ) : (
+            <small class="block w-full text-left leading-4 translate-y-[1px]">{text}</small>
+        )
+    }
 </div>
