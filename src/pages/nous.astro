@@ -101,6 +101,7 @@ const introduction = {
     <div class="relative">
         <VerticalText position="left" className="top-1/2">Découvrez la grimpe d'arbre</VerticalText>
         <ForestMask
+            loading="eager"
             imgOneClasses="[transform:_scale(-1,1)_translateY(40px)] xl:[transform:_scale(-1,1)_translateY(100px)]"
         />
         <Earth />
@@ -144,7 +145,7 @@ const introduction = {
                     <article class={`space-y-5`}>
                         <Image
                             src={word.image}
-                            alt={"Photo de " + word.title}
+                            alt={word.title + " dans un arbre avec l'équipement de grimpe"}
                             width={350}
                             height={350}
                             class={`aspect-square max-h-[350px] max-w-[350px] full mb-5 rounded-md`}

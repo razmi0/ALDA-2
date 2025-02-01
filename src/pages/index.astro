@@ -11,7 +11,7 @@ import Layout from "@/layouts/Layout.astro";
 <Layout title="accueil" className="max-w-screen">
     <Hero slot="header" />
     <CatchSection />
-    <ForestMask className="bg-map-dark" type="white" />
+    <ForestMask loading="lazy" className="bg-map-dark" type="white" />
     <div class={`bg-pattern`}>
         <Products />
         <FooterSectionSimple />

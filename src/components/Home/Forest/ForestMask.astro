@@ -11,6 +11,7 @@ interface Props {
     type?: "dark" | "white";
     imgOneClasses?: string;
     imgTwoClasses?: string;
+    loading: "eager" | "lazy";
 }
 ---
 
@@ -20,6 +21,7 @@ interface Props {
     className={`relative overflow-hidden z-10 flex justify-start items-start ${Astro.props.className || ""}`}>
     <!-- bg-map-dark -->
     <Image
+        loading={Astro.props.loading}
         src={Astro.props.type === "white" ? ForestWhite : Forest}
         role={"presentation"}
         alt={""}
@@ -31,6 +33,7 @@ interface Props {
         sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}
     />
     <Image
+        loading={Astro.props.loading}
         src={BackgroundForest}
         role={"presentation"}
         alt={""}

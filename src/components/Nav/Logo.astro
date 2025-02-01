@@ -1,6 +1,12 @@
 ---
 import LogoImg from "@/assets/logo-3.png";
 import { Image } from "astro:assets";
+
+interface Props {
+    loading: "eager" | "lazy";
+}
+
+const { loading = "lazy" } = Astro.props;
 ---
 
-<Image src={LogoImg} alt="logo de alabordarbre" width={50} height={50} loading="eager" />
+<Image src={LogoImg} alt="logo de alabordarbre" width={50} height={50} loading={loading} />
