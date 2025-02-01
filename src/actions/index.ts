@@ -39,7 +39,7 @@ export const server = {
                 {
                     from,
                     to: ["contact@alabordarbre.fr"],
-                    subject: `[Alabordarbre.fr] : ${emailLabel}`,
+                    subject: `Alabordarbre.fr : ${emailLabel}`,
                     html: `
                     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                         <h2 style="color: #4CAF50;">${content.toDns.title}</h2>
