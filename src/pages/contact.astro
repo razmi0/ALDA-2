@@ -7,7 +7,6 @@ import Socials from "@/components/shared/Socials.astro";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/layouts/Section.astro";
 import { Send, ThumbsUp } from "lucide-react";
-import { Image } from "astro:assets";
 
 const key = "contact";
 
@@ -28,12 +27,54 @@ const adresse = {
 
     const form = document.querySelector("form");
     form?.addEventListener("submit", async (event) => {
-        console.log("submit");
         event.preventDefault();
         const formData = new FormData(form);
         const { error } = await actions.send(formData);
-        if (!error) navigate("/confirmation");
+        if (!error) {
+            createToaster("Votre message a bien été envoyé", "success");
+            form.reset();
+        } else {
+            createToaster("Une erreur est survenue, veuillez réessayer", "error");
+        }
     });
+
+    /**
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    function createToaster(message: string, type = "info", duration = 5000) {
+        const toaster = document.createElement("div");
+        toaster.textContent = message;
+        toaster.className = `toaster toaster-${type}`;
+
+        Object.assign(toaster.style, {
+            position: "fixed",
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: type === "error" ? "#e74c3c" : type === "success" ? "#2ecc71" : "#3498db",
+            color: "#fff",
+            padding: "15px 28px",
+            borderRadius: "5px",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
+            zIndex: "1000",
+            opacity: "1",
+            transition: "opacity 0.5s ease-in-out",
+            whiteSpace: "nowrap",
+        });
+
+        document.body.appendChild(toaster);
+
+        setTimeout(() => {
+            toaster.style.opacity = "0";
+            setTimeout(() => toaster.remove(), 500);
+        }, duration);
+    }
 </script>
 
 <Layout title="contact" className="bg-pattern">
