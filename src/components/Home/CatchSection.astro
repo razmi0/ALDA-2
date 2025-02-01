@@ -4,43 +4,43 @@ import Rope from "@/components/Icons/Rope.astro";
 ---
 
 <style>
-  @media screen and (min-width: 1024px) {
-    .custom-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr;
-      column-gap: 20px;
-      padding-inline: 16px;
+    @media screen and (min-width: 1024px) {
+        .custom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+            column-gap: 20px;
+            padding-inline: 16px;
+        }
     }
-  }
 </style>
 
 <section
-  class={`bg-map-dark vertical flex-wrap lg:horizontal center relative pt-28 lg:py-28 gap-10 [&_p]:max-w-[60ch]`}>
-  <article class={`text-map-darkblue space-y-6 px-4 sm:px-0 py-1 w-full custom-grid`}>
-    <div class={`vertical justify-end items-center gap-10`}>
-      <div class="w-full max-w-[60ch]">
-        <Rope />
-      </div>
-      <div class="max-w-[60ch] w-full">
-        <p class="text-xl font-semibold text-white/80">Libérez l'aventurier qui sommeille en vous !</p>
-      </div>
-    </div>
-    <div class={`hidden lg:block`}></div>
-    <!-- <div class="content"> -->
-    <div class={`space-y-2 vertical center`}>
-      <p>Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !</p>
-      <p class={`text-map-darkblue`}>
-        Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant dans un
-        environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions authentiques et à
-        comprendre l'importance de préserver notre écosystème. Réservez dès maintenant pour vivre une expérience
-        inoubliable et riche en sensations.
-      </p>
-    </div>
+    class={`bg-map-dark vertical flex-wrap lg:horizontal center relative pt-28 lg:py-28 gap-10 [&_p]:max-w-[60ch]`}>
+    <article class={`text-map-darkblue space-y-6 px-4 sm:px-0 py-1 w-full custom-grid`}>
+        <div class={`vertical justify-end items-center gap-10`}>
+            <div class="w-full max-w-[60ch]">
+                <Rope />
+            </div>
+            <div class="max-w-[60ch] w-full">
+                <p class="text-xl font-semibold text-white/80">Libérez l'aventurier qui sommeille en vous !</p>
+            </div>
+        </div>
+        <div class={`hidden lg:block`}></div>
+        <!-- <div class="content"> -->
+        <div class={`space-y-2 vertical center `}>
+            <p>Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !</p>
+            <p class={`text-map-darkblue`}>
+                Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant dans un
+                environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions authentiques
+                et à comprendre l'importance de préserver notre écosystème. Réservez dès maintenant pour vivre une
+                expérience inoubliable et riche en sensations.
+            </p>
+        </div>
 
-    <CatchVideo
-      className="max-w-[60ch] xl:max-w-[60ch] mx-auto w-full object-cover rounded-lg ring-1 ring-white/10 ring-offset-2 ring-offset-map-darkblue/40 "
-    />
-    <!-- </div> -->
-  </article>
+        <CatchVideo
+            className="max-w-[60ch] xl:max-w-[60ch] mx-auto w-full object-cover rounded-lg ring-1 ring-white/10 ring-offset-2 ring-offset-map-darkblue/40 "
+        />
+        <!-- </div> -->
+    </article>
 </section>
