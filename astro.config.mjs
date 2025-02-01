@@ -2,13 +2,13 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
-
+import robotsTxt from "astro-robots-txt";
 import sitemap from "@astrojs/sitemap";
 
 /**
  * redirections to maintenance page if true;
  */
-const OFFLINE_PROD = import.meta.env.PROD && true;
+const OFFLINE_PROD = import.meta.env.PROD && false;
 
 // https://astro.build/config
 
@@ -41,6 +41,16 @@ export default defineConfig({
                 console.log("[Generating sitemap] ", page, crawlable ? "crawlable" : "not crawlable");
                 return crawlable;
             },
+        }),
+        robotsTxt({
+            sitemap: ["https://alabordarbre.fr/sitemap-index.xml", "https://alabordarbre.fr/sitemap-0.xml"],
+            policy: [
+                {
+                    userAgent: "*",
+                    allow: "/",
+                    disallow: ["/honey", "/maintenance"],
+                },
+            ],
         }),
     ],
 
