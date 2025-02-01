@@ -1,5 +1,5 @@
 import { companyContact } from "@/pages/contact.astro";
-import { ActionError, defineAction } from "astro:actions";
+import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { Resend } from "resend";
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
@@ -73,10 +73,7 @@ export const server = {
             ]);
 
             if (error) {
-                throw new ActionError({
-                    code: "BAD_REQUEST",
-                    message: error.message,
-                });
+                return error;
             }
 
             return data;
