@@ -15,28 +15,73 @@ import Video from "../HeroVideo.astro";
     }
 </style>
 
+<style>
+    .reveal-from-bottom-fast {
+        animation: reveal-from-bottom 1s ease-out forwards;
+    }
+
+    .reveal-from-bottom-slow {
+        animation: reveal-from-bottom 1s ease-out 0.5s forwards;
+    }
+
+    @keyframes reveal-from-bottom {
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    import { setupIntersectionObserver } from "@/lib/utils";
+
+    const topElement = document.querySelector("[data-observer='1']") as HTMLElement;
+    const bottomElement = document.querySelector("[data-observer='2']") as HTMLElement;
+
+    setupIntersectionObserver(topElement, {
+        onIntersect: () => {
+            topElement.classList.add("reveal-from-bottom-fast");
+        },
+    });
+
+    setupIntersectionObserver(bottomElement, {
+        onIntersect: () => {
+            bottomElement.classList.add("reveal-from-bottom-slow");
+        },
+    });
+</script>
+
 <Header />
 <Section className="relative text-white vertical center">
     <div class="absolute-align full z-30 fade-out-bottom pointer-events-none"></div>
     <Video />
     <div class="z-50 vertical items-center h-screen justify-center text-center pointer-events-none">
         <VerticalText position="right" className="bottom-48">Embarquez avec nous</VerticalText>
-        <Heading h2="l'aventure commence ici!" h3="Découvrez la grimpe d'arbre" cta>
-            <div class={`horizontal center gap-10`}>
-                <CTA href="/contact">
-                    <Button
-                        className="pointer-events-auto hover:bg-white"
-                        variant="filled"
-                        ring="sm"
-                        size="lg"
-                        data-is="hero-button"
-                        textClass="-translate-x-2"
-                        leftIcon>
-                        <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
-                        Nous contacter
-                    </Button>
-                </CTA>
+        <div class={"vertical center gap-6 text-center z-50"}>
+            <h2
+                class="text-5xl uppercase opacity-0 translate-y-[100%]"
+                style={"text-shadow: 0px 0px 3px black;"}
+                data-observer="1">
+                l'aventure commence ici!
+            </h2>
+            <div class={`horizontal center gap-5 flex-wrap  opacity-0 translate-y-[100%]`} data-observer="2">
+                <h3 class="text-2xl" style={"text-shadow: 0px 0px 3px black;"}>Découvrez la grimpe d'arbre</h3>
+                <div class={`horizontal center gap-10`}>
+                    <CTA href="/contact">
+                        <Button
+                            className="pointer-events-auto hover:bg-white"
+                            variant="filled"
+                            ring="sm"
+                            size="lg"
+                            data-is="hero-button"
+                            textClass="-translate-x-2"
+                            leftIcon>
+                            <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
+                            Nous contacter
+                        </Button>
+                    </CTA>
+                </div>
             </div>
-        </Heading>
+        </div>
     </div>
 </Section>
