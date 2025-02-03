@@ -15,10 +15,33 @@ import Rope from "@/components/Icons/Rope.astro";
     }
 </style>
 
+<script>
+    import { setupIntersectionObserver } from "@/lib/utils";
+
+    const topIntro = document.querySelector("[data-observer='a']") as HTMLElement;
+    const p1 = document.querySelector("[data-observer='b']") as HTMLElement;
+    const p2 = document.querySelector("[data-observer='c']") as HTMLElement;
+    const video = document.querySelector("[data-observer='d']") as HTMLElement;
+
+    setupIntersectionObserver(topIntro, {
+        onIntersect: () => {
+            topIntro.classList.add("reveal-from-bottom-base");
+        },
+    });
+
+    [p1, p2, video].forEach((element) => {
+        setupIntersectionObserver(element, {
+            onIntersect: () => {
+                element.classList.add("reveal-from-bottom-delayed");
+            },
+        });
+    });
+</script>
+
 <section
     class={`bg-map-dark vertical flex-wrap lg:horizontal center relative pt-28 lg:py-28 gap-10 [&_p]:max-w-[60ch]`}>
     <article class={`text-map-darkblue space-y-6 px-4 sm:px-0 py-1 w-full custom-grid`}>
-        <div class={`vertical justify-end items-center gap-10`}>
+        <div class={`vertical justify-end items-center gap-10 opacity-0 translate-y-[100%]`} data-observer="a">
             <div class="w-full max-w-[60ch]">
                 <Rope />
             </div>
@@ -29,8 +52,14 @@ import Rope from "@/components/Icons/Rope.astro";
         <div class={`hidden lg:block`}></div>
         <!-- <div class="content"> -->
         <div class={`space-y-2 vertical center `}>
-            <p>Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !</p>
-            <p class={`text-map-darkblue`}>
+            <p data-observer="b" class={`opacity-0 translate-y-[100%]`} style="--reveal-delay: 0.4s">
+                Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !
+            </p>
+            <p
+                data-observer="c"
+                class={`opacity-0 translate-y-[100%]`}
+                style="--reveal-delay: 0.5s"
+                class={`text-map-darkblue`}>
                 Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant dans un
                 environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions authentiques
                 et à comprendre l'importance de préserver notre écosystème. Réservez dès maintenant pour vivre une
@@ -39,7 +68,9 @@ import Rope from "@/components/Icons/Rope.astro";
         </div>
 
         <CatchVideo
-            className="max-w-[60ch] xl:max-w-[60ch] mx-auto w-full object-cover rounded-lg ring-1 ring-white/10 ring-offset-2 ring-offset-map-darkblue/40 "
+            dataObserver="d"
+            style="--reveal-delay: 0.6s"
+            className="max-w-[60ch] xl:max-w-[60ch] mx-auto w-full object-cover rounded-lg ring-1 ring-white/10 ring-offset-2 ring-offset-map-darkblue/40 opacity-0 translate-y-[50%]"
         />
         <!-- </div> -->
     </article>
