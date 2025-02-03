@@ -63,12 +63,13 @@
         z-index: -1; /* Place it behind the content */
     }
 
-    .reveal-from-bottom-fast {
+    .reveal-from-bottom-base {
         animation: reveal-from-bottom 1s ease-out forwards;
     }
 
-    .reveal-from-bottom-slow {
-        animation: reveal-from-bottom 1s ease-out 0.5s forwards;
+    .reveal-from-bottom-delayed {
+        animation: reveal-from-bottom 1s ease-out forwards;
+        animation-delay: var(--reveal-delay);
     }
 
     @keyframes reveal-from-bottom {
