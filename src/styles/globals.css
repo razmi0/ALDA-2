@@ -63,11 +63,6 @@
         z-index: -1; /* Place it behind the content */
     }
 
-    .reveal-animation-before-start {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-
     .reveal-from-bottom-base {
         animation: reveal-from-bottom 1s ease-out forwards;
     }
@@ -78,6 +73,10 @@
     }
 
     @keyframes reveal-from-bottom {
+        0% {
+            transform: translateY(100%);
+            opacity: 0;
+        }
         100% {
             transform: translateY(0);
             opacity: 1;

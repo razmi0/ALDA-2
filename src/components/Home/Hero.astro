@@ -18,20 +18,22 @@ import Video from "../HeroVideo.astro";
 <script>
     import { setupIntersectionObserver } from "@/lib/utils";
 
-    const topElement = document.querySelector("[data-observer]=1") as HTMLElement;
-    const bottomElement = document.querySelector("[data-observer]=2") as HTMLElement;
+    const topElement = document.querySelector("[data-observer='1']") as HTMLElement;
+    const bottomElement = document.querySelector("[data-observer='2']") as HTMLElement;
+
+    if (!topElement || !bottomElement) {
+        throw new Error("Missing observer elements");
+    }
 
     setupIntersectionObserver(topElement, {
         onIntersect: () => {
             topElement.classList.add("reveal-from-bottom-base");
-            topElement.classList.remove("reveal-animation-before-start");
         },
     });
 
     setupIntersectionObserver(bottomElement, {
         onIntersect: () => {
             bottomElement.classList.add("reveal-from-bottom-delayed");
-            bottomElement.classList.remove("reveal-animation-before-start");
         },
     });
 </script>
@@ -44,13 +46,13 @@ import Video from "../HeroVideo.astro";
         <VerticalText position="right" className="bottom-48">Embarquez avec nous</VerticalText>
         <div class={"vertical center gap-6 text-center z-50"}>
             <h2
-                class="text-5xl uppercase reveal-animation-before-start"
+                class="text-5xl uppercase translate-y-[100%] opacity-0"
                 data-observer="1"
                 style={"text-shadow: 0px 0px 3px black;"}>
                 l'aventure commence ici!
             </h2>
             <div
-                class={`horizontal center gap-5 flex-wrap reveal-animation-before-start`}
+                class={`horizontal center gap-5 flex-wrap translate-y-[100%] opacity-0`}
                 data-observer="2"
                 style="--reveal-delay : 0.5s;">
                 <h3 class="text-2xl" style={"text-shadow: 0px 0px 3px black;"}>Découvrez la grimpe d'arbre</h3>
