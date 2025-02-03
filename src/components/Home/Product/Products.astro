@@ -5,14 +5,14 @@ import RechercheImage from "@/assets/client-img-54.jpeg";
 import ImmersionImage from "@/assets/client-img-57.jpeg";
 import InitiationImage from "@/assets/client-img-58.jpeg";
 import data from "@/components/shared/product-data/main-product.json" assert { type: "json" };
-import Simple from "./Simple.astro";
-import TopSection from "./TopSection.astro";
+import ProductSection from "./ProductSection.astro";
 import type { Product, ProductData, ProductImage } from "./types";
 import { Image } from "astro:assets";
-// import Pattern1 from "@/assets/pattern_1.webp";
 import { capitalize } from "@/lib/utils";
 import CTA from "@/components/shared/CTA.astro";
 import Button from "@/components/shared/Button.astro";
+import Article from "@/components/shared/Article.astro";
+import Badge from "@/components/shared/Badge.astro";
 
 const buildProducts = (data: ProductData): { simpleProducts: Product[]; withSubproducts: Product[] } => {
     const { poles, products } = data;
@@ -58,40 +58,92 @@ const images: ProductImage[] = [
 ];
 ---
 
-<TopSection title="Nos quatres pôles d'activités">
+<script>
+    import { setupIntersectionObserver } from "@/lib/utils";
+
+    const bigTitle = document.querySelector("[data-observer='5']") as HTMLElement;
+    const subtitle = document.querySelector("[data-observer='6']") as HTMLElement;
+    const toparticles = Array.from(document.querySelectorAll("[data-observer^='wrapper-7']")) as HTMLElement[]; // data-observer={"wrapper-8" + i}
+    const bottomarticles = Array.from(document.querySelectorAll("[data-observer^='wrapper-8']")) as HTMLElement[]; // data-observer={"wrapper-8" + i}
+
+    toparticles.forEach((article) => {
+        setupIntersectionObserver(article, {
+            onIntersect: () => {
+                article.querySelector("h3").classList.add("reveal-from-bottom-delayed");
+                article.querySelector("img").classList.add("reveal-from-bottom-delayed");
+                article.querySelector("p").classList.add("reveal-from-bottom-delayed");
+                article.querySelector("button").classList.add("reveal-from-bottom-delayed");
+            },
+        });
+    });
+
+    bottomarticles.forEach((article) => {
+        setupIntersectionObserver(article, {
+            onIntersect: () => {
+                article.querySelector("h2").classList.add("reveal-from-bottom-delayed");
+                article.querySelector("[data-id]").classList.add("reveal-from-bottom-delayed");
+                article.querySelector("img").classList.add("reveal-from-bottom-delayed");
+            },
+        });
+    });
+
+    setupIntersectionObserver(bigTitle, {
+        onIntersect: () => {
+            bigTitle.classList.add("reveal-from-bottom-base");
+        },
+    });
+
+    setupIntersectionObserver(subtitle, {
+        onIntersect: () => {
+            subtitle.classList.add("reveal-from-bottom-base");
+        },
+    });
+</script>
+
+<ProductSection title="Nos quatres pôles d'activités">
     {
         withSubproducts.map((p) => {
             return (
                 <section class={`vertical center gap-10`}>
-                    <div class="w-full">
+                    <div class="w-full opacity-0 translate-y-[100%]" data-observer="5">
                         <h2 class="text-4xl text-center">Pôle {capitalize(p.title)}</h2>
                     </div>
-                    <p class={`text-black/90 max-w-[60ch] text-center`}>
+                    <p class={`text-black/90 max-w-[60ch] text-center opacity-0 translate-y-[100%]`} data-observer="6">
                         Le pôle Animation propose des activités immersives et captivantes pour encourager l'exploration,
                         la connexion à la nature et l'éveil des sens. Il se divise en deux volets complémentaires :
                     </p>
-                    <div class={`vertical md:horizontal center gap-10`}>
+                    <div class={`vertical md:horizontal center gap-10 `}>
                         {p.subproducts &&
-                            p.subproducts.map((p) => {
+                            p.subproducts.map((p, i) => {
                                 const image = images.find((img) => img.label === p.title);
                                 return (
-                                    <div class={`vertical center gap-5`}>
-                                        <h3 class={`text-4xl`}>{capitalize(p.title)}</h3>
+                                    <div class={`vertical center gap-5 `} data-observer={"wrapper-7" + i}>
+                                        <h3
+                                            style={`--reveal-delay : ${200 * i}ms`}
+                                            class={`text-4xl opacity-0 translate-y-[50%]`}>
+                                            {capitalize(p.title)}
+                                        </h3>
                                         <Image
                                             src={image.src}
                                             alt={image.alt}
                                             width={image.size[0] ?? 500}
                                             height={image.size[1] ?? 500}
-                                            class={`aspect-square object-cover rounded-md`}
+                                            class={`aspect-square object-cover rounded-md opacity-0 translate-y-[50%]`}
+                                            style={`--reveal-delay : ${200 * i}ms`}
                                         />
-                                        <p class={`text-center max-w-[60ch]`}>{p.description}</p>
+                                        <p
+                                            class={`text-center max-w-[60ch] opacity-0 translate-y-[50%]`}
+                                            style={`--reveal-delay : ${200 * i}ms`}>
+                                            {p.description}
+                                        </p>
                                         <CTA href={`/contact`} prefetch prefetchType="hover">
                                             <Button
                                                 ring="sm"
                                                 size="lg"
                                                 variant="outline"
                                                 dark
-                                                className="w-fit font-bold whitespace-nowrap bg-white">
+                                                className="w-fit font-bold whitespace-nowrap bg-white opacity-0 translate-y-[50%]"
+                                                style={`--reveal-delay : ${200 * i}ms`}>
                                                 En savoir plus
                                             </Button>
                                         </CTA>
@@ -104,11 +156,98 @@ const images: ProductImage[] = [
         })
     }
     {
-        simpleProducts.map((p, i) => {
+        simpleProducts.map((product, i) => {
+            const { id, pole, description, tags, price, locations, program, audience } = product;
             const orientation = (i & 1) === 0 ? "ltr" : "rtl";
-            const img = images.find((img) => img.label === p.title);
+            const image = images.find((img) => img.label === product.title);
 
-            return <Simple product={p} orientation={orientation} image={img} buttonText="En savoir plus" />;
+            return (
+                <div class={`flex flex-col gap-10`} data-observer={"wrapper-8" + i}>
+                    <div class="w-full">
+                        <h2
+                            class="text-4xl text-center opacity-0 translate-y-[100%]"
+                            style={`--reveal-delay : ${200 * i}ms`}>
+                            Pôle {capitalize(pole)}
+                        </h2>
+                    </div>
+                    <article
+                        class={
+                            orientation === "rtl"
+                                ? "vertical xl:horizontal-reverse gap-10"
+                                : "vertical xl:horizontal gap-10"
+                        }>
+                        <div class={`mx-auto`}>
+                            <Image
+                                src={image.src}
+                                alt={image.alt}
+                                width={image.size[0] ?? 500}
+                                height={image.size[1] ?? 500}
+                                class={`aspect-square object-cover rounded-md opacity-0 translate-y-[100%]`}
+                                style={`--reveal-delay : ${200 * i}ms`}
+                            />
+                        </div>
+                        <div
+                            class="vertical gap-5 w-fit opacity-0 translate-y-[100%]"
+                            data-id={id}
+                            style={`--reveal-delay : ${200 * i}ms`}>
+                            <Article
+                                words1={description && capitalize(description)}
+                                pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"}
+                                dark>
+                                {tags && (
+                                    <div class="w-full h-full space-x-4 mt-5 text-left" slot="subtitle">
+                                        {tags.map((tag) => (
+                                            <Badge tag={tag} />
+                                        ))}
+                                    </div>
+                                )}
+                            </Article>
+                            <ul class={`max-w-[50ch]`}>
+                                {price && (
+                                    <li>
+                                        <strong class={`quattrocento-sans-bold`}>Prix</strong> :{" "}
+                                        {typeof price === "string" ? capitalize(price) : price}
+                                    </li>
+                                )}
+                                {locations && (
+                                    <li>
+                                        <strong class={`quattrocento-sans-bold`}>Lieux</strong> :{" "}
+                                        {Array.isArray(locations)
+                                            ? locations.map(capitalize).join(", ")
+                                            : capitalize(locations)}
+                                    </li>
+                                )}
+                                {program && (
+                                    <li>
+                                        <strong class={`quattrocento-sans-bold`}>Programme</strong> :{" "}
+                                        {Array.isArray(program)
+                                            ? program.map(capitalize).join(", ")
+                                            : capitalize(program)}
+                                    </li>
+                                )}
+                                {audience && (
+                                    <li>
+                                        <strong class={`quattrocento-sans-bold`}>Publique</strong> :{" "}
+                                        {capitalize(audience)}
+                                    </li>
+                                )}
+                            </ul>
+                            <footer class="horizontal items-center justify-start gap-10">
+                                <CTA href={`/contact`} prefetch prefetchType="viewport">
+                                    <Button
+                                        ring="sm"
+                                        size="lg"
+                                        variant="outline"
+                                        dark
+                                        className="w-fit font-bold whitespace-nowrap bg-white">
+                                        En savoir plus
+                                    </Button>
+                                </CTA>
+                            </footer>
+                        </div>
+                    </article>
+                </div>
+            );
         })
     }
-</TopSection>
+</ProductSection>

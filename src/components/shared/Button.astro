@@ -2,142 +2,143 @@
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "astro/types";
 interface Props {
-  variant?: "outline" | "filled" | "danger";
-  size?: "sm" | "md" | "lg";
-  ring?: "sm" | "md" | "lg" | "xl";
-  className?: string;
-  dark?: boolean;
-  value?: string;
-  autofocus?: boolean;
-  rest?: Omit<HTMLAttributes<"button">, "class">;
-  type?: HTMLAttributes<"button">["type"];
-  leftIcon?: boolean;
-  rightIcon?: boolean;
-  textClass?: string;
+    variant?: "outline" | "filled" | "danger";
+    size?: "sm" | "md" | "lg";
+    ring?: "sm" | "md" | "lg" | "xl";
+    className?: string;
+    dark?: boolean;
+    value?: string;
+    autofocus?: boolean;
+    rest?: Omit<HTMLAttributes<"button">, "class">;
+    type?: HTMLAttributes<"button">["type"];
+    leftIcon?: boolean;
+    rightIcon?: boolean;
+    textClass?: string;
+    style?: string;
 }
 
 const {
-  className,
-  variant = "outline",
-  dark,
-  size,
-  ring,
-  value,
-  autofocus,
-  type = "button",
-  rightIcon,
-  leftIcon,
-  textClass,
-  ...rest
+    className,
+    variant = "outline",
+    dark,
+    size,
+    ring,
+    value,
+    autofocus,
+    type = "button",
+    rightIcon,
+    leftIcon,
+    textClass,
+    ...rest
 } = Astro.props;
 
 let iconClass;
 const hasIcon = Astro.slots.has("icon");
 if (hasIcon) {
-  iconClass = rightIcon ? "horizontal-reverse justify-between" : leftIcon ? "horizontal justify-between" : "";
+    iconClass = rightIcon ? "horizontal-reverse justify-between" : leftIcon ? "horizontal justify-between" : "";
 }
 
 const variants = {
-  outline: {
-    dark: "text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700",
-    light: "text-white/95 dark:text-black/95 hover:bg-white/80 hover:dark:bg-black/80",
-  },
-  filled: {
-    dark: "text-white/95 dark:text-vlack/95 bg-black dark:bg-white hover:bg-black/90 hover:dark:bg-white/90",
-    light: "text-black dark:text-white dark:bg-black bg-white dark:hover:bg-black/80 hover:bg-white/80",
-  },
-  danger: {
-    dark: "text-red-500 dark:text-red-500 hover:bg-red-500/20 dark:hover:bg-red-500/20",
-    light: "text-red-500 dark:text-red-500 hover:bg-red-500/20 dark:hover:bg-red-500/20",
-  },
-  contact: {},
-  sizes: {
-    sm: "px-3 py-1",
-    md: "px-5 py-2",
-    lg: "px-9 py-2",
-    xl: "px-12 py-3",
-  },
-  rings: {
-    sm: "ring-1",
-    md: "ring-2",
-    lg: "ring-4",
-    xl: "ring-8",
-    dark: "ring-black dark:ring-white",
-    light: "ring-white/95 dark:ring-black/95 ",
-  },
+    outline: {
+        dark: "text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700",
+        light: "text-white/95 dark:text-black/95 hover:bg-white/80 hover:dark:bg-black/80",
+    },
+    filled: {
+        dark: "text-white/95 dark:text-vlack/95 bg-black dark:bg-white hover:bg-black/90 hover:dark:bg-white/90",
+        light: "text-black dark:text-white dark:bg-black bg-white dark:hover:bg-black/80 hover:bg-white/80",
+    },
+    danger: {
+        dark: "text-red-500 dark:text-red-500 hover:bg-red-500/20 dark:hover:bg-red-500/20",
+        light: "text-red-500 dark:text-red-500 hover:bg-red-500/20 dark:hover:bg-red-500/20",
+    },
+    contact: {},
+    sizes: {
+        sm: "px-3 py-1",
+        md: "px-5 py-2",
+        lg: "px-9 py-2",
+        xl: "px-12 py-3",
+    },
+    rings: {
+        sm: "ring-1",
+        md: "ring-2",
+        lg: "ring-4",
+        xl: "ring-8",
+        dark: "ring-black dark:ring-white",
+        light: "ring-white/95 dark:ring-black/95 ",
+    },
 };
 ---
 
 <style>
-  [data-loading="loading"] {
-    position: relative;
-  }
-
-  [data-loading="loading"]::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 50%;
-    border: 2px solid;
-    border-color: currentColor transparent transparent transparent;
-    animation: spin 1s linear infinite;
-  }
-
-  [data-loading="loading"] > [data-is="button-text"] {
-    opacity: 0;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
+    [data-loading="loading"] {
+        position: relative;
     }
 
-    100% {
-      transform: rotate(360deg);
+    [data-loading="loading"]::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        margin-left: -10px;
+        border-radius: 50%;
+        border: 2px solid;
+        border-color: currentColor transparent transparent transparent;
+        animation: spin 1s linear infinite;
     }
-  }
+
+    [data-loading="loading"] > [data-is="button-text"] {
+        opacity: 0;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 
 <button
-  autofocus={autofocus}
-  value={value}
-  data-is="button"
-  type={type}
-  class={cn(
-    "pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold group disabled:pointer-events-none disabled:bg-neutral-300",
-    variants[variant || "outline"][dark ? "dark" : "light"],
-    variants.sizes[size || "md"],
-    ring && variants.rings[ring || "sm"],
-    ring && variants.rings[dark ? "dark" : "light"],
-    iconClass,
-    className
-  )}
-  {...rest}>
-  <div
+    autofocus={autofocus}
+    value={value}
+    data-is="button"
+    type={type}
     class={cn(
-      hasIcon &&
-        "group-focus:opacity-100 group-hover:opacity-100 opacity-0 transition-all group-focus:translate-x-0 group-hover:translate-x-0",
-      rightIcon ? "-translate-x-5" : leftIcon ? "translate-x-5" : ""
-    )}>
-    <slot name="icon" />
-  </div>
-  <div
-    data-is="button-text"
-    class={cn(
-      "translate-y-[1px]",
-      hasIcon && "transition-all",
-      rightIcon
-        ? "group-focus:-translate-x-1 group-hover:-translate-x-1 translate-x-3"
-        : leftIcon
-          ? "group-focus:translate-x-1 group-hover:translate-x-1 -translate-x-3"
-          : "",
-      textClass
-    )}>
-    <slot />
-  </div>
+        "pointer-events-auto cursor-pointer select-none w-fit rounded-md font-semibold group disabled:pointer-events-none disabled:bg-neutral-300",
+        variants[variant || "outline"][dark ? "dark" : "light"],
+        variants.sizes[size || "md"],
+        ring && variants.rings[ring || "sm"],
+        ring && variants.rings[dark ? "dark" : "light"],
+        iconClass,
+        className
+    )}
+    {...rest}>
+    <div
+        class={cn(
+            hasIcon &&
+                "group-focus:opacity-100 group-hover:opacity-100 opacity-0 transition-all group-focus:translate-x-0 group-hover:translate-x-0",
+            rightIcon ? "-translate-x-5" : leftIcon ? "translate-x-5" : ""
+        )}>
+        <slot name="icon" />
+    </div>
+    <div
+        data-is="button-text"
+        class={cn(
+            "translate-y-[1px]",
+            hasIcon && "transition-all",
+            rightIcon
+                ? "group-focus:-translate-x-1 group-hover:-translate-x-1 translate-x-3"
+                : leftIcon
+                  ? "group-focus:translate-x-1 group-hover:translate-x-1 -translate-x-3"
+                  : "",
+            textClass
+        )}>
+        <slot />
+    </div>
 </button>

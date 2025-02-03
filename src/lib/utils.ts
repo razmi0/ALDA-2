@@ -60,14 +60,22 @@ type HandleIntersectionOptions = {
     debugLog?: string;
     onIntersect: () => void;
     onDisappear: () => void;
+    unobserve?: boolean;
 };
 
-const handleIntersection = (entries: IntersectionObserverEntry[], options: HandleIntersectionOptions) => {
-    const { debug = isDev, debugLog, onIntersect, onDisappear } = options;
+const handleIntersection = (
+    observer: IntersectionObserver,
+    entries: IntersectionObserverEntry[],
+    options: HandleIntersectionOptions
+) => {
+    const { debug = isDev, debugLog, onIntersect, onDisappear, unobserve } = options;
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             debug && console.log(`Element ${debugLog} is intersecting`);
             onIntersect();
+            if (unobserve) {
+                observer.unobserve(entry.target);
+            }
         } else {
             onDisappear();
             debug && console.log(`Element ${debugLog} is not intersecting`);
@@ -81,16 +89,24 @@ type SetupObserverProps = {
     threshold?: number;
     onIntersect?: () => void;
     onDisappear?: () => void;
+    unobserve?: boolean;
 };
 
 const voidCb = () => {};
 
 const setupIntersectionObserver = (
     element: HTMLElement,
-    { debug = isDev, debugLog = "", threshold = 0.5, onIntersect = voidCb, onDisappear = voidCb }: SetupObserverProps
+    {
+        debug = isDev,
+        debugLog = "",
+        threshold = 0.5,
+        onIntersect = voidCb,
+        onDisappear = voidCb,
+        unobserve = true,
+    }: SetupObserverProps
 ) => {
-    const options = { debug, debugLog, onIntersect, onDisappear };
-    const observer = new IntersectionObserver((entry) => handleIntersection(entry, options), {
+    const options = { debug, debugLog, onIntersect, onDisappear, unobserve };
+    const observer = new IntersectionObserver((entry) => handleIntersection(observer, entry, options), {
         threshold: threshold,
     });
 

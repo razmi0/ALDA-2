@@ -74,10 +74,12 @@
 
     @keyframes reveal-from-bottom {
         0% {
+            filter: blur(2px);
             transform: translateY(100%);
             opacity: 0;
         }
         100% {
+            filter: blur(0);
             transform: translateY(0);
             opacity: 1;
         }
