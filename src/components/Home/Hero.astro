@@ -15,23 +15,6 @@ import Video from "../HeroVideo.astro";
     }
 </style>
 
-<style>
-    .reveal-from-bottom-fast {
-        animation: reveal-from-bottom 1s ease-out forwards;
-    }
-
-    .reveal-from-bottom-slow {
-        animation: reveal-from-bottom 1s ease-out 0.5s forwards;
-    }
-
-    @keyframes reveal-from-bottom {
-        100% {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-</style>
-
 <script>
     import { setupIntersectionObserver } from "@/lib/utils";
 

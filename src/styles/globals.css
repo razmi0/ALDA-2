@@ -62,4 +62,19 @@
         opacity: 0.3; /* Adjust opacity here */
         z-index: -1; /* Place it behind the content */
     }
+
+    .reveal-from-bottom-fast {
+        animation: reveal-from-bottom 1s ease-out forwards;
+    }
+
+    .reveal-from-bottom-slow {
+        animation: reveal-from-bottom 1s ease-out 0.5s forwards;
+    }
+
+    @keyframes reveal-from-bottom {
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
 }
