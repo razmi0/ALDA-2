@@ -64,11 +64,11 @@
     }
 
     .reveal-from-bottom-base {
-        animation: reveal-from-bottom 1s ease-out forwards;
+        animation: reveal-from-bottom 0.8s ease-out forwards;
     }
 
     .reveal-from-bottom-delayed {
-        animation: reveal-from-bottom 1s ease-out forwards;
+        animation: reveal-from-bottom 0.8s ease-out forwards;
         animation-delay: var(--reveal-delay);
     }
 
