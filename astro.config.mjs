@@ -11,18 +11,35 @@ import sitemap from "@astrojs/sitemap";
 const OFFLINE_PROD = import.meta.env.PROD && false;
 
 // https://astro.build/config
-
-const maintenancyRedirections = {
-    "/": "/maintenance",
-    "/contact": "/maintenance",
-    "/activites": "/maintenance",
-    "/faq": "/maintenance",
-    "/nous": "/maintenance",
+const robotConfig = {
+    forbiddenPaths: ["/honey", "/maintenance"],
+    sitemapsUrl: ["https://alabordarbre.fr/sitemap-index.xml", "https://alabordarbre.fr/sitemap-0.xml"],
+    policy: [
+        {
+            userAgent: "*",
+            allow: "/",
+            disallow: ["/honey", "/maintenance"],
+        },
+    ],
+};
+const redirections = {
+    offline: {
+        "/": "/maintenance",
+        "/contact": "/maintenance",
+        "/activites": "/maintenance",
+        "/faq": "/maintenance",
+        "/nous": "/maintenance",
+        "/honey": "/maintenance",
+    },
+    online: {
+        "/maintenance": "/",
+        "/honey": "/",
+    },
 };
 
 export default defineConfig({
     site: "https://alabordarbre.fr",
-    redirects: OFFLINE_PROD ? maintenancyRedirections : {},
+    redirects: OFFLINE_PROD ? redirections.offline : redirections.online,
     integrations: [
         react(),
         tailwind({
@@ -35,22 +52,15 @@ export default defineConfig({
              * @returns {boolean}
              */
             filter: (page) => {
-                const forbiddenPaths = ["/honey", "/maintenance"];
                 const url = new URL(page);
-                const crawlable = !forbiddenPaths.some((path) => url.pathname.startsWith(path));
+                const crawlable = !robotConfig.forbiddenPaths.some((path) => url.pathname.startsWith(path));
                 console.log("[Generating sitemap] ", page, crawlable ? "crawlable" : "not crawlable");
                 return crawlable;
             },
         }),
         robotsTxt({
-            sitemap: ["https://alabordarbre.fr/sitemap-index.xml", "https://alabordarbre.fr/sitemap-0.xml"],
-            policy: [
-                {
-                    userAgent: "*",
-                    allow: "/",
-                    disallow: ["/honey", "/maintenance"],
-                },
-            ],
+            sitemap: robotConfig.sitemapsUrl,
+            policy: robotConfig.policy,
         }),
     ],
 
