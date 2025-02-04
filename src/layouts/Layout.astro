@@ -18,12 +18,35 @@ const allowIndexing = Astro.url.pathname !== "/maintenance" && Astro.url.pathnam
 
 <html lang="en" class={className}>
     <head>
+        <meta name="author" />
         <SEO
             noindex={!allowIndexing}
+            nofollow={!allowIndexing}
             canonical={"https://alabordarbre.fr"}
             charset="UTF-8"
             title={`${title.charAt(0).toUpperCase() + title.slice(1)} - Alabordarbre`}
             description={description}
+            openGraph={{
+                basic: {
+                    title: "Alabordarbre – Grimpe et escalade d’arbre à Toulouse | Animations & Événements",
+                    image: "https://alabordarbre.fr/og-img.webp",
+                    type: "website",
+                    url: "https://alabordarbre.fr",
+                },
+                optional: {
+                    locale: "fr_FR",
+                    siteName: "alabordarbre",
+                    description: "Grimpe et escalade d’arbre à Toulouse | Animations & Événements",
+                    video: "https://www.alabordarbre.fr/catch/catch.mp4",
+                },
+                image: {
+                    url: "https://alabordarbre.fr/og-img.webp",
+                    alt: "Alabordarbre",
+                    width: 600,
+                    height: 315,
+                    type: "image/webp",
+                },
+            }}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
