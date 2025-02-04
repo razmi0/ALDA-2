@@ -18,7 +18,11 @@ const allowIndexing = Astro.url.pathname !== "/maintenance" && Astro.url.pathnam
 
 <html lang="en" class={className}>
     <head>
-        <meta name="author" />
+        <meta name="author" content="Alabordarbre" />
+        <meta
+            name="keywords"
+            content="sport, escalade, grimpeur, nature, grimpe d'arbre, escalade d'arbre, animations, événements, aventure en forêt, Toulouse, Midi-Pyrénées, loisirs en plein air, recherche environnementale"
+        />
         <SEO
             noindex={!allowIndexing}
             nofollow={!allowIndexing}
