@@ -7,7 +7,7 @@ const links = [
 ];
 ---
 
-<ul class="horizontal gap-3 sm:gap-10">
+<ul class="horizontal gap-3 sm:gap-10 pe-5">
     {
         links.map((l) => {
             const { href, label, Icon } = l;
@@ -21,28 +21,4 @@ const links = [
             );
         })
     }
-    <!-- <li>
-        <a href="/">
-            <Youtube className={"w-6 h-6 stroke-1"} />
-            <span class="sr-only">youtube link</span>
-        </a>
-    </li>
-    <li>
-        <a href="/">
-            <Linkedin className={"w-5 h-5 stroke-1"} />
-            <span class="sr-only">Linkedin link</span>
-        </a>
-    </li>
-    <li>
-        <Instagram className={"w-5 h-5 stroke-1"} />
-        <a href="/">
-            <span class="sr-only">Instagram link</span>
-        </a>
-    </li>
-    <li>
-        <a href="/">
-            <Facebook className={"w-5 h-5 stroke-1"} />
-            <span class="sr-only">Facebook link</span>
-        </a>
-    </li> -->
 </ul>
