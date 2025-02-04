@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+    :root {
+        @supports (interpolate-size: allow-keywords) {
+            interpolate-size: allow-keywords;
+        }
+    }
+
     * {
         scrollbar-color: #f0f3f2;
         scrollbar-width: thin;
