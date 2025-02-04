@@ -9,7 +9,6 @@
         "build": "astro check && astro build",
         "preview": "astro preview",
         "astro": "astro",
-        "lint": "eslint ./src/**/*.{astro,ts,tsx}",
         "check": "astro check",
         "knip": "knip"
     },
@@ -38,7 +37,6 @@
     },
     "devDependencies": {
         "@types/node": "^22.13.1",
-        "eslint": "^8.57.1",
         "knip": "^5.43.6",
         "typescript": "^5.7.3"
     }
