@@ -15,6 +15,9 @@ import Vijay from "@/assets/vijay.jpeg";
 import Lou from "@/assets/lou.jpeg";
 import ForestMask from "@/components/Home/Forest/ForestMask.astro";
 
+const description =
+    "Découvrez Alabordarbre, son équipe de grimpeurs passionnés et son engagement pour l’escalade de plein air, à l'air libre et la grimpe d’arbre. Entreprise basée à Toulouse, alliant animation, événementiel et recherche pour une approche unique de cette discipline.";
+
 const missions = [
     {
         title: "",
@@ -83,7 +86,7 @@ const introduction = {
     }
 </style>
 
-<Layout title="nous" className="bg-pattern" description="">
+<Layout title="nous" className="bg-pattern" description={description}>
     <Header slot="header" />
     <Section size="half" extension="md" className="vertical items-center justify-center mt-28 sm:mt-14 px-3 sm:px-15">
         <div class="vertical items-start w-fit gap-5 mt-32" transition:name="heading">

@@ -19,6 +19,9 @@ const adresse = {
     title: "Notre adresse",
     content: ["8 Chemin de Castelviel", "Goyrans", "31120"],
 };
+
+const description =
+    "Contactez Alabordarbre pour organiser vos animations, événements ou projets de recherche en grimpe d’arbre. Basés à Toulouse, nous répondons à toutes vos demandes avec passion et professionnalisme. Vive la grimpe, grimpeurs et grimpeuses.";
 ---
 
 <script>
@@ -79,7 +82,7 @@ const adresse = {
     }
 </script>
 
-<Layout title="contact" className="bg-pattern" description="">
+<Layout title="contact" className="bg-pattern" description={description}>
     <Header slot="header" />
     <Section
         data-action={`section-message#${key}`}

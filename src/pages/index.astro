@@ -6,9 +6,12 @@ import ForestMask from "@/components/Home/Forest/ForestMask.astro";
 import Hero from "@/components/Home/Hero.astro";
 import Products from "@/components/Home/Product/Products.astro";
 import Layout from "@/layouts/Layout.astro";
+
+const description =
+    "Découvrez Alabordarbre, grimpeurs chevronnés, spécialiste de la grimpe et de l'escalade d'arbre à l'air libre, de plein air, en Midi-Pyrénées. Organisation d'animations, événements et recherche pour tous les publics à Toulouse et ses environs. Organiser des expériences uniques en pleine nature dans le respect !";
 ---
 
-<Layout title="accueil" className="max-w-screen" description="">
+<Layout title="accueil" className="max-w-screen" description={description}>
     <Hero slot="header" />
     <CatchSection />
     <ForestMask loading="lazy" className="bg-map-dark" type="white" />

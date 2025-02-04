@@ -7,9 +7,12 @@ import CTA from "@/components/shared/CTA.astro";
 import Section from "@/layouts/Section.astro";
 import { ArrowDown } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
+
+const description =
+    "Trouvez les réponses à vos questions sur la grimpe d’arbre, nos animations, événements et projets de recherche. Consultez notre foire aux questions pour en savoir plus sur Alabordarbre.";
 ---
 
-<Layout title="FAQ" className="bg-pattern" description="">
+<Layout title="FAQ" className="bg-pattern" description={description}>
     <Header slot="header" />
     <Section className={"vertical items-center justify-start gap-0 mt-36"} size="full" extension="xl">
         <div class="text-center vertical center mb-20 px-5" transition:name="heading">
