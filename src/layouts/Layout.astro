@@ -14,21 +14,34 @@ interface Props {
 const { title, className, description } = Astro.props;
 
 const allowIndexing = Astro.url.pathname !== "/maintenance" && Astro.url.pathname !== "/honey";
+const metaKeys = [
+    "sport",
+    "escalade",
+    "grimpeur",
+    "nature",
+    "grimpe d'arbre",
+    "escalade d'arbre",
+    "animations",
+    "événements",
+    "aventure en forêt",
+    "Toulouse",
+    "Midi-Pyrénées",
+    "loisirs en plein air",
+    "recherche environnementale",
+];
+const metaTitle = title.charAt(0).toUpperCase() + title.slice(1) + " - Alabordarbre";
 ---
 
 <html lang="en" class={className}>
     <head>
         <meta name="author" content="Alabordarbre" />
-        <meta
-            name="keywords"
-            content="sport, escalade, grimpeur, nature, grimpe d'arbre, escalade d'arbre, animations, événements, aventure en forêt, Toulouse, Midi-Pyrénées, loisirs en plein air, recherche environnementale"
-        />
+        <meta name="keywords" content={metaKeys.join(", ")} />
         <SEO
             noindex={!allowIndexing}
             nofollow={!allowIndexing}
             canonical={"https://alabordarbre.fr"}
             charset="UTF-8"
-            title={`${title.charAt(0).toUpperCase() + title.slice(1)} - Alabordarbre`}
+            title={metaTitle}
             description={description}
             openGraph={{
                 basic: {
@@ -40,7 +53,7 @@ const allowIndexing = Astro.url.pathname !== "/maintenance" && Astro.url.pathnam
                 optional: {
                     locale: "fr_FR",
                     siteName: "alabordarbre",
-                    description: "Grimpe et escalade d’arbre à Toulouse | Animations & Événements",
+                    description: description,
                     video: "https://www.alabordarbre.fr/catch/catch.mp4",
                 },
                 image: {
