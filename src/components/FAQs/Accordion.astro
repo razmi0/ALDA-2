@@ -1,0 +1,42 @@
+---
+import { ChevronDown } from "lucide-react";
+import rawFaqs from "@/components/FAQs/faq.json" assert { type: "json" };
+
+interface Props {
+    single?: boolean;
+}
+
+const { single } = Astro.props;
+let name: string;
+if (single) {
+    name = "single";
+}
+---
+
+<style>
+    details[open] {
+        height: auto;
+        overflow: hidden;
+    }
+</style>
+<div class={`space-y-5`}>
+    {
+        rawFaqs.faqs.map((faq) => (
+            <details
+                name={name}
+                class={`h-16 pb-2 transition-all border rounded-md px-3 bg-gray-100 cursor-pointer [&[open]_svg]:rotate-180`}>
+                <summary
+                    id={faq.id}
+                    class={`h-16 horizontal justify-start items-center text-lg quattrocento-sans-bold transition-all hover:underline`}>
+                    <span class="mr-5" aria-description="Question number">
+                        Q{faq.id}
+                    </span>
+                    <h4>{faq.question}</h4>
+                    <div class={`grow`} />
+                    <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-150" />
+                </summary>
+                <p class={`font-medium bg-[#fdfdfd] rounded-md px-3 py-2 transition-all`}>{faq.answer}</p>
+            </details>
+        ))
+    }
+</div>

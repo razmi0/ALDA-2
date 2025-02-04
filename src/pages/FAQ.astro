@@ -1,11 +1,11 @@
 ---
-import SearchableAccordion from "@/components/FAQs/Accordion";
+import Accordion from "@/components/FAQs/Accordion.astro";
 import rawFaqs from "@/components/FAQs/faq.json" assert { type: "json" };
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Nav/Header.astro";
 import CTA from "@/components/shared/CTA.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ChevronDown, ListCollapse, SearchIcon } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const description =
@@ -24,7 +24,143 @@ const description =
             <ArrowDown size="32" />
         </div>
         <div class="px-5 md:px-0 w-full md:w-9/12 h-full vertical justify-end">
-            <SearchableAccordion client:visible faqs={rawFaqs.faqs} />
+            <script>
+                const SEARCH_THRESHOLD = 2;
+                const DIACRITICS: Record<string, string> = {
+                    È: "e",
+                    É: "e",
+                    Ê: "e",
+                    Ë: "e",
+                    è: "e",
+                    é: "e",
+                    ê: "e",
+                    ë: "e",
+                    à: "a",
+                    á: "a",
+                    â: "a",
+                    ã: "a",
+                    ä: "a",
+                    å: "a",
+                    æ: "a",
+                    À: "a",
+                    Á: "a",
+                    Â: "a",
+                    Ã: "a",
+                    Ä: "a",
+                    Å: "a",
+                    Æ: "a",
+                    Ù: "u",
+                    Ú: "u",
+                    Û: "u",
+                    Ü: "u",
+                    ù: "u",
+                    ú: "u",
+                    û: "u",
+                    ü: "u",
+                    Ì: "i",
+                    Í: "i",
+                    Î: "i",
+                    Ï: "i",
+                    ì: "i",
+                    í: "i",
+                    î: "i",
+                    ï: "i",
+                    Ÿ: "y",
+                    ÿ: "y",
+                    Ò: "o",
+                    Ó: "o",
+                    Ô: "o",
+                    Õ: "o",
+                    Ö: "o",
+                    Ø: "o",
+                    ò: "o",
+                    ó: "o",
+                    ô: "o",
+                    õ: "o",
+                    ö: "o",
+                    ø: "o",
+                } as const;
+
+                let open = false; // controlled state of all details
+                const details = Array.from(document.querySelectorAll("details")) as HTMLDetailsElement[];
+                const searchInput = document.getElementById("searchInput") as HTMLInputElement;
+
+                // button to toggle all details business
+                document.querySelector("button#toggle-all").addEventListener("click", () => {
+                    open = !open;
+                    details.forEach((detail, i) => {
+                        // detail.name = name + i;
+                        detail.open = open;
+                        if (open === false) {
+                            // detail.name = name;
+                        }
+                    });
+                });
+
+                // normalize all strings for further comparison
+                const replaceDiacritics = (str: string) =>
+                    str.replace(/[^A-Za-z0-9]/g, (char) => DIACRITICS[char] || char);
+
+                // retrieve all faqs from dom ( server -> html -> dom -> current script )
+                const faqs = details.map((detail) => {
+                    const faq = {
+                        detail,
+                        id: detail.querySelector("summary")?.id,
+                        question: detail.querySelector("h4")?.textContent,
+                        answer: replaceDiacritics(detail.querySelector("p")?.textContent),
+                    };
+
+                    return faq;
+                });
+
+                // toggle visibility of details based on search input
+                searchInput.addEventListener("input", (e) => {
+                    const input = e.target as HTMLInputElement;
+                    const value = input.value.trim();
+
+                    if (value.length <= SEARCH_THRESHOLD) {
+                        faqs.forEach((faq) => {
+                            faq.detail.hidden = false;
+                        });
+                        return;
+                    }
+
+                    const search = replaceDiacritics(value);
+
+                    faqs.forEach((faq) => {
+                        const match = faq.answer.includes(search);
+                        console.log(faq.answer, match);
+                        faq.detail.hidden = !match;
+                    });
+                });
+            </script>
+
+            <search className="horizontal mb-10">
+                <div class="vertical grow">
+                    <label class="font-medium text-gray-700" for="searchInput"> Chercher par mots-clés : </label>
+                    <div class="relative w-full mr-2">
+                        <!-- onChange={handleSearch} -->
+                        <input
+                            id="searchInput"
+                            type="text"
+                            placeholder="Entrer un mot-clé.."
+                            class="w-full py-2 pt-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                        />
+                        <SearchIcon
+                            className="absolute w-5 h-5 text-gray-400 left-3 top-1/2 transition-colors -translate-y-[110%]"
+                        />
+                        <!-- onClick={toggleAll} -->
+                        <button type="button" id="toggle-all">
+                            <ListCollapse
+                                className={`absolute w-6 h-6 right-3 top-1/2 transition-colors -translate-y-[100%] ${0 ? "text-green-600 hover:text-green-500" : "text-gray-400 hover:text-gray-300"}`}
+                            />
+                        </button>
+                    </div>
+                </div>
+            </search>
+
+            <!-- DETAILS  -->
+            <Accordion single />
         </div>
         <Section size="quarter" className={"vertical center mb-10 px-3"}>
             <div class="sm:flex sm:gap-3 justify-center items-center">
