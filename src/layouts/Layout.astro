@@ -12,9 +12,10 @@ interface Props {
 }
 
 const { title, className, description } = Astro.props;
-
+const metaTitle = title.charAt(0).toUpperCase() + title.slice(1) + " - Alabordarbre";
+// SEO
 const allowIndexing = Astro.url.pathname !== "/maintenance" && Astro.url.pathname !== "/honey";
-const metaKeys = [
+const metaKeywords = [
     "sport",
     "escalade",
     "grimpeur",
@@ -29,13 +30,17 @@ const metaKeys = [
     "loisirs en plein air",
     "recherche environnementale",
 ];
-const metaTitle = title.charAt(0).toUpperCase() + title.slice(1) + " - Alabordarbre";
+const ogTitle = "Alabordarbre – Grimpe et escalade d’arbre à Toulouse | Animations & Événements";
+const ogImg = "https://alabordarbre.fr/og-img.webp"; // webp please
+const ogVideo = "https://www.alabordarbre.fr/catch/catch.mp4";
+const ogDesc =
+    "Escalade et grimpe d'arbre en pleine nature à Toulouse. Activités sportives et animations pour tous les âges.";
 ---
 
 <html lang="en" class={className}>
     <head>
         <meta name="author" content="Alabordarbre" />
-        <meta name="keywords" content={metaKeys.join(", ")} />
+        <meta name="keywords" content={metaKeywords.join(", ")} />
         <SEO
             noindex={!allowIndexing}
             nofollow={!allowIndexing}
@@ -45,20 +50,20 @@ const metaTitle = title.charAt(0).toUpperCase() + title.slice(1) + " - Alabordar
             description={description}
             openGraph={{
                 basic: {
-                    title: "Alabordarbre – Grimpe et escalade d’arbre à Toulouse | Animations & Événements",
-                    image: "https://alabordarbre.fr/og-img.webp",
+                    title: ogTitle,
+                    image: ogImg,
                     type: "website",
                     url: "https://alabordarbre.fr",
                 },
                 optional: {
                     locale: "fr_FR",
                     siteName: "alabordarbre",
-                    description: description,
-                    video: "https://www.alabordarbre.fr/catch/catch.mp4",
+                    description: ogDesc,
+                    video: ogVideo,
                 },
                 image: {
-                    url: "https://alabordarbre.fr/og-img.webp",
-                    alt: "Alabordarbre",
+                    url: ogImg,
+                    alt: "carte alabordarbre",
                     width: 600,
                     height: 315,
                     type: "image/webp",
@@ -66,7 +71,7 @@ const metaTitle = title.charAt(0).toUpperCase() + title.slice(1) + " - Alabordar
             }}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.png" />
         <meta name="generator" content={Astro.generator} />
         <AstroFont
             config={[
