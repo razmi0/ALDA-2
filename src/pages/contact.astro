@@ -1,5 +1,5 @@
 ---
-import Message from "@/components/Activité/Form/Message.astro";
+import Message from "@/components/Form/Message.astro";
 import Button from "@/components/shared/Button.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Nav/Header.astro";
@@ -25,6 +25,7 @@ const description =
 ---
 
 <script>
+    import { jsx } from "astro/jsx-runtime";
     import { actions } from "astro:actions";
 
     const submitButton = document.querySelector("button[type=submit]");
@@ -54,7 +55,7 @@ const description =
 
     function createToaster(message: string, type = "info", duration = 5000) {
         const toaster = document.createElement("div");
-        toaster.textContent = message;
+        toaster.innerHTML = `<p>${message}</p>`;
         toaster.className = `toaster toaster-${type}`;
 
         Object.assign(toaster.style, {

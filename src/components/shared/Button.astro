@@ -32,7 +32,7 @@ const {
     ...rest
 } = Astro.props;
 
-let iconClass;
+let iconClass: string;
 const hasIcon = Astro.slots.has("icon");
 if (hasIcon) {
     iconClass = rightIcon ? "horizontal-reverse justify-between" : leftIcon ? "horizontal justify-between" : "";

@@ -34,27 +34,6 @@ const needDOM = <T>(selector: string, multiple: { multiple?: boolean | undefined
     return elements as typeof multiple extends { multiple: true } ? T[] : T;
 };
 
-const getFromLS = (key: string) => {
-    if (typeof window === "undefined") {
-        return null;
-    }
-    return localStorage.getItem(key);
-};
-
-const setToLS = (key: string, value: string) => {
-    if (typeof window === "undefined") {
-        return;
-    }
-    localStorage.setItem(key, value);
-};
-
-const hasProp = <T extends object, K extends PropertyKey>(
-    obj: T,
-    prop: K
-): obj is Extract<T, { [P in K]?: unknown }> => {
-    return prop in obj;
-};
-
 type HandleIntersectionOptions = {
     debug?: boolean;
     debugLog?: string;
@@ -113,23 +92,6 @@ const setupIntersectionObserver = (
     observer.observe(element);
 };
 
-const securePath = (e: Event, allowedPath: string[]) => {
-    const path = (e.target as Window).location.pathname as string;
-    if (!allowedPath.includes(path)) return false;
-    return true;
-};
-
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-export {
-    capitalize,
-    cn,
-    generateLorem,
-    getFromLS,
-    hasProp,
-    isDev,
-    needDOM,
-    securePath,
-    setToLS,
-    setupIntersectionObserver,
-};
+export { capitalize, cn, generateLorem, setupIntersectionObserver };

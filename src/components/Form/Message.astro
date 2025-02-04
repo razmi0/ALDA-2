@@ -1,6 +1,6 @@
 ---
 import type { ProductType } from "@/components/shared/product-data/types";
-import type { OptionType } from "@/components/Activité/types";
+
 import Checkbox from "@/components/ui/checkbox.astro";
 import { cn } from "@/lib/utils";
 import Info from "./Info.astro";
@@ -12,7 +12,11 @@ interface Props {
     emailClass?: string;
     textareaClass?: string;
 }
-
+type OptionType = {
+    label: string;
+    value: string;
+    description?: string;
+};
 const option: OptionType = {
     label: "je souhaite etre recontacté",
     value: "recontact",

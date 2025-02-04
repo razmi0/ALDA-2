@@ -1,13 +1,18 @@
 ---
-import Info from "../Activité/Form/Info.astro";
-import type { OptionType } from "../Activité/types";
+import Info from "../Form/Info.astro";
+
+type OptionType = {
+    label: string;
+    value: string;
+    description?: string;
+};
 interface Props {
-  option: OptionType;
-  key?: string | number;
+    option: OptionType;
+    key?: string | number;
 }
 
 const inpCl =
-  "w-full inline-flex h-10 justify-between items-center whitespace-nowrap text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-normal";
+    "w-full inline-flex h-10 justify-between items-center whitespace-nowrap text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-normal";
 
 const { option, key } = Astro.props;
 
@@ -15,18 +20,18 @@ const pair = key ? option.value + key : option.value + Math.random().toString(36
 ---
 
 <div class="py-1 ps-3">
-  <div
-    class={`${inpCl} ${option.description ? "pt-1" : "py-1"} ps-2 has-[:checked]:bg-zinc-100 has-[:checked]:text-zinc-900`}>
-    <label for={pair} class="cursor-pointer horizontal items-center gap-3 text-sm w-full h-full">
-      <input
-        type="checkbox"
-        value={option.value}
-        id={pair}
-        name={option.value}
-        class="accent-slate-700 h-5 w-5 cursor-pointer"
-      />
-      <span class="first-letter:uppercase translate-y-[1px]">{option.label}</span>
-    </label>
-  </div>
-  {option.description && <Info text={option.description} className="ps-2" />}
+    <div
+        class={`${inpCl} ${option.description ? "pt-1" : "py-1"} ps-2 has-[:checked]:bg-zinc-100 has-[:checked]:text-zinc-900`}>
+        <label for={pair} class="cursor-pointer horizontal items-center gap-3 text-sm w-full h-full">
+            <input
+                type="checkbox"
+                value={option.value}
+                id={pair}
+                name={option.value}
+                class="accent-slate-700 h-5 w-5 cursor-pointer"
+            />
+            <span class="first-letter:uppercase translate-y-[1px]">{option.label}</span>
+        </label>
+    </div>
+    {option.description && <Info text={option.description} className="ps-2" />}
 </div>

@@ -1,11 +1,10 @@
 ---
 import Accordion from "@/components/FAQs/Accordion.astro";
-import rawFaqs from "@/components/FAQs/faq.json" assert { type: "json" };
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Nav/Header.astro";
 import CTA from "@/components/shared/CTA.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown, ChevronDown, ListCollapse, SearchIcon } from "lucide-react";
+import { ArrowDown, ListCollapse, SearchIcon } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const description =
@@ -88,7 +87,7 @@ const description =
                 // button to toggle all details business
                 document.querySelector("button#toggle-all").addEventListener("click", () => {
                     open = !open;
-                    details.forEach((detail, i) => {
+                    details.forEach((detail) => {
                         // detail.name = name + i;
                         detail.open = open;
                         if (open === false) {

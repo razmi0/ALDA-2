@@ -9,12 +9,12 @@ export interface ProductData {
     products: Product[];
 }
 
-export interface Poles {
+interface Poles {
     available: number[];
     all: All[];
 }
 
-export interface All {
+interface All {
     id: number;
     label: string;
 }
@@ -32,7 +32,7 @@ export interface Product {
     subproducts?: Subproduct[];
 }
 
-export interface Subproduct {
+interface Subproduct {
     id: number;
     title: string;
     theme: string;
