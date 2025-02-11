@@ -5,19 +5,19 @@ import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 
 const p1 =
-  "Grimper dans les arbres pour partager un moment hors du temps au sein de la forêt et la canopée , rencontrer ses êtres végétaux qui nous côtoient dans  notre quotidien. Les arbres nous accueillent toutes et tous pour nous faire vivre une expérience unique, se reconnecter au vivant, et retrouver les plaisirs simple de la vie.";
+    "Grimper dans les arbres pour partager un moment hors du temps au sein de la forêt et la canopée , rencontrer ses êtres végétaux qui nous côtoient dans  notre quotidien. Les arbres nous accueillent toutes et tous pour nous faire vivre une expérience unique, se reconnecter au vivant, et retrouver les plaisirs simple de la vie.";
 const p2 =
-  "Alors, la prochaine fois que vous croiserez un arbre aux branches accueillantes, n'hésitez pas à grimper. Laissez-vous guider par ses branches, élevez-vous vers la lumière et offrez-vous un moment de pure magie au cœur de la forêt.";
+    "Alors, la prochaine fois que vous croiserez un arbre aux branches accueillantes, n'hésitez pas à grimper. Laissez-vous guider par ses branches, et offrez-vous un moment de pure magie au cœur de la forêt.";
 const title = "Quand les arbres nous accueillent...";
 ---
 
 <div class="w-fit h-fit vertical px-6 sm:px-12 gap-10">
-  <div class="vertical items-start gap-6 z-10">
-    <Article words1={p1} words2={p2} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/60"} title={title}>
-      <BirdIcon />
-    </Article>
-  </div>
-  <CTA href="/contact">
-    <Button dark={false} size="lg" className="z-50 hover:bg-white/20 transition-colors" ring="sm">Contact</Button>
-  </CTA>
+    <div class="vertical items-start gap-6 z-10">
+        <Article words1={p1} words2={p2} className="max-w-[50ch]" pClass={"max-w-[50ch] text-white/60"} title={title}>
+            <BirdIcon />
+        </Article>
+    </div>
+    <CTA href="/contact">
+        <Button dark={false} size="lg" className="z-50 hover:bg-white/20 transition-colors" ring="sm">Contact</Button>
+    </CTA>
 </div>
