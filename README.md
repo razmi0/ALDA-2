@@ -14,3 +14,10 @@
     }
 }
 ```
+
+## client changes
+
+- [ ] photo initiation à changer.
+- [ ] Pourquoi la grimpe d'arbre dans catch section.
+- [ ] fondu contour photo
+- [ ] guillemet qui ferme sur les citations perso
