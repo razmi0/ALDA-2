@@ -78,7 +78,7 @@ const setupIntersectionObserver = (
     {
         debug = isDev,
         debugLog = "",
-        threshold = 0.5,
+        threshold = 0.2,
         onIntersect = voidCb,
         onDisappear = voidCb,
         unobserve = true,

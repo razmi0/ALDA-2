@@ -29,8 +29,8 @@
             "description": "nous proposerons des animations lors d'événements locaux (atelier de grimpe simple, aménagement d'espace convivial perché, atelier à sensations fortes), mais aussi la création d'ateliers sur mesure pour tout type de festivals, les anniversaires, les enterrements de vie de jeunes filles ou de garçons, etc. Nous avons également pour projet de proposer nos propres événements avec des partenaires par la suite.",
             "price": "nous contacter afin d'établir un devis",
             "program": "sur-mesure pour vous",
-            "audience": "tout publique",
-            "locations": "en cours de convention, si vous avez un déjà un lieu a nous proposer nous nous déplaçons. Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres , et établir une convention pour autorisation d'usage du site ainsi que l'installation et l'encadrement de l'animation"
+            "audience": "tout public",
+            "locations": "en cours de convention, si vous avez déjà un lieu à nous proposer nous nous déplaçons. Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres, et l'établissement d'une convention pour autorisation d'usage du site ainsi que l'installation et l'encadrement de l'animation."
         },
         {
             "id": 2,
@@ -39,8 +39,8 @@
             "tags": ["échange", "bienveillance", "éducation"],
             "description": "nous souhaitons mettre en place des ateliers sensoriels, adaptés aux jeunes enfants et aux personnes en situation de handicap, tels que des après-midi « bibliothèque perchée », de l’éveil-musical en filet, des siestes aériennes musicales, ou des lectures de contes. Sur du plus long terme, nous souhaitons également travailler avec les écoles et avec les communes pour organiser des ateliers de sensibilisation sur la protection de l'environnement.",
             "price": "nous contacter afin d'établir un devis",
-            "audience": "tout publique",
-            "locations": "en cours de convention, si vous souhaitez réaliser une activité au sein de votre structure, contactez-nous pour que nous puissions réaliser un repérage (comprend une étude de faisabilité et un diagnostic des arbres) , puis établir une convention d'occupation pour autorisation d'usage du site.",
+            "audience": "tout public",
+            "locations": "en cours de convention, si vous souhaitez réaliser une activité au sein de votre structure, contactez-nous pour que nous puissions réaliser un repérage (comprend une étude de faisabilité et un diagnostic des arbres), puis l'établissement d'une convention d'occupation pour autorisation d'usage du site.",
             "program": "sur-mesure pour vous"
         },
         {
@@ -49,7 +49,7 @@
             "pole": "recherche",
             "description": "pour compléter la veille scientifique que nous menons sur les bienfaits psychologiques de la grimpe d'arbre, nous aimerions développer des projets de recherche en partenariat avec les universités pour enrichir la littérature scientifique sur ce sujet. Enfin, ce pôle permettra également d'intervenir sur des projets de recherche existants concernant la faune et la flore des milieux forestiers (inventaire, suivi d'espèces protégées, installation de matériel tel que des pièges photos, etc.).",
             "price": "nous contacter afin d'établir un devis",
-            "locations": "nous nous déplaçons sur le lieu ou vous avez besoin de nos compétences. Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres , et établir une convention pour autorisation d'usage du site ainsi que l'installation de matériel, etc..."
+            "locations": "nous nous déplaçons sur le lieu où vous avez besoin de nos compétences. Notre déplacement comprend une étude de faisabilité, un diagnostic des arbres, et l'établissement d'une convention pour autorisation d'usage du site ainsi que l'installation de matériel, etc..."
         },
 
         {
@@ -61,7 +61,7 @@
                     "id": 1,
                     "title": "initiation",
                     "theme": "ateliers découverte et sensations",
-                    "description": "Nous offrons des ateliers immersifs et dynamiques tels que la découverte de la grimpe d’arbre ou des expériences à sensations fortes comme la tyrolienne, le pont de singe, le filet, ou encore le saut pendulaire. Ces activités, proposées sur des formats adaptés (2h30 à 3 jours), visent à éveiller la curiosité, se déconnecter du quotidien et repartir avec une envie renouvelée d’explorer et de se dépasser."
+                    "description": "Nous offrons des ateliers immersifs et dynamiques telles que la découverte de la grimpe d’arbre ou des expériences à sensations fortes comme la tyrolienne, le pont de singe, le filet, ou encore le saut pendulaire. Ces activités, proposées sur des formats adaptés (2 h 30 à 3 jours), visent à éveiller la curiosité, se déconnecter du quotidien et repartir avec une envie renouvelée d’explorer et de se dépasser."
                 },
                 {
                     "id": 2,

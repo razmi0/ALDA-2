@@ -17,8 +17,8 @@ const description =
         <div class="text-center vertical center mb-20 px-5" transition:name="heading">
             <h2 class="text-5xl uppercase mb-5">Questions fréquentes</h2>
             <p class="max-w-[50ch] mb-5 text-[1rem] text-balance">
-                Retrouvez la plupart des questions et réponses que vous vous posez sur le fonctionnement de
-                l'association, qui nous sommes, comment payer ou encore comment rejoindre le lieu de grimpe
+                Retrouvez les réponses aux questions fréquentes sur notre fonctionnement, notre identité, les modalités
+                de paiement et l'accès au lieu de grimpe.
             </p>
             <ArrowDown size="32" />
         </div>
@@ -84,18 +84,6 @@ const description =
                 const details = Array.from(document.querySelectorAll("details")) as HTMLDetailsElement[];
                 const searchInput = document.getElementById("searchInput") as HTMLInputElement;
 
-                // button to toggle all details business
-                document.querySelector("button#toggle-all").addEventListener("click", () => {
-                    open = !open;
-                    details.forEach((detail) => {
-                        // detail.name = name + i;
-                        detail.open = open;
-                        if (open === false) {
-                            // detail.name = name;
-                        }
-                    });
-                });
-
                 // normalize all strings for further comparison
                 const replaceDiacritics = (str: string) =>
                     str.replace(/[^A-Za-z0-9]/g, (char) => DIACRITICS[char] || char);
@@ -135,7 +123,7 @@ const description =
             </script>
 
             <search className="horizontal mb-10">
-                <div class="vertical grow">
+                <div class="vertical grow mb-5">
                     <label class="font-medium text-gray-700" for="searchInput"> Chercher par mots-clés : </label>
                     <div class="relative w-full mr-2">
                         <!-- onChange={handleSearch} -->
@@ -146,14 +134,8 @@ const description =
                             class="w-full py-2 pt-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
                         />
                         <SearchIcon
-                            className="absolute w-5 h-5 text-gray-400 left-3 top-1/2 transition-colors -translate-y-[110%]"
+                            className="absolute w-5 h-5 text-gray-400 left-3 top-1/2 transition-colors -translate-y-[48%]"
                         />
-                        <!-- onClick={toggleAll} -->
-                        <button type="button" id="toggle-all">
-                            <ListCollapse
-                                className={`absolute w-6 h-6 right-3 top-1/2 transition-colors -translate-y-[100%] ${0 ? "text-green-600 hover:text-green-500" : "text-gray-400 hover:text-gray-300"}`}
-                            />
-                        </button>
                     </div>
                 </div>
             </search>
@@ -165,7 +147,7 @@ const description =
             <div class="sm:flex sm:gap-3 justify-center items-center">
                 <p class={`max-w-[35ch] sm:max-w-[50ch] grow`}>Vous n'avez pas trouvé votre réponse ?</p>
                 <CTA href="/contact" prefetch prefetchType="hover" className="font-bold grow justify-end underline">
-                    Contact
+                    Contactez-nous
                 </CTA>
             </div>
         </Section>

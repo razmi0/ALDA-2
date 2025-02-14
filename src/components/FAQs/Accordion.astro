@@ -35,7 +35,11 @@ if (single) {
                     <div class={`grow`} />
                     <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-150" />
                 </summary>
-                <p class={`font-medium bg-[#fdfdfd] rounded-md px-3 py-2 transition-all`}>{faq.answer}</p>
+                {faq.answer.map((answer) => {
+                    return (
+                        <p class={`font-medium bg-[#fdfdfd] rounded-md px-3 py-2 transition-all`} set:html={answer} />
+                    );
+                })}
             </details>
         ))
     }
