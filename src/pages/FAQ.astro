@@ -4,7 +4,7 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Nav/Header.astro";
 import CTA from "@/components/shared/CTA.astro";
 import Section from "@/layouts/Section.astro";
-import { ArrowDown, ListCollapse, SearchIcon } from "lucide-react";
+import { ArrowDown, SearchIcon } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
 
 const description =
@@ -12,10 +12,16 @@ const description =
 ---
 
 <Layout title="FAQ" className="bg-pattern" description={description}>
+    <style is:global>
+        ::highlight(faq-search) {
+            background-color: #fde68a;
+            color: inherit;
+        }
+    </style>
     <Header slot="header" />
     <Section className={"vertical items-center justify-start gap-0 mt-36"} size="full" extension="xl">
-        <div class="text-center vertical center mb-20 px-5" transition:name="heading">
-            <h2 class="text-5xl uppercase mb-5">Questions fréquentes</h2>
+        <div class="text-center vertical center mb-20 px-5">
+            <h2 class="text-[clamp(2.125rem,6vw,3rem)] uppercase mb-5">Questions fréquentes</h2>
             <p class="max-w-[50ch] mb-5 text-[1rem] text-balance">
                 Retrouvez les réponses aux questions fréquentes sur notre fonctionnement, notre identité, les modalités
                 de paiement et l'accès au lieu de grimpe.
@@ -25,101 +31,147 @@ const description =
         <div class="px-5 md:px-0 w-full md:w-9/12 h-full vertical justify-end">
             <script>
                 const SEARCH_THRESHOLD = 2;
-                const DIACRITICS: Record<string, string> = {
-                    È: "e",
-                    É: "e",
-                    Ê: "e",
-                    Ë: "e",
-                    è: "e",
-                    é: "e",
-                    ê: "e",
-                    ë: "e",
-                    à: "a",
-                    á: "a",
-                    â: "a",
-                    ã: "a",
-                    ä: "a",
-                    å: "a",
-                    æ: "a",
-                    À: "a",
-                    Á: "a",
-                    Â: "a",
-                    Ã: "a",
-                    Ä: "a",
-                    Å: "a",
-                    Æ: "a",
-                    Ù: "u",
-                    Ú: "u",
-                    Û: "u",
-                    Ü: "u",
-                    ù: "u",
-                    ú: "u",
-                    û: "u",
-                    ü: "u",
-                    Ì: "i",
-                    Í: "i",
-                    Î: "i",
-                    Ï: "i",
-                    ì: "i",
-                    í: "i",
-                    î: "i",
-                    ï: "i",
-                    Ÿ: "y",
-                    ÿ: "y",
-                    Ò: "o",
-                    Ó: "o",
-                    Ô: "o",
-                    Õ: "o",
-                    Ö: "o",
-                    Ø: "o",
-                    ò: "o",
-                    ó: "o",
-                    ô: "o",
-                    õ: "o",
-                    ö: "o",
-                    ø: "o",
-                } as const;
+                const SEARCH_DEBOUNCE_MS = 200;
 
-                let open = false; // controlled state of all details
                 const details = Array.from(document.querySelectorAll("details")) as HTMLDetailsElement[];
-                const searchInput = document.getElementById("searchInput") as HTMLInputElement;
+                const searchInput = document.getElementById("searchInput") as HTMLInputElement | null;
+                let debounceId: ReturnType<typeof setTimeout> | undefined;
+                const highlightName = "faq-search";
+                const supportsHighlight = "highlights" in CSS && "Highlight" in window;
 
                 // normalize all strings for further comparison
-                const replaceDiacritics = (str: string) =>
-                    str.replace(/[^A-Za-z0-9]/g, (char) => DIACRITICS[char] || char);
+                const normalize = (str: string) =>
+                    str
+                        .normalize("NFD")
+                        .replace(/[\u0300-\u036f]/g, "")
+                        .toLowerCase();
+
+                const clearHighlight = () => {
+                    if (supportsHighlight) {
+                        CSS.highlights.delete(highlightName);
+                    }
+                };
+
+                const collectTextNodes = (element: HTMLElement): Text[] => {
+                    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+                    const nodes: Text[] = [];
+                    let currentNode = walker.nextNode();
+                    while (currentNode) {
+                        const textNode = currentNode as Text;
+                        if (textNode.textContent?.trim()) {
+                            nodes.push(textNode);
+                        }
+                        currentNode = walker.nextNode();
+                    }
+                    return nodes;
+                };
+
+                const buildNormalizedMap = (value: string): { normalized: string; map: number[] } => {
+                    let normalized = "";
+                    const map: number[] = [];
+                    for (let index = 0; index < value.length; index++) {
+                        const normalizedChunk = normalize(value[index] || "");
+                        normalized += normalizedChunk;
+                        for (let i = 0; i < normalizedChunk.length; i++) {
+                            map.push(index);
+                        }
+                    }
+                    return { normalized, map };
+                };
+
+                const createRangesForNode = (node: Text, normalizedQuery: string): Range[] => {
+                    const content = node.textContent ?? "";
+                    if (!content.trim()) return [];
+
+                    const { normalized, map } = buildNormalizedMap(content);
+                    if (!normalized || !normalizedQuery) return [];
+
+                    const ranges: Range[] = [];
+                    let cursor = 0;
+                    while (cursor < normalized.length) {
+                        const start = normalized.indexOf(normalizedQuery, cursor);
+                        if (start === -1) break;
+
+                        const end = start + normalizedQuery.length - 1;
+                        const startIndex = map[start];
+                        const endIndex = (map[end] ?? content.length - 1) + 1;
+
+                        if (startIndex !== undefined && endIndex > startIndex) {
+                            const range = new Range();
+                            range.setStart(node, startIndex);
+                            range.setEnd(node, Math.min(endIndex, content.length));
+                            ranges.push(range);
+                        }
+
+                        cursor = start + normalizedQuery.length;
+                    }
+
+                    return ranges;
+                };
+
+                const highlightMatches = (normalizedQuery: string) => {
+                    clearHighlight();
+                    if (!supportsHighlight || normalizedQuery.length <= SEARCH_THRESHOLD) return;
+
+                    const ranges: Range[] = [];
+                    faqs.forEach((faq) => {
+                        if (faq.detail.hidden) return;
+                        const textNodes = collectTextNodes(faq.detail);
+                        textNodes.forEach((textNode) => {
+                            ranges.push(...createRangesForNode(textNode, normalizedQuery));
+                        });
+                    });
+
+                    if (ranges.length > 0) {
+                        CSS.highlights.set(highlightName, new Highlight(...ranges));
+                    }
+                };
 
                 // retrieve all faqs from dom ( server -> html -> dom -> current script )
                 const faqs = details.map((detail) => {
+                    const question = detail.querySelector("h4")?.textContent ?? "";
+                    const answers = Array.from(detail.querySelectorAll("p"))
+                        .map((node) => node.textContent ?? "")
+                        .join(" ");
                     const faq = {
                         detail,
                         id: detail.querySelector("summary")?.id,
-                        question: detail.querySelector("h4")?.textContent,
-                        answer: replaceDiacritics(detail.querySelector("p")?.textContent),
+                        searchable: normalize(`${question} ${answers}`),
                     };
 
                     return faq;
                 });
 
                 // toggle visibility of details based on search input
-                searchInput.addEventListener("input", (e) => {
-                    const input = e.target as HTMLInputElement;
-                    const value = input.value.trim();
+                const applySearch = (rawValue: string) => {
+                    const value = rawValue.trim();
 
                     if (value.length <= SEARCH_THRESHOLD) {
                         faqs.forEach((faq) => {
                             faq.detail.hidden = false;
                         });
+                        clearHighlight();
                         return;
                     }
 
-                    const search = replaceDiacritics(value);
+                    const search = normalize(value);
 
                     faqs.forEach((faq) => {
-                        const match = faq.answer.includes(search);
-                        console.log(faq.answer, match);
+                        const match = faq.searchable.includes(search);
                         faq.detail.hidden = !match;
                     });
-                });
+                    highlightMatches(search);
+                };
+
+                if (searchInput) {
+                    searchInput.addEventListener("input", (e) => {
+                        const input = e.target as HTMLInputElement;
+                        clearTimeout(debounceId);
+                        debounceId = setTimeout(() => {
+                            applySearch(input.value);
+                        }, SEARCH_DEBOUNCE_MS);
+                    });
+                }
             </script>
 
             <search className="horizontal mb-10">

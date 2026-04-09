@@ -4,13 +4,21 @@ import { z } from "astro:schema";
 import { Resend } from "resend";
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
+const escapeHtml = (value: string): string =>
+    value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 const content = {
     toDns: {
         title: "Nouveau message depuis le site",
         row: (label: string, value: string) => `
             <tr style="background-color: #f9f9f9;">
-                <td style="padding: 8px; border: 1px solid #ddd;"><strong>${label}:</strong></td>
-                <td style="padding: 8px; border: 1px solid #ddd;">${value}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;"><strong>${escapeHtml(label)}:</strong></td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(value)}</td>
             </tr>
         `,
     },
@@ -34,7 +42,12 @@ export const server = {
             recontact: z.literal("recontact").optional(),
         }),
         handler: async ({ email, message, recontact, tel }) => {
-            const emailLabel = email.split("@")[0];
+            const emailLabel = email
+                .split("@")[0]
+                .replace(/[^\p{L}\p{N}._-]/gu, "")
+                .slice(0, 60);
+            const safeMessage = escapeHtml(message);
+            const safeTel = escapeHtml(tel || "N/A");
             const { data, error } = await resend.batch.send([
                 {
                     from,
@@ -63,8 +76,8 @@ export const server = {
                     <p>Bonjour !</p>
                     <p>${content.toClient.body}</p>
                     <div style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; margin: 20px 0;">
-                        <p><strong>Message :</strong> ${message}</p>
-                        <p><strong>Téléphone :</strong> ${tel || "N/A"}</p>
+                        <p><strong>Message :</strong> ${safeMessage}</p>
+                        <p><strong>Téléphone :</strong> ${safeTel}</p>
                     </div>
                     <p style="font-size: 14px; color: #555;">${content.toClient.footer}</p>
                 </div>

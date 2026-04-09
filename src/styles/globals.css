@@ -27,7 +27,8 @@
     }
 
     h1,
-    h2 h3,
+    h2,
+    h3,
     h4,
     h5,
     h6 {
@@ -70,24 +71,31 @@
     }
 
     .reveal-from-bottom-base {
-        animation: reveal-from-bottom 0.5s ease-in-out forwards;
+        animation: fadeInUp var(--reveal-duration, 0.55s) ease-out forwards;
     }
 
     .reveal-from-bottom-delayed {
-        animation: reveal-from-bottom 0.5s ease-in-out forwards;
-        animation-delay: var(--reveal-delay);
+        animation: fadeInUp var(--reveal-duration, 0.55s) ease-out forwards;
+        animation-delay: var(--reveal-delay, 0ms);
     }
 
-    @keyframes reveal-from-bottom {
-        0% {
-            filter: blur(2px);
-            transform: translateY(75%);
+    @keyframes fadeInUp {
+        from {
             opacity: 0;
+            transform: translateY(40px);
         }
-        100% {
-            filter: blur(0);
-            transform: translateY(0);
+        to {
             opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal-from-bottom-base,
+        .reveal-from-bottom-delayed {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
     }
 }

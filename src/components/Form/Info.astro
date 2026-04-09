@@ -31,7 +31,6 @@ const { text, key, className } = Astro.props;
         for (const mutation of mutationList) {
             if (mutation.type === "attributes") {
                 const output = mutation.target as HTMLElement;
-                console.log("Resetting");
                 const key = output.dataset.info?.split("#")[1] as string;
                 if (!key) throw new Error("Key not found");
                 const timeId = setTimeout(() => {

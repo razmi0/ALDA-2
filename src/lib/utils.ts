@@ -66,6 +66,7 @@ type SetupObserverProps = {
     debug?: boolean;
     debugLog?: string;
     threshold?: number;
+    rootMargin?: string;
     onIntersect?: () => void;
     onDisappear?: () => void;
     unobserve?: boolean;
@@ -78,15 +79,30 @@ const setupIntersectionObserver = (
     {
         debug = isDev,
         debugLog = "",
-        threshold = 0.2,
+        threshold = 0,
+        rootMargin = "0px 0px -12% 0px",
         onIntersect = voidCb,
         onDisappear = voidCb,
         unobserve = true,
     }: SetupObserverProps
 ) => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+        onIntersect();
+        return;
+    }
+
+    const rect = element.getBoundingClientRect();
+    const isAlreadyInView = rect.top <= window.innerHeight * 0.98 && rect.bottom >= 0;
+    if (isAlreadyInView) {
+        onIntersect();
+        if (unobserve) return;
+    }
+
     const options = { debug, debugLog, onIntersect, onDisappear, unobserve };
     const observer = new IntersectionObserver((entry) => handleIntersection(observer, entry, options), {
         threshold: threshold,
+        rootMargin,
     });
 
     observer.observe(element);

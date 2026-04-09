@@ -18,8 +18,7 @@ const { className } = Astro.props as Props;
     className={cn(
         "vertical items-end justify-center [&_a:hover]:underline [&>*]:px-10 backdrop-blur-sm bg-darkMode-500 text-white",
         className
-    )}
-    transition:animate={"none"}>
+    )}>
     <section class="full horizontal items-center justify-between">
         <Logo loading="lazy" />
         <div class={`grow`}></div>

@@ -27,21 +27,23 @@ const description =
 <script>
     import { actions } from "astro:actions";
 
-    const submitButton = document.querySelector("button[type=submit]");
-    const form = document.querySelector("form");
-    form?.addEventListener("submit", async (event) => {
-        submitButton.setAttribute("data-loading", "loading");
-        event.preventDefault();
-        const formData = new FormData(form);
-        const { error } = await actions.send(formData);
-        if (!error) {
-            createToaster("Votre message a bien été envoyé", "success");
-            form.reset();
-        } else {
-            createToaster("Une erreur est survenue, veuillez réessayer", "error");
-        }
-        submitButton.setAttribute("data-loading", "idle");
-    });
+    const submitButton = document.querySelector("button[type=submit]") as HTMLButtonElement | null;
+    const form = document.querySelector("form") as HTMLFormElement | null;
+    if (form && submitButton) {
+        form.addEventListener("submit", async (event) => {
+            submitButton.setAttribute("data-loading", "loading");
+            event.preventDefault();
+            const formData = new FormData(form);
+            const { error } = await actions.send(formData);
+            if (!error) {
+                createToaster("Votre message a bien été envoyé", "success");
+                form.reset();
+            } else {
+                createToaster("Une erreur est survenue, veuillez réessayer", "error");
+            }
+            submitButton.setAttribute("data-loading", "idle");
+        });
+    }
 
     /**
      *
@@ -92,8 +94,8 @@ const description =
         <div class={"vertical md:horizontal center gap-3 gap-y-20 w-full h-fit px-2"}>
             <div class="text-left vertical center h-full gap-20">
                 <!--  -->
-                <div transition:name="heading">
-                    <h2 class="text-5xl uppercase mb-5 text-center">Contactez-nous</h2>
+                <div>
+                    <h2 class="text-[clamp(2.125rem,6vw,3rem)] uppercase mb-5 text-center">Contactez-nous</h2>
                     <p class="max-w-[50ch] text-[1rem] text-balance text-center">
                         Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ?
                         N'hésitez pas à nous contacter via le formulaire ci-dessous.

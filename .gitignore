@@ -32,3 +32,4 @@ src/pages/test.astro
 
 *.sec.*
 .vercel
+suivi.md

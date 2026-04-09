@@ -18,18 +18,21 @@ import Rope from "@/components/Icons/Rope.astro";
 <script>
     import { setupIntersectionObserver } from "@/lib/utils";
 
-    const topIntro = document.querySelector("[data-observer='a']") as HTMLElement;
-    const p1 = document.querySelector("[data-observer='b']") as HTMLElement;
-    const p2 = document.querySelector("[data-observer='c']") as HTMLElement;
-    const video = document.querySelector("[data-observer='d']") as HTMLElement;
+    const topIntro = document.querySelector("[data-observer='a']") as HTMLElement | null;
+    const p1 = document.querySelector("[data-observer='b']") as HTMLElement | null;
+    const p2 = document.querySelector("[data-observer='c']") as HTMLElement | null;
+    const video = document.querySelector("[data-observer='d']") as HTMLElement | null;
 
-    setupIntersectionObserver(topIntro, {
-        onIntersect: () => {
-            topIntro.classList.add("reveal-from-bottom-base");
-        },
-    });
+    if (topIntro) {
+        setupIntersectionObserver(topIntro, {
+            onIntersect: () => {
+                topIntro.classList.add("reveal-from-bottom-base");
+            },
+        });
+    }
 
     [p1, p2, video].forEach((element) => {
+        if (!element) return;
         setupIntersectionObserver(element, {
             onIntersect: () => {
                 element.classList.add("reveal-from-bottom-delayed");
@@ -57,9 +60,9 @@ import Rope from "@/components/Icons/Rope.astro";
             </p>
             <p
                 data-observer="c"
-                class={`opacity-0 translate-y-[100%]`}
+                class={`opacity-0 translate-y-[100%] text-map-darkblue`}
                 style="--reveal-delay: 0.5s"
-                class={`text-map-darkblue`}>
+            >
                 Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant dans un
                 environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions authentiques
                 et à comprendre l'importance de préserver notre écosystème. Réservez dès maintenant pour vivre une

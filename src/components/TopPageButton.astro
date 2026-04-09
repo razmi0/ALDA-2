@@ -1,0 +1,21 @@
+<script>
+    const button = document.querySelector("[data-top-page-button]") as HTMLButtonElement | null;
+    if (button) {
+        button.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+</script>
+
+<button
+    type="button"
+    title="Revenir en haut de la page"
+    aria-label="Revenir en haut de la page"
+    data-top-page-button
+    class="z-50 fixed m-4 mb-7 bottom-0 right-0 p-1 rounded-lg bg-slate-200/80 hover:opacity-70 transition-opacity border border-zinc-200 shadow-md"
+>
+    <span class="sr-only">Revenir en haut de la page</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#09090b">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+</button>

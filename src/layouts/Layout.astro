@@ -1,6 +1,6 @@
 ---
 import Loader from "@/components/Loader.astro";
-import TopPageButton from "@/components/TopPageButton";
+import TopPageButton from "@/components/TopPageButton.astro";
 import "@/styles/globals.css";
 import { AstroFont } from "astro-font";
 import { SEO } from "astro-seo";
@@ -37,7 +37,7 @@ const ogDesc =
     "Escalade et grimpe d'arbre en pleine nature à Toulouse. Activités sportives et animations pour tous les âges.";
 ---
 
-<html lang="en" class={className}>
+<html lang="fr" class={className}>
     <head>
         <meta name="author" content="Alabordarbre" />
         <meta name="keywords" content={metaKeywords.join(", ")} />
@@ -141,6 +141,6 @@ const ogDesc =
             <slot />
         </main>
         <slot name="footer" />
-        <TopPageButton client:idle />
+        <TopPageButton />
     </body>
 </html>

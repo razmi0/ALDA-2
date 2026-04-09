@@ -9,6 +9,6 @@ interface Props {
 const { dataObserver, className, style } = Astro.props;
 ---
 
-<video loop controls class={cn(className)} data-observer={dataObserver} style={style}>
+<video loop controls preload="metadata" class={cn(className)} data-observer={dataObserver} style={style}>
     <source src={"/catch/catch.mp4"} type="video/mp4" />
 </video>

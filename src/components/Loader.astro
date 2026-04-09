@@ -1,10 +1,11 @@
 <script>
-    const progressBar = document.querySelector("[data-progress]") as HTMLElement;
-    progressBar.dataset.progress = "idle";
-
-    document.addEventListener("astro:before-preparation", () => {
-        progressBar.dataset.progress = "before-preparation";
-    });
+    const progressBar = document.querySelector("[data-progress]") as HTMLElement | null;
+    if (progressBar) {
+        progressBar.dataset.progress = "idle";
+        document.addEventListener("astro:before-preparation", () => {
+            progressBar.dataset.progress = "before-preparation";
+        });
+    }
 </script>
 
 <style>

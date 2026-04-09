@@ -61,18 +61,24 @@ const images: ProductImage[] = [
 <script>
     import { setupIntersectionObserver } from "@/lib/utils";
 
-    const bigTitle = document.querySelector("[data-observer='5']") as HTMLElement;
-    const subtitle = document.querySelector("[data-observer='6']") as HTMLElement;
+    const titles = Array.from(document.querySelectorAll("[data-observer='5']")) as HTMLElement[];
+    const subtitles = Array.from(document.querySelectorAll("[data-observer='6']")) as HTMLElement[];
     const toparticles = Array.from(document.querySelectorAll("[data-observer^='wrapper-7']")) as HTMLElement[]; // data-observer={"wrapper-8" + i}
     const bottomarticles = Array.from(document.querySelectorAll("[data-observer^='wrapper-8']")) as HTMLElement[]; // data-observer={"wrapper-8" + i}
+
+    const reveal = (element: Element | null, className: string) => {
+        if (element instanceof HTMLElement) {
+            element.classList.add(className);
+        }
+    };
 
     toparticles.forEach((article) => {
         setupIntersectionObserver(article, {
             onIntersect: () => {
-                article.querySelector("h3").classList.add("reveal-from-bottom-delayed");
-                article.querySelector("img").classList.add("reveal-from-bottom-delayed");
-                article.querySelector("p").classList.add("reveal-from-bottom-delayed");
-                article.querySelector("button").classList.add("reveal-from-bottom-delayed");
+                reveal(article.querySelector("h3"), "reveal-from-bottom-delayed");
+                reveal(article.querySelector("img"), "reveal-from-bottom-delayed");
+                reveal(article.querySelector("p"), "reveal-from-bottom-delayed");
+                reveal(article.querySelector("button"), "reveal-from-bottom-delayed");
             },
         });
     });
@@ -80,23 +86,27 @@ const images: ProductImage[] = [
     bottomarticles.forEach((article) => {
         setupIntersectionObserver(article, {
             onIntersect: () => {
-                article.querySelector("h2").classList.add("reveal-from-bottom-delayed");
-                article.querySelector("[data-id]").classList.add("reveal-from-bottom-delayed");
-                article.querySelector("img").classList.add("reveal-from-bottom-delayed");
+                reveal(article.querySelector("h2"), "reveal-from-bottom-delayed");
+                reveal(article.querySelector("[data-id]"), "reveal-from-bottom-delayed");
+                reveal(article.querySelector("img"), "reveal-from-bottom-delayed");
             },
         });
     });
 
-    setupIntersectionObserver(bigTitle, {
-        onIntersect: () => {
-            bigTitle.classList.add("reveal-from-bottom-base");
-        },
+    titles.forEach((title) => {
+        setupIntersectionObserver(title, {
+            onIntersect: () => {
+                title.classList.add("reveal-from-bottom-base");
+            },
+        });
     });
 
-    setupIntersectionObserver(subtitle, {
-        onIntersect: () => {
-            subtitle.classList.add("reveal-from-bottom-base");
-        },
+    subtitles.forEach((subtitle) => {
+        setupIntersectionObserver(subtitle, {
+            onIntersect: () => {
+                subtitle.classList.add("reveal-from-bottom-base");
+            },
+        });
     });
 </script>
 

@@ -40,34 +40,11 @@ if (!key) throw new Error("No key found");
 <script>
     const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
 
-    const getDOM = (section: HTMLElement, key: string) => {
-        type Elements = [
-            HTMLInputElement,
-            HTMLInputElement,
-            HTMLTextAreaElement,
-            HTMLButtonElement,
-            HTMLElement,
-            HTMLElement,
-        ];
-        const elements = [
-            section.querySelector(`input[type="email"]`), // [0] email
-            section.querySelector(`input[type="tel"]`), // [1] tel
-            section.querySelector(`textarea`), // [2] textarea
-            document.querySelector(`[data-for='message'][data-action="next#${key}"]`), // [3] validateTrigger
-            section.querySelector(`[data-variant][data-type="email"]`), // [4] infoEmail
-            section.querySelector(`[data-variant][data-type="tel"]`), // [5] infoTel
-        ];
-        return elements as Elements;
-    };
-
     sections.forEach((section) => {
         const action = section.dataset.action;
-        if (!action) throw new Error("No action found on section");
-        const key = action.split("#")[1] as string;
-        /**
-         * email, tel, nextFrameBtn, infoEmail, infoTel
-         */
-        const [textarea] = getDOM(section, key);
+        if (!action) return;
+        const textarea = section.querySelector(`textarea`) as HTMLTextAreaElement | null;
+        if (!textarea) return;
         textarea.addEventListener("input", () => {
             textarea.style.height = `${textarea.scrollHeight}px`;
         });
