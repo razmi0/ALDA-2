@@ -27,7 +27,6 @@ const redirections = {
         "/": "/maintenance",
         "/contact": "/maintenance",
         "/activites": "/maintenance",
-        "/faq": "/maintenance",
         "/nous": "/maintenance",
         "/honey": "/maintenance",
     },

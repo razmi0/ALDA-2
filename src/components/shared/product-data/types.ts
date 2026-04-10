@@ -13,7 +13,7 @@ export interface ProductType {
     materials: string[];
     public: string;
     tasks: string[];
-    duration: "string";
+    duration: string;
 }
 
 type StatType = {
@@ -26,4 +26,4 @@ type DescriptionType = {
     long: string;
 };
 
-type UnitType = "group" | "person" | "enfant" | "nuit" | "journée";
+type UnitType = "group" | "person" | "enfant" | "nuit" | "journée" | "heure" | "session" | "participant";

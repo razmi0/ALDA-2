@@ -13,7 +13,7 @@ const links = [
             const { href, label, Icon } = l;
             return (
                 <li>
-                    <a href={href} target="_blank">
+                    <a href={href} target="_blank" rel="noopener noreferrer">
                         <Icon className={"w-5 h-5 stroke-1"} />
                         <span class="sr-only">{label} link</span>
                     </a>

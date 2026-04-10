@@ -6,258 +6,228 @@ import ImmersionImage from "@/assets/client-img-57.jpeg";
 import InitiationImage from "@/assets/client-img-58.jpeg";
 import data from "@/components/shared/product-data/main-product.json" assert { type: "json" };
 import ProductSection from "./ProductSection.astro";
+import CardProduct from "./CardProduct.astro";
 import type { Product, ProductData, ProductImage } from "./types";
-import { Image } from "astro:assets";
 import { capitalize } from "@/lib/utils";
-import CTA from "@/components/shared/CTA.astro";
-import Button from "@/components/shared/Button.astro";
-import Article from "@/components/shared/Article.astro";
-import Badge from "@/components/shared/Badge.astro";
 
 const buildProducts = (data: ProductData): { simpleProducts: Product[]; withSubproducts: Product[] } => {
     const { poles, products } = data;
-    const availableProducts = products.filter((p) => poles.available.includes(p.id));
+    const availableProducts = products.filter((p) => poles.enabledProductIds.includes(p.id));
     const simpleProducts = availableProducts.filter((p) => !p.subproducts);
     const withSubproducts = availableProducts.filter((p) => p.subproducts);
     return { simpleProducts, withSubproducts };
 };
-
-const { simpleProducts, withSubproducts } = buildProducts(data);
+const productData: ProductData = data;
+const { simpleProducts, withSubproducts } = buildProducts(productData);
 
 const images: ProductImage[] = [
     {
-        label: "evenementiel",
+        key: "evenementiel",
         src: EvenementielImage,
-        alt: "Illustration d'un évenement Alabordarbre avec des personnes souriantes en cercle écoutant les instructions de l'animatrice Lou équipée sur corde",
-        size: [500, 500],
+        alt: "Illustration d'un événement Alabordarbre avec des personnes souriantes en cercle, écoutant les instructions de l'animatrice Lou équipée sur corde",
+        width: 1200,
+        height: 800,
     },
     {
-        label: "sensoriel et sensibilisation",
+        key: "sensoriel",
         src: SensorielImage,
         alt: "Illustration d'un atelier sensoriel Alabordarbre où l'on aperçoit deux personnes grimpant dans le vide sur une corde",
-        size: [500, 500],
+        width: 1200,
+        height: 800,
     },
     {
-        label: "recherche",
+        key: "recherche",
         src: RechercheImage,
         alt: "Illustration d'un atelier de recherche Alabordarbre pendant lequel un groupe de personne est en train de chercher des indices au pied d'un arbre",
-        size: [500, 500],
+        width: 1200,
+        height: 800,
     },
     {
-        label: "initiation",
+        key: "initiation",
         src: InitiationImage,
-        alt: "",
-        size: [500, 500],
+        alt: "Illustration d'un atelier d'initiation à la grimpe d'arbre avec une personne encordée en progression",
+        width: 1200,
+        height: 800,
     },
     {
-        label: "immersion",
+        key: "immersion",
         src: ImmersionImage,
-        alt: "",
-        size: [500, 500],
+        alt: "Illustration d'une immersion perchée en forêt avec des participants installés dans les arbres",
+        width: 1200,
+        height: 800,
     },
 ];
+
+type OfferItem = {
+    id: string;
+    pole: string;
+    title: string;
+    description: string;
+    tags: string[];
+    price?: string;
+    program?: string[];
+    audience?: string;
+    locations?: string;
+    theme?: string;
+    image: ProductImage;
+    sortKey: number;
+};
+
+const normalizeLabel = (value: string) => value.trim().toLowerCase();
+const imageByKey = new Map(images.map((image) => [normalizeLabel(image.key), image]));
+const defaultImage = images[0];
+const getImageForKey = (key?: string) => (key ? imageByKey.get(normalizeLabel(key)) : undefined) ?? defaultImage;
+const normalizeProgram = (program: string[] | string | undefined): string[] => {
+    if (!program) return [];
+    return Array.isArray(program) ? program : [program];
+};
+
+const simpleOffers: OfferItem[] = simpleProducts.map((product) => ({
+    id: `product-${product.id}`,
+    pole: product.pole,
+    title: product.title,
+    description: capitalize(product.description || ""),
+    tags: product.tags ?? [],
+    price: product.price,
+    program: normalizeProgram(product.program),
+    audience: product.audience,
+    locations: product.locations,
+    image: getImageForKey(product.imageKey),
+    sortKey: product.id * 1000,
+}));
+
+const subproductOffers: OfferItem[] = withSubproducts.flatMap((product) =>
+    (product.subproducts ?? []).map((subproduct) => ({
+        id: `subproduct-${product.id}-${subproduct.id}`,
+        pole: product.pole,
+        title: subproduct.title,
+        description: subproduct.description,
+        tags: [],
+        program: normalizeProgram(subproduct.program),
+        theme: subproduct.theme,
+        image: getImageForKey(subproduct.imageKey),
+        sortKey: product.id * 1000 + subproduct.id,
+    })),
+);
+
+const offers: OfferItem[] = [...simpleOffers, ...subproductOffers];
+
+const availablePoles = productData.poles.all.filter((pole) => productData.poles.enabledPoleIds.includes(pole.id));
+
+const offersByPole = new Map<string, OfferItem[]>();
+availablePoles.forEach((pole) => {
+    const poleOffers = offers
+        .filter((offer) => normalizeLabel(offer.pole) === normalizeLabel(pole.label))
+        .sort((a, b) => a.sortKey - b.sortKey);
+    offersByPole.set(pole.label, poleOffers);
+});
+
+const productIdByPoleLabel = new Map<string, number>();
+productData.products.forEach((p) => {
+    if (productData.poles.enabledProductIds.includes(p.id)) {
+        productIdByPoleLabel.set(normalizeLabel(p.pole), p.id);
+    }
+});
+
+const polesSortedByProductId = [...availablePoles].sort(
+    (a, b) =>
+        (productIdByPoleLabel.get(normalizeLabel(a.label)) ?? 999) -
+        (productIdByPoleLabel.get(normalizeLabel(b.label)) ?? 999),
+);
+
+const poleIntro: Record<string, string> = {
+    animation:
+        "Deux formats complémentaires pour vivre la grimpe d'arbre : une initiation dynamique ou une immersion longue en nature.",
+    evenementiel:
+        "Des interventions sur-mesure pour vos festivals, anniversaires et événements afin de proposer une expérience marquante.",
+    "sensoriel et sensibilisation":
+        "Des ateliers accessibles et pédagogiques pour explorer, ressentir et sensibiliser à la protection de l'environnement.",
+    recherche:
+        "Des accompagnements scientifiques et techniques pour vos projets d'étude de la faune, de la flore et des milieux forestiers.",
+};
 ---
+
+<ProductSection title="Nos pôles d'activités et nos ateliers">
+    <div class="vertical gap-20 md:gap-28 w-full">
+        {
+            polesSortedByProductId.map((pole) => {
+                const poleOffers = offersByPole.get(pole.label) ?? [];
+                const intro = poleIntro[normalizeLabel(pole.label)] ?? "";
+                if (poleOffers.length === 0) return null;
+                return (
+                    <section class="vertical gap-8">
+                        <header class="vertical gap-2 max-w-2xl" data-reveal="pole-header">
+                            <h3 class="grandstander text-[clamp(1.4rem,3.5vw,1.9rem)] text-gr-600">
+                                Pôle {capitalize(pole.label)}
+                            </h3>
+                            {intro && <p class="text-black/55 text-sm md:text-base leading-relaxed">{intro}</p>}
+                        </header>
+                        <div class="vertical gap-8">
+                            {poleOffers.map(({ sortKey: _sk, ...offer }) => (
+                                <CardProduct {...offer} />
+                            ))}
+                        </div>
+                    </section>
+                );
+            })
+        }
+    </div>
+</ProductSection>
 
 <script>
     import { setupIntersectionObserver } from "@/lib/utils";
 
-    const titles = Array.from(document.querySelectorAll("[data-observer='5']")) as HTMLElement[];
-    const subtitles = Array.from(document.querySelectorAll("[data-observer='6']")) as HTMLElement[];
-    const toparticles = Array.from(document.querySelectorAll("[data-observer^='wrapper-7']")) as HTMLElement[]; // data-observer={"wrapper-8" + i}
-    const bottomarticles = Array.from(document.querySelectorAll("[data-observer^='wrapper-8']")) as HTMLElement[]; // data-observer={"wrapper-8" + i}
+    const revealElements = document.querySelectorAll<HTMLElement>("[data-reveal]");
 
-    const reveal = (element: Element | null, className: string) => {
-        if (element instanceof HTMLElement) {
-            element.classList.add(className);
-        }
-    };
-
-    toparticles.forEach((article) => {
-        setupIntersectionObserver(article, {
-            onIntersect: () => {
-                reveal(article.querySelector("h3"), "reveal-from-bottom-delayed");
-                reveal(article.querySelector("img"), "reveal-from-bottom-delayed");
-                reveal(article.querySelector("p"), "reveal-from-bottom-delayed");
-                reveal(article.querySelector("button"), "reveal-from-bottom-delayed");
-            },
-        });
-    });
-
-    bottomarticles.forEach((article) => {
-        setupIntersectionObserver(article, {
-            onIntersect: () => {
-                reveal(article.querySelector("h2"), "reveal-from-bottom-delayed");
-                reveal(article.querySelector("[data-id]"), "reveal-from-bottom-delayed");
-                reveal(article.querySelector("img"), "reveal-from-bottom-delayed");
-            },
-        });
-    });
-
-    titles.forEach((title) => {
-        setupIntersectionObserver(title, {
-            onIntersect: () => {
-                title.classList.add("reveal-from-bottom-base");
-            },
-        });
-    });
-
-    subtitles.forEach((subtitle) => {
-        setupIntersectionObserver(subtitle, {
-            onIntersect: () => {
-                subtitle.classList.add("reveal-from-bottom-base");
-            },
+    revealElements.forEach((el) => {
+        setupIntersectionObserver(el, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -8% 0px",
+            onIntersect: () => el.classList.add("revealed"),
+            onDisappear: () => {},
+            unobserve: true,
+            debug: false,
         });
     });
 </script>
 
-<ProductSection title="Nos quatres pôles d'activités">
-    {
-        withSubproducts.map((p) => {
-            return (
-                <section class={`vertical center gap-10`}>
-                    <div class="w-full opacity-0 translate-y-[100%]" data-observer="5">
-                        <h2 class="text-4xl text-center">Pôle {capitalize(p.title)}</h2>
-                    </div>
-                    <p class={`text-black/90 max-w-[60ch] text-center opacity-0 translate-y-[100%]`} data-observer="6">
-                        Le pôle Animation propose des activités immersives et captivantes pour encourager l'exploration,
-                        la connexion à la nature et l'éveil des sens. Il se divise en deux volets complémentaires :
-                    </p>
-                    <div class={`vertical md:horizontal center gap-10 `}>
-                        {p.subproducts &&
-                            p.subproducts.map((p, i) => {
-                                const image = images.find((img) => img.label === p.title);
-                                return (
-                                    <div class={`vertical center gap-5 `} data-observer={"wrapper-7" + i}>
-                                        <h3
-                                            style={`--reveal-delay : ${200 * i}ms`}
-                                            class={`text-4xl opacity-0 translate-y-[50%]`}>
-                                            {capitalize(p.title)}
-                                        </h3>
-                                        <Image
-                                            src={image.src}
-                                            alt={image.alt}
-                                            width={image.size[0] ?? 500}
-                                            height={image.size[1] ?? 500}
-                                            class={`aspect-square object-cover rounded-md opacity-0 translate-y-[50%]`}
-                                            style={`--reveal-delay : ${200 * i}ms`}
-                                        />
-                                        <p
-                                            class={`text-center max-w-[60ch] opacity-0 translate-y-[50%]`}
-                                            style={`--reveal-delay : ${200 * i}ms`}>
-                                            {p.description}
-                                        </p>
-                                        <CTA href={`/contact`} prefetch prefetchType="hover">
-                                            <Button
-                                                ring="sm"
-                                                size="lg"
-                                                variant="outline"
-                                                dark
-                                                className="w-fit font-bold whitespace-nowrap bg-white opacity-0 translate-y-[50%]"
-                                                style={`--reveal-delay : ${200 * i}ms`}>
-                                                En savoir plus
-                                            </Button>
-                                        </CTA>
-                                    </div>
-                                );
-                            })}
-                    </div>
-                </section>
-            );
-        })
+<style is:global>
+    [data-reveal="section-title"],
+    [data-reveal="pole-header"] {
+        opacity: 0;
+        transform: translateY(1.2rem);
+        transition:
+            opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    {
-        simpleProducts.map((product, i) => {
-            const { id, pole, description, tags, price, locations, program, audience } = product;
-            const orientation = (i & 1) === 0 ? "ltr" : "rtl";
-            const image = images.find((img) => img.label === product.title);
+    [data-reveal="section-title"].revealed,
+    [data-reveal="pole-header"].revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-            return (
-                <div class={`flex flex-col gap-10`} data-observer={"wrapper-8" + i}>
-                    <div class="w-full">
-                        <h2
-                            class="text-4xl text-center opacity-0 translate-y-[100%]"
-                            style={`--reveal-delay : ${200 * i}ms`}>
-                            Pôle {capitalize(pole)}
-                        </h2>
-                    </div>
-                    <article
-                        class={
-                            orientation === "rtl"
-                                ? "vertical xl:horizontal-reverse gap-10"
-                                : "vertical xl:horizontal gap-10"
-                        }>
-                        <div class={`mx-auto`}>
-                            <Image
-                                src={image.src}
-                                alt={image.alt}
-                                width={image.size[0] ?? 500}
-                                height={image.size[1] ?? 500}
-                                class={`aspect-square object-cover rounded-md opacity-0 translate-y-[100%]`}
-                                style={`--reveal-delay : ${200 * i}ms`}
-                            />
-                        </div>
-                        <div
-                            class="vertical gap-5 w-fit opacity-0 translate-y-[100%]"
-                            data-id={id}
-                            style={`--reveal-delay : ${200 * i}ms`}>
-                            <Article
-                                words1={description && capitalize(description)}
-                                pClass={"text-black/90 dark:text-white/90 max-w-[50ch]"}
-                                dark>
-                                {tags && (
-                                    <div class="w-full h-full space-x-4 mt-5 text-left" slot="subtitle">
-                                        {tags.map((tag) => (
-                                            <Badge tag={tag} />
-                                        ))}
-                                    </div>
-                                )}
-                            </Article>
-                            <ul class={`max-w-[50ch]`}>
-                                {price && (
-                                    <li>
-                                        <strong class={`quattrocento-sans-bold`}>Prix</strong> :{" "}
-                                        {typeof price === "string" ? capitalize(price) : price}
-                                    </li>
-                                )}
-                                {locations && (
-                                    <li>
-                                        <strong class={`quattrocento-sans-bold`}>Lieux</strong> :{" "}
-                                        {Array.isArray(locations)
-                                            ? locations.map(capitalize).join(", ")
-                                            : capitalize(locations)}
-                                    </li>
-                                )}
-                                {program && (
-                                    <li>
-                                        <strong class={`quattrocento-sans-bold`}>Programme</strong> :{" "}
-                                        {Array.isArray(program)
-                                            ? program.map(capitalize).join(", ")
-                                            : capitalize(program)}
-                                    </li>
-                                )}
-                                {audience && (
-                                    <li>
-                                        <strong class={`quattrocento-sans-bold`}>Public</strong> :{" "}
-                                        {capitalize(audience)}
-                                    </li>
-                                )}
-                            </ul>
-                            <footer class="horizontal items-center justify-start gap-10">
-                                <CTA href={`/contact`} prefetch prefetchType="viewport">
-                                    <Button
-                                        ring="sm"
-                                        size="lg"
-                                        variant="outline"
-                                        dark
-                                        className="w-fit font-bold whitespace-nowrap bg-white">
-                                        En savoir plus
-                                    </Button>
-                                </CTA>
-                            </footer>
-                        </div>
-                    </article>
-                </div>
-            );
-        })
+    [data-reveal="card-glass"] {
+        opacity: 0;
+        transform: translateY(1.8rem) scale(0.97);
+        transition:
+            opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
-</ProductSection>
+    [data-reveal="card-glass"].revealed {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    [data-reveal="program-row"] {
+        opacity: 0;
+        transform: translateX(-0.6rem);
+        transition:
+            opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--row-delay, 0ms);
+    }
+    [data-reveal="program-row"].revealed {
+        opacity: 1;
+        transform: translateX(0);
+    }
+</style>

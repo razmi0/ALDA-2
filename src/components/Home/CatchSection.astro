@@ -1,19 +1,6 @@
 ---
 import CatchVideo from "@/components/CatchVideo.astro";
-import Rope from "@/components/Icons/Rope.astro";
 ---
-
-<style>
-    @media screen and (min-width: 1024px) {
-        .custom-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto 1fr;
-            column-gap: 20px;
-            padding-inline: 16px;
-        }
-    }
-</style>
 
 <script>
     import { setupIntersectionObserver } from "@/lib/utils";
@@ -41,40 +28,45 @@ import Rope from "@/components/Icons/Rope.astro";
     });
 </script>
 
-<section
-    class={`bg-map-dark vertical flex-wrap lg:horizontal center relative pt-28 lg:py-28 gap-10 [&_p]:max-w-[60ch]`}>
-    <article class={`text-map-darkblue space-y-6 px-4 sm:px-0 py-1 w-full custom-grid`}>
-        <div class={`vertical justify-end items-center gap-10 opacity-0 translate-y-[100%]`} data-observer="a">
-            <div class="w-full max-w-[60ch]">
-                <Rope />
-            </div>
-            <div class="max-w-[60ch] w-full">
-                <p class="text-xl font-semibold text-white/80">Libérez l'aventurier qui sommeille en vous !</p>
-            </div>
-        </div>
-        <div class={`hidden lg:block`}></div>
-        <!-- <div class="content"> -->
-        <div class={`space-y-2 vertical center `}>
-            <p data-observer="b" class={`opacity-0 translate-y-[100%]`} style="--reveal-delay: 0.4s">
-                Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !
-            </p>
-            <p
-                data-observer="c"
-                class={`opacity-0 translate-y-[100%] text-map-darkblue`}
-                style="--reveal-delay: 0.5s"
-            >
-                Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant dans un
-                environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions authentiques
-                et à comprendre l'importance de préserver notre écosystème. Réservez dès maintenant pour vivre une
-                expérience inoubliable et riche en sensations.
-            </p>
+<section class="bg-map-dark relative overflow-hidden py-24 sm:py-32 px-5 md:px-10">
+    <div class="absolute inset-0 bg-gradient-to-b from-fsky-700/15 via-transparent to-transparent pointer-events-none" />
+
+    <div class="relative z-10 max-w-6xl mx-auto vertical gap-16 lg:gap-20">
+        <div class="vertical center text-center gap-6 opacity-0 translate-y-[100%]" data-observer="a">
+            <span class="inline-block text-gr-400 text-sm font-semibold tracking-widest uppercase">
+                Découvrir la grimpe d'arbre
+            </span>
+            <h2 class="grandstander text-[clamp(1.8rem,5vw,3rem)] text-white leading-tight max-w-[20ch]">
+                Un parc accrobranche chez vous !
+            </h2>
+            <div class="w-12 h-px bg-gradient-to-r from-transparent via-gr-400/60 to-transparent" />
         </div>
 
-        <CatchVideo
-            dataObserver="d"
-            style="--reveal-delay: 0.6s"
-            className="max-w-[60ch] xl:max-w-[60ch] mx-auto w-full object-cover rounded-lg ring-1 ring-white/10 ring-offset-2 ring-offset-map-darkblue/40 opacity-0 translate-y-[50%]"
-        />
-        <!-- </div> -->
-    </article>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div class="vertical gap-6 order-2 lg:order-1">
+                <p
+                    data-observer="b"
+                    class="opacity-0 translate-y-[100%] text-lg md:text-xl font-medium text-white/90 leading-relaxed"
+                    style="--reveal-delay: 0.4s">
+                    Envie de te dépasser et de te reconnecter à la nature ? La grimpe d'arbre est faite pour toi !
+                </p>
+                <p
+                    data-observer="c"
+                    class="opacity-0 translate-y-[100%] text-[0.95rem] md:text-base text-map-darkblue/80 leading-relaxed"
+                    style="--reveal-delay: 0.5s">
+                    Accompagnés par nos éducateurs passionnés, explorez la sérénité des cimes en vous redécouvrant
+                    dans un environnement extra-ordinaire. Chaque atelier est une invitation à ressentir des émotions
+                    authentiques et à comprendre l'importance de préserver notre écosystème.
+                </p>
+            </div>
+
+            <div class="order-1 lg:order-2">
+                <CatchVideo
+                    dataObserver="d"
+                    style="--reveal-delay: 0.6s"
+                    className="w-full object-cover rounded-xl shadow-2xl shadow-black/40 ring-1 ring-white/10 opacity-0 translate-y-[50%]"
+                />
+            </div>
+        </div>
+    </div>
 </section>

@@ -30,7 +30,7 @@ const MobileMenu = ({ websiteLinks }: MobileMenuProps) => {
                         <MenuIcon className="w-9 h-9" />
                     </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="mr-3">
+                <DropdownMenuContent className="mr-3 z-[10010]">
                     {websiteLinks.map(({ href, isActive, name }) => (
                         <DropdownMenuItem
                             key={name}

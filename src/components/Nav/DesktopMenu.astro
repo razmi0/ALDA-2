@@ -15,10 +15,10 @@ const { websiteLinks } = Astro.props;
       return cta ? (
         <li>
           <CTA href={href}>
-            <button
+            <span
               class={`px-10 py-3 rounded-lg bg-pur-500 hover:brightness-110 hover:text-white/80 text-white transition-all`}>
               {name}
-            </button>
+            </span>
           </CTA>
         </li>
       ) : (

@@ -1,9 +1,8 @@
 ---
 import VerticalText from "@/components/shared/VerticalText.astro";
-import Button from "@/components/shared/Button.astro";
 import CTA from "@/components/shared/CTA.astro";
 import Section from "@/layouts/Section.astro";
-import { Mountain } from "lucide-react";
+import { Mountain, ArrowRight, Instagram, Facebook } from "lucide-react";
 import Header from "../Nav/Header.astro";
 import Video from "../HeroVideo.astro";
 ---
@@ -52,21 +51,31 @@ import Video from "../HeroVideo.astro";
                 class={`horizontal center gap-5 flex-wrap translate-y-[100%] opacity-0`}
                 data-observer="2"
                 style="--reveal-delay : 0.5s;">
-                <h3 class="text-2xl" style={"text-shadow: 0px 0px 3px black;"}></h3>
-                <div class={`horizontal center gap-10`}>
+                <div class={`horizontal center gap-4`}>
                     <CTA href="/contact">
-                        <Button
-                            className="pointer-events-auto hover:bg-white"
-                            variant="filled"
-                            ring="sm"
-                            size="lg"
-                            data-is="hero-button"
-                            textClass="-translate-x-2"
-                            leftIcon>
-                            <Mountain className="h-[18px] w-[18px] translate-y-[3px]" slot="icon" />
-                            Nous contacter
-                        </Button>
+                        <div
+                            class="pointer-events-auto group inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-gradient-to-r from-gr-500 to-gr-600 text-white font-semibold text-[0.95rem] shadow-lg shadow-gr-600/30 hover:shadow-xl hover:shadow-gr-600/45 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ring-1 ring-white/20">
+                            <Mountain className="w-[18px] h-[18px]" />
+                            <span>Nous contacter</span>
+                            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </div>
                     </CTA>
+                    <a
+                        href="https://www.instagram.com/alabordarbre/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        class="pointer-events-auto w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm ring-1 ring-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-200">
+                        <Instagram className="w-[18px] h-[18px]" />
+                    </a>
+                    <a
+                        href="https://www.facebook.com/people/A-labordarbre/61564217311513/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook"
+                        class="pointer-events-auto w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm ring-1 ring-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-200">
+                        <Facebook className="w-[18px] h-[18px]" />
+                    </a>
                 </div>
             </div>
         </div>
