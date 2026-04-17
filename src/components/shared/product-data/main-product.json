@@ -61,7 +61,7 @@
             "imageKey": "evenementiel",
             "tags": ["anniversaire", "festival", "entreprise"],
             "description": "nous proposerons des animations lors d'événements locaux, mais aussi la création d'ateliers sur mesure pour tout type de festivals, les anniversaires, les enterrements de vie de jeunes filles ou de garçons, etc.",
-            "price": "300 - 500",
+            "price": "400 - 650",
             "program": [
                 "atelier de grimpe simple",
                 "aménagement d'espace convivial perché",
@@ -77,7 +77,7 @@
             "imageKey": "sensoriel",
             "tags": ["inclusif", "sensibilisation", "éducation"],
             "description": "nous mettons en place des ateliers adaptés aux jeunes enfants et aux personnes en situation de handicap. Nous travaillons également avec les écoles et avec les communes pour organiser des ateliers de sensibilisation sur la protection de l'environnement.",
-            "price": "300 - 500",
+            "price": "400 - 650",
             "audience": "tout public",
             "locations": "Où vous le souhaitez !",
             "program": [
@@ -95,7 +95,7 @@
             "pole": "recherche",
             "imageKey": "recherche",
             "program": ["Sur-mesure pour vous"],
-            "price": "300 - 500",
+            "price": "400 - 650",
             "locations": "Où vous le souhaitez !",
             "description": "pour compléter la veille scientifique que nous menons sur les bienfaits psychologiques de la grimpe d'arbre, nous développons des projets de recherche en partenariat avec les universités pour enrichir la littérature scientifique sur ce sujet. Enfin, ce pôle permettra également d'intervenir sur des projets de recherche existants concernant la faune et la flore des milieux forestiers (inventaire, suivi d'espèces protégées, installation de matériel tel que des pièges photos, etc.)."
         }
