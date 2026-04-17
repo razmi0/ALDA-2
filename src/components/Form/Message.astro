@@ -1,12 +1,10 @@
 ---
-import type { ProductType } from "@/components/shared/product-data/types";
-
 import Checkbox from "@/components/ui/checkbox.astro";
 import { cn } from "@/lib/utils";
 import Info from "./Info.astro";
 
 interface Props {
-    product?: ProductType;
+    product?: { id: string | number };
     key?: string;
     telClass?: string;
     emailClass?: string;
@@ -26,19 +24,24 @@ const { product, emailClass, telClass, textareaClass } = Astro.props;
 
 const key = product ? product.id : Astro.props.key;
 if (!key) throw new Error("No key found");
+
+const baseInput = "w-full ps-3 py-2.5 rounded-xl text-sm text-black/80 placeholder:text-black/30 outline-none transition-all duration-200";
 ---
 
 <style>
-    label {
-        @apply text-sm;
+    label span.field-label {
+        @apply text-sm font-medium text-black/65 tracking-wide;
     }
-    input {
-        @apply w-full ps-3 py-2 rounded-md;
+    [data-field-input][data-invalid="true"] {
+        @apply border-red-400/80 ring-2 ring-red-200;
+    }
+    .field-error {
+        @apply mt-1 block text-xs leading-4 text-red-600;
     }
 </style>
 
 <script>
-    const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"]`)) as HTMLElement[];
+    const sections = Array.from(document.querySelectorAll(`section[data-action*="section-message"], [data-action*="section-message"]`)) as HTMLElement[];
 
     sections.forEach((section) => {
         const action = section.dataset.action;
@@ -46,46 +49,53 @@ if (!key) throw new Error("No key found");
         const textarea = section.querySelector(`textarea`) as HTMLTextAreaElement | null;
         if (!textarea) return;
         textarea.addEventListener("input", () => {
+            textarea.style.height = "auto";
             textarea.style.height = `${textarea.scrollHeight}px`;
         });
     });
 </script>
 
 <fieldset
-    class={"h-full w-full py-7 vertical gap-5 justify-between [&>label]:vertical [&>label]:items-start [&>label]:justify-center"}
+    class={"h-full w-full py-4 vertical gap-5 justify-between [&>label]:vertical [&>label]:items-start [&>label]:justify-center [&>label]:gap-1.5"}
     data-action={`section-message#${key}`}>
     <label for={`email-${key}`}>
-        <span class="font-medium text-md">Votre email :</span>
+        <span class="field-label">Votre email</span>
         <input
             id={`email-${key}`}
             type="email"
             name="email"
             placeholder="monemail@email.com"
-            class={cn("mb-1", emailClass)}
+            class={cn(baseInput, emailClass)}
             data-valid="false"
+            data-field-input
         />
         <Info text="Votre email nous permettra de nous mettre en contact" data-type="email" key={`${key}`} />
+        <small class="field-error hidden" data-field-error-for="email" />
     </label>
     <label for={`tel-${key}`}>
-        <span class="font-medium text-md">Votre téléphone :</span>
+        <span class="field-label">Votre téléphone</span>
         <input
             id={`tel-${key}`}
             type="tel"
             name={`tel`}
             placeholder="Téléphone..."
-            class={cn("mb-1", telClass)}
+            class={cn(baseInput, telClass)}
             data-valid="false"
+            data-field-input
         />
         <Info text="Votre téléphone n'est pas obligatoire" data-type="tel" key={`${key}`} />
+        <small class="field-error hidden" data-field-error-for="tel" />
     </label>
     <label for={`textarea-${key}`}>
-        <span class="font-medium text-md">Votre message :</span>
+        <span class="field-label">Votre message</span>
         <textarea
             id={`textarea-${key}`}
             name={`message`}
-            class={cn("w-full min-h-40 px-2 py-1 h-auto rounded-md max-h-52 mb-1", textareaClass)}
-            placeholder="Message..."></textarea>
+            class={cn("w-full min-h-36 px-3 py-2.5 h-auto rounded-xl max-h-52 text-sm text-black/80 placeholder:text-black/30 outline-none transition-all duration-200 resize-none", textareaClass)}
+            placeholder="Décrivez votre projet ou posez-nous votre question..."
+            data-field-input></textarea>
         <Info text="Votre message nous permettra de mieux comprendre votre demande" />
+        <small class="field-error hidden" data-field-error-for="message" />
     </label>
     <Checkbox option={option} />
 </fieldset>

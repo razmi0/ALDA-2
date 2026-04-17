@@ -19,7 +19,7 @@ interface Props {
     size="quarter"
     extension="sm"
     className={`relative overflow-hidden z-10 flex justify-start items-start ${Astro.props.className || ""}`}>
-    <!-- bg-map-dark -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gr-600/10 pointer-events-none z-[-1]"></div>
     <Image
         loading={Astro.props.loading}
         src={Astro.props.type === "white" ? ForestWhite : Forest}
@@ -27,7 +27,7 @@ interface Props {
         alt={""}
         class={cn(
             "absolute bottom-0 object-cover min-w-[632px] w-full z-[1] [transform:_scale(-1,1)_translateY(75px)] xl:[transform:_scale(-1,1)_translateY(125px)]",
-            Astro.props.imgOneClasses
+            Astro.props.imgOneClasses,
         )}
         widths={[240, 320, 478, 648, 720, 1024, 1574]}
         sizes={`(max-width: 320px) 240px, (max-width: 478px) 320px, (max-width: 648px) 478px, (max-width: 1024px) 648px, (max-width: 1574px) 720px, 1024px`}

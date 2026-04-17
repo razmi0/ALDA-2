@@ -1,19 +1,13 @@
 ---
 import Message from "@/components/Form/Message.astro";
-import Button from "@/components/shared/Button.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Nav/Header.astro";
 import Socials from "@/components/shared/Socials.astro";
+import { companyContact } from "@/config/site";
 import Layout from "@/layouts/Layout.astro";
-import Section from "@/layouts/Section.astro";
-import { Send, ThumbsUp } from "lucide-react";
+import { Send, MapPin, Mail, Phone } from "lucide-react";
 
 const key = "contact";
-
-export const companyContact = {
-    email: "contact@alabordarbre.fr",
-    tel: "06 71 34 07 07",
-};
 
 const adresse = {
     title: "Notre adresse",
@@ -21,62 +15,185 @@ const adresse = {
 };
 
 const description =
-    "Contactez Alabordarbre pour organiser vos animations, événements ou projets de recherche en grimpe d’arbre. Basés à Toulouse, nous répondons à toutes vos demandes avec passion et professionnalisme. Vive la grimpe, grimpeurs et grimpeuses.";
+    "Contactez Alabordarbre pour organiser vos animations, événements ou projets de recherche en grimpe d'arbre. Basés à Toulouse, nous répondons à toutes vos demandes avec passion et professionnalisme. Vive la grimpe, grimpeurs et grimpeuses.";
 ---
 
 <script>
     import { actions } from "astro:actions";
+    import { setupIntersectionObserver } from "@/lib/utils";
 
-    const submitButton = document.querySelector("button[type=submit]") as HTMLButtonElement | null;
-    const form = document.querySelector("form") as HTMLFormElement | null;
+    const form = document.querySelector("[data-contact-form]") as HTMLFormElement | null;
+    const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+    const normalize = (value: FormDataEntryValue | null): string => (typeof value === "string" ? value.trim() : "");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phonePattern = /^[+()\d.\s-]{6,}$/;
+
+    const setFieldError = (name: "email" | "tel" | "message", message: string) => {
+        if (!form) return;
+        const input = form.querySelector(`[name="${name}"]`) as HTMLElement | null;
+        const output = form.querySelector(`[data-field-error-for="${name}"]`) as HTMLElement | null;
+
+        if (input) {
+            input.setAttribute("data-invalid", "true");
+            input.setAttribute("aria-invalid", "true");
+        }
+        if (output) {
+            output.textContent = message;
+            output.classList.remove("hidden");
+        }
+    };
+
+    const clearFieldError = (name: "email" | "tel" | "message") => {
+        if (!form) return;
+        const input = form.querySelector(`[name="${name}"]`) as HTMLElement | null;
+        const output = form.querySelector(`[data-field-error-for="${name}"]`) as HTMLElement | null;
+        if (input) {
+            input.removeAttribute("data-invalid");
+            input.removeAttribute("aria-invalid");
+        }
+        if (output) {
+            output.textContent = "";
+            output.classList.add("hidden");
+        }
+    };
+
+    const clearAllFieldErrors = () => {
+        clearFieldError("email");
+        clearFieldError("tel");
+        clearFieldError("message");
+    };
+
+    const validateForm = (formData: FormData) => {
+        const email = normalize(formData.get("email"));
+        const tel = normalize(formData.get("tel"));
+        const message = normalize(formData.get("message"));
+        let hasError = false;
+
+        if (!message) {
+            setFieldError("message", "Merci de renseigner votre message.");
+            hasError = true;
+        }
+
+        if (!email && !tel) {
+            const contactMessage = "Renseignez au moins un email ou un téléphone.";
+            setFieldError("email", contactMessage);
+            setFieldError("tel", contactMessage);
+            hasError = true;
+        }
+
+        if (email && !emailPattern.test(email)) {
+            setFieldError("email", "Veuillez saisir une adresse email valide.");
+            hasError = true;
+        }
+
+        if (tel && !phonePattern.test(tel)) {
+            setFieldError("tel", "Veuillez saisir un numéro de téléphone valide.");
+            hasError = true;
+        }
+
+        return !hasError;
+    };
+
+    const applyServerFieldErrors = (error: unknown) => {
+        if (!error || typeof error !== "object" || !("fields" in error)) return false;
+        const fields = (error as { fields?: Record<string, string[] | undefined> }).fields;
+        if (!fields) return false;
+
+        Object.entries(fields).forEach(([name, messages]) => {
+            if (!messages?.length) return;
+            if (name === "email" || name === "tel" || name === "message") {
+                setFieldError(name, messages[0] || "Champ invalide.");
+            }
+        });
+        return true;
+    };
+
+    const bindInputErrorReset = () => {
+        if (!form) return;
+        (["email", "tel", "message"] as const).forEach((name) => {
+            const input = form.querySelector(`[name="${name}"]`) as HTMLInputElement | HTMLTextAreaElement | null;
+            if (!input) return;
+            input.addEventListener("input", () => {
+                clearFieldError(name);
+                if (name === "email" || name === "tel") {
+                    const email = normalize(new FormData(form).get("email"));
+                    const tel = normalize(new FormData(form).get("tel"));
+                    if (email || tel) {
+                        clearFieldError("email");
+                        clearFieldError("tel");
+                    }
+                }
+            });
+        });
+    };
+
+    bindInputErrorReset();
+
     if (form && submitButton) {
         form.addEventListener("submit", async (event) => {
             submitButton.setAttribute("data-loading", "loading");
             event.preventDefault();
             const formData = new FormData(form);
+            clearAllFieldErrors();
+
+            if (!validateForm(formData)) {
+                createToaster("Veuillez corriger les champs en erreur.", "error");
+                submitButton.setAttribute("data-loading", "idle");
+                return;
+            }
+
             const { error } = await actions.send(formData);
             if (!error) {
                 createToaster("Votre message a bien été envoyé", "success");
                 form.reset();
+                clearAllFieldErrors();
             } else {
-                createToaster("Une erreur est survenue, veuillez réessayer", "error");
+                const hasFieldErrors = applyServerFieldErrors(error);
+                createToaster(
+                    hasFieldErrors
+                        ? "Certains champs sont invalides, vérifiez le formulaire."
+                        : "Impossible d'envoyer le message pour le moment. Veuillez réessayer.",
+                    "error"
+                );
             }
             submitButton.setAttribute("data-loading", "idle");
         });
     }
 
-    /**
-     *
-     *
-     *
-     *
-     *
-     *
-     */
+    document.querySelectorAll<HTMLElement>("[data-contact-reveal]").forEach((el) => {
+        setupIntersectionObserver(el, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -5% 0px",
+            onIntersect: () => el.classList.add("revealed"),
+            onDisappear: () => {},
+            unobserve: true,
+            debug: false,
+        });
+    });
 
     function createToaster(message: string, type = "info", duration = 5000) {
         const toaster = document.createElement("div");
         toaster.innerHTML = `<p>${message}</p>`;
-        toaster.className = `toaster toaster-${type}`;
 
         Object.assign(toaster.style, {
             position: "fixed",
-            top: "20px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            background: type === "error" ? "#e74c3c" : type === "success" ? "#2ecc71" : "#3498db",
+            bottom: "20px",
+            right: "20px",
+            background: type === "error" ? "#e74c3c" : type === "success" ? "#397c5b" : "#3498db",
             color: "#fff",
             padding: "15px 28px",
-            borderRadius: "5px",
-            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-            zIndex: "1000",
+            borderRadius: "12px",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.18)",
+            zIndex: "20000",
             opacity: "1",
             transition: "opacity 0.5s ease-in-out",
-            whiteSpace: "nowrap",
+            fontSize: "0.9rem",
+            fontWeight: "500",
+            maxWidth: "min(420px, calc(100vw - 40px))",
         });
 
         document.body.appendChild(toaster);
-
         setTimeout(() => {
             toaster.style.opacity = "0";
             setTimeout(() => toaster.remove(), 500);
@@ -84,81 +201,121 @@ const description =
     }
 </script>
 
+<style is:global>
+    [data-contact-reveal] {
+        opacity: 0;
+        transform: translateY(1.5rem);
+        transition:
+            opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+    [data-contact-reveal].revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
 <Layout title="contact" className="bg-pattern" description={description}>
     <Header slot="header" />
-    <Section
-        data-action={`section-message#${key}`}
-        size="full"
-        extension="sm"
-        className={"grid center mt-40 md:mt-0 mb-20 md:mb-0"}>
-        <div class={"vertical md:horizontal center gap-3 gap-y-20 w-full h-fit px-2"}>
-            <div class="text-left vertical center h-full gap-20">
-                <!--  -->
-                <div>
-                    <h2 class="text-[clamp(2.125rem,6vw,3rem)] uppercase mb-5 text-center">Contactez-nous</h2>
-                    <p class="max-w-[50ch] text-[1rem] text-balance text-center">
-                        Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ?
-                        N'hésitez pas à nous contacter via le formulaire ci-dessous.
-                    </p>
-                </div>
-                <div
-                    class="sm:py-10 sm:px-14 px-9 py-5 shadow-md rounded-md bg-slate-100 vertical items-start text-left justify-between h-fit gap-6 [&>article>h3]:text-lg [&>article>h3]:mb-2 [&>article]:h-full [&>article]:grow text-black">
-                    <article>
-                        <h3>{adresse.title}</h3>
-                        {adresse.content.map((line) => <p>{line}</p>)}
-                    </article>
-                    <article>
-                        <h3>Nos contacts</h3>
 
-                        <p>
-                            <span>Email : </span>
-                            <span class="font-semibold">{companyContact.email}</span>
-                        </p>
-                        <p>
-                            <span>Téléphone : </span>
-                            <span class="font-semibold">{companyContact.tel}</span>
-                        </p>
-                    </article>
-                    <article class="vertical justify-end">
-                        <h3>Nos réseaux</h3>
-                        <Socials />
-                    </article>
-                </div>
+    <section
+        data-action={`section-message#${key}`}
+        class="min-h-screen px-4 sm:px-6 md:px-10 pt-36 md:pt-44 pb-20">
+        <div class="max-w-5xl mx-auto vertical gap-12">
+            <div class="text-center vertical center gap-4" data-contact-reveal>
+                <span class="text-gr-500 text-sm font-semibold tracking-widest uppercase">
+                    Nous contacter
+                </span>
+                <h2 class="grandstander text-[clamp(1.8rem,5vw,2.8rem)] text-gr-600 leading-tight">
+                    Parlons de votre projet
+                </h2>
+                <p class="max-w-[50ch] text-black/55 text-sm md:text-base text-balance leading-relaxed">
+                    Vous avez une question, une demande de devis ou vous souhaitez simplement nous dire bonjour ?
+                    N'hésitez pas à nous contacter.
+                </p>
             </div>
-            <form
-                class="p-3 sm:py-5 sm:px-7 md:py-10 md:px-14 shadow-md rounded-md bg-slate-100 space-y-5 ring-offset-1 vertical text-black shadow-black/20"
-                method="POST">
-                <div class="max-w-lg vertical center">
-                    <Message
-                        key={key}
-                        telClass="bg-stone-100 ring-1 ring-stone-200 bg-white"
-                        textareaClass="bg-stone-100 ring-1 ring-stone-200 bg-white"
-                        emailClass="bg-stone-100 ring-1 ring-stone-200 bg-white"
-                    />
-                </div>
-                <div class="w-full horizontal-reverse">
-                    <div class={`relative vertical center`}>
-                        <Button
-                            data-loading="idle"
-                            data-for={"form"}
-                            type="submit"
-                            size="md"
-                            variant="filled"
-                            rightIcon
-                            ring="sm">
-                            Valider
-                            <Send className="stroke-1 h-5 w-5 translate-y-[3px]" slot="icon" />
-                        </Button>
-                        <div
-                            class={`absolute -bottom-6 left-0 hidden text-sm whitespace-nowrap center gap-2 font-medium transition-transform translate-y-5`}>
-                            <ThumbsUp className="stroke-1 h-5 w-5" />
-                            Votre message a bien été envoyé
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-8 items-start">
+                <div class="vertical gap-6" data-contact-reveal style="--reveal-delay: 100ms">
+                    <div class="relative overflow-hidden rounded-2xl bg-white/60 backdrop-blur-xl border border-gr-500/10 shadow-[0_2px_24px_rgba(29,56,34,0.08)] p-6 vertical gap-6">
+                        <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-gr-400 via-gr-500 to-gr-600" />
+
+                        <div class="vertical gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-gr-400/25 to-gr-500/15 flex items-center justify-center ring-1 ring-gr-500/10">
+                                    <MapPin className="w-4 h-4 text-gr-500" />
+                                </div>
+                                <h3 class="font-semibold text-gr-600 text-[0.95rem]">{adresse.title}</h3>
+                            </div>
+                            <div class="pl-12 text-sm text-black/60 leading-relaxed">
+                                {adresse.content.map((line) => <p>{line}</p>)}
+                            </div>
+                        </div>
+
+                        <div class="w-full h-px bg-gradient-to-r from-transparent via-gr-500/15 to-transparent" />
+
+                        <div class="vertical gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-gr-400/25 to-gr-500/15 flex items-center justify-center ring-1 ring-gr-500/10">
+                                    <Mail className="w-4 h-4 text-gr-500" />
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gr-500/60 uppercase tracking-wide font-medium">Email</p>
+                                    <a href={`mailto:${companyContact.email}`} class="text-sm font-semibold text-gr-600 hover:text-gr-500 hover:underline transition-colors duration-150">
+                                        {companyContact.email}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-gr-400/25 to-gr-500/15 flex items-center justify-center ring-1 ring-gr-500/10">
+                                    <Phone className="w-4 h-4 text-gr-500" />
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gr-500/60 uppercase tracking-wide font-medium">Téléphone</p>
+                                    <a href={`tel:${companyContact.tel.replace(/\s/g, "")}`} class="text-sm font-semibold text-gr-600 hover:text-gr-500 hover:underline transition-colors duration-150">
+                                        {companyContact.tel}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-px bg-gradient-to-r from-transparent via-gr-500/15 to-transparent" />
+
+                        <div class="vertical gap-2">
+                            <p class="text-xs text-gr-500/60 uppercase tracking-wide font-medium">Réseaux sociaux</p>
+                            <Socials />
                         </div>
                     </div>
                 </div>
-            </form>
+
+                <form
+                    data-contact-reveal
+                    data-contact-form
+                    style="--reveal-delay: 200ms"
+                    class="relative overflow-hidden rounded-2xl bg-white/60 backdrop-blur-xl border border-gr-500/10 shadow-[0_2px_24px_rgba(29,56,34,0.08)] p-6 md:p-8 vertical gap-2"
+                    method="POST">
+                    <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-gr-500 via-gr-400 to-gr-500" />
+                    <Message
+                        key={key}
+                        telClass="bg-white/70 border border-black/[0.08] focus:border-gr-500/40 focus:ring-2 focus:ring-gr-500/15"
+                        textareaClass="bg-white/70 border border-black/[0.08] focus:border-gr-500/40 focus:ring-2 focus:ring-gr-500/15"
+                        emailClass="bg-white/70 border border-black/[0.08] focus:border-gr-500/40 focus:ring-2 focus:ring-gr-500/15"
+                    />
+                    <div class="flex justify-end pt-3">
+                        <button
+                            data-loading="idle"
+                            data-for="form"
+                            type="submit"
+                            class="group inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-gradient-to-r from-gr-500 to-gr-600 text-white font-semibold text-sm shadow-lg shadow-gr-600/25 hover:shadow-xl hover:shadow-gr-600/35 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer disabled:opacity-50 disabled:pointer-events-none">
+                            <span data-is="button-text">Envoyer votre message</span>
+                            <Send className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </Section>
+    </section>
 
     <Footer slot="footer" />
 </Layout>

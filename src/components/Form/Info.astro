@@ -12,62 +12,77 @@ interface Props {
 const { text, key, className } = Astro.props;
 ---
 
-<script>
-    const outputs = Array.from(document.querySelectorAll('[data-info^="info"]')) as HTMLElement[];
-    const resetDelay = 10000;
-
-    const initial = new Map<string, { element: HTMLElement; baseText: string }>();
-
-    outputs.forEach((output) => {
-        const key = output.dataset.info?.split("#")[1] as string;
-        initial.set(key, { element: output, baseText: output.textContent as string });
-    });
-
-    const config = { attributes: true, childList: false, subtree: false };
-    /**
-     * Form component mutate variant to error when validation fails. This handler resets the variant to info after a delay.
-     */
-    const onMutation = (mutationList: MutationRecord[]) => {
-        for (const mutation of mutationList) {
-            if (mutation.type === "attributes") {
-                const output = mutation.target as HTMLElement;
-                const key = output.dataset.info?.split("#")[1] as string;
-                if (!key) throw new Error("Key not found");
-                const timeId = setTimeout(() => {
-                    if (output.dataset.variant === "info") return;
-                    output.dataset.variant = "info" as "info" | "error";
-                    if (initial.has(key)) {
-                        const initialData = initial.get(key);
-                        if (initialData) output.textContent = initialData.baseText;
-                        clearTimeout(timeId);
-                    }
-                }, resetDelay);
-            }
-        }
-    };
-    const observer = new MutationObserver(onMutation);
-    outputs.forEach((output) => observer.observe(output, config));
-</script>
-
 <style>
-    div:has(> [data-variant="error"]) {
-        @apply text-red-500 ring-1 ring-red-500;
+    .info-row:has(> [data-variant="error"]) {
+        @apply text-red-500/80;
+    }
+    .info-row:has(> [data-variant="error"]) :global(svg) {
+        @apply text-red-400;
     }
 </style>
 
-<div class={cn("horizontal center text-[0.98rem] w-full", className)}>
-    <InfoIcon className="inline-block w-5 h-5 mr-1.5 stroke-1" />
+<div class={cn("info-row horizontal items-center gap-1.5 mt-1 text-black/35", className)}>
+    <InfoIcon className="inline-block w-3.5 h-3.5 shrink-0 stroke-[1.5]" />
     {
         key ? (
             <small
                 data-type={Astro.props["data-type"]}
                 data-info={`info#${key}`}
                 data-variant="info"
-                class="block w-full text-left leading-4 translate-y-[1px]">
+                class="block w-full text-left text-xs leading-4">
                 {text}
             </small>
         ) : (
-            <small class="block w-full text-left leading-4 translate-y-[1px]">{text}</small>
+            <small class="block w-full text-left text-xs leading-4">{text}</small>
         )
     }
 </div>
+
+<script>
+    const resetDelay = 10000;
+    const config = { attributes: true, childList: false, subtree: false };
+
+    const setupInfoObservers = () => {
+        const outputs = Array.from(document.querySelectorAll('[data-info^="info"]')) as HTMLElement[];
+        const targets = outputs.filter((output) => output.dataset.infoBound !== "true");
+        if (targets.length === 0) return;
+
+        const initial = new Map<string, string>();
+        targets.forEach((output) => {
+            const key = output.dataset.info?.split("#")[1];
+            if (!key) return;
+            output.dataset.infoBound = "true";
+            initial.set(key, output.textContent ?? "");
+        });
+
+        const observer = new MutationObserver((mutationList) => {
+            mutationList.forEach((mutation) => {
+                if (mutation.type !== "attributes") return;
+                const output = mutation.target as HTMLElement;
+                const key = output.dataset.info?.split("#")[1];
+                if (!key) return;
+
+                setTimeout(() => {
+                    if (output.dataset.variant === "info") return;
+                    output.dataset.variant = "info";
+                    const baseText = initial.get(key);
+                    if (baseText !== undefined) {
+                        output.textContent = baseText;
+                    }
+                }, resetDelay);
+            });
+        });
+
+        targets.forEach((output) => observer.observe(output, config));
+    };
+
+    if (document.readyState === "loading") {
+        const windowWithFlag = window as Window & { __infoObserverInitQueued?: boolean };
+        if (!windowWithFlag.__infoObserverInitQueued) {
+            windowWithFlag.__infoObserverInitQueued = true;
+            document.addEventListener("DOMContentLoaded", setupInfoObservers, { once: true });
+        }
+    } else {
+        setupInfoObservers();
+    }
+</script>

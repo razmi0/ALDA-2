@@ -25,9 +25,10 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover point
     } as Record<SrcType, SrcValue>;
 
     let elementsOk = true;
+    const root = document.querySelector("[data-hero-video]") as HTMLElement | null;
     const elements = {
-        video: document.querySelector("video[data-connection]") as HTMLVideoElement,
-        img: document.querySelector("img[data-connection]") as HTMLImageElement,
+        video: root?.querySelector("video[data-connection]") as HTMLVideoElement | undefined,
+        img: root?.querySelector("img[data-connection]") as HTMLImageElement | undefined,
     };
     if (!elements.video || !elements.img) elementsOk = false;
 
@@ -63,11 +64,13 @@ const styles = "absolute-align w-screen h-screen max-w-screen object-cover point
     }
 </style>
 
-<video data-connection="0" preload="auto" class={styles + " z-20"} autoplay loop muted playsinline> </video>
-<Image
-    data-connection="0"
-    src={HeroStart}
-    alt="l'équipe alabrodarbre s'assurant que le lieux est sécurisé et aidant les grimpeur assurés"
-    class={styles + " z-10"}
-    loading="eager"
-/>
+<div data-hero-video>
+    <video data-connection="0" preload="auto" class={styles + " z-20"} autoplay loop muted playsinline> </video>
+    <Image
+        data-connection="0"
+        src={HeroStart}
+        alt="L'équipe Alabordarbre s'assure que le lieu est sécurisé et accompagne les grimpeurs encordés"
+        class={styles + " z-10"}
+        loading="eager"
+    />
+</div>

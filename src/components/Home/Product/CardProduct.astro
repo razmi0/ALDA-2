@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import { capitalize } from "@/lib/utils";
+import CTA from "@/components/shared/CTA.astro";
+import Badge from "@/components/shared/Badge.astro";
+import type { ProductImage } from "./types";
+import { Leaf, ArrowRight } from "lucide-react";
+
+interface Props {
+    title: string;
+    description: string;
+    tags: string[];
+    price?: string;
+    program?: string[];
+    audience?: string;
+    locations?: string;
+    theme?: string;
+    image: ProductImage;
+}
+
+const { title, description, tags, price, program, audience, locations, theme, image } = Astro.props;
+---
+
+<style>
+    .card-overlay {
+        background: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 0.45) 0%,
+            rgba(255, 255, 255, 0.15) 40%,
+            transparent 70%
+        );
+    }
+    @media (min-width: 768px) {
+        .card-overlay {
+            background: linear-gradient(
+                to right,
+                transparent 0%,
+                transparent 22%,
+                rgba(255, 255, 255, 0.25) 38%,
+                rgba(255, 255, 255, 0.5) 55%
+            );
+        }
+    }
+</style>
+
+<article class="relative w-full overflow-hidden rounded-2xl bg-white shadow-md border border-black/[0.06]">
+    <Image
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        class="absolute inset-0 w-full h-full object-cover"
+    />
+
+    <div class="card-overlay absolute inset-0"></div>
+
+    <div
+        class="relative z-10 vertical min-h-[30rem] p-4 pt-44 md:pt-6 md:pb-6 md:pr-8 md:pl-[40%] lg:pl-[42%] items-end justify-end md:justify-center">
+        <div
+            data-reveal="card-glass"
+            class="vertical gap-5 max-w-lg rounded-2xl bg-white/60 backdrop-blur-xl border border-white/70 shadow-[0_2px_20px_rgba(0,0,0,0.06)] p-5 md:p-7">
+            <div class="vertical gap-1.5">
+                <h3 class="grandstander text-[clamp(1.35rem,3.5vw,1.8rem)] font-bold text-gr-600 leading-tight">
+                    {capitalize(title)}
+                </h3>
+                {theme && <p class="text-sm text-gr-500 font-medium italic">{capitalize(theme)}</p>}
+            </div>
+
+            {
+                tags.length > 0 && (
+                    <div class="flex gap-2 flex-wrap">
+                        {tags.map((tag) => (
+                            <Badge tag={tag} className="!bg-gr-500/10 !border-gr-500/20 !text-gr-600" />
+                        ))}
+                    </div>
+                )
+            }
+
+            <p class="text-black/70 text-sm md:text-[0.92rem] leading-relaxed">
+                {description}
+            </p>
+
+            {
+                program && program.length > 0 && (
+                    <div class="relative rounded-xl bg-white/45 backdrop-blur-md border border-white/50 p-4 pt-5 vertical gap-3">
+                        <span class="absolute -top-2.5 left-3.5 px-2 py-0.5 text-[0.65rem] uppercase tracking-widest font-semibold text-gr-600/70 bg-white/80 backdrop-blur-sm rounded-full border border-white/60">
+                            Ateliers proposés
+                        </span>
+                        {program.map((item, i) => (
+                            <div
+                                data-reveal="program-row"
+                                style={`--row-delay: ${80 * i}ms`}
+                                class="flex items-center gap-3">
+                                <div class="shrink-0 w-7 h-7 rounded-full bg-gr-500/12 flex items-center justify-center">
+                                    <Leaf className="w-3.5 h-3.5 text-gr-500" />
+                                </div>
+                                <span class="text-[0.85rem] font-semibold text-black/80">{capitalize(item)}</span>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
+
+            {
+                price && (
+                    <div class="vertical gap-1 pt-1">
+                        <p class="font-bold text-black/85 text-[0.95rem]">
+                            À partir de <span class="text-[1.65rem] text-gr-600 tracking-tight">{price} €</span>
+                            <span class="text-sm font-normal text-black/50 ml-0.5">/ jour</span>
+                        </p>
+                        {(audience || locations) && (
+                            <p class="text-xs text-black/45">
+                                {audience && capitalize(audience)}
+                                {audience && locations && " · "}
+                                {locations && capitalize(locations)}
+                            </p>
+                        )}
+                    </div>
+                )
+            }
+
+            <CTA href="/contact" prefetch prefetchType="viewport">
+                <div
+                    class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-gr-500 to-gr-600 text-white font-semibold text-sm shadow-lg shadow-gr-600/25 hover:shadow-xl hover:shadow-gr-600/35 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer">
+                    <span>Demandez votre devis personnalisé</span>
+                    <ArrowRight className="w-4 h-4" />
+                </div>
+            </CTA>
+        </div>
+    </div>
+</article>

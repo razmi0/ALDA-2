@@ -1,8 +1,9 @@
 export type ProductImage = {
-    label: Product["title"];
+    key: string;
     src: ImageMetadata;
     alt: string;
-    size: number[];
+    width: number;
+    height: number;
 };
 export interface ProductData {
     poles: Poles;
@@ -10,7 +11,8 @@ export interface ProductData {
 }
 
 interface Poles {
-    available: number[];
+    enabledPoleIds: number[];
+    enabledProductIds: number[];
     all: All[];
 }
 
@@ -23,10 +25,11 @@ export interface Product {
     id: number;
     title: string;
     pole: string;
+    imageKey?: string;
     tags?: string[];
     description?: string;
     price?: string;
-    program?: string;
+    program?: string[] | string;
     audience?: string;
     locations?: string;
     subproducts?: Subproduct[];
@@ -35,6 +38,9 @@ export interface Product {
 interface Subproduct {
     id: number;
     title: string;
+    imageKey?: string;
     theme: string;
     description: string;
+    program?: string[] | string;
+    duration?: string;
 }

@@ -27,7 +27,7 @@ if (single) {
                 class={`h-16 pb-2 transition-all border rounded-md px-3 bg-gray-100 cursor-pointer [&[open]_svg]:rotate-180`}>
                 <summary
                     id={faq.id}
-                    class={`h-16 horizontal justify-start items-center text-lg quattrocento-sans-bold transition-all hover:underline`}>
+                    class={`h-16 list-none flex flex-row justify-start items-center text-lg quattrocento-sans-bold transition-all hover:underline [&::-webkit-details-marker]:hidden`}>
                     <span class="mr-5" aria-description="Question number">
                         Q{faq.id}
                     </span>
